@@ -16,7 +16,7 @@
 
         <!-- CENTRO -->
         <div class="toolbar-center">
-          <router-link to="/" class="header-title"> UP-Ros </router-link>
+          <router-link to="/" class="header-title"> UP-Ros Academy </router-link>
         </div>
 
         <!-- DERECHA (ESPACIADOR) -->
@@ -89,7 +89,7 @@ const currentYear = computed(() => new Date().getFullYear());
 
 .header-title:hover {
   color: #6ecbff;
-  text-shadow: 0 0 10px rgba(110, 203, 255, 0.6);
+  text-shadow: 0 3px 10px rgba(110, 203, 255, 0.6);
 }
 
 /* =========================

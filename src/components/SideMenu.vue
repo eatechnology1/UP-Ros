@@ -25,14 +25,14 @@
 <script setup lang="ts">
 const menu = [
   { id: 0, label: 'Home', icon: 'home', route: '/' },
-  { id: 1, label: 'Introducción', icon: 'circle', route: '/introduccion' },
-  { id: 2, label: 'Instalación', icon: 'download', route: '/instalacion' },
-  { id: 3, label: 'Fundamentos', icon: 'info', route: '/fundamentos' },
+  { id: 1, label: 'Introducción', icon: 'school', route: '/introduccion' },
+  { id: 2, label: 'Fundamentos', icon: 'memory', route: '/fundamentos' },
+  { id: 3, label: 'Instalación', icon: 'download', route: '/instalacion' },
   { id: 4, label: 'Ejemplos prácticos', icon: 'code', route: '/ejemplos' },
-  { id: 5, label: 'Simulación', icon: 'inventory_2', route: '/simulacion' },
-  { id: 6, label: 'Proyecto con Robot', icon: 'smart_toy', route: '/proyecto' },
+  { id: 5, label: 'Simulación', icon: 'videogame_asset', route: '/simulacion' },
+  { id: 6, label: 'Proyecto con Robot', icon: 'precision_manufacturing', route: '/proyecto' },
   { id: 7, label: 'Glosario', icon: 'menu_book', route: '/glosario' },
-  { id: 8, label: 'Créditos', icon: 'school', route: '/creditos' },
+  { id: 8, label: 'Créditos', icon: 'info', route: '/creditos' },
 ];
 </script>
 

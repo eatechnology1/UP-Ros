@@ -5,10 +5,25 @@
       <div class="hero-content">
         <h1 class="hero-title">Introducción a <span class="accent">ROS 2</span></h1>
         <TextBlock>
-          Bienvenido a <strong>UP-Ros</strong>. Esta plataforma es una
-          <strong>ruta de aprendizaje estructurada</strong> y diseñada para que domines el estándar
-          mundial en robótica (ROS 2 Jazzy), desde los conceptos fundamentales hasta la
-          implementación en robots reales.
+          <strong>UpROS Academy</strong> es una plataforma educativa diseñada para reducir la curva
+          de aprendizaje de ROS 2 de forma clara, práctica y acompañada, tanto si estás dando tus
+          primeros pasos como si ya tienes experiencia básica en robótica o programación.
+          <br /><br />
+          Aquí encontrarás un recorrido estructurado que integra
+          <strong>fundamentos teóricos</strong>, <strong>guías de instalación</strong> y
+          <strong>ejercicios prácticos</strong>, permitiéndote avanzar desde los conceptos básicos
+          hasta la ejecución de simulaciones y control de robots reales, superando las barreras
+          iniciales de Linux y la terminal.<br /><br />
+          Comenzarás entendiendo qué es ROS 2 y cómo funciona, y desde el inicio trabajarás de
+          manera práctica configurando tu entorno y explorando los componentes de un robot en
+          simulación. Aprenderás a crear nodos, publicadores y suscriptores en Python, a controlar
+          un rover en Gazebo y RViz, y a depurar tus programas con herramientas reales de
+          desarrollo. <br />
+
+          <br />
+          Además, conocerás el Navigation Stack (NAV2) para implementar navegación autónoma en
+          robots simulados y reales, y descubrirás cómo integrarte al ecosistema de ROS y aplicar
+          Inteligencia Artificial en proyectos robóticos concretos.
         </TextBlock>
       </div>
     </section>
@@ -37,7 +52,7 @@
 
     <!-- GLOSARIO VISUAL (Reducción de carga cognitiva) -->
     <div class="section-group self-stretch">
-      <SectionTitle>Conceptos Fundamentales (Glosario Visual)</SectionTitle>
+      <SectionTitle>Conceptos Fundamentales </SectionTitle>
       <div class="row q-col-gutter-lg items-stretch">
         <div class="col-12 col-md-7">
           <ImageBlock
@@ -252,16 +267,13 @@ echo "¡Sistema base listo para instalar ROS 2!"`.trim();
 /* ROADMAP STEPS */
 .roadmap-step {
   background: rgba(20, 30, 50, 0.8);
-  border-radius: 16px;
-  padding: 1.5rem;
+  border-radius: 18px;
+  padding: 1.8rem;
+  height: 100%;
   text-align: center;
   border: 1px solid rgba(148, 163, 184, 0.2);
-  transition: all 0.3s ease;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  transition: all 0.2s ease;
   align-items: center;
-  justify-content: center;
 }
 
 .roadmap-step:hover {

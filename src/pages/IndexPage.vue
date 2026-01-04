@@ -164,18 +164,18 @@ export default defineComponent({
         icon: 'school',
       },
       {
-        title: 'Instalación',
-        description:
-          'Prepara tu entorno de desarrollo con una guía paso a paso para instalar ROS 2 correctamente.',
-        to: '/instalacion',
-        icon: 'download',
-      },
-      {
         title: 'Fundamentos',
         description:
           'Aprende los conceptos esenciales: nodos, tópicos, servicios, acciones y paquetes en ROS 2.',
         to: '/fundamentos',
         icon: 'memory',
+      },
+      {
+        title: 'Instalación',
+        description:
+          'Prepara tu entorno de desarrollo con una guía paso a paso para instalar ROS 2 correctamente.',
+        to: '/instalacion',
+        icon: 'download',
       },
       {
         title: 'Ejemplos prácticos',
@@ -203,7 +203,7 @@ export default defineComponent({
         description:
           'Consulta términos clave, acrónimos y conceptos relacionados con ROS 2 y robótica.',
         to: '/glosario',
-        icon: 'book',
+        icon: 'menu_book',
       },
       {
         title: 'Créditos',
@@ -315,22 +315,19 @@ export default defineComponent({
 }
 
 .up-section-card {
+  background: rgba(20, 30, 50, 0.8);
+  border-radius: 18px;
   width: 100%;
   height: 100%;
-  border-radius: 18px;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  background: rgba(15, 23, 42, 0.65);
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    background 0.18s ease;
+  transition: all 0.3s ease;
 }
 
 .up-section-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.7);
-  background: rgba(15, 23, 42, 0.85);
+  border-color: #6ecbff;
+  box-shadow: 0 12px 32px rgba(110, 203, 255, 0.6);
 }
 
 .up-section-inner {
