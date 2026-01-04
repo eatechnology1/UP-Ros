@@ -1,1 +1,31 @@
 // app global css in SCSS form
+:root {
+  /* Base dark */
+  --glass-bg: rgba(20, 22, 30, 0.65);
+  --glass-bg-strong: rgba(20, 22, 30, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  /* Highlight */
+  --glass-hover: rgba(255, 255, 255, 0.12);
+  --glass-active: rgba(0, 170, 255, 0.25);
+
+  /* Text */
+  --text-primary: #e6e6e6;
+  --text-secondary: #a0a0a0;
+
+  /* Blur */
+  --glass-blur: blur(14px);
+}
+body {
+  background: radial-gradient(circle at top, #141821, #0b0d12);
+  color: var(--text-primary);
+  font-family: 'Inter', 'Poppins', system-ui, sans-serif;
+}
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+}
+@import './content-blocks.css';
