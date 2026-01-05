@@ -1,11 +1,13 @@
 {
   "name": "up-ros",
-  "version": "0.0.1",
-  "description": "Plataforma de aprendizaje ROS - Opcion de grado del programa Ingenería Mecatrónica - Alexander Calderon Leal",
+  "version": "1.0.0",
+  "description": "Plataforma educativa de robótica avanzada basada en ROS 2",
+  "author": "Alexander Calderon Leal <edwin.calderon@unipamplona.edu.co>",
   "productName": "UP Ros",
-  "author": "EA Technology <eatechnologycolombia@gmail.com>",
   "type": "module",
   "private": true,
+  "license": "MIT",
+  "main": "electron-main.js",
   "scripts": {
     "lint": "eslint -c ./eslint.config.js \"./src*/**/*.{ts,js,cjs,mjs,vue}\"",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
@@ -18,6 +20,7 @@
     "@quasar/extras": "^1.16.4",
     "marked": "^17.0.1",
     "quasar": "^2.16.0",
+    "register-service-worker": "^1.7.2",
     "vue": "^3.5.22",
     "vue-router": "^4.0.12"
   },
@@ -30,6 +33,7 @@
     "@vue/eslint-config-typescript": "^14.4.0",
     "autoprefixer": "^10.4.2",
     "electron": "^39.2.7",
+    "electron-builder": "^26.0.12",
     "eslint": "^9.14.0",
     "eslint-plugin-vue": "^10.4.0",
     "globals": "^16.4.0",
@@ -37,7 +41,14 @@
     "typescript": "^5.9.2",
     "vite-plugin-checker": "^0.11.0",
     "vue-eslint-parser": "^10.2.0",
-    "vue-tsc": "^3.0.7"
+    "vue-tsc": "^3.0.7",
+    "workbox-build": "^7.4.0",
+    "workbox-cacheable-response": "^7.4.0",
+    "workbox-core": "^7.4.0",
+    "workbox-expiration": "^7.4.0",
+    "workbox-precaching": "^7.4.0",
+    "workbox-routing": "^7.4.0",
+    "workbox-strategies": "^7.4.0"
   },
   "engines": {
     "node": "^28 || ^26 || ^24 || ^22 || ^20",

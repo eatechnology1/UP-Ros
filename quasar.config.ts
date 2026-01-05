@@ -178,7 +178,7 @@ export default defineConfig((/* ctx */) => {
       // specify the debugging port to use for the Electron app when running in development mode
       inspectPort: 5858,
 
-      bundler: 'packager', // 'packager' or 'builder'
+      bundler: 'builder', // 'packager' or 'builder'
 
       packager: {
         // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
@@ -192,9 +192,24 @@ export default defineConfig((/* ctx */) => {
       },
 
       builder: {
-        // https://www.electron.build/configuration/configuration
+        appId: 'com.alexandercalderon.upros',
+        productName: 'UP-Ros',
 
-        appId: 'up-ros',
+        files: ['**/*'],
+
+        extraMetadata: {
+          main: 'electron-main.js',
+        },
+
+        linux: {
+          target: ['deb', 'AppImage'],
+          category: 'Education',
+        },
+
+        win: {
+          target: ['nsis'],
+          arch: ['x64'],
+        },
       },
     },
 
