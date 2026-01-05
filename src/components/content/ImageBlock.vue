@@ -1,7 +1,15 @@
 <template>
   <div class="image-block-wrapper">
     <!-- Imagen principal -->
-    <div class="image-container" :class="{ 'image-zoomable': zoomable }" @click="toggleZoom">
+    <div
+      class="image-container"
+      :class="{ 'image-zoomable': zoomable }"
+      @click="toggleZoom"
+      role="button"
+      :aria-label="zoomable ? 'Ampliar imagen' : alt"
+      :tabindex="zoomable ? 0 : -1"
+      @keydown.enter="toggleZoom"
+    >
       <img
         ref="imageRef"
         :src="src"
@@ -10,29 +18,49 @@
         draggable="false"
       />
 
-      <!-- Overlay zoom (solo desktop) -->
-      <div v-if="zoomable && !zoomed" class="zoom-hint">
+      <!-- Overlay zoom (solo visual) -->
+      <div v-if="zoomable" class="zoom-hint">
         <q-icon name="zoom_in" />
-        <span class="zoom-text">Click para ampliar</span>
+        <span class="zoom-text">Ampliar</span>
       </div>
     </div>
 
-    <!-- Caption -->
-    <div v-if="caption || credit" class="image-caption">
-      <div class="caption-text">{{ caption }}</div>
-      <div v-if="credit" class="image-credit">📷 {{ credit }}</div>
+    <!-- Caption / Créditos -->
+    <div v-if="caption || credit" class="image-meta">
+      <div v-if="caption" class="caption-text">{{ caption }}</div>
+      <div v-if="credit" class="credit-text">
+        <q-icon name="photo_camera" size="xs" class="q-mr-xs" />
+        {{ credit }}
+      </div>
     </div>
 
-    <!-- Modal zoom (fullscreen) -->
-    <q-dialog v-model="zoomedDialog" persistent>
-      <q-card class="zoom-modal">
-        <q-card-section class="row justify-end q-pa-none">
-          <q-btn icon="close" flat round dense @click="closeZoom" aria-label="Cerrar imagen" />
-        </q-card-section>
-        <q-card-section class="zoom-content q-pa-none">
-          <img :src="src" :alt="alt" class="zoom-image" />
-        </q-card-section>
-      </q-card>
+    <!-- Modal zoom (Fullscreen) -->
+    <q-dialog
+      v-model="zoomedDialog"
+      transition-show="scale"
+      transition-hide="scale"
+      backdrop-filter="blur(4px)"
+    >
+      <div class="zoom-modal-container">
+        <!-- Botón cerrar flotante -->
+        <q-btn
+          icon="close"
+          flat
+          round
+          dense
+          color="white"
+          class="zoom-close-btn"
+          @click="closeZoom"
+          aria-label="Cerrar zoom"
+        />
+
+        <img :src="src" :alt="alt" class="zoom-image" />
+
+        <!-- Caption en zoom también -->
+        <div v-if="caption" class="zoom-caption">
+          {{ caption }}
+        </div>
+      </div>
     </q-dialog>
   </div>
 </template>
@@ -62,18 +90,15 @@ const emit = defineEmits<{
 
 const imageRef = ref<HTMLImageElement>();
 const zoomedDialog = ref(false);
-const zoomed = ref(false);
 
 function toggleZoom() {
   if (props.zoomable) {
     zoomedDialog.value = true;
-    zoomed.value = true;
   }
 }
 
 function closeZoom() {
   zoomedDialog.value = false;
-  zoomed.value = false;
 }
 
 onMounted(() => {
@@ -84,57 +109,123 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* ... MISMO CSS ANTERIOR SIN CAMBIOS ... */
 .image-block-wrapper {
-  max-width: 900px;
-  margin: 40px auto;
+  width: 100%;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* CONTENEDOR IMAGEN */
 .image-container {
   position: relative;
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(2px);
-  box-shadow:
-    0 20px 60px rgba(15, 23, 42, 0.7),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  background: rgba(15, 23, 42, 0.5); /* Placeholder oscuro */
+  display: inline-block; /* Ajustarse al tamaño de la imagen */
+  max-width: 100%;
 }
 
-.image-container:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    0 32px 80px rgba(15, 23, 42, 0.85),
-    0 0 0 1px rgba(110, 203, 255, 0.2);
+.image-zoomable {
+  cursor: zoom-in;
 }
 
 .image-container img {
   display: block;
-  width: 100%;
+  max-width: 100%;
   height: auto;
   transition: transform 0.3s ease;
 }
 
-/* Resto del CSS igual... */
-/* FIX ZOOM MODAL - Imagen completa sin recorte */
-.zoom-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain !important; /* ← ESTO SOLO */
-  object-position: center;
-  background: rgba(15, 23, 42, 0.95); /* Fondo oscuro suave */
+/* HINT ZOOM */
+.zoom-hint {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  color: white;
+  font-weight: 500;
+  backdrop-filter: blur(2px);
 }
-.zoom-modal {
-  max-width: 90vw;
-  max-height: 90vh;
-  border-radius: 16px;
-  overflow: hidden;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  background: rgba(15, 23, 42, 0.95);
-  box-shadow:
-    0 32px 80px rgba(15, 23, 42, 0.85),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+.image-zoomable:hover .zoom-hint {
+  opacity: 1;
+}
+
+/* CAPTION & CREDIT */
+.image-meta {
+  margin-top: 12px;
+  text-align: center;
+  max-width: 90%;
+}
+
+.caption-text {
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.credit-text {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* MODAL ZOOM (ESTILO LIBRE SIN CARD DE QUASAR) */
+.zoom-modal-container {
+  position: relative;
+  max-width: 95vw;
+  max-height: 95vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.zoom-image {
+  max-width: 100%;
+  max-height: 85vh; /* Deja espacio para caption/botón */
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+}
+
+.zoom-close-btn {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.zoom-caption {
+  margin-top: 16px;
+  color: white;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .zoom-close-btn {
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+  }
 }
 </style>

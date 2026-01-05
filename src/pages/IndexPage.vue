@@ -1,375 +1,364 @@
 <template>
-  <q-page class="q-pa-xl column items-center justify-start up-hero-page">
-    <!-- HERO PRINCIPAL -->
-    <section class="up-hero q-pa-xl q-mb-xl">
-      <div class="up-hero-content">
-        <div class="up-hero-text">
-          <div class="text-overline text-primary text-weight-bold q-mb-sm">
-            Plataforma educativa para ROS 2
+  <q-page class="q-pa-lg column items-center">
+    <!-- 1. HERO SECTION -->
+    <!-- Usamos SplitBlock para dividir Contenido (Izq) y Visual (Der) -->
+    <div class="section-group self-stretch q-mt-md">
+      <SplitBlock>
+        <!-- IZQUIERDA: Mensaje Principal -->
+        <template #left>
+          <div class="hero-header">
+            <div class="text-overline text-accent text-weight-bold q-mb-xs">
+              Plataforma Educativa v1.0
+            </div>
+            <h1 class="hero-title">
+              Aprende <span class="text-primary">ROS 2</span> de forma progresiva
+            </h1>
           </div>
 
-          <h1 class="text-h3 text-weight-bold q-mb-md">
-            UP-Ros: aprende ROS 2 de forma progresiva y guiada
-          </h1>
+          <TextBlock>
+            <strong>UP-Ros</strong> te guía desde la instalación hasta el control de robots reales.
+            Explora conceptos, practica con simuladores y domina la robótica moderna con un enfoque
+            estructurado y documentación de rigor técnico.
+          </TextBlock>
 
-          <p class="text-subtitle1 text-grey-4 q-mb-lg">
-            Explora conceptos, instala tu entorno, practica con ejemplos y lleva ROS 2 a robots
-            reales a través de un recorrido estructurado, visualmente claro y orientado a la
-            práctica.
-          </p>
-
-          <div class="row q-gutter-sm q-gutter-md-sm q-mt-sm">
+          <div class="row q-gutter-md q-mt-md">
             <q-btn
               color="primary"
               unelevated
-              no-caps
-              class="up-btn-main"
-              label="Empezar por la Introducción"
+              rounded
+              padding="10px 24px"
+              icon-right="arrow_forward"
+              label="Empezar Introducción"
               to="/introduccion"
+              class="hero-btn"
             />
             <q-btn
-              color="secondary"
+              color="dark"
+              text-color="white"
               outline
-              no-caps
-              class="up-btn-secondary"
-              label="Ir a Instalación de ROS 2"
+              rounded
+              padding="10px 24px"
+              icon="download"
+              label="Instalar ROS 2"
               to="/instalacion"
+              class="hero-btn"
             />
           </div>
-        </div>
+        </template>
 
-        <div class="up-hero-visual">
-          <q-card flat bordered class="up-hero-card">
-            <q-card-section class="up-hero-image-wrapper">
-              <img
-                src="src/assets/images/jazzy_robot.png"
-                alt="Robot educativo UP-Ros"
-                class="up-hero-image"
-              />
-            </q-card-section>
+        <!-- DERECHA: Robot + Ruta Sugerida -->
+        <template #right>
+          <div class="column q-gutter-y-md">
+            <!-- Imagen del Robot -->
+            <ImageBlock
+              src="src/assets/images/jazzy_robot.png"
+              alt="Robot educativo UP-Ros"
+              :zoomable="false"
+              class="hero-image-block"
+            />
 
-            <q-separator color="grey-8" />
+            <!-- Checklist rápido (Ahora es un AlertBlock) -->
+            <AlertBlock type="info" title="🚀 Ruta Sugerida">
+              1. <strong>Introducción:</strong> Filosofía y Conceptos.<br />
+              2. <strong>Instalación:</strong> Configura tu Ubuntu.<br />
+              3. <strong>Fundamentos:</strong> Nodos y Tópicos.<br />
+              4. <strong>Proyecto:</strong> Simulación y Hardware.
+            </AlertBlock>
+          </div>
+        </template>
+      </SplitBlock>
+    </div>
 
-            <q-card-section>
-              <div class="text-caption text-primary text-weight-bold q-mb-xs">Ruta sugerida</div>
-              <div class="text-body2 text-grey-4">
-                1. Introducción a ROS 2 <br />
-                2. Instalación del entorno <br />
-                3. Fundamentos y nodos básicos <br />
-                4. Ejemplos, simulación y proyecto con robot
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-      </div>
-    </section>
+    <!-- 2. HUB DE NAVEGACIÓN -->
+    <div class="section-group self-stretch">
+      <SectionTitle>Explora el Contenido</SectionTitle>
 
-    <!-- SECCIONES PRINCIPALES COMO HUB -->
-    <section class="up-sections q-mb-xl full-width">
-      <div class="text-subtitle1 text-grey-4 q-mb-md text-center">
-        Navega por los bloques principales del contenido
-      </div>
-
-      <div class="row q-col-gutter-lg q-row-gutter-lg justify-center items-stretch">
-        <div
+      <div class="modules-grid">
+        <router-link
           v-for="section in mainSections"
           :key="section.to"
-          class="col-12 col-sm-6 col-md-3 flex"
+          :to="section.to"
+          class="module-card"
         >
-          <q-card
-            class="up-section-card cursor-pointer full-width"
-            flat
-            bordered
-            @click="$router.push(section.to)"
-          >
-            <q-card-section class="column justify-between up-section-inner">
-              <div>
-                <div class="row items-center no-wrap q-mb-sm">
-                  <q-icon :name="section.icon" size="md" class="q-mr-sm text-primary" />
-                  <div class="text-h6 text-weight-medium">
-                    {{ section.title }}
-                  </div>
-                </div>
-                <div class="text-body2 text-grey-5">
-                  {{ section.description }}
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
+          <div class="module-icon-box">
+            <q-icon :name="section.icon" size="28px" />
+          </div>
+          <div class="module-content">
+            <div class="module-title">{{ section.title }}</div>
+            <div class="module-desc">{{ section.description }}</div>
+          </div>
+          <div class="module-arrow">
+            <q-icon name="chevron_right" />
+          </div>
+        </router-link>
+      </div>
+    </div>
+
+    <!-- 3. METODOLOGÍA (Flow) -->
+    <div class="section-group self-stretch">
+      <SectionTitle>¿Cómo está organizado?</SectionTitle>
+
+      <div class="flow-grid">
+        <div v-for="(step, index) in learningFlow" :key="index" class="flow-card">
+          <div class="flow-number">{{ index + 1 }}</div>
+          <h3 class="flow-title">{{ step.title }}</h3>
+          <p class="flow-desc">{{ step.description }}</p>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- CÓMO ESTÁ ORGANIZADO EL RECORRIDO -->
-    <section class="up-flow q-pa-lg q-mb-xl">
-      <div class="text-subtitle1 text-weight-bold q-mb-md text-primary">
-        ¿Cómo está organizado el recorrido de aprendizaje?
-      </div>
-
-      <div class="row q-col-gutter-md q-row-gutter-sm">
-        <div
-          v-for="(step, index) in learningFlow"
-          :key="index"
-          class="col-12 col-md-3 up-flow-step"
-        >
-          <div class="text-h5 text-primary text-weight-bold q-mb-xs">{{ index + 1 }}.</div>
-          <div class="text-body1 text-grey-3 text-weight-medium q-mb-xs">
-            {{ step.title }}
-          </div>
-          <div class="text-body2 text-grey-5">
-            {{ step.description }}
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MENSAJE DOCENTE / FILOSOFÍA -->
-    <section class="up-message q-pa-lg q-mb-xl">
-      <div class="text-subtitle1 text-weight-bold q-mb-sm">Enfoque de UP-Ros</div>
-      <p class="text-body2 text-grey-4">
-        UP-Ros está diseñado para integrar rigor técnico, documentación clara y visualización
-        efectiva de conceptos clave en ROS 2. La plataforma prioriza una curva de aprendizaje
-        progresiva, apoyada en ejemplos prácticos, simulación y proyectos con robots reales, para
-        facilitar la transferencia de conocimiento a estudiantes y profesionales.
-      </p>
-    </section>
+    <!-- 4. MANIFIESTO (Enfoque) -->
+    <div class="section-group self-stretch q-mb-xl">
+      <TextBlock highlighted>
+        <div class="text-h6 text-white q-mb-sm">🎓 Enfoque de UP-Ros</div>
+        UP-Ros está diseñado para integrar <strong>rigor técnico</strong>,
+        <strong>documentación clara</strong> y <strong>visualización efectiva</strong>. Priorizamos
+        una curva de aprendizaje progresiva para facilitar la transferencia de conocimiento real a
+        estudiantes de ingeniería y profesionales.
+      </TextBlock>
+    </div>
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import SplitBlock from 'components/content/SplitBlock.vue';
+import TextBlock from 'components/content/TextBlock.vue';
+import ImageBlock from 'components/content/ImageBlock.vue';
+import AlertBlock from 'components/content/AlertBlock.vue';
+import SectionTitle from 'components/content/SectionTitle.vue';
 
-interface MainSection {
-  title: string;
-  description: string;
-  to: string;
-  icon: string;
-}
-
-interface LearningStep {
-  title: string;
-  description: string;
-}
-
-export default defineComponent({
-  name: 'IndexPage',
-
-  setup() {
-    const mainSections: MainSection[] = [
-      {
-        title: 'Introducción',
-        description:
-          'Comprende la filosofía de ROS 2, su arquitectura y el enfoque de la plataforma UP-Ros.',
-        to: '/introduccion',
-        icon: 'school',
-      },
-      {
-        title: 'Fundamentos',
-        description:
-          'Aprende los conceptos esenciales: nodos, tópicos, servicios, acciones y paquetes en ROS 2.',
-        to: '/fundamentos',
-        icon: 'memory',
-      },
-      {
-        title: 'Instalación',
-        description:
-          'Prepara tu entorno de desarrollo con una guía paso a paso para instalar ROS 2 correctamente.',
-        to: '/instalacion',
-        icon: 'download',
-      },
-      {
-        title: 'Ejemplos prácticos',
-        description:
-          'Desarrolla y ejecuta ejemplos guiados para afianzar los conceptos clave de ROS 2.',
-        to: '/ejemplos',
-        icon: 'play_circle_filled',
-      },
-      {
-        title: 'Simulación',
-        description:
-          'Trabaja con simuladores para probar tus nodos y paquetes antes de llevarlos a hardware real.',
-        to: '/simulacion',
-        icon: 'videogame_asset',
-      },
-      {
-        title: 'Proyecto con Robot',
-        description:
-          'Integra ROS 2 en un proyecto real con robot, aplicando los conceptos aprendidos.',
-        to: '/proyecto',
-        icon: 'precision_manufacturing',
-      },
-      {
-        title: 'Glosario',
-        description:
-          'Consulta términos clave, acrónimos y conceptos relacionados con ROS 2 y robótica.',
-        to: '/glosario',
-        icon: 'menu_book',
-      },
-      {
-        title: 'Créditos',
-        description:
-          'Conoce la autoría, referencias y recursos utilizados para el desarrollo de UP-Ros.',
-        to: '/creditos',
-        icon: 'info',
-      },
-    ];
-
-    const learningFlow: LearningStep[] = [
-      {
-        title: 'Comprender el contexto de ROS_2',
-        description:
-          'Revisa la introducción y los fundamentos para entender qué resuelve ROS 2 y cómo se estructura.',
-      },
-      {
-        title: 'Preparar el entorno',
-        description:
-          'Sigue la guía de instalación para configurar tu sistema y verificar que todo funciona correctamente.',
-      },
-      {
-        title: 'Explorar ejemplos y simulación',
-        description:
-          'Desarrolla ejemplos guiados y utiliza simuladores para experimentar sin riesgo sobre hardware real.',
-      },
-      {
-        title: 'Aplicar en un proyecto con robot',
-        description:
-          'Transfiere lo aprendido a un proyecto con robot, integrando control, comunicación y herramientas ROS 2.',
-      },
-    ];
-
-    return {
-      mainSections,
-      learningFlow,
-    };
+// DATOS
+const mainSections = [
+  {
+    title: 'Introducción',
+    description: 'Filosofía, arquitectura y enfoque.',
+    to: '/introduccion',
+    icon: 'school',
   },
-});
+  {
+    title: 'Fundamentos',
+    description: 'Nodos, tópicos, servicios y acciones.',
+    to: '/fundamentos',
+    icon: 'memory', // Icono de chip/proceso
+  },
+  {
+    title: 'Instalación',
+    description: 'Guía paso a paso para Ubuntu 24.04.',
+    to: '/instalacion',
+    icon: 'terminal', // Más técnico que download
+  },
+  {
+    title: 'Ejemplos Prácticos',
+    description: 'Código Python explicado línea a línea.',
+    to: '/ejemplos',
+    icon: 'code',
+  },
+  {
+    title: 'Simulación',
+    description: 'Gazebo y RViz sin riesgos.',
+    to: '/simulacion',
+    icon: 'view_in_ar', // Icono de 3D/AR
+  },
+  {
+    title: 'Proyecto Robot',
+    description: 'Integración final en hardware.',
+    to: '/proyecto',
+    icon: 'smart_toy',
+  },
+];
+
+const learningFlow = [
+  {
+    title: 'Contexto',
+    description: 'Entiende qué resuelve ROS 2 antes de escribir código.',
+  },
+  {
+    title: 'Entorno',
+    description: 'Prepara tu sistema Linux con las herramientas profesionales.',
+  },
+  {
+    title: 'Experimentación',
+    description: 'Usa simuladores para fallar rápido y aprender seguro.',
+  },
+  {
+    title: 'Aplicación',
+    description: 'Transfiere el código a un robot físico real.',
+  },
+];
 </script>
 
 <style scoped>
-.up-hero-page {
-  gap: 2rem;
+/* GENERAL LAYOUT */
+.section-group {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 3rem auto;
 }
 
 /* HERO */
-.up-hero {
-  width: 100%;
-  max-width: 1100px;
-  border-radius: 24px;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  background: rgba(15, 23, 42, 0.7);
-  border: 1px solid rgba(148, 163, 184, 0.3);
+.hero-header {
+  margin-bottom: 24px;
 }
 
-.up-hero-content {
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #f8fafc; /* Slate-50 */
+  margin: 0;
+}
+
+.hero-btn {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Ajuste específico para la imagen del hero para que no sea gigante */
+:deep(.hero-image-block .image-container) {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+:deep(.hero-image-block img) {
+  max-height: 300px; /* Control de altura */
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3)); /* Sombra a la silueta PNG */
+}
+
+/* GRID DE MÓDULOS (HUB) */
+.modules-grid {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
-  gap: 2.5rem;
-  align-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
 }
 
-.up-hero-text {
-  max-width: 620px;
-}
-
-.up-hero-visual {
+.module-card {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(30, 41, 59, 0.4); /* Slate-800 Glass */
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
 }
 
-.up-hero-card {
-  min-width: 260px;
-  border-radius: 18px;
-  background: rgba(15, 23, 42, 0.8);
+.module-card:hover {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(56, 189, 248, 0.4); /* Sky-400 */
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.3);
+}
+
+.module-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+
+.module-card:hover .module-icon-box {
+  background: rgba(56, 189, 248, 0.2);
+  color: #7dd3fc;
+}
+
+.module-content {
+  flex: 1;
+}
+
+.module-title {
+  color: #f1f5f9;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.module-desc {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.module-arrow {
+  color: #475569;
+  transition:
+    transform 0.3s,
+    color 0.3s;
+}
+
+.module-card:hover .module-arrow {
+  color: #38bdf8;
+  transform: translateX(4px);
+}
+
+/* GRID DE FLUJO (STEPS VISUALES) */
+.flow-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.flow-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
   overflow: hidden;
 }
 
-/* IMAGEN JAZZY_ROBOT */
-.up-hero-image-wrapper {
-  padding: 0;
+.flow-number {
+  font-size: 4rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.03);
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  line-height: 1;
 }
 
-.up-hero-image {
-  display: block;
-  width: 100%;
-  height: auto; /* ← CAMBIA: altura automática */
-  max-height: 240px; /* ← Aumenta un poco el espacio disponible */
-  object-fit: contain; /* ← MUESTRA COMPLETA SIN CORTAR */
-  object-position: center; /* ← Centra la imagen */
+.flow-title {
+  color: #38bdf8;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
 }
 
-/* BOTONES HERO */
-.up-btn-main {
-  border-radius: 999px;
-  padding-inline: 1.5rem;
-}
-
-.up-btn-secondary {
-  border-radius: 999px;
-  padding-inline: 1.2rem;
-}
-
-/* CARDS SECCIONES - ALINEADAS EN ALTO */
-.up-sections {
-  max-width: 1100px;
-}
-
-.up-section-card {
-  background: rgba(20, 30, 50, 0.8);
-  border-radius: 18px;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  transition: all 0.3s ease;
-}
-
-.up-section-card:hover {
-  transform: translateY(-4px);
-  border-color: #6ecbff;
-  box-shadow: 0 12px 32px rgba(110, 203, 255, 0.6);
-}
-
-.up-section-inner {
-  height: 100%;
-}
-
-/* FLUJO DE APRENDIZAJE */
-.up-flow {
-  width: 100%;
-  max-width: 1100px;
-  border-radius: 18px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  background: rgba(15, 23, 42, 0.75);
-  border: 1px solid rgba(148, 163, 184, 0.25);
-}
-
-.up-flow-step {
-  padding: 0.4rem 0.2rem;
-}
-
-/* MENSAJE DOCENTE */
-.up-message {
-  width: 100%;
-  max-width: 900px;
-  border-radius: 18px;
-  border: 1px dashed rgba(148, 163, 184, 0.5);
-  background: rgba(15, 23, 42, 0.6);
+.flow-desc {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
 }
 
 /* RESPONSIVE */
-@media (max-width: 960px) {
-  .up-hero-content {
-    grid-template-columns: minmax(0, 1fr);
+@media (max-width: 900px) {
+  .hero-title {
+    font-size: 2.2rem;
   }
 
-  .up-hero-visual {
-    justify-content: flex-start;
+  .flow-grid {
+    grid-template-columns: 1fr 1fr; /* 2 columnas en tablets */
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 1.8rem;
   }
 
-  .up-hero {
-    padding: 1.5rem;
+  .flow-grid {
+    grid-template-columns: 1fr; /* 1 columna en móvil */
   }
 }
 </style>
