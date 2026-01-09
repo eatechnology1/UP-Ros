@@ -1,45 +1,49 @@
 import { app, BrowserWindow } from 'electron';
 import path from 'path';
 import os from 'os';
-import { fileURLToPath } from 'url'
+import { fileURLToPath } from 'url';
 
-// needed in case process is undefined under Linux
 const platform = process.platform || os.platform();
-
 const currentDir = fileURLToPath(new URL('.', import.meta.url));
 
 let mainWindow: BrowserWindow | undefined;
 
 async function createWindow() {
-  /**
-   * Initial window options
-   */
   mainWindow = new BrowserWindow({
-    icon: path.resolve(currentDir, 'icons/icon.png'), // tray icon
+    icon: path.resolve(currentDir, 'icons/icon.png'),
     width: 1000,
     height: 600,
     useContentSize: true,
+    show: false, // ⬅️ SIEMPRE false
     webPreferences: {
       contextIsolation: true,
-      // More info: https://v2.quasar.dev/quasar-cli-vite/developing-electron-apps/electron-preload-script
       preload: path.resolve(
         currentDir,
-        path.join(process.env.QUASAR_ELECTRON_PRELOAD_FOLDER, 'electron-preload' + process.env.QUASAR_ELECTRON_PRELOAD_EXTENSION)
+        path.join(
+          process.env.QUASAR_ELECTRON_PRELOAD_FOLDER,
+          'electron-preload' + process.env.QUASAR_ELECTRON_PRELOAD_EXTENSION,
+        ),
       ),
     },
   });
 
+  // Cargar contenido
   if (process.env.DEV) {
     await mainWindow.loadURL(process.env.APP_URL);
   } else {
     await mainWindow.loadFile('index.html');
   }
 
+  // 🔑 FORZAR MAXIMIZE ANTES DE MOSTRAR
+  mainWindow.maximize();
+
+  // 🔑 Mostrar solo cuando el contenido ya existe
+  mainWindow.show();
+
+  // Debug
   if (process.env.DEBUGGING) {
-    // if on DEV or Production with debug enabled
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
   } else {
-    // we're on production; no access to devtools pls
     mainWindow.webContents.on('devtools-opened', () => {
       mainWindow?.webContents.closeDevTools();
     });
@@ -50,6 +54,7 @@ async function createWindow() {
   });
 }
 
+// CORRECCIÓN 1: Usar void
 void app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
@@ -59,7 +64,8 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  if (mainWindow === undefined) {
+  if (!mainWindow) {
+    // CORRECCIÓN 2: Usar void
     void createWindow();
   }
 });

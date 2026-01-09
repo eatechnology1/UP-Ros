@@ -206,10 +206,10 @@ export default defineConfig((/* ctx */) => {
           category: 'Education',
         },
 
-        win: {
-          target: ['nsis'],
-          arch: ['x64'],
-        },
+        // win: {
+        //   target: 'nsis', // O 'portable', 'zip', etc.
+        //   arch: ['x64'], // <--- Aquí es donde va la arquitectura
+        // },
       },
     },
 
