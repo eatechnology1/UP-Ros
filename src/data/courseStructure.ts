@@ -269,12 +269,12 @@ export const courseStructure: CourseNode[] = [
     icon: 'terminal',
     path: 'modulo-0',
     children: [
-      { title: '0.1 Navegación Terminal', path: '01nav-sistema' },
-      { title: '0.2 Gestión de Archivos', path: '02gestion-archivos' },
-      { title: '0.3 Permisos y Usuarios', path: 'permisos' },
-      { title: '0.4 Editores de Texto', path: 'editores' },
-      { title: '0.5 Variables de Entorno', path: 'variables-entorno' },
-      { title: '0.6 Instalación Software', path: 'instalacion' },
+      { title: '0.1 Navegación Terminal', path: '01navsistemaPage' },
+      { title: '0.2 Gestión de Archivos', path: '02gestionarchivosPage' },
+      { title: '0.3 Permisos y Usuarios', path: '03permisosPage' },
+      { title: '0.4 Editores de Texto', path: '04editoresPage' },
+      { title: '0.5 Variables de Entorno', path: '05variablesentornoPage' },
+      { title: '0.6 Instalación Software', path: '06instalacionPage' },
     ],
   },
   {
@@ -282,11 +282,11 @@ export const courseStructure: CourseNode[] = [
     icon: 'code',
     path: 'modulo-1',
     children: [
-      { title: '1.1 Python Scripts', path: 'python-scripts' },
-      { title: '1.2 Módulos y Librerías', path: 'python-modulos' },
-      { title: '1.3 Compilación C++', path: 'cpp-compilacion' },
-      { title: '1.4 Estructura C++', path: 'cpp-estructura' },
-      { title: '1.5 Bash Scripting', path: 'bash-scripting' },
+      { title: '1.1 Python Scripts', path: '01python-scripts' },
+      { title: '1.2 Módulos y Librerías', path: '02python-modulos' },
+      { title: '1.3 Compilación C++', path: '03cpp-compilacion' },
+      { title: '1.4 Estructura C++', path: '04cpp-estructura' },
+      { title: '1.5 Bash Scripting', path: '05bash-scripting' },
     ],
   },
   {
@@ -294,10 +294,10 @@ export const courseStructure: CourseNode[] = [
     icon: 'data_object',
     path: 'modulo-2',
     children: [
-      { title: '2.1 XML Básico', path: 'xml' },
-      { title: '2.2 JSON Básico', path: 'json' },
-      { title: '2.3 YAML Básico', path: 'yaml' },
-      { title: '2.4 Conversión y Uso', path: 'conversion' },
+      { title: '2.1 XML Básico', path: '01xmlPage' },
+      { title: '2.2 JSON Básico', path: '02jsonPage' },
+      { title: '2.3 YAML Básico', path: '03yamlPage' },
+      { title: '2.4 Conversión y Uso', path: '04conversionPage' },
     ],
   },
   {
@@ -305,13 +305,13 @@ export const courseStructure: CourseNode[] = [
     icon: 'call_split', // Icono de rama/branch
     path: 'modulo-3',
     children: [
-      { title: '3.1 Conceptos Básicos', path: 'conceptos' },
-      { title: '3.2 Commits', path: 'commits' },
-      { title: '3.3 Historia', path: 'historia' },
-      { title: '3.4 Ramas (Branches)', path: 'ramas' },
-      { title: '3.5 Remotos', path: 'remotos' },
-      { title: '3.6 Pull Requests', path: 'pull-requests' },
-      { title: '3.7 Gitignore', path: 'gitignore' },
+      { title: '3.1 Conceptos Básicos', path: '01conceptosPage' },
+      { title: '3.2 Commits', path: '02commitsPage' },
+      { title: '3.3 Historial', path: '03historialPage' },
+      { title: '3.4 Ramas (Branches)', path: '04ramasPage' },
+      { title: '3.5 Remotos', path: '05remotosPage' },
+      { title: '3.6 Pull Requests', path: '06pull-requestsPage' },
+      { title: '3.7 Gitignore', path: '07gitignorePage' },
     ],
   },
   {
@@ -319,11 +319,11 @@ export const courseStructure: CourseNode[] = [
     icon: 'smart_toy', // Icono de robot
     path: 'modulo-4',
     children: [
-      { title: '4.1 Arquitectura', path: 'arquitectura' },
-      { title: '4.2 Workspace y Paquetes', path: 'workspace' },
-      { title: '4.3 Tópicos (Topics)', path: 'topics' },
-      { title: '4.4 Servicios', path: 'servicios' },
-      { title: '4.5 Acciones', path: 'acciones' },
+      { title: '4.1 Arquitectura', path: '01arquitecturaPage' },
+      { title: '4.2 Workspace y Paquetes', path: '02workspacePage' },
+      { title: '4.3 Tópicos (Topics)', path: '03topicsPage' },
+      { title: '4.4 Servicios', path: '04serviciosPage' },
+      { title: '4.5 Acciones', path: '05accionesPage' },
     ],
   },
   {
@@ -331,10 +331,10 @@ export const courseStructure: CourseNode[] = [
     icon: 'build',
     path: 'modulo-5',
     children: [
-      { title: '5.1 Launch System', path: 'launch' },
-      { title: '5.2 Parámetros', path: 'parametros' },
-      { title: '5.3 Visualización', path: 'visualizacion' },
-      { title: '5.4 Rosbag', path: 'rosbag' },
+      { title: '5.1 Launch System', path: '01launchPage' },
+      { title: '5.2 Parámetros', path: '02parametrosPage' },
+      { title: '5.3 Visualización', path: '03visualizacionPage' },
+      { title: '5.4 Rosbag', path: '04rosbagPage' },
     ],
   },
   {

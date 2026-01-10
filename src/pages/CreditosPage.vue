@@ -28,48 +28,75 @@
 
           <div class="profile-content">
             <h2 class="text-h5 text-white q-my-sm">Alexander Calderon Leal</h2>
-            <div class="text-subtitle2 text-primary text-weight-bold">Ingeniero Mecatrónico</div>
+            <div class="text-subtitle2 text-secondary text-weight-bold">
+              Desarrollador Principal & Arquitecto de UP-Ros
+            </div>
             <div class="text-caption text-grey-4 q-mb-md">Universidad de Pamplona</div>
 
             <p class="text-grey-4 text-body2 text-justify">
-              Especializado en la integración de mecánica, electrónica y software. Enfocado en
-              robótica móvil (ROS 2), simulación y arquitecturas escalables. Creador de la
-              arquitectura UP-Ros.
+              Alexander Calderon Leal es ingeniero mecatrónico con experiencia en el diseño e
+              integración de sistemas embebidos, soluciones IoT, infraestructura inalámbrica y
+              seguridad electrónica. Ha dirigido proyectos tecnológicos orientados a domótica,
+              seguridad perimetral, transmisión de datos y automatización para entornos industriales
+              y residenciales. <br />Sus áreas de especialización incluyen robótica aplicada, diseño
+              electrónico, redes industriales, visión térmica e inteligencia aplicada a sistemas
+              IoT, con énfasis en monitorización y control. Actualmente desarrolla soluciones
+              basadas en cámaras térmicas, domótica y sistemas autónomos, incluyendo plataformas de
+              gestión energética y supervisión remota. Es creador de la arquitectura UP-Ros.
             </p>
 
-            <!-- Botones Sociales -->
+            <!-- BOTONES SOCIALES (ALEX) -->
             <div class="row justify-center q-gutter-sm q-mt-md">
-              <q-btn
-                flat
-                round
-                dense
-                color="white"
-                icon="code"
-                href="https://github.com/"
-                target="_blank"
-              >
-                <q-tooltip>GitHub</q-tooltip>
-              </q-btn>
-              <q-btn
-                flat
-                round
-                dense
-                color="blue-5"
-                icon="work"
-                href="https://linkedin.com/"
-                target="_blank"
-              >
-                <q-tooltip>LinkedIn</q-tooltip>
-              </q-btn>
+              <!-- 1. Correo -->
               <q-btn
                 flat
                 round
                 dense
                 color="green-4"
-                icon="mail"
-                href="mailto:alexander@example.com"
+                :icon="remMailSendFill"
+                href="mailto:edwin.calderon@unipamplona.edu.co"
+                target="_blank"
               >
-                <q-tooltip>Contacto</q-tooltip>
+                <q-tooltip>Correo</q-tooltip>
+              </q-btn>
+
+              <!-- 2. Telegram -->
+              <q-btn
+                flat
+                round
+                dense
+                color="blue-4"
+                :icon="remTelegramFill"
+                href="https://t.me/ea_technology"
+                target="_blank"
+              >
+                <q-tooltip>Telegram</q-tooltip>
+              </q-btn>
+
+              <!-- 6. YouTube -->
+              <q-btn
+                flat
+                round
+                dense
+                color="red-5"
+                :icon="remYoutubeFill"
+                href="https://www.youtube.com/@ea.technology"
+                target="_blank"
+              >
+                <q-tooltip>YouTube</q-tooltip>
+              </q-btn>
+
+              <!-- 7. GitHub -->
+              <q-btn
+                flat
+                round
+                dense
+                color="grey-5"
+                :icon="remGithubFill"
+                href="https://github.com/eatechnology1"
+                target="_blank"
+              >
+                <q-tooltip>GitHub</q-tooltip>
               </q-btn>
             </div>
           </div>
@@ -80,27 +107,98 @@
         <div class="profile-card">
           <div class="profile-img-container">
             <!-- Usa una foto real si tienes, si no, deja este icono -->
-            <q-icon name="person" size="60px" color="grey-4" class="placeholder-icon" />
+            <img src="~assets/images/alex.png" alt="Oscar Duque" class="profile-img" />
           </div>
 
           <div class="profile-content">
-            <h2 class="text-h5 text-white q-my-sm">[Nombre del Director]</h2>
-            <div class="text-subtitle2 text-secondary text-weight-bold">Director de Proyecto</div>
+            <h2 class="text-h5 text-white q-my-sm">BSc. Ing.Duque Suarez Oscar Manuel</h2>
+            <div class="text-subtitle2 text-primary text-weight-bold">Director de Proyecto</div>
             <div class="text-caption text-grey-4 q-mb-md">Docente - Facultad de Ingenierías</div>
 
             <p class="text-grey-4 text-body2 text-justify">
-              [Espacio para describir brevemente el rol del director, su especialidad académica (ej:
-              Control Automático, Inteligencia Artificial) y su guía fundamental en el desarrollo
-              metodológico de este proyecto.]
+              Duque Suarez Oscar Manuel recibió el BSc. Ing. en Ingeniería Mecatrónica de la
+              Universidad de Pamplona, Colombia, en 2007. Especialista en mecatrónica industrial y
+              Msc. en Controles Industriales de la misma Universidad. Actualmente, es docente en el
+              Departamento de Ingeniería Mecatrónica de la Universidad de pamplona, Villa del
+              Rosario, Colombia desde 2009 con estudios doctorales en Proyectos -línea de
+              investigación de ingeniería. Además, es miembro de del grupo de investigación de
+              Automatización y control (A&C). Su investigación se basa en sistemas de control,
+              Robótica e Inteligencia Artificial.
             </p>
 
             <div class="row justify-center q-gutter-sm q-mt-md">
-              <q-btn flat round dense color="white" icon="school">
+              <q-btn
+                flat
+                round
+                dense
+                color="orange-4"
+                :icon="remBuilding2Fill"
+                href="https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0000930113"
+                target="_blank"
+              >
                 <q-tooltip>CvLAC / Perfil Académico</q-tooltip>
               </q-btn>
-              <q-btn flat round dense color="white" icon="mail">
+              <!-- Correo -->
+              <q-btn
+                flat
+                round
+                dense
+                color="green-4"
+                :icon="remMailSendFill"
+                href="mailto:omduque@unipamplona.edu.co"
+                target="_blank"
+              >
                 <q-tooltip>Correo Institucional</q-tooltip>
               </q-btn>
+              <!-- 6. YouTube -->
+              <q-btn
+                flat
+                round
+                dense
+                color="red-5"
+                :icon="remYoutubeFill"
+                href="https://www.youtube.com/@BRANKS-ROBOTICACOLABORATIVA"
+                target="_blank"
+              >
+                <q-tooltip>BRANKS - ROBÓTICA COLABORATIVA</q-tooltip>
+              </q-btn>
+              <!-- 6. YouTube -->
+              <q-btn
+                flat
+                round
+                dense
+                color="red-5"
+                :icon="remYoutubeFill"
+                href="https://www.youtube.com/@Dynamic3_"
+                target="_blank"
+              >
+                <q-tooltip>Dynamic 3</q-tooltip>
+              </q-btn>
+              <!-- 6. YouTube -->
+              <q-btn
+                flat
+                round
+                dense
+                color="red-5"
+                :icon="remYoutubeFill"
+                href="https://www.youtube.com/@RoboPro-pp6go"
+                target="_blank"
+              >
+                <q-tooltip>RoboPro</q-tooltip>
+              </q-btn>
+              <!-- 6. YouTube -->
+              <q-btn
+                flat
+                round
+                dense
+                color="red-5"
+                :icon="remYoutubeFill"
+                href="https://www.youtube.com/@RedesYComunicaciones_UP"
+                target="_blank"
+              >
+                <q-tooltip>RedesYComunicaciones_UP</q-tooltip>
+              </q-btn>
+              <!-- ////////////////////////// -->
             </div>
           </div>
         </div>
@@ -203,6 +301,15 @@
 <script setup lang="ts">
 import TextBlock from 'components/content/TextBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
+import {
+  remGithubFill,
+  // remLinkedinBoxFill, <--- BORRADO PORQUE NO SE USA EN EL TEMPLATE AÚN
+  remMailSendFill,
+  remTelegramFill,
+  remYoutubeFill,
+  // remSchoolFill, <--- NO EXISTE, REEMPLAZADO ABAJO
+  remBuilding2Fill, // Icono de edificio/universidad
+} from 'quasar-extras-svg-icons/remix-icons';
 
 // STACK ROBÓTICA (Solo lo más relevante)
 const stackRobotics = [

@@ -1,7 +1,6 @@
 <template>
   <q-page class="q-pa-lg column items-center">
     <!-- 1. HERO: PROPÓSITO -->
-    <!-- Usamos 'intro-hero' con backdrop-filter para un inicio impactante -->
     <section class="intro-hero self-stretch">
       <div class="hero-content">
         <div class="text-overline text-accent text-weight-bold q-mb-sm">Módulo 1</div>
@@ -10,21 +9,20 @@
         <TextBlock>
           <strong>UpROS Academy</strong> es tu puerta de entrada al desarrollo robótico profesional.
           Diseñamos este recorrido para reducir la curva de aprendizaje mediante una metodología
-          <strong>teórico-práctica</strong>. <br /><br />
-          Desde la instalación del entorno hasta la simulación y control de robots reales, aquí
-          superarás las barreras de Linux y la terminal con acompañamiento paso a paso.
+          <strong>teórico-práctica</strong>. Supera las barreras de Linux y la terminal con
+          acompañamiento paso a paso.
         </TextBlock>
       </div>
     </section>
 
-    <!-- 2. OBJETIVOS (SplitBlock para balancear texto y visual) -->
+    <!-- 2. OBJETIVOS -->
     <div class="section-group self-stretch">
       <SectionTitle>🎯 Objetivos del Módulo</SectionTitle>
       <SplitBlock>
         <template #left>
           <TextBlock>
-            Al finalizar este recorrido introductorio, habrás dominado las competencias clave para
-            iniciar tu carrera en robótica:
+            Al finalizar este recorrido, habrás dominado las competencias clave para iniciar tu
+            carrera:
           </TextBlock>
           <StepsBlock :steps="learningObjectives" />
         </template>
@@ -38,23 +36,21 @@
             4. <strong>Hardware:</strong> Despliega en el mundo real.
           </AlertBlock>
 
-          <!-- Imagen decorativa pequeña para llenar espacio -->
-          <div class="q-mt-md opacity-80">
-            <ImageBlock
+          <!-- Imagen ajustada al estilo -->
+          <div class="row justify-center q-mt-md">
+            <q-img
               src="src/assets/images/jazzy_robot.png"
-              style="max-width: 200px; margin: 0 auto"
-              :zoomable="false"
-              alt="Robot concept"
+              style="width: 180px; opacity: 0.8"
+              alt="Robot Concept"
             />
           </div>
         </template>
       </SplitBlock>
     </div>
 
-    <!-- 3. GLOSARIO VISUAL (Conceptos Clave) -->
+    <!-- 3. GLOSARIO VISUAL -->
     <div class="section-group self-stretch">
       <SectionTitle>Conceptos Fundamentales</SectionTitle>
-
       <SplitBlock>
         <template #left>
           <ImageBlock
@@ -66,17 +62,24 @@
 
         <template #right>
           <TextBlock>
-            Antes de escribir tu primera línea de código, es vital hablar el mismo idioma. La
-            arquitectura de ROS 2 se basa en grafos de comunicación:
+            Antes de escribir código, es vital hablar el mismo idioma. La arquitectura se basa en
+            grafos:
           </TextBlock>
 
-          <div class="q-mt-md">
-            <AlertBlock title="🔑 Diccionario Esencial" type="success">
-              • <strong>Nodo:</strong> Tu programa (ej: driver de cámara).<br />
-              • <strong>Tópico:</strong> Streaming de datos (TV broadcast).<br />
-              • <strong>Servicio:</strong> Cliente/Servidor (Llamada telefónica).<br />
-              • <strong>Paquete:</strong> La carpeta que agrupa tu código.
-            </AlertBlock>
+          <!-- Usamos el estilo trouble-grid para definiciones rápidas -->
+          <div class="trouble-grid q-mt-md">
+            <div class="trouble-item">
+              <div class="trouble-q text-primary">Nodo</div>
+              <div class="trouble-a">Tu programa ejecutable (ej: driver de cámara).</div>
+            </div>
+            <div class="trouble-item">
+              <div class="trouble-q text-primary">Tópico</div>
+              <div class="trouble-a">Streaming de datos continuo (TV broadcast).</div>
+            </div>
+            <div class="trouble-item">
+              <div class="trouble-q text-primary">Servicio</div>
+              <div class="trouble-a">Cliente/Servidor síncrono (Llamada telefónica).</div>
+            </div>
           </div>
         </template>
       </SplitBlock>
@@ -84,12 +87,12 @@
 
     <!-- 4. JUSTIFICACIÓN TECNOLÓGICA -->
     <div class="section-group self-stretch">
-      <SectionTitle>¿Por qué ROS 2 Jazzy (LTS)?</SectionTitle>
+      <SectionTitle>¿Por qué ROS 2 Jazzy?</SectionTitle>
       <SplitBlock>
         <template #left>
           <TextBlock>
-            No usamos versiones antiguas. Apostamos por <strong>Jazzy Jalisco</strong>, la versión
-            con soporte a largo plazo (LTS) hasta 2029.
+            Apostamos por <strong>Jazzy Jalisco</strong>, la versión con soporte a largo plazo (LTS)
+            hasta 2029.
           </TextBlock>
           <AlertBlock title="🚫 ¿Por qué no ROS 1?" type="warning">
             • <strong>Fin de vida:</strong> Sin soporte oficial.<br />
@@ -97,50 +100,56 @@
             • <strong>Inseguro:</strong> Sin encriptación nativa.
           </AlertBlock>
         </template>
+
         <template #right>
-          <TextBlock highlighted>
-            <div class="text-h6 text-white q-mb-sm">Ventajas de ROS 2</div>
-            El estándar industrial moderno ofrece:<br /><br />
-            ✅ <strong>DDS (Data Distribution Service):</strong> Comunicación robusta.<br />
-            ✅ <strong>Tiempo Real:</strong> Control determinista.<br />
-            ✅ <strong>Multi-plataforma:</strong> Linux, Windows, macOS.
-          </TextBlock>
+          <!-- Convertido a Tool Card para destacar ventajas -->
+          <div class="tool-card advantages">
+            <div class="tool-header">
+              <q-icon name="verified" size="md" color="white" />
+              <h2>Ventajas Modernas</h2>
+            </div>
+            <ul class="tool-list">
+              <li>✅ <strong>DDS:</strong> Comunicación industrial robusta.</li>
+              <li>✅ <strong>Real-Time:</strong> Control determinista.</li>
+              <li>✅ <strong>Multi-plataforma:</strong> Linux, Windows, macOS.</li>
+              <li>✅ <strong>Seguridad:</strong> SROS2 nativo.</li>
+            </ul>
+          </div>
         </template>
       </SplitBlock>
     </div>
 
-    <!-- 5. RUTA DE APRENDIZAJE (Roadmap Visual Mejorado) -->
+    <!-- 5. RUTA DE APRENDIZAJE (ROADMAP) -->
     <div class="section-group self-stretch">
       <SectionTitle>Tu Ruta de Aprendizaje</SectionTitle>
 
-      <!-- Reemplazamos la imagen estática por bloques visuales interactivos -->
-      <div class="roadmap-container">
-        <div class="roadmap-card" v-for="(step, i) in roadmapSteps" :key="i">
-          <div class="step-badge">{{ i + 1 }}</div>
-          <div class="step-icon">
-            <q-icon :name="step.icon" />
-          </div>
-          <div class="step-info">
-            <h4>{{ step.title }}</h4>
-            <p>{{ step.desc }}</p>
+      <div class="row q-col-gutter-md">
+        <div class="col-12 col-md-3" v-for="(step, i) in roadmapSteps" :key="i">
+          <!-- Tool Card adaptada para pasos -->
+          <div class="tool-card" :style="{ borderTopColor: step.color }">
+            <div class="tool-header">
+              <q-icon :name="step.icon" size="md" />
+              <div class="text-h6 text-weight-bold">Paso {{ i + 1 }}</div>
+            </div>
+            <h3 class="text-subtitle1 text-white q-my-none">{{ step.title }}</h3>
+            <p class="q-mt-sm text-caption text-grey-4">{{ step.desc }}</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 6. VALIDACIÓN INICIAL -->
+    <!-- 6. VALIDACIÓN -->
     <div class="section-group self-stretch">
       <SectionTitle>Validación Inmediata</SectionTitle>
       <SplitBlock>
         <template #left>
           <TextBlock>
-            ¿Listo para empezar? Abre tu terminal y ejecuta este comando. Si ves las versiones, tu
-            sistema base está listo.
+            ¿Listo para empezar? Abre tu terminal y ejecuta este comando para verificar tu sistema
+            base.
           </TextBlock>
           <AlertBlock title="✅ Checklist Previo" type="success">
             • Ubuntu 22.04 / 24.04 instalado.<br />
-            • Terminal abierta (Ctrl+Alt+T).<br />
-            • Ganas de aprender.
+            • Terminal abierta (Ctrl+Alt+T).
           </AlertBlock>
         </template>
         <template #right>
@@ -154,31 +163,30 @@
       </SplitBlock>
     </div>
 
-    <!-- 7. CTA / NAVEGACIÓN -->
+    <!-- 7. CTA & RECURSOS -->
     <div class="section-group self-stretch column items-center q-mt-xl">
-      <div class="row q-gutter-md justify-center">
+      <div class="row q-gutter-md justify-center q-mb-xl">
         <q-btn
           color="primary"
           unelevated
           rounded
           padding="12px 32px"
-          to="/instalacion"
+          to="/modulo-0/01nav-sistema"
           icon="terminal"
-          label="Comenzar Instalación"
+          label="Comenzar Aprendizaje"
           class="text-weight-bold"
         />
         <q-btn flat rounded color="white" icon="arrow_back" label="Volver al Inicio" to="/" />
       </div>
-    </div>
 
-    <!-- 8. RECURSOS DESCARGABLES -->
-    <div class="section-group self-stretch q-mb-xl">
-      <PdfBlock
-        title="Syllabus y Cronograma"
-        description="Descarga el plan de estudios detallado y la guía de referencia rápida."
-        size="2.4 MB"
-        src="src/assets/upros-roadmap.pdf"
-      />
+      <div class="full-width" style="max-width: 800px">
+        <PdfBlock
+          title="Syllabus y Cronograma"
+          description="Descarga el plan de estudios detallado y la guía de referencia rápida."
+          size="2.4 MB"
+          src="src/assets/upros-roadmap.pdf"
+        />
+      </div>
     </div>
   </q-page>
 </template>
@@ -210,31 +218,35 @@ echo "¡Todo listo para ROS 2 Jazzy!"
 `.trim();
 
 const roadmapSteps = [
-  { title: 'Fundamentos', desc: 'Teoría base y conceptos.', icon: 'school' },
-  { title: 'Instalación', desc: 'Setup del entorno Linux.', icon: 'settings_suggest' },
-  { title: 'Código', desc: 'Python, Nodos y Tópicos.', icon: 'code' },
-  { title: 'Proyecto', desc: 'Simulación y Robot Real.', icon: 'smart_toy' },
+  { title: 'Fundamentos', desc: 'Teoría base y conceptos.', icon: 'school', color: '#4ade80' }, // Green
+  {
+    title: 'Instalación',
+    desc: 'Setup del entorno Linux.',
+    icon: 'settings_suggest',
+    color: '#38bdf8',
+  }, // Blue
+  { title: 'Código', desc: 'Python, Nodos y Tópicos.', icon: 'code', color: '#a78bfa' }, // Purple
+  { title: 'Proyecto', desc: 'Simulación y Robot Real.', icon: 'smart_toy', color: '#f97316' }, // Orange
 ];
 </script>
 
 <style scoped>
-/* GENERAL LAYOUT */
+/* --- ESTILOS MAESTROS --- */
 .intro-hero,
 .section-group {
   width: 100%;
-  max-width: 1000px; /* Un poco más estrecho para facilitar lectura */
+  max-width: 1100px; /* Estandarizado a 1100px */
   margin: 0 auto 3.5rem auto;
 }
 
-/* HERO SECTION */
 .intro-hero {
   padding: 3rem 2rem;
   background:
-    radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 40%),
-    rgba(15, 23, 42, 0.6);
+    radial-gradient(circle at top left, rgba(236, 72, 153, 0.15), transparent 60%),
+    rgba(15, 23, 42, 0.8);
   backdrop-filter: blur(20px);
   border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   text-align: center;
 }
 
@@ -246,80 +258,82 @@ const roadmapSteps = [
   color: #f8fafc;
 }
 
-/* ROADMAP CARDS (Mejorado) */
-.roadmap-container {
+/* CARDS ESTÁNDAR */
+.tool-card {
+  height: 100%;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease;
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
+  display: flex;
+  flex-direction: column;
+}
+
+.tool-card:hover {
+  transform: translateY(-5px);
+}
+
+.tool-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tool-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.tool-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 16px;
+  color: #cbd5e1;
+}
+
+.tool-list li {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+/* VARIANTE SPECIFICA PARA ESTA PAGINA */
+.tool-card.advantages {
+  border-top: 4px solid #4ade80; /* Green highlight */
+}
+
+/* GRID DE DEFINICIONES (Trouble-grid reutilizado) */
+.trouble-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  gap: 16px;
 }
 
-.roadmap-card {
+.trouble-item {
   background: rgba(30, 41, 59, 0.4);
   border: 1px solid rgba(148, 163, 184, 0.1);
-  border-radius: 16px;
-  padding: 24px;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s ease;
-}
-
-.roadmap-card:hover {
-  transform: translateY(-4px);
-  background: rgba(30, 41, 59, 0.6);
-  border-color: rgba(56, 189, 248, 0.3);
-}
-
-.step-badge {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  width: 60px;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  font-weight: 900;
-  color: rgba(255, 255, 255, 0.1);
-  pointer-events: none;
-}
-
-.step-icon {
-  width: 48px;
-  height: 48px;
-  background: rgba(56, 189, 248, 0.1);
-  color: #38bdf8;
   border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  margin-bottom: 16px;
+  padding: 16px;
 }
 
-.step-info h4 {
-  color: #e2e8f0;
-  font-size: 1.1rem;
-  margin: 0 0 4px 0;
+.trouble-q {
   font-weight: 700;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
 }
 
-.step-info p {
+.trouble-a {
   color: #94a3b8;
-  font-size: 0.9rem;
-  margin: 0;
+  font-size: 0.85rem;
   line-height: 1.4;
 }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.2rem;
-  }
-  .intro-hero {
-    padding: 2rem 1rem;
   }
 }
 </style>
