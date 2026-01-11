@@ -1,24 +1,5 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-amber-4 text-weight-bold q-mb-sm">
-          MÓDULO 8.4: EL GRAN CIERRE
-        </div>
-        <h1 class="hero-title">
-          Proyecto Final: <span class="text-white">Operación Warehouse</span>
-        </h1>
-        <TextBlock>
-          Felicidades por llegar hasta aquí. Has aprendido las herramientas individuales. Ahora,
-          tienes que usarlas todas juntas.
-          <br /><br />
-          Tu misión, si decides aceptarla, es diseñar, construir y programar un robot móvil autónomo
-          capaz de operar en un almacén logístico simulado. No hay guías paso a paso. Eres tú contra
-          el código.
-        </TextBlock>
-      </div>
-    </section>
-
+  <LessonContainer>
     <div class="section-group self-stretch">
       <SectionTitle>1. El Requerimiento del Cliente</SectionTitle>
       <SplitBlock>
@@ -263,10 +244,11 @@
         </div>
       </div>
     </div>
-  </q-page>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
@@ -276,28 +258,10 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 
 <style scoped>
 /* GENERAL */
-.intro-hero,
 .section-group {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto 3.5rem auto;
-}
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(251, 191, 36, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  text-align: center;
-  margin-bottom: 3rem;
-}
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  color: #f8fafc;
 }
 
 /* TECH CARDS */
@@ -330,6 +294,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 .tool-card {
   border-radius: 12px;
   height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.05); /* Added consistency */
 }
 .h-full {
   height: 100%;
@@ -383,6 +348,12 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 @keyframes blink {
   50% {
     opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.2rem;
   }
 }
 </style>

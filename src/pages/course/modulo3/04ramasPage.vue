@@ -1,497 +1,1186 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <!-- 1. HERO SECTION -->
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-cyan-4 text-weight-bold q-mb-sm">
-          MÓDULO 3.4: EL MULTIVERSO
-        </div>
+  <LessonContainer>
+    <!-- INTRO -->
+    <TextBlock>
+      Las ramas (branches) son la característica más poderosa de Git. Te permiten crear realidades
+      alternativas donde puedes experimentar sin miedo a romper el código principal. En robótica,
+      donde un bug puede hacer que el robot se estrelle, las ramas son esenciales.
+      <br /><br />
+      Dominar las ramas te convierte de principiante a profesional.
+    </TextBlock>
 
-        <h1 class="hero-title">Ramas <span class="text-white">(Branches)</span></h1>
+    <AlertBlock type="info" title="¿Por qué usar branches?">
+      <strong>Experimentación segura:</strong> Prueba nuevos algoritmos sin romper main
+      <br />
+      <strong>Trabajo paralelo:</strong> Múltiples features en desarrollo simultáneo
+      <br />
+      <strong>Code review:</strong> Revisar código antes de fusionar a main
+      <br />
+      <strong>Rollback fácil:</strong> Si algo falla, simplemente borra la rama
+    </AlertBlock>
 
-        <TextBlock>
-          Hasta ahora has trabajado en una línea recta. Pero el desarrollo real no es lineal. Las
-          <strong>Ramas</strong> son realidades paralelas. Puedes tener una realidad donde tu robot
-          usa cámaras, y otra donde usa láseres. Trabaja sin miedo: lo que pasa en una rama, se
-          queda en la rama... hasta que tú decidas lo contrario.
-        </TextBlock>
-      </div>
-    </section>
-
-    <!-- 2. LA REGLA DE ORO: MAIN ES SAGRADO -->
-    <div class="section-group self-stretch">
-      <SectionTitle>1. La Regla de Oro</SectionTitle>
-
-      <div class="row q-col-gutter-lg items-center">
-        <div class="col-12 col-md-6">
-          <TextBlock>
-            Tu rama principal (llamada <code>main</code> o antiguamente <code>master</code>) es
-            sagrada. <br /><br />
-            <strong>El código en Main siempre debe compilar y funcionar.</strong>
-            Nunca experimentes directamente en Main. Si rompes Main, detienes el trabajo de todo el
-            equipo.
-          </TextBlock>
-          <div class="q-mt-md">
-            <AlertBlock type="warning" title="Zona de No-Combate">
-              Para cualquier cambio (arreglar un bug, añadir un sensor), crea SIEMPRE una rama
-              nueva.
-            </AlertBlock>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6">
-          <!-- VISUAL TRAFFIC LIGHT -->
-          <div
-            class="tool-card safety-card q-pa-lg row items-center justify-around bg-slate-900 shadow-2"
-          >
-            <!-- MAIN -->
-            <div class="column items-center">
-              <div class="traffic-light bg-green-9 shadow-green q-mb-md animate-pulse-slow">
-                <q-icon name="check" color="white" size="2.5rem" />
-              </div>
-              <div class="text-h6 text-green-4 text-weight-bold">main</div>
-              <div class="text-caption text-grey-5 text-center q-mt-xs font-mono">
-                Estable.<br />Probado.<br />Sagrado.
-              </div>
-            </div>
-
-            <div class="vertical-separator bg-grey-8" style="width: 1px; height: 120px"></div>
-
-            <!-- FEATURE -->
-            <div class="column items-center">
-              <div class="traffic-light bg-yellow-9 shadow-yellow q-mb-md">
-                <q-icon name="construction" color="black" size="2.5rem" />
-              </div>
-              <div class="text-h6 text-yellow-4 text-weight-bold">feature/*</div>
-              <div class="text-caption text-grey-5 text-center q-mt-xs font-mono">
-                Caos.<br />Experimentos.<br />Riesgo.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. EL CICLO DE VIDA DE UNA RAMA -->
-    <div class="section-group self-stretch">
-      <SectionTitle>2. El Ciclo de Vida: Crear, Cambiar, Fusionar</SectionTitle>
+    <!-- REGLA DE ORO -->
+    <div class="section-group">
+      <SectionTitle>1. La Regla de Oro: Main es Sagrado</SectionTitle>
       <TextBlock>
-        Para trabajar con ramas, usamos comandos modernos (`switch`) que son más claros que el
-        antiguo `checkout`.
+        Tu rama principal (llamada <code>main</code> o antiguamente <code>master</code>) es sagrada.
+        <strong>El código en main siempre debe compilar y funcionar.</strong> Nunca experimentes
+        directamente en main.
       </TextBlock>
 
-      <div class="lifecycle-grid q-mt-lg">
-        <!-- PASO 1: CREAR -->
-        <div class="step-card bg-slate-800 border-cyan">
-          <div class="step-number bg-cyan-9 shadow-1">1</div>
-          <div class="text-subtitle1 text-cyan-4 text-weight-bold">Crear y Saltar</div>
-          <p class="text-caption text-grey-4 q-my-sm">
-            Creas el universo paralelo y te teletransportas a él.
-          </p>
-          <div class="cmd-box border-cyan-dim">git switch -c feature/nuevo-sensor</div>
+      <div class="golden-rule q-mt-md">
+        <div class="rule-card main-card">
+          <div class="rule-icon">
+            <q-icon name="verified" size="4rem" color="green-4" />
+          </div>
+          <div class="rule-title">main</div>
+          <div class="rule-desc">
+            <div class="rule-item">✅ Código estable y probado</div>
+            <div class="rule-item">✅ Siempre compila</div>
+            <div class="rule-item">✅ Pasa todos los tests</div>
+            <div class="rule-item">✅ Listo para producción</div>
+          </div>
+          <div class="rule-command">
+            <code>git checkout main</code>
+          </div>
         </div>
 
-        <!-- PASO 2: TRABAJAR -->
-        <div class="step-card bg-slate-800 border-yellow">
-          <div class="step-number bg-yellow-9 shadow-1">2</div>
-          <div class="text-subtitle1 text-yellow-4 text-weight-bold">Hacer Cambios</div>
-          <p class="text-caption text-grey-4 q-my-sm">
-            Modificas archivos y haces commits normales. Main no se entera.
-          </p>
-          <div class="cmd-box border-yellow-dim">git commit -m "Añadir driver"</div>
+        <div class="rule-arrow">
+          <q-icon name="block" size="3rem" color="red-4" />
+          <div class="arrow-label">NUNCA edites directamente</div>
         </div>
 
-        <!-- PASO 3: VOLVER -->
-        <div class="step-card bg-slate-800 border-green">
-          <div class="step-number bg-green-9 shadow-1">3</div>
-          <div class="text-subtitle1 text-green-4 text-weight-bold">Volver a Casa</div>
-          <p class="text-caption text-grey-4 q-my-sm">Regresas a la realidad original (Main).</p>
-          <div class="cmd-box border-green-dim">git switch main</div>
-        </div>
-
-        <!-- PASO 4: FUSIONAR -->
-        <div class="step-card bg-slate-800 border-purple">
-          <div class="step-number bg-purple-9 shadow-1">4</div>
-          <div class="text-subtitle1 text-purple-4 text-weight-bold">Fusionar (Merge)</div>
-          <p class="text-caption text-grey-4 q-my-sm">Traes los cambios de la rama a Main.</p>
-          <div class="cmd-box border-purple-dim">git merge feature/nuevo-sensor</div>
+        <div class="rule-card feature-card">
+          <div class="rule-icon">
+            <q-icon name="science" size="4rem" color="yellow-6" />
+          </div>
+          <div class="rule-title">feature/*</div>
+          <div class="rule-desc">
+            <div class="rule-item">🔬 Experimentación libre</div>
+            <div class="rule-item">🔬 Puede estar roto</div>
+            <div class="rule-item">🔬 Work in progress</div>
+            <div class="rule-item">🔬 Zona de pruebas</div>
+          </div>
+          <div class="rule-command">
+            <code>git checkout -b feature/nueva</code>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- 4. VISUALIZACIÓN DE MERGE -->
-    <div class="section-group self-stretch q-mt-xl">
-      <SectionTitle>3. Visualizando la Fusión (Merge)</SectionTitle>
-      <SplitBlock>
-        <template #left>
-          <TextBlock>
-            Cuando haces <strong>Merge</strong>, Git toma la historia de tu rama experimental y la
-            inyecta en <code>main</code>. <br /><br />
-            Si todo sale bien (Fast-forward), es como si nunca te hubieras desviado. Si hay cambios
-            complejos, Git crea un "Merge Commit" que une los dos caminos.
-          </TextBlock>
-        </template>
+    <!-- CICLO DE VIDA -->
+    <div class="section-group">
+      <SectionTitle>2. Ciclo de Vida de una Rama</SectionTitle>
+      <TextBlock>
+        El flujo típico de trabajo con ramas sigue 4 pasos. Usamos comandos modernos
+        (<code>switch</code>) que son más claros que el antiguo <code>checkout</code>.
+      </TextBlock>
 
-        <template #right>
-          <div class="tool-card visual-merge q-pa-lg bg-slate-900 flex flex-center">
-            <svg viewBox="0 0 400 160" class="merge-svg">
-              <!-- MAIN LINE -->
-              <line
-                x1="20"
-                y1="130"
-                x2="380"
-                y2="130"
-                stroke="#4ade80"
-                stroke-width="4"
-                stroke-linecap="round"
-              />
-              <text
-                x="20"
-                y="155"
-                fill="#4ade80"
-                font-family="monospace"
-                font-size="12"
-                font-weight="bold"
-              >
-                main
-              </text>
+      <div class="lifecycle-visual q-mt-md">
+        <div class="lifecycle-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <div class="step-title">Crear y Cambiar</div>
+            <div class="step-desc">Creas el universo paralelo y te teletransportas a él</div>
+            <CodeBlock
+              lang="bash"
+              content="# Crear y cambiar en un comando
+git switch -c feature/add-camera
 
-              <!-- FEATURE LINE -->
-              <path
-                d="M 80 130 Q 120 130 120 60 L 280 60 Q 320 60 320 120"
-                stroke="#22d3ee"
-                stroke-width="4"
-                fill="none"
-                stroke-dasharray="8,4"
-              />
-              <text
-                x="140"
-                y="50"
-                fill="#22d3ee"
-                font-family="monospace"
-                font-size="12"
-                font-weight="bold"
-              >
-                feature/sensor
-              </text>
+# Equivalente antiguo
+git checkout -b feature/add-camera
 
-              <!-- COMMITS MAIN -->
-              <circle cx="50" cy="130" r="7" fill="#4ade80" stroke="#0f172a" stroke-width="2" />
-              <circle cx="80" cy="130" r="7" fill="#4ade80" stroke="#0f172a" stroke-width="2" />
-              <!-- Divergence -->
-
-              <!-- COMMITS FEATURE -->
-              <circle cx="160" cy="60" r="7" fill="#22d3ee" stroke="#0f172a" stroke-width="2" />
-              <circle cx="240" cy="60" r="7" fill="#22d3ee" stroke="#0f172a" stroke-width="2" />
-
-              <!-- MERGE POINT -->
-              <circle cx="320" cy="130" r="12" fill="#a855f7" stroke="white" stroke-width="2" />
-              <text
-                x="305"
-                y="105"
-                fill="#a855f7"
-                font-family="monospace"
-                font-size="12"
-                font-weight="bold"
-              >
-                MERGE
-              </text>
-            </svg>
+# Ver en qué rama estás
+git branch"
+              :copyable="true"
+            />
           </div>
-        </template>
-      </SplitBlock>
+        </div>
+
+        <div class="lifecycle-arrow">
+          <q-icon name="arrow_downward" size="2rem" color="orange-4" />
+        </div>
+
+        <div class="lifecycle-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <div class="step-title">Hacer Cambios</div>
+            <div class="step-desc">
+              Modificas archivos y haces commits normales. Main no se entera
+            </div>
+            <CodeBlock
+              lang="bash"
+              content="# Editar archivos...
+git add src/camera_driver.py
+git commit -m 'feat: add camera driver'
+
+# Más commits...
+git commit -m 'test: add camera tests'
+git commit -m 'docs: update README'"
+              :copyable="true"
+            />
+          </div>
+        </div>
+
+        <div class="lifecycle-arrow">
+          <q-icon name="arrow_downward" size="2rem" color="orange-4" />
+        </div>
+
+        <div class="lifecycle-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <div class="step-title">Volver a Main</div>
+            <div class="step-desc">Regresas a la realidad original</div>
+            <CodeBlock
+              lang="bash"
+              content="# Cambiar a main
+git switch main
+
+# Equivalente antiguo
+git checkout main
+
+# Traer últimos cambios del equipo
+git pull"
+              :copyable="true"
+            />
+          </div>
+        </div>
+
+        <div class="lifecycle-arrow">
+          <q-icon name="arrow_downward" size="2rem" color="orange-4" />
+        </div>
+
+        <div class="lifecycle-step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <div class="step-title">Fusionar (Merge)</div>
+            <div class="step-desc">Traes los cambios de la rama a main</div>
+            <CodeBlock
+              lang="bash"
+              content="# Estando en main, fusionar feature
+git merge feature/add-camera
+
+# Si todo está bien, eliminar rama
+git branch -d feature/add-camera"
+              :copyable="true"
+            />
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- 5. CONFLICTOS (EL VILLANO) -->
-    <div class="section-group self-stretch q-mt-xl">
-      <SectionTitle>4. Pesadilla: Conflictos de Fusión</SectionTitle>
-      <AlertBlock type="danger" title="Cuando dos personas tocan la misma línea">
+    <!-- COMANDOS ESENCIALES -->
+    <div class="section-group">
+      <SectionTitle>3. Comandos Esenciales de Branches</SectionTitle>
+
+      <div class="commands-grid">
+        <div class="command-card">
+          <div class="command-header">
+            <q-icon name="add_circle" color="green-4" />
+            <span>Crear Rama</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Crear sin cambiar
+git branch feature/nueva
+
+# Crear y cambiar (recomendado)
+git switch -c feature/nueva
+
+# Desde commit específico
+git switch -c hotfix a1b2c3d"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="command-card">
+          <div class="command-header">
+            <q-icon name="swap_horiz" color="blue-4" />
+            <span>Cambiar de Rama</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Cambiar a rama existente
+git switch feature/nueva
+
+# Volver a main
+git switch main
+
+# Cambiar a rama remota
+git switch -c local origin/remote-branch"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="command-card">
+          <div class="command-header">
+            <q-icon name="list" color="purple-4" />
+            <span>Listar Ramas</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Ramas locales
+git branch
+
+# Todas las ramas (locales + remotas)
+git branch -a
+
+# Ramas con último commit
+git branch -v"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="command-card">
+          <div class="command-header">
+            <q-icon name="delete" color="red-4" />
+            <span>Eliminar Rama</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Eliminar rama fusionada
+git branch -d feature/vieja
+
+# Forzar eliminación (no fusionada)
+git branch -D feature/experimental
+
+# Eliminar rama remota
+git push origin --delete feature/vieja"
+            :copyable="true"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- MERGE VISUAL -->
+    <div class="section-group">
+      <SectionTitle>4. Visualizando el Merge</SectionTitle>
+      <TextBlock>
+        Cuando haces <strong>merge</strong>, Git toma la historia de tu rama experimental y la
+        inyecta en main. Hay dos tipos de merge: Fast-Forward y Merge Commit.
+      </TextBlock>
+
+      <div class="merge-types q-mt-md">
+        <div class="merge-type-card">
+          <div class="merge-type-header">
+            <q-icon name="fast_forward" color="green-4" size="2rem" />
+            <span>Fast-Forward Merge</span>
+          </div>
+          <div class="merge-type-desc">
+            Main no ha cambiado desde que creaste la rama. Git simplemente mueve el puntero de main
+            hacia adelante.
+          </div>
+
+          <div class="merge-visual">
+            <div class="visual-label">Antes del merge</div>
+            <div class="commit-chain">
+              <div class="commit-dot main">A</div>
+              <div class="commit-dot main">B</div>
+              <div class="commit-dot main-pointer">main</div>
+              <div class="commit-dot feature">C</div>
+              <div class="commit-dot feature-pointer">feature</div>
+            </div>
+
+            <div class="visual-arrow">
+              <q-icon name="arrow_downward" size="2rem" />
+              <code>git merge feature</code>
+            </div>
+
+            <div class="visual-label">Después del merge</div>
+            <div class="commit-chain">
+              <div class="commit-dot">A</div>
+              <div class="commit-dot">B</div>
+              <div class="commit-dot">C</div>
+              <div class="commit-dot main-pointer">main, feature</div>
+            </div>
+          </div>
+
+          <div class="merge-note success">
+            ✅ Historial lineal y limpio. No crea commit adicional.
+          </div>
+        </div>
+
+        <div class="merge-type-card">
+          <div class="merge-type-header">
+            <q-icon name="merge_type" color="purple-4" size="2rem" />
+            <span>Merge Commit</span>
+          </div>
+          <div class="merge-type-desc">
+            Main ha cambiado mientras trabajabas en la rama. Git crea un commit especial que une
+            ambas historias.
+          </div>
+
+          <div class="merge-visual">
+            <div class="visual-label">Antes del merge</div>
+            <div class="branch-diagram">
+              <div class="branch-line main-line">
+                <div class="commit-dot">A</div>
+                <div class="commit-dot">B</div>
+                <div class="commit-dot">D</div>
+                <div class="commit-dot main-pointer">main</div>
+              </div>
+              <div class="branch-line feature-line">
+                <div class="commit-dot">C</div>
+                <div class="commit-dot feature-pointer">feature</div>
+              </div>
+            </div>
+
+            <div class="visual-arrow">
+              <q-icon name="arrow_downward" size="2rem" />
+              <code>git merge feature</code>
+            </div>
+
+            <div class="visual-label">Después del merge</div>
+            <div class="branch-diagram merged">
+              <div class="commit-dot">A</div>
+              <div class="commit-dot">B</div>
+              <div class="commit-dot">D</div>
+              <div class="commit-dot">C</div>
+              <div class="commit-dot merge-commit">M</div>
+              <div class="commit-dot main-pointer">main</div>
+            </div>
+          </div>
+
+          <div class="merge-note info">ℹ️ Preserva la historia completa. Crea commit de merge.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONFLICTOS -->
+    <div class="section-group">
+      <SectionTitle>5. Conflictos de Merge: El Villano</SectionTitle>
+      <TextBlock>
         Si tú cambias la línea 10 de un archivo en tu rama, y otro compañero cambia la MISMA línea
-        10 en Main... Git entra en pánico. No sabe a quién creerle y te pide ayuda.
+        10 en main... Git entra en pánico. No sabe a quién creerle y te pide ayuda.
+      </TextBlock>
+
+      <div class="conflict-scenario q-mt-md">
+        <div class="scenario-header">
+          <q-icon name="warning" color="red-4" size="2rem" />
+          <span>Escenario de Conflicto</span>
+        </div>
+
+        <div class="scenario-visual">
+          <div class="scenario-branch">
+            <div class="branch-label main">main</div>
+            <div class="code-snippet">
+              <div class="line-number">10</div>
+              <div class="code-line">max_speed = 1.5</div>
+            </div>
+          </div>
+
+          <div class="conflict-icon">
+            <q-icon name="close" size="3rem" color="red-4" />
+          </div>
+
+          <div class="scenario-branch">
+            <div class="branch-label feature">feature/speed</div>
+            <div class="code-snippet">
+              <div class="line-number">10</div>
+              <div class="code-line">max_speed = 2.0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="conflict-message">
+          Git no sabe cuál valor es el correcto. Necesita que TÚ decidas.
+        </div>
+      </div>
+
+      <div class="q-mt-lg">
+        <SectionTitle>Cómo Resolver Conflictos</SectionTitle>
+        <div class="resolution-steps">
+          <div class="resolution-step">
+            <div class="resolution-number">1</div>
+            <div class="resolution-content">
+              <div class="resolution-title">Git marca el conflicto</div>
+              <div class="conflict-file">
+                <div class="conflict-header">
+                  <q-icon name="error" color="red-4" />
+                  <span>motor_driver.py</span>
+                </div>
+                <div class="conflict-code">
+                  <div class="conflict-marker head">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD (main)</div>
+                  <div class="conflict-content main">max_speed = 1.5</div>
+                  <div class="conflict-marker separator">=======</div>
+                  <div class="conflict-content feature">max_speed = 2.0</div>
+                  <div class="conflict-marker feature">
+                    &gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/speed
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="resolution-step">
+            <div class="resolution-number">2</div>
+            <div class="resolution-content">
+              <div class="resolution-title">Edita el archivo manualmente</div>
+              <div class="resolution-desc">
+                Elimina los marcadores (&lt;&lt;&lt;, ===, &gt;&gt;&gt;) y deja el código correcto:
+              </div>
+              <CodeBlock
+                lang="python"
+                content="# Opción 1: Quedarte con main
+max_speed = 1.5
+
+# Opción 2: Quedarte con feature
+max_speed = 2.0
+
+# Opción 3: Combinar (lo más común)
+max_speed = 2.0  # Increased for better performance"
+                :copyable="true"
+              />
+            </div>
+          </div>
+
+          <div class="resolution-step">
+            <div class="resolution-number">3</div>
+            <div class="resolution-content">
+              <div class="resolution-title">Marcar como resuelto</div>
+              <CodeBlock
+                lang="bash"
+                content="# Agregar archivo resuelto
+git add motor_driver.py
+
+# Completar el merge
+git commit -m 'Merge feature/speed: resolved max_speed conflict'
+
+# Ver estado
+git status"
+                :copyable="true"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-mt-md">
+        <AlertBlock type="warning" title="Prevenir Conflictos">
+          <strong>Comunícate con tu equipo:</strong> Evita que dos personas trabajen en el mismo
+          archivo
+          <br />
+          <strong>Pull frecuentemente:</strong> Trae cambios de main a tu rama regularmente
+          <br />
+          <strong>Commits pequeños:</strong> Más fácil de resolver que cambios masivos
+        </AlertBlock>
+      </div>
+    </div>
+
+    <!-- ESTRATEGIAS -->
+    <div class="section-group">
+      <SectionTitle>6. Estrategias de Branching</SectionTitle>
+      <TextBlock>
+        Diferentes proyectos usan diferentes estrategias de branches. Aquí están las más comunes en
+        robótica.
+      </TextBlock>
+
+      <div class="strategies-grid q-mt-md">
+        <div class="strategy-card">
+          <div class="strategy-header">
+            <q-icon name="account_tree" color="green-4" />
+            <span>Git Flow</span>
+          </div>
+          <div class="strategy-desc">Estrategia completa con múltiples ramas permanentes</div>
+          <div class="strategy-branches">
+            <div class="branch-item"><code>main</code> - Producción</div>
+            <div class="branch-item"><code>develop</code> - Desarrollo</div>
+            <div class="branch-item"><code>feature/*</code> - Nuevas features</div>
+            <div class="branch-item"><code>hotfix/*</code> - Bugs urgentes</div>
+          </div>
+          <div class="strategy-use">
+            <strong>Uso:</strong> Proyectos grandes con releases programados
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="strategy-header">
+            <q-icon name="linear_scale" color="blue-4" />
+            <span>GitHub Flow</span>
+          </div>
+          <div class="strategy-desc">Estrategia simple: solo main + feature branches</div>
+          <div class="strategy-branches">
+            <div class="branch-item"><code>main</code> - Siempre deployable</div>
+            <div class="branch-item"><code>feature/*</code> - Todo lo demás</div>
+          </div>
+          <div class="strategy-use"><strong>Uso:</strong> Proyectos pequeños, deploy continuo</div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="strategy-header">
+            <q-icon name="science" color="purple-4" />
+            <span>Trunk-Based</span>
+          </div>
+          <div class="strategy-desc">Todos trabajan en main, branches de vida muy corta</div>
+          <div class="strategy-branches">
+            <div class="branch-item"><code>main</code> - Todo el trabajo</div>
+            <div class="branch-item"><code>feature/*</code> - Máximo 1-2 días</div>
+          </div>
+          <div class="strategy-use">
+            <strong>Uso:</strong> Equipos experimentados, CI/CD robusto
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="section-group">
+      <SectionTitle>📹 Video Complementario</SectionTitle>
+      <div class="video-container">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="Git Branches and Merging"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+            "
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <q-icon name="info" color="blue-4" size="sm" />
+          Reemplaza dQw4w9WgXcQ con tu video de YouTube
+        </div>
+      </div>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="section-group q-mb-xl">
+      <SectionTitle>📝 Resumen</SectionTitle>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <code>git switch -c</code>
+          <span>Crear y cambiar a rama</span>
+        </div>
+        <div class="summary-item">
+          <code>git branch</code>
+          <span>Listar ramas</span>
+        </div>
+        <div class="summary-item">
+          <code>git merge</code>
+          <span>Fusionar rama a main</span>
+        </div>
+        <div class="summary-item">
+          <code>git branch -d</code>
+          <span>Eliminar rama</span>
+        </div>
+        <div class="summary-item">
+          <code>git pull</code>
+          <span>Actualizar antes de merge</span>
+        </div>
+        <div class="summary-item">
+          <code>git add + commit</code>
+          <span>Resolver conflictos</span>
+        </div>
+      </div>
+
+      <AlertBlock type="success" title="Checklist de Branches" class="q-mt-lg">
+        ✅ NUNCA edites directamente en main
+        <br />
+        ✅ Crea una rama para cada feature/bugfix
+        <br />
+        ✅ Usa nombres descriptivos (<code>feature/add-camera</code>, no
+        <code>test123</code>)
+        <br />
+        ✅ Haz <code>git pull</code> en main antes de merge
+        <br />
+        ✅ Elimina ramas después de fusionar
+        <br />
+        ✅ Resuelve conflictos con calma (lee el código, no adivines)
       </AlertBlock>
-
-      <div class="tool-card conflict-card q-mt-lg bg-black q-pa-none overflow-hidden shadow-2">
-        <div
-          class="bg-dark-soft q-px-md q-py-xs border-bottom-dark text-caption text-grey-5 font-mono flex items-center"
-        >
-          <q-icon name="warning" color="red" size="xs" class="q-mr-sm" />
-          CONFLICTO: robot_config.py
-        </div>
-
-        <div class="conflict-viewer font-mono text-sm q-pa-md">
-          <div class="text-grey-4">class Robot:</div>
-
-          <!-- HEAD (MAIN) -->
-          <div class="conflict-block head">
-            <div class="marker bg-green-9 text-white">
-              &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD (Lo que hay en Main)
-            </div>
-            <div class="content text-green-2 q-pl-lg">velocidad = 10</div>
-          </div>
-
-          <!-- SEPARATOR -->
-          <div class="marker bg-grey-8 text-white">=======</div>
-
-          <!-- INCOMING (RAMA) -->
-          <div class="conflict-block incoming">
-            <div class="content text-cyan-2 q-pl-lg">velocidad = 20</div>
-            <div class="marker bg-cyan-9 text-white">
-              &gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/sensor (Lo que tú traes)
-            </div>
-          </div>
-
-          <div class="text-grey-4">def iniciar(self):</div>
-        </div>
-
-        <div class="bg-dark-soft q-pa-sm text-center border-top-dashed">
-          <p class="text-grey-5 text-caption q-mb-none">
-            💡 Solución: Borra las marcas (<code>&lt;&lt;&lt;</code>, <code>===</code>,
-            <code>&gt;&gt;&gt;</code>) y deja solo el código correcto.
-          </p>
-        </div>
-      </div>
     </div>
-
-    <!-- 6. LIMPIEZA -->
-    <div class="section-group self-stretch q-mb-xl q-mt-xl">
-      <div class="bg-slate-800 q-pa-lg rounded-borders border-dashed text-center shadow-1">
-        <q-icon name="cleaning_services" size="md" color="grey-5" class="q-mb-sm" />
-        <div class="text-h6 text-white">Limpia tu Laboratorio</div>
-        <p class="text-grey-4 q-mb-md">
-          Una vez que fusionas una rama, esa rama ya cumplió su propósito. No la acumules.
-        </p>
-        <div
-          class="bg-black q-pa-md rounded-borders font-mono text-body2 text-red-4 inline-block border-light"
-        >
-          git branch -d feature/nuevo-sensor
-        </div>
-      </div>
-    </div>
-  </q-page>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
+import CodeBlock from 'components/content/CodeBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
-import SplitBlock from 'components/content/SplitBlock.vue';
 </script>
 
 <style scoped>
-/* --- ESTILOS MAESTROS --- */
-.intro-hero,
 .section-group {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 3.5rem auto;
+  margin-bottom: 3.5rem;
 }
 
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(34, 211, 238, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+/* GOLDEN RULE */
+.golden-rule {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.rule-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 3px solid;
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
   text-align: center;
 }
 
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.1;
-  color: #f8fafc;
+.rule-card.main-card {
+  border-color: #22c55e;
 }
 
-/* TOOL CARDS */
-.tool-card {
-  height: 100%;
-  border-radius: 16px;
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+.rule-card.feature-card {
+  border-color: #fbbf24;
 }
 
-/* SAFETY CARD */
-.safety-card {
-  border-top: 4px solid #4ade80;
-}
-.traffic-light {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.shadow-green {
-  box-shadow: 0 0 30px rgba(74, 222, 128, 0.4);
-}
-.shadow-yellow {
-  box-shadow: 0 0 30px rgba(250, 204, 21, 0.4);
-}
-.animate-pulse-slow {
-  animation: pulse 3s infinite;
-}
-@keyframes pulse {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-  100% {
-    opacity: 1;
-  }
+.rule-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Fira Code', monospace;
+  color: #f1f5f9;
 }
 
-/* LIFECYCLE GRID */
-.lifecycle-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-}
-.step-card {
-  padding: 24px 20px;
-  border-radius: 12px;
-  position: relative;
-  border-top: 4px solid;
+.rule-desc {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  transition: transform 0.2s;
+  gap: 0.5rem;
+  width: 100%;
 }
-.step-card:hover {
-  transform: translateY(-5px);
+
+.rule-item {
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+.rule-command {
+  padding: 0.75rem 1.5rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  font-family: 'Fira Code', monospace;
+  color: #60a5fa;
+  font-weight: 700;
+}
+
+.rule-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.arrow-label {
+  color: #fca5a5;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* LIFECYCLE VISUAL */
+.lifecycle-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lifecycle-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: start;
 }
 
 .step-number {
-  position: absolute;
-  top: -15px;
-  right: 15px;
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #f97316, #ea580c);
   border-radius: 50%;
-  color: white;
-  font-weight: bold;
-  font-size: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #1e293b;
-}
-.border-cyan {
-  border-top-color: #22d3ee;
-}
-.border-yellow {
-  border-top-color: #facc15;
-}
-.border-green {
-  border-top-color: #4ade80;
-}
-.border-purple {
-  border-top-color: #a855f7;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
 }
 
-.cmd-box {
-  background: #0f172a;
-  color: #e2e8f0;
-  padding: 8px;
+.step-content {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.step-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 0.5rem;
+}
+
+.step-desc {
+  color: #94a3b8;
+  margin-bottom: 1rem;
+}
+
+.lifecycle-arrow {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0;
+}
+
+/* COMMANDS GRID */
+.commands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.command-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.command-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1.05rem;
+}
+
+/* MERGE TYPES */
+.merge-types {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.merge-type-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.merge-type-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.merge-type-desc {
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+.merge-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.visual-label {
+  font-weight: 700;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.commit-chain {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.commit-dot {
+  width: 45px;
+  height: 45px;
+  background: #3b82f6;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.commit-dot.main {
+  background: #22c55e;
+}
+
+.commit-dot.feature {
+  background: #fbbf24;
+}
+
+.commit-dot.main-pointer {
+  background: #22c55e;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+  font-size: 0.75rem;
+}
+
+.commit-dot.feature-pointer {
+  background: #fbbf24;
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+  font-size: 0.75rem;
+}
+
+.commit-dot.merge-commit {
+  background: #a855f7;
+}
+
+.visual-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fbbf24;
+  font-family: 'Fira Code', monospace;
+}
+
+.merge-note {
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.merge-note.success {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid #22c55e;
+  color: #86efac;
+}
+
+.merge-note.info {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid #3b82f6;
+  color: #93c5fd;
+}
+
+/* CONFLICT SCENARIO */
+.conflict-scenario {
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid #ef4444;
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.scenario-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fca5a5;
+  margin-bottom: 1.5rem;
+}
+
+.scenario-visual {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.scenario-branch {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.branch-label {
+  font-family: 'Fira Code', monospace;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.branch-label.main {
+  background: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+}
+
+.branch-label.feature {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fde047;
+}
+
+.code-snippet {
+  display: flex;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.line-number {
+  background: rgba(100, 116, 139, 0.3);
+  padding: 0.75rem;
+  color: #64748b;
+  font-family: 'Fira Code', monospace;
+}
+
+.code-line {
+  padding: 0.75rem;
+  color: #cbd5e1;
+  font-family: 'Fira Code', monospace;
+  flex: 1;
+}
+
+.conflict-message {
+  text-align: center;
+  color: #fca5a5;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* RESOLUTION STEPS */
+.resolution-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.resolution-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.resolution-number {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.resolution-content {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.resolution-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 1rem;
+}
+
+.resolution-desc {
+  color: #94a3b8;
+  margin-bottom: 1rem;
+}
+
+.conflict-file {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.conflict-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border-bottom: 1px solid #ef4444;
+  font-family: 'Fira Code', monospace;
+  color: #fca5a5;
+}
+
+.conflict-code {
+  padding: 1rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+}
+
+.conflict-marker {
+  color: #ef4444;
+  font-weight: 700;
+  margin: 0.5rem 0;
+}
+
+.conflict-content {
+  padding: 0.5rem 1rem;
+  margin: 0.25rem 0;
+}
+
+.conflict-content.main {
+  background: rgba(34, 197, 94, 0.1);
+  color: #86efac;
+}
+
+.conflict-content.feature {
+  background: rgba(251, 191, 36, 0.1);
+  color: #fde047;
+}
+
+/* STRATEGIES GRID */
+.strategies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.strategy-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.strategy-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.strategy-desc {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.strategy-branches {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.branch-item {
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 6px;
   font-family: 'Fira Code', monospace;
-  font-size: 0.75rem;
-  text-align: center;
-  margin-top: auto;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.border-cyan-dim {
-  border-color: rgba(34, 211, 238, 0.3);
-  color: #22d3ee;
-}
-.border-yellow-dim {
-  border-color: rgba(250, 204, 21, 0.3);
-  color: #facc15;
-}
-.border-green-dim {
-  border-color: rgba(74, 222, 128, 0.3);
-  color: #4ade80;
-}
-.border-purple-dim {
-  border-color: rgba(168, 85, 247, 0.3);
-  color: #a855f7;
+  color: #cbd5e1;
+  font-size: 0.9rem;
 }
 
-/* VISUAL MERGE */
-.visual-merge {
-  background: #0f172a;
-  border: 1px dashed rgba(255, 255, 255, 0.2);
-}
-.merge-svg {
-  width: 100%;
-  height: auto;
-  max-width: 500px;
+.strategy-use {
+  color: #94a3b8;
+  font-size: 0.9rem;
 }
 
-/* CONFLICT VIEWER */
-.conflict-card {
-  border-left: 4px solid #ef4444;
+/* VIDEO */
+.video-container {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
 }
-.conflict-viewer {
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
   background: #000;
 }
 
-.conflict-block {
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-}
-.marker {
-  padding: 4px 10px;
-  font-weight: bold;
-  opacity: 0.9;
-}
-.content {
-  padding: 8px 0;
-  background: rgba(255, 255, 255, 0.02);
+  height: 100%;
 }
 
-/* UTILS */
-.font-mono {
+.video-caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* SUMMARY */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.summary-item {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-item code {
   font-family: 'Fira Code', monospace;
+  color: #22c55e;
+  font-size: 0.95rem;
 }
-.text-sm {
-  font-size: 0.9rem;
-}
-.inline-block {
-  display: inline-block;
-}
-.bg-slate-800 {
-  background: #1e293b;
-}
-.bg-slate-900 {
-  background: #0f172a;
-}
-.bg-dark-soft {
-  background: rgba(255, 255, 255, 0.05);
-}
-.border-light {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.border-dashed {
-  border: 1px dashed rgba(255, 255, 255, 0.2);
-}
-.border-bottom-dark {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-.border-top-dashed {
-  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+
+.summary-item span {
+  color: #cbd5e1;
+  font-size: 0.85rem;
 }
 
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.2rem;
-  }
-  .lifecycle-grid {
+  .golden-rule {
     grid-template-columns: 1fr;
+  }
+
+  .rule-arrow {
+    transform: rotate(90deg);
+  }
+
+  .merge-types {
+    grid-template-columns: 1fr;
+  }
+
+  .scenario-visual {
+    grid-template-columns: 1fr;
+  }
+
+  .conflict-icon {
+    transform: rotate(90deg);
   }
 }
 </style>

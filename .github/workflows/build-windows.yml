@@ -17,15 +17,41 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+        env:
+          NODE_OPTIONS: '--max-old-space-size=4096'
 
       - name: Build Electron App (Windows)
         run: npx quasar build -m electron
+        env:
+          NODE_OPTIONS: '--max-old-space-size=4096'
 
-      - name: Upload artifacts
+      - name: List build output
+        run: |
+          echo "Listing dist/electron directory:"
+          dir dist\electron /s
+        shell: cmd
+
+      - name: Upload Windows Installer
         uses: actions/upload-artifact@v4
         with:
-          name: UP-Ros-Windows
-          path: dist/electron/Packaged
+          name: UP-Ros-Windows-Installer
+          path: |
+            dist/electron/Packaged/*.exe
+            dist/electron/Packaged/*.msi
+          if-no-files-found: error
+
+      - name: Upload Full Package (Optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: UP-Ros-Windows-Full
+          path: dist/electron/Packaged/
+          if-no-files-found: warn

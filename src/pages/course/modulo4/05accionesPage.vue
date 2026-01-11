@@ -1,577 +1,952 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <!-- 1. HERO SECTION -->
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-purple-4 text-weight-bold q-mb-sm">
-          MÓDULO 4.5: MISIONES COMPLEJAS
-        </div>
+  <LessonContainer>
+    <!-- HERO INTRO -->
+    <TextBlock>
+      Las <strong>Actions</strong> son el mecanismo para tareas de larga duración con feedback
+      continuo y capacidad de cancelación. Combinan lo mejor de Topics (feedback asíncrono) y
+      Services (goal-oriented), ideales para navegación, manipulación, y tareas complejas.
+    </TextBlock>
 
-        <h1 class="hero-title">Acciones <span class="text-white">(Actions)</span></h1>
+    <AlertBlock type="info" title="Características Clave">
+      <strong>Goal-oriented:</strong> Cliente envía objetivo, servidor ejecuta
+      <br />
+      <strong>Feedback continuo:</strong> Reportes de progreso (0-100%)
+      <br />
+      <strong>Cancelable:</strong> Cliente puede abortar en cualquier momento
+      <br />
+      <strong>Preemptable:</strong> Nuevos goals pueden reemplazar anteriores
+    </AlertBlock>
 
-        <TextBlock>
-          Los Servicios son geniales para cosas rápidas ("enciende la luz"), pero terribles para
-          tareas largas ("navega a la cocina"). Si usas un Servicio para mover el robot, te quedarás
-          bloqueado varios minutos sin saber qué pasa [web:6]. Las
-          <strong>Acciones</strong> resuelven esto añadiendo <strong>Feedback</strong> en tiempo
-          real y un botón de <strong>Cancelar</strong> [web:6][web:8].
-        </TextBlock>
-      </div>
-    </section>
-
-    <!-- 2. ANATOMÍA DE UNA ACCIÓN (LA TRÍADA) -->
-    <div class="section-group self-stretch">
-      <SectionTitle>1. La Tríada de Comunicación</SectionTitle>
-
-      <div class="row q-col-gutter-lg items-center">
-        <div class="col-12 col-md-5">
-          <TextBlock>
-            Una Acción no es un protocolo nuevo; es un "truco" inteligente que combina 3 canales
-            estándar bajo el capó [web:6][web:3].
-            <br /><br />
-            <ol class="q-pl-md q-mt-sm text-grey-4 tool-list">
-              <li>
-                🎯 <strong>Goal (Servicio):</strong> El Cliente pide la misión. El Servidor acepta o
-                rechaza.
-              </li>
-              <li>
-                📢 <strong>Feedback (Tópico):</strong> El Servidor reporta el progreso ("Voy por el
-                50%").
-              </li>
-              <li>
-                🏁 <strong>Result (Servicio):</strong> El Servidor notifica que terminó (o que
-                falló).
-              </li>
-            </ol>
-          </TextBlock>
-        </div>
-
-        <div class="col-12 col-md-7">
-          <!-- VISUAL ACTION VIZ -->
-          <div
-            class="tool-card action-viz q-pa-lg bg-black relative-position overflow-hidden shadow-2"
-          >
-            <div
-              class="row items-center justify-between relative-position full-height"
-              style="z-index: 2"
-            >
-              <!-- CLIENT -->
-              <div class="column items-center" style="width: 90px">
-                <div class="node-box bg-green-9 shadow-green border-light transition-hover">
-                  <q-icon name="person_pin" color="white" size="2rem" />
-                </div>
-                <div class="text-weight-bold text-green-4 q-mt-sm font-mono text-xs">Client</div>
-                <div class="text-caption text-grey-4 text-center q-mt-xs text-xs">
-                  "Ve a la cocina"
-                </div>
-              </div>
-
-              <!-- CHANNELS ZONE -->
-              <div
-                class="col relative-position column justify-center q-mx-md"
-                style="height: 190px"
-              >
-                <!-- 1. GOAL -->
-                <div class="channel-row relative-position">
-                  <div class="line-bg"></div>
-                  <div
-                    class="packet-goal bg-blue-5 text-black text-xxs text-weight-bold rounded-borders q-px-xs"
-                  >
-                    GOAL
-                  </div>
-                  <div class="text-caption text-blue-3 absolute-right label-right">1. Petición</div>
-                </div>
-
-                <!-- 2. FEEDBACK -->
-                <div class="channel-row relative-position q-my-md">
-                  <div class="line-bg"></div>
-                  <div
-                    class="packet-fb bg-purple-5 text-black text-xxs text-weight-bold rounded-borders q-px-xs"
-                  >
-                    FB
-                  </div>
-                  <div
-                    class="packet-fb bg-purple-5 text-black text-xxs text-weight-bold rounded-borders q-px-xs"
-                    style="animation-delay: 1.2s"
-                  >
-                    FB
-                  </div>
-                  <div class="text-caption text-purple-3 absolute-left label-left">
-                    2. Progreso...
-                  </div>
-                </div>
-
-                <!-- 3. RESULT -->
-                <div class="channel-row relative-position">
-                  <div class="line-bg"></div>
-                  <div
-                    class="packet-res bg-yellow-5 text-black text-xxs text-weight-bold rounded-borders q-px-xs"
-                  >
-                    RES
-                  </div>
-                  <div class="text-caption text-yellow-3 absolute-right label-right">3. Final</div>
-                </div>
-              </div>
-
-              <!-- SERVER -->
-              <div class="column items-center" style="width: 90px">
-                <div class="node-box bg-red-9 shadow-red border-light transition-hover">
-                  <q-icon name="smart_toy" color="white" size="2rem" />
-                </div>
-                <div class="text-weight-bold text-red-4 q-mt-sm font-mono text-xs">Server</div>
-                <div class="text-caption text-grey-4 text-center q-mt-xs text-xs">Navegando...</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. INTERFAZ .ACTION (LA DEFINICIÓN) -->
-    <div class="section-group self-stretch">
-      <SectionTitle>2. El Contrato Triple (.action)</SectionTitle>
-      <SplitBlock>
-        <template #left>
-          <TextBlock>
-            Para definir una acción, se usa un archivo <code>.action</code> con tres secciones:
-            Goal, Result y Feedback [web:6][web:3]. <br /><br />
-            A diferencia de los servicios (un separador <code>---</code>), las acciones usan
-            <strong>dos separadores</strong> para dividir: 1. Meta (Goal), 2. Resultado (Result), 3.
-            Progreso (Feedback) [web:3].
-          </TextBlock>
-        </template>
-
-        <template #right>
-          <div
-            class="tool-card action-file-card bg-slate-900 q-pa-none border-purple shadow-2 overflow-hidden"
-          >
-            <div
-              class="row justify-between items-center q-px-md q-py-sm bg-black border-bottom-dark"
-            >
-              <span class="text-grey-5 font-mono text-xs"
-                >my_robot_interfaces/action/Navigate.action</span
-              >
-              <q-icon name="rocket_launch" color="purple-4" size="xs" />
-            </div>
-
-            <div class="code-structure font-mono text-sm q-pa-md bg-slate-800">
-              <div class="text-caption text-grey-6 text-xxs q-mb-xs"># 1. GOAL (¿A dónde voy?)</div>
-              <div class="row q-mb-xs">
-                <div class="col-4 text-blue-4">float32</div>
-                <div class="col text-white">x</div>
-              </div>
-              <div class="row q-mb-sm">
-                <div class="col-4 text-blue-4">float32</div>
-                <div class="col text-white">y</div>
-              </div>
-
-              <div class="separator-dashed q-my-sm">---</div>
-
-              <div class="text-caption text-grey-6 text-xxs q-mb-xs">
-                # 2. RESULT (¿Llegué bien?)
-              </div>
-              <div class="row q-mb-xs">
-                <div class="col-4 text-blue-4">bool</div>
-                <div class="col text-white">success</div>
-              </div>
-              <div class="row q-mb-sm">
-                <div class="col-4 text-blue-4">string</div>
-                <div class="col text-white">message</div>
-              </div>
-
-              <div class="separator-dashed q-my-sm">---</div>
-
-              <div class="text-caption text-grey-6 text-xxs q-mb-xs">
-                # 3. FEEDBACK (¿Cuánto falta?)
-              </div>
-              <div class="row">
-                <div class="col-4 text-blue-4">float32</div>
-                <div class="col text-white">distance_remaining</div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </SplitBlock>
-    </div>
-
-    <!-- 4. LA MÁQUINA DE ESTADOS (EL CEREBRO) -->
-    <div class="section-group self-stretch q-mt-xl">
-      <SectionTitle>3. El Cerebro del Servidor</SectionTitle>
-      <AlertBlock type="info" title="No es solo 'On/Off'">
-        Una Acción es una mini máquina de estados. El servidor puede rechazar tu meta si está
-        ocupado, o tú puedes cancelarla si te arrepientes [web:6][web:8].
-      </AlertBlock>
-
-      <div class="row q-mt-md justify-center">
-        <div class="col-12 col-md-10">
-          <div class="tool-card state-machine bg-slate-800 q-pa-lg text-center shadow-2">
-            <div class="row items-center justify-around">
-              <!-- STATE 1 -->
-              <div class="state-circle bg-grey-9 border-grey text-grey-5">IDLE</div>
-              <q-icon name="arrow_forward" color="grey-6" />
-
-              <!-- STATE 2 -->
-              <div class="state-circle bg-blue-9 border-blue text-white pulse-anim">EXECUTING</div>
-
-              <div class="column q-gutter-sm">
-                <div class="row items-center">
-                  <q-icon name="arrow_forward" color="green-4" />
-                  <div class="state-pill bg-green-9 text-xs q-ml-sm text-green-3">SUCCEEDED</div>
-                </div>
-                <div class="row items-center">
-                  <q-icon name="arrow_forward" color="red-4" />
-                  <div class="state-pill bg-red-9 text-xs q-ml-sm text-red-3">ABORTED</div>
-                </div>
-                <div class="row items-center">
-                  <q-icon name="arrow_forward" color="orange-4" />
-                  <div class="state-pill bg-orange-9 text-xs q-ml-sm text-orange-3">CANCELED</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="text-caption text-grey-5 q-mt-md">
-              El servidor puede abortar si encuentra un obstáculo, o tú puedes cancelar si pulsas
-              "Stop" [web:6][web:9].
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 5. HERRAMIENTAS CLI -->
-    <div class="section-group self-stretch q-mt-xl q-mb-xl">
-      <SectionTitle>4. Acciones en la Terminal</SectionTitle>
+    <!-- ACTION ANATOMY -->
+    <div class="section-group">
+      <SectionTitle>1. Anatomía de una Action</SectionTitle>
       <TextBlock>
-        Probar acciones a mano es vital para asegurarte de que tu servidor funciona antes de
-        escribir el cliente en Python/C++ [web:6][web:7]. Nota el flag <code>--feedback</code> para
-        ver la actualización en vivo [web:10].
+        Una Action no es un protocolo nuevo; es una composición inteligente de 3 canales DDS: 1
+        servicio para goal, 1 tópico para feedback, 1 servicio para result.
       </TextBlock>
 
-      <div class="tool-card cli-card bg-black q-pa-md q-mt-md border-purple-glow shadow-2">
-        <div class="window-dots row q-mb-md">
-          <div class="dot bg-red-5 q-mr-xs"></div>
-          <div class="dot bg-yellow-5 q-mr-xs"></div>
-          <div class="dot bg-green-5"></div>
+      <div class="action-visual q-mt-md">
+        <div class="action-node client">
+          <div class="node-icon">
+            <q-icon name="flag" size="2.5rem" />
+          </div>
+          <div class="node-label">Action Client</div>
+          <div class="node-state">Monitoring...</div>
         </div>
 
-        <div class="text-grey-5 font-mono text-xs q-mb-sm"># Enviar una meta y ver el feedback</div>
+        <div class="action-channels">
+          <div class="channel goal">
+            <div class="channel-icon">
+              <q-icon name="send" />
+            </div>
+            <div class="channel-info">
+              <div class="channel-name">Goal (Service)</div>
+              <div class="channel-desc">Navigate to (x, y, θ)</div>
+            </div>
+            <div class="channel-arrow">→</div>
+          </div>
 
-        <div class="cmd-line q-pa-sm rounded bg-slate-900 q-mb-md">
-          <span class="text-purple-4 font-mono text-sm text-break">
-            $ ros2 action send_goal /navigate my_pkg/action/Navigate "{x: 5.0, y: 0.0}" --feedback
-          </span>
+          <div class="channel feedback">
+            <div class="channel-arrow">←</div>
+            <div class="channel-info">
+              <div class="channel-name">Feedback (Topic)</div>
+              <div class="channel-desc">Progress: 45%, Distance: 2.3m</div>
+            </div>
+            <div class="channel-icon">
+              <q-icon name="timeline" />
+            </div>
+          </div>
+
+          <div class="channel result">
+            <div class="channel-arrow">←</div>
+            <div class="channel-info">
+              <div class="channel-name">Result (Service)</div>
+              <div class="channel-desc">Success! Final pose: (5, 3, 1.57)</div>
+            </div>
+            <div class="channel-icon">
+              <q-icon name="check_circle" />
+            </div>
+          </div>
         </div>
 
-        <div class="console-output q-mt-sm font-mono text-xs">
-          <div class="text-blue-3">Waiting for an action server to become available...</div>
-          <div class="text-green-4">Goal accepted with ID: a1b2...</div>
-          <br />
-          <div class="text-purple-3">Feedback:</div>
-          <div class="text-grey-4">distance_remaining: 5.0</div>
-          <div class="text-grey-4">distance_remaining: 4.5</div>
-          <div class="text-grey-4">distance_remaining: 4.0 ...</div>
-          <br />
-          <div class="text-yellow-4">Result:</div>
-          <div class="text-white">success: true</div>
-          <div class="text-white">message: "Llegué al destino"</div>
+        <div class="action-node server">
+          <div class="node-icon">
+            <q-icon name="smart_toy" size="2.5rem" />
+          </div>
+          <div class="node-label">Action Server</div>
+          <div class="node-state">Executing...</div>
+        </div>
+      </div>
+
+      <div class="q-mt-lg">
+        <div class="code-comparison">
+          <div class="code-col">
+            <div class="code-header">Server (C++)</div>
+            <CodeBlock
+              lang="cpp"
+              content='auto action_server = rclcpp_action::create_server<Fibonacci>(
+  node, "fibonacci",
+  [](const GoalUUID &, std::shared_ptr<const Goal> goal) {
+    // Accept/reject goal
+    return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
+  },
+  [](const std::shared_ptr<GoalHandle> goal_handle) {
+    // Cancel callback
+    return rclcpp_action::CancelResponse::ACCEPT;
+  },
+  [](const std::shared_ptr<GoalHandle> goal_handle) {
+    // Execute callback
+    auto result = std::make_shared<Result>();
+    auto feedback = std::make_shared<Feedback>();
+
+    for (int i = 0; i &lt; goal_handle->get_goal()->order; ++i) {
+      feedback->partial_sequence.push_back(fib(i));
+      goal_handle->publish_feedback(feedback);
+      std::this_thread::sleep_for(1s);
+    }
+
+    result->sequence = feedback->partial_sequence;
+    goal_handle->succeed(result);
+  });'
+              :copyable="true"
+            />
+          </div>
+          <div class="code-col">
+            <div class="code-header">Client (Python)</div>
+            <CodeBlock
+              lang="python"
+              content="client = ActionClient(node, Fibonacci, 'fibonacci')
+client.wait_for_server()
+
+goal = Fibonacci.Goal()
+goal.order = 10
+
+# Callbacks
+def feedback_cb(feedback_msg):
+    print(f'Progress: {feedback_msg.feedback.partial_sequence}')
+
+def goal_response_cb(future):
+    goal_handle = future.result()
+    if not goal_handle.accepted:
+        print('Goal rejected')
+        return
+
+    result_future = goal_handle.get_result_async()
+    result_future.add_done_callback(result_cb)
+
+def result_cb(future):
+    result = future.result().result
+    print(f'Final: {result.sequence}')
+
+# Send goal
+send_goal_future = client.send_goal_async(
+    goal, feedback_callback=feedback_cb)
+send_goal_future.add_done_callback(goal_response_cb)"
+              :copyable="true"
+            />
+          </div>
         </div>
       </div>
     </div>
-  </q-page>
+
+    <!-- ACTION INTERFACE -->
+    <div class="section-group">
+      <SectionTitle>2. Interfaces .action</SectionTitle>
+      <TextBlock>
+        Los archivos <code>.action</code> definen Goal, Result y Feedback. Se dividen por
+        <code>---</code> en tres secciones.
+      </TextBlock>
+
+      <div class="action-examples q-mt-md">
+        <div class="action-card">
+          <div class="action-header">
+            <q-icon name="calculate" />
+            <span>Fibonacci.action</span>
+          </div>
+          <CodeBlock
+            lang="idl"
+            content="# Goal
+int32 order
+---
+# Result
+int32[] sequence
+---
+# Feedback
+int32[] partial_sequence"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="action-card">
+          <div class="action-header">
+            <q-icon name="navigation" />
+            <span>NavigateToPose.action</span>
+          </div>
+          <CodeBlock
+            lang="idl"
+            content="# Goal
+geometry_msgs/PoseStamped pose
+---
+# Result
+std_msgs/Empty
+---
+# Feedback
+geometry_msgs/PoseStamped current_pose
+builtin_interfaces/Duration navigation_time
+int16 number_of_recoveries
+float32 distance_remaining"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="action-card">
+          <div class="action-header">
+            <q-icon name="precision_manufacturing" />
+            <span>PickPlace.action</span>
+          </div>
+          <CodeBlock
+            lang="idl"
+            content="# Goal
+geometry_msgs/Pose pick_pose
+geometry_msgs/Pose place_pose
+---
+# Result
+bool success
+string error_message
+---
+# Feedback
+string current_state  # APPROACHING, GRASPING, LIFTING, etc.
+float32 progress_percentage"
+            :copyable="true"
+          />
+        </div>
+      </div>
+
+      <div class="q-mt-md">
+        <CodeBlock
+          title="Crear custom action"
+          lang="bash"
+          content='# 1. Crear estructura
+mkdir -p my_interfaces/action
+cat > my_interfaces/action/ComputePath.action << EOF
+geometry_msgs/Pose start
+geometry_msgs/Pose goal
+---
+nav_msgs/Path path
+float32 total_distance
+---
+float32 progress_percentage
+geometry_msgs/Pose current_waypoint
+EOF
+
+# 2. Agregar a CMakeLists.txt
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "action/ComputePath.action"
+  DEPENDENCIES geometry_msgs nav_msgs
+)
+
+# 3. Compilar
+colcon build --packages-select my_interfaces'
+          :copyable="true"
+        />
+      </div>
+    </div>
+
+    <!-- STATE MACHINE -->
+    <div class="section-group">
+      <SectionTitle>3. Action Server State Machine</SectionTitle>
+      <TextBlock>
+        El Action Server implementa una máquina de estados compleja que maneja múltiples goals
+        concurrentes, cancelación y preemption.
+      </TextBlock>
+
+      <div class="state-diagram q-mt-md">
+        <div class="state-flow">
+          <div class="state idle">
+            <div class="state-name">IDLE</div>
+            <div class="state-desc">Esperando goal</div>
+          </div>
+
+          <div class="transition-line">↓ Goal received</div>
+
+          <div class="state accepting">
+            <div class="state-name">ACCEPTING</div>
+            <div class="state-desc">Validando goal</div>
+          </div>
+
+          <div class="state-split">
+            <div class="split-path">
+              <div class="transition-line">← Rejected</div>
+              <div class="state rejected">
+                <div class="state-name">REJECTED</div>
+              </div>
+            </div>
+
+            <div class="split-path">
+              <div class="transition-line">→ Accepted</div>
+              <div class="state executing">
+                <div class="state-name">EXECUTING</div>
+                <div class="state-desc">Publicando feedback</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="state-outcomes">
+            <div class="outcome succeeded">
+              <div class="outcome-name">SUCCEEDED</div>
+              <div class="outcome-desc">Goal completado</div>
+            </div>
+            <div class="outcome aborted">
+              <div class="outcome-name">ABORTED</div>
+              <div class="outcome-desc">Error interno</div>
+            </div>
+            <div class="outcome canceled">
+              <div class="outcome-name">CANCELED</div>
+              <div class="outcome-desc">Cliente canceló</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-mt-md">
+        <AlertBlock type="warning" title="Preemption Policy">
+          Cuando llega un nuevo goal mientras otro está ejecutando, el servidor puede:
+          <br />
+          <br />
+          <strong>REJECT:</strong> Rechazar nuevo goal (mantener actual)
+          <br />
+          <strong>ABORT:</strong> Abortar goal actual, aceptar nuevo
+          <br />
+          <strong>QUEUE:</strong> Encolar nuevo goal (ejecutar después)
+          <br />
+          <br />
+          La política se define en el callback de aceptación del servidor.
+        </AlertBlock>
+      </div>
+    </div>
+
+    <!-- CANCELLATION -->
+    <div class="section-group">
+      <SectionTitle>4. Cancelación de Goals</SectionTitle>
+      <TextBlock>
+        Los clientes pueden cancelar goals en cualquier momento. El servidor debe manejar
+        cancelación gracefully, liberando recursos y reportando estado final.
+      </TextBlock>
+
+      <div class="cancel-flow q-mt-md">
+        <div class="cancel-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <div class="step-title">Cliente solicita cancelación</div>
+            <CodeBlock
+              lang="python"
+              content="# Cancelar goal específico
+goal_handle.cancel_goal_async()
+
+# Cancelar todos los goals
+client.cancel_all_goals_async()"
+              :copyable="true"
+            />
+          </div>
+        </div>
+
+        <div class="cancel-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <div class="step-title">Servidor procesa cancelación</div>
+            <CodeBlock
+              lang="cpp"
+              content='// Cancel callback
+auto cancel_callback = [](const std::shared_ptr<GoalHandle> goal_handle) {
+  RCLCPP_INFO(node->get_logger(), "Received cancel request");
+  // Cleanup resources
+  stop_motors();
+  release_locks();
+  return rclcpp_action::CancelResponse::ACCEPT;
+};'
+              :copyable="true"
+            />
+          </div>
+        </div>
+
+        <div class="cancel-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <div class="step-title">Servidor reporta cancelación</div>
+            <CodeBlock
+              lang="cpp"
+              content="// En execute callback
+if (goal_handle->is_canceling()) {
+  auto result = std::make_shared<Result>();
+  result->success = false;
+  goal_handle->canceled(result);
+  return;
+}"
+              :copyable="true"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLI TOOLS -->
+    <div class="section-group">
+      <SectionTitle>5. Herramientas CLI</SectionTitle>
+
+      <div class="cli-grid q-mt-md">
+        <div class="cli-card">
+          <div class="cli-header">
+            <q-icon name="list" />
+            <span>Listar Actions</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Listar todas las actions
+ros2 action list
+
+# Con tipos
+ros2 action list -t"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="cli-card">
+          <div class="cli-header">
+            <q-icon name="info" />
+            <span>Información</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Ver tipo de action
+ros2 action type /fibonacci
+
+# Ver interfaz
+ros2 interface show example_interfaces/action/Fibonacci"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="cli-card">
+          <div class="cli-header">
+            <q-icon name="send" />
+            <span>Enviar Goal</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Enviar goal y ver feedback
+ros2 action send_goal /fibonacci \
+  example_interfaces/action/Fibonacci \
+  '{order: 10}' --feedback"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="cli-card">
+          <div class="cli-header">
+            <q-icon name="search" />
+            <span>Monitorear</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Ver información detallada
+ros2 action info /fibonacci
+
+# Incluye:
+# - Número de action servers
+# - Número de action clients"
+            :copyable="true"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="section-group">
+      <SectionTitle>📹 Video Complementario</SectionTitle>
+      <div class="video-container">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="ROS 2 Actions Deep Dive"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+            "
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <q-icon name="info" color="blue-4" size="sm" />
+          Reemplaza con video técnico sobre Actions
+        </div>
+      </div>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="section-group q-mb-xl">
+      <SectionTitle>📝 Resumen Técnico</SectionTitle>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <code>Goal-Oriented</code>
+          <span>Tareas de larga duración</span>
+        </div>
+        <div class="summary-item">
+          <code>3 Channels</code>
+          <span>Goal, Feedback, Result</span>
+        </div>
+        <div class="summary-item">
+          <code>Cancelable</code>
+          <span>Abort en cualquier momento</span>
+        </div>
+        <div class="summary-item">
+          <code>State Machine</code>
+          <span>IDLE → EXECUTING → SUCCEEDED/ABORTED/CANCELED</span>
+        </div>
+        <div class="summary-item">
+          <code>Preemption</code>
+          <span>Manejo de múltiples goals</span>
+        </div>
+      </div>
+
+      <AlertBlock type="success" title="Best Practices" class="q-mt-lg">
+        ✅ Usar Actions para tareas &gt;1 segundo (navegación, manipulación)
+        <br />
+        ✅ Publicar feedback frecuentemente (10-20 Hz)
+        <br />
+        ✅ Implementar cancelación graceful (liberar recursos)
+        <br />
+        ✅ Definir preemption policy clara (reject/abort/queue)
+        <br />
+        ✅ Incluir progress_percentage en feedback para UIs
+        <br />
+        ✅ Para tareas rápidas (&lt;100ms), usar Services en su lugar
+      </AlertBlock>
+    </div>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
+import CodeBlock from 'components/content/CodeBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
-import SplitBlock from 'components/content/SplitBlock.vue';
 </script>
 
 <style scoped>
-/* --- ESTILOS MAESTROS --- */
-.intro-hero,
 .section-group {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 3.5rem auto;
+  margin-bottom: 3.5rem;
 }
 
-.intro-hero {
+/* ACTION VISUAL */
+.action-visual {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 3rem;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid rgba(251, 191, 36, 0.3);
+  border-radius: 16px;
   padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(168, 85, 247, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  text-align: center;
 }
 
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.1;
-  color: #f8fafc;
-}
-
-/* TOOL CARDS */
-.tool-card {
-  height: 100%;
-  border-radius: 16px;
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* ACTION VIZ */
-.action-viz {
-  border-top: 4px solid #a855f7;
-  height: 300px;
-}
-.node-box {
-  width: 70px;
-  height: 70px;
-  border-radius: 14px;
+.action-node {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-}
-.shadow-green {
-  box-shadow: 0 0 15px rgba(74, 222, 128, 0.4);
-}
-.shadow-red {
-  box-shadow: 0 0 15px rgba(248, 113, 113, 0.4);
+  gap: 1rem;
 }
 
-.channel-row {
-  height: 46px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-.line-bg {
-  height: 2px;
-  width: 100%;
-  background: #334155;
-}
-
-.label-right {
-  position: absolute;
-  right: 0;
-  top: -18px;
-}
-.label-left {
-  position: absolute;
-  left: 0;
-  top: -18px;
-}
-
-/* Packet Animations (ciclo Goal -> Feedback -> Result) */
-.packet-goal,
-.packet-fb,
-.packet-res {
-  position: absolute;
-  top: 8px;
-  border-radius: 4px;
-  padding: 2px 6px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-  opacity: 0;
-}
-
-/* 0–25% Goal, 30–70% Feedback, 75–100% Result */
-@keyframes goalTravel {
-  0% {
-    left: 0%;
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  10% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  25% {
-    left: 85%;
-    opacity: 1;
-  }
-  30% {
-    left: 90%;
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  100% {
-    left: 90%;
-    opacity: 0;
-  }
-}
-@keyframes fbTravel {
-  0% {
-    right: 0%;
-    opacity: 0;
-  }
-  30% {
-    right: 0%;
-    opacity: 0;
-  }
-  40% {
-    right: 15%;
-    opacity: 1;
-  }
-  60% {
-    right: 80%;
-    opacity: 1;
-  }
-  70% {
-    right: 90%;
-    opacity: 0;
-  }
-  100% {
-    right: 90%;
-    opacity: 0;
-  }
-}
-@keyframes resTravel {
-  0% {
-    right: 0%;
-    opacity: 0;
-  }
-  75% {
-    right: 0%;
-    opacity: 0;
-  }
-  82% {
-    right: 20%;
-    opacity: 1;
-  }
-  95% {
-    right: 80%;
-    opacity: 1;
-  }
-  100% {
-    right: 90%;
-    opacity: 0;
-  }
-}
-
-.packet-goal {
-  animation: goalTravel 4s infinite linear;
-}
-.packet-fb {
-  animation: fbTravel 4s infinite linear;
-}
-.packet-res {
-  animation: resTravel 4s infinite linear;
-}
-
-/* ACTION FILE CARD */
-.action-file-card {
-  border-left: 4px solid #a855f7;
-}
-.separator-dashed {
-  border-bottom: 2px dashed #64748b;
-  width: 100%;
-  text-align: center;
-  line-height: 0.1em;
-  color: #64748b;
-}
-
-/* STATE MACHINE */
-.state-machine {
-  border-radius: 16px;
-}
-.state-circle {
+.node-icon {
   width: 80px;
   height: 80px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
   border-radius: 50%;
-  border: 3px solid;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  font-size: 0.8rem;
-}
-.pulse-anim {
-  animation: pulse 2.5s infinite;
-}
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 12px rgba(59, 130, 246, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
-  }
-}
-.state-pill {
-  padding: 4px 8px;
-  border-radius: 999px;
-  font-weight: bold;
-}
-.border-grey {
-  border-color: #4b5563;
-}
-.border-blue {
-  border-color: #3b82f6;
+  color: white;
+  box-shadow: 0 0 30px rgba(251, 191, 36, 0.5);
 }
 
-/* CLI CARD */
-.border-purple-glow {
-  border: 1px solid #a855f7;
-  box-shadow: 0 0 18px rgba(168, 85, 247, 0.2);
+.node-label {
+  font-weight: 700;
+  color: #fde047;
+  font-size: 1.1rem;
 }
-.window-dots .dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+
+.node-state {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  font-style: italic;
 }
-.cmd-line {
-  border-radius: 4px;
+
+.action-channels {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
-.console-output {
-  background: #020617;
+
+.channel {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 8px;
-  padding: 10px;
 }
 
-/* UTILS */
-.font-mono {
-  font-family: 'Fira Code', monospace;
+.channel.goal {
+  border-left: 3px solid #3b82f6;
 }
-.text-xxs {
-  font-size: 0.7rem;
+
+.channel.feedback {
+  border-left: 3px solid #a855f7;
 }
-.text-xs {
-  font-size: 0.8rem;
+
+.channel.result {
+  border-left: 3px solid #00ff88;
 }
-.text-sm {
-  font-size: 0.9rem;
+
+.channel-icon {
+  color: #fbbf24;
 }
-.bg-slate-900 {
-  background: #0f172a;
+
+.channel-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
-.bg-slate-800 {
-  background: #1e293b;
-}
-.border-light {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.border-bottom-dark {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-.tool-list {
-  list-style: none;
-  padding: 0;
-}
-.tool-list li {
-  margin-bottom: 10px;
+
+.channel-name {
+  font-weight: 700;
+  color: #f1f5f9;
   font-size: 0.95rem;
 }
 
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.2rem;
+.channel-desc {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  font-family: 'Fira Code', monospace;
+}
+
+.channel-arrow {
+  color: #fbbf24;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* CODE COMPARISON */
+.code-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.code-header {
+  padding: 0.75rem 1rem;
+  background: rgba(251, 191, 36, 0.1);
+  border-bottom: 1px solid rgba(251, 191, 36, 0.3);
+  font-weight: 700;
+  color: #fde047;
+  text-align: center;
+}
+
+/* ACTION EXAMPLES */
+.action-examples {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.action-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.action-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  font-weight: 700;
+  font-family: 'Fira Code', monospace;
+  color: #f1f5f9;
+}
+
+/* STATE DIAGRAM */
+.state-diagram {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+}
+
+.state-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.state {
+  padding: 1.5rem 3rem;
+  border-radius: 12px;
+  border: 2px solid;
+  text-align: center;
+  min-width: 200px;
+}
+
+.state.idle {
+  border-color: #64748b;
+  background: rgba(100, 116, 139, 0.1);
+}
+
+.state.accepting {
+  border-color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+}
+
+.state.rejected {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.state.executing {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.state-name {
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.state-desc {
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+.transition-line {
+  color: #00d9ff;
+  font-weight: 700;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+.state-split {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  width: 100%;
+}
+
+.split-path {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.state-outcomes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.outcome {
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 2px solid;
+  text-align: center;
+}
+
+.outcome.succeeded {
+  border-color: #00ff88;
+  background: rgba(0, 255, 136, 0.1);
+}
+
+.outcome.aborted {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.outcome.canceled {
+  border-color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+}
+
+.outcome-name {
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.outcome-desc {
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* CANCEL FLOW */
+.cancel-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cancel-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.step-number {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.step-content {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.step-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 1rem;
+}
+
+/* CLI GRID */
+.cli-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.cli-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cli-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+/* VIDEO */
+.video-container {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* SUMMARY */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.summary-item {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-item code {
+  font-family: 'Fira Code', monospace;
+  color: #fbbf24;
+  font-size: 0.95rem;
+}
+
+.summary-item span {
+  color: #cbd5e1;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 1024px) {
+  .action-visual {
+    grid-template-columns: 1fr;
+  }
+
+  .code-comparison,
+  .cli-grid,
+  .state-outcomes {
+    grid-template-columns: 1fr;
+  }
+
+  .state-split {
+    grid-template-columns: 1fr;
   }
 }
 </style>

@@ -1,23 +1,5 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-light-blue-4 text-weight-bold q-mb-sm">
-          MÓDULO 8.3: CONTENERIZACIÓN
-        </div>
-        <h1 class="hero-title">Docker: El <span class="text-white">Traje Espacial</span></h1>
-        <TextBlock>
-          ¿Te ha pasado que tu código funciona perfecto en tu casa pero falla en la demo por una
-          "dependencia faltante"?
-          <br /><br />
-          <strong>Docker</strong> soluciona el problema de <em>"Funciona en mi máquina"</em>.
-          Empaqueta tu código, tus librerías, tus configuraciones e incluso el sistema operativo
-          entero en un bloque inmutable llamado <strong>Contenedor</strong>. Si corre en tu Docker,
-          corre en cualquier parte.
-        </TextBlock>
-      </div>
-    </section>
-
+  <LessonContainer>
     <div class="section-group self-stretch">
       <SectionTitle>1. ¿Por qué no usar una Máquina Virtual?</SectionTitle>
       <SplitBlock>
@@ -276,10 +258,11 @@ services:
         </template>
       </SplitBlock>
     </div>
-  </q-page>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
@@ -289,34 +272,17 @@ import CodeBlock from 'components/content/CodeBlock.vue';
 
 <style scoped>
 /* GENERAL */
-.intro-hero,
 .section-group {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto 3.5rem auto;
 }
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(3, 169, 244, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  text-align: center;
-  margin-bottom: 3rem;
-}
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  color: #f8fafc;
-}
 
-/* VISUALIZATIONS */
+/* CARDS */
 .tool-card {
   border-radius: 12px;
   height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.05); /* Added for consistency */
 }
 .custom-card {
   border-radius: 12px;
@@ -401,6 +367,10 @@ import CodeBlock from 'components/content/CodeBlock.vue';
 .bg-slate-900 {
   background: #0f172a;
 }
+.bg-slate-800 {
+  /* Standardized darker background */
+  background: #1e293b;
+}
 .text-xxs {
   font-size: 0.6rem;
 }
@@ -427,5 +397,11 @@ import CodeBlock from 'components/content/CodeBlock.vue';
 }
 .bg-light-blue-3 {
   background: #4fc3f7;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
 }
 </style>

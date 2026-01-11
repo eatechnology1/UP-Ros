@@ -1,161 +1,220 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <!-- 1. HERO SECTION -->
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-yellow-4 text-weight-bold q-mb-sm">
-          MÓDULO 2.2: EL MENSAJERO ÁGIL
+  <LessonContainer>
+    <!-- INTRO -->
+    <TextBlock>
+      JSON (JavaScript Object Notation) es el formato de intercambio de datos más usado en la web.
+      En ROS 2, lo usarás para comunicarte con interfaces web, configurar parámetros, y trabajar con
+      APIs REST.
+      <br /><br />
+      A diferencia de XML, JSON es <strong>minimalista</strong>: sin etiquetas de cierre, sin
+      atributos, solo pares clave-valor.
+    </TextBlock>
+
+    <AlertBlock type="info" title="¿Cuándo usar JSON en ROS 2?">
+      <strong>rosbridge:</strong> Comunicación web (WebSockets)
+      <br />
+      <strong>REST APIs:</strong> Servicios HTTP para control remoto
+      <br />
+      <strong>Configuración:</strong> Archivos de parámetros (alternativa a YAML)
+      <br />
+      <strong>Logging:</strong> Exportar datos de sensores <br /><br />
+      JSON es <strong>universal</strong>: cualquier lenguaje puede leerlo.
+    </AlertBlock>
+
+    <!-- ANATOMÍA -->
+    <div class="section-group">
+      <SectionTitle>1. Anatomía: Clave-Valor</SectionTitle>
+
+      <div class="anatomy-demo">
+        <div class="anatomy-visual">
+          <div class="json-breakdown">
+            <span class="bracket">{</span>
+            <br />
+            <span class="indent"></span>
+            <span class="key">"nombre"</span>
+            <span class="colon">:</span>
+            <span class="value string">"TurtleBot"</span>
+            <span class="comma">,</span>
+            <br />
+            <span class="indent"></span>
+            <span class="key">"velocidad"</span>
+            <span class="colon">:</span>
+            <span class="value number">2.5</span>
+            <br />
+            <span class="bracket">}</span>
+          </div>
+
+          <div class="annotations">
+            <div class="annotation key-ann">
+              <q-icon name="vpn_key" />
+              <span>Clave (siempre string)</span>
+            </div>
+            <div class="annotation value-ann">
+              <q-icon name="data_object" />
+              <span>Valor (varios tipos)</span>
+            </div>
+          </div>
         </div>
-
-        <h1 class="hero-title">JSON <span class="text-white">Básico</span></h1>
-
-        <TextBlock>
-          JSON (JavaScript Object Notation) es el estándar mundial para mover datos en internet. En
-          Robótica, es el puente entre tu máquina y el mundo humano: interfaces web, dashboards de
-          control y bases de datos en la nube. Es famoso por ser
-          <strong>legible, ligero y basado en pares Clave:Valor</strong>.
-        </TextBlock>
       </div>
-    </section>
 
-    <!-- 2. ANATOMÍA: CLAVE-VALOR -->
-    <div class="section-group self-stretch">
-      <SectionTitle>1. Anatomía: El Mapa del Tesoro</SectionTitle>
-
-      <div class="row q-col-gutter-lg items-center">
-        <div class="col-12 col-md-5">
-          <TextBlock>
-            JSON elimina las etiquetas redundantes. Todo se reduce a una estructura de diccionario:
-            <br /><br />
-            <strong>"Clave": Valor</strong>
-          </TextBlock>
-
-          <ul class="tool-list q-mt-md">
-            <li>
-              🔑 <strong>Comillas Dobles:</strong> Las claves <em>siempre</em> van entre
-              <code>" "</code>. (Las simples <code>' '</code> rompen el formato).
-            </li>
-            <li>⛓️ <strong>Dos Puntos:</strong> Separan la clave del valor.</li>
-            <li>
-              📦 <strong>Tipos de Datos:</strong> Soporta Texto, Números, Booleanos, Listas
-              <code>[]</code> y Objetos <code>{}</code>.
-            </li>
-          </ul>
-        </div>
-
-        <div class="col-12 col-md-7">
-          <!-- VISUAL DISSECTION -->
-          <div class="tool-card dissection-card relative-position q-pa-xl">
-            <div class="font-mono text-h5">
-              <span class="text-grey-6">{</span>
+      <div class="q-mt-lg">
+        <SectionTitle>Reglas de Sintaxis</SectionTitle>
+        <div class="rules-grid">
+          <div class="rule-item">
+            <q-icon name="format_quote" color="yellow-6" size="md" />
+            <div class="rule-text">
+              <strong>Comillas dobles</strong>
               <br />
-
-              <!-- CLAVE -->
-              <div class="q-pl-md row items-center wrap">
-                <span class="text-yellow-4 text-weight-bold key-hover">"sensor_id"</span>
-                <span class="text-grey-5 q-mx-sm">:</span>
-                <span class="text-blue-4 value-hover">105</span><span class="text-grey-6">,</span>
-              </div>
-
-              <!-- LISTA -->
-              <div class="q-pl-md row items-center q-mt-sm wrap">
-                <span class="text-yellow-4 text-weight-bold key-hover">"posicion"</span>
-                <span class="text-grey-5 q-mx-sm">:</span>
-                <span class="text-purple-4 list-hover">[ 12.5, 40.1, 0.0 ]</span>
-              </div>
-
-              <span class="text-grey-6">}</span>
+              <code>"clave"</code> ✅ | <code>'clave'</code> ❌
             </div>
-
-            <!-- ANNOTATIONS -->
-            <div class="annotations q-mt-xl relative-position row justify-around text-center">
-              <!-- Key Label -->
-              <div class="column items-center">
-                <q-icon name="vpn_key" color="yellow-7" size="sm" />
-                <div class="text-caption text-yellow-7 text-weight-bold">Clave (String)</div>
-              </div>
-
-              <!-- Value Label -->
-              <div class="column items-center">
-                <q-icon name="data_usage" color="blue-4" size="sm" />
-                <div class="text-caption text-blue-4 text-weight-bold">Valor (Number)</div>
-              </div>
-
-              <!-- Array Label -->
-              <div class="column items-center">
-                <q-icon name="list" color="purple-4" size="sm" />
-                <div class="text-caption text-purple-4 text-weight-bold">Array (Lista)</div>
-              </div>
+          </div>
+          <div class="rule-item">
+            <q-icon name="more_horiz" color="blue-4" size="md" />
+            <div class="rule-text">
+              <strong>Sin coma final</strong>
+              <br />
+              <code>{"a": 1}</code> ✅ | <code>{"a": 1,}</code> ❌
+            </div>
+          </div>
+          <div class="rule-item">
+            <q-icon name="code" color="green-4" size="md" />
+            <div class="rule-text">
+              <strong>Sin comentarios</strong>
+              <br />
+              JSON puro no soporta <code>//</code> ni <code>/* */</code>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 3. ESTRUCTURAS COMPLEJAS (NESTING) -->
-    <div class="section-group self-stretch">
-      <SectionTitle>2. Estructuras Anidadas</SectionTitle>
-      <SplitBlock>
-        <template #left>
-          <TextBlock>
-            Un robot no es plano. Tiene partes dentro de partes. JSON permite meter Objetos dentro
-            de Objetos (Nesting).
-            <br /><br />
-            Observa cómo la propiedad <code>"bateria"</code> no es un simple número, sino un objeto
-            completo con sus propios datos (voltaje, estado).
-          </TextBlock>
-          <div class="q-mt-lg">
-            <AlertBlock type="warning" title="El error de la coma final">
-              En JSON estándar, <strong>NO</strong> puedes poner una coma después del último
-              elemento de una lista u objeto. Es el error de sintaxis #1.
-            </AlertBlock>
+    <!-- TIPOS DE DATOS -->
+    <div class="section-group">
+      <SectionTitle>2. Tipos de Datos</SectionTitle>
+
+      <div class="types-grid">
+        <div class="type-card string">
+          <div class="type-header">
+            <q-icon name="text_fields" size="lg" />
+            <span>String (Texto)</span>
           </div>
-        </template>
+          <CodeBlock lang="json" content='"nombre": "Robot1"' />
+          <div class="type-note">Siempre entre comillas dobles</div>
+        </div>
 
-        <template #right>
-          <div class="tool-card bg-slate-900 q-pa-lg">
-            <!-- CORREGIDO: lang & content -->
-            <CodeBlock
-              lang="json"
-              content='{
-  "robot_name": "TurtleBot",
-  "online": true,
+        <div class="type-card number">
+          <div class="type-header">
+            <q-icon name="123" size="lg" />
+            <span>Number (Número)</span>
+          </div>
+          <CodeBlock lang="json" content='"velocidad": 2.5' />
+          <div class="type-note">Enteros o decimales (sin comillas)</div>
+        </div>
 
-  "bateria": {
-    "voltaje": 12.4,
-    "estado": "cargando",
-    "celdas": [4.1, 4.1, 4.2]
-  },
+        <div class="type-card boolean">
+          <div class="type-header">
+            <q-icon name="toggle_on" size="lg" />
+            <span>Boolean</span>
+          </div>
+          <CodeBlock lang="json" content='"activo": true' />
+          <div class="type-note"><code>true</code> o <code>false</code> (minúsculas)</div>
+        </div>
 
-  "errores": null
+        <div class="type-card null">
+          <div class="type-header">
+            <q-icon name="block" size="lg" />
+            <span>Null (Vacío)</span>
+          </div>
+          <CodeBlock lang="json" content='"error": null' />
+          <div class="type-note">Representa ausencia de valor</div>
+        </div>
+
+        <div class="type-card array">
+          <div class="type-header">
+            <q-icon name="list" size="lg" />
+            <span>Array (Lista)</span>
+          </div>
+          <CodeBlock lang="json" content='"posicion": [1.0, 2.5, 0.0]' />
+          <div class="type-note">Lista ordenada de valores</div>
+        </div>
+
+        <div class="type-card object">
+          <div class="type-header">
+            <q-icon name="data_object" size="lg" />
+            <span>Object (Objeto)</span>
+          </div>
+          <CodeBlock
+            lang="json"
+            content='"bateria": {
+  "voltaje": 12.4,
+  "nivel": 85
 }'
-            />
-          </div>
-        </template>
-      </SplitBlock>
+          />
+          <div class="type-note">Pares clave-valor anidados</div>
+        </div>
+      </div>
     </div>
 
-    <!-- 4. CASO REAL: ROSBRIDGE (WEB SOCKETS) -->
-    <div class="section-group self-stretch q-mt-xl">
-      <SectionTitle>3. En la Práctica: Rosbridge Protocol</SectionTitle>
-      <div class="row q-col-gutter-lg items-center">
+    <!-- ANIDACIÓN -->
+    <div class="section-group">
+      <SectionTitle>3. Estructuras Anidadas</SectionTitle>
+      <TextBlock>
+        JSON permite anidar objetos y arrays infinitamente. Esto es perfecto para representar robots
+        con múltiples sensores y actuadores.
+      </TextBlock>
+
+      <CodeBlock
+        title="robot_config.json"
+        lang="json"
+        content='{
+  "robot": {
+    "id": "robot_001",
+    "tipo": "movil",
+    "sensores": [
+      {
+        "nombre": "lidar",
+        "modelo": "RPLidar A1",
+        "rango_max": 12.0,
+        "activo": true
+      },
+      {
+        "nombre": "camara",
+        "modelo": "Intel RealSense",
+        "resolucion": [1920, 1080],
+        "fps": 30
+      }
+    ],
+    "motores": {
+      "izquierdo": {
+        "velocidad_max": 3.0,
+        "encoder_ticks": 1024
+      },
+      "derecho": {
+        "velocidad_max": 3.0,
+        "encoder_ticks": 1024
+      }
+    }
+  }
+}'
+        :copyable="true"
+      />
+    </div>
+
+    <!-- ROSBRIDGE -->
+    <div class="section-group">
+      <SectionTitle>4. Caso Práctico: rosbridge (Web ↔ ROS 2)</SectionTitle>
+      <TextBlock>
+        <strong>rosbridge</strong> es un paquete que traduce mensajes ROS 2 a JSON para que puedas
+        controlar robots desde una página web usando WebSockets.
+      </TextBlock>
+
+      <div class="row q-col-gutter-md q-mt-md">
         <div class="col-12 col-md-6">
-          <TextBlock>
-            ¿Cómo controlas un robot desde una página web? Usas un paquete llamado
-            <strong>rosbridge</strong>. <br /><br />
-            Este paquete convierte los mensajes complejos de C++ de ROS en texto JSON simple que
-            cualquier navegador (Chrome/Firefox) puede entender.
-          </TextBlock>
-        </div>
-        <div class="col-12 col-md-6">
-          <div class="tool-card code-card q-pa-none border-yellow">
-            <div
-              class="bg-yellow-9 text-black q-px-md q-py-sm text-subtitle2 flex justify-between items-center border-bottom-light"
-            >
-              <span class="text-weight-bold">Mensaje WebSocket (Telemetría)</span>
-              <q-icon name="wifi" />
+          <div class="rosbridge-card publish">
+            <div class="rosbridge-header">
+              <q-icon name="publish" size="md" />
+              <span>Publicar (Web → Robot)</span>
             </div>
-            <!-- CORREGIDO: lang & content -->
             <CodeBlock
               lang="json"
               content='{
@@ -170,184 +229,774 @@
     "angular": {
       "x": 0.0,
       "y": 0.0,
-      "z": -1.2
+      "z": 1.2
     }
   }
 }'
+              :copyable="true"
             />
-            <div class="bg-dark-subtle q-px-md q-py-sm text-caption text-grey-5 border-top-light">
-              👆 Este JSON le dice al robot: "Avanza a 0.5 m/s y gira a la derecha".
+            <div class="rosbridge-note">
+              Envía comando de velocidad: avanzar 0.5 m/s y girar 1.2 rad/s
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <div class="rosbridge-card subscribe">
+            <div class="rosbridge-header">
+              <q-icon name="sensors" size="md" />
+              <span>Suscribirse (Robot → Web)</span>
+            </div>
+            <CodeBlock
+              lang="json"
+              content='{
+  "op": "subscribe",
+  "topic": "/scan",
+  "type": "sensor_msgs/LaserScan",
+  "throttle_rate": 100
+}'
+              :copyable="true"
+            />
+            <div class="rosbridge-note">Recibe datos del LIDAR a 100ms (10 Hz)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-mt-md">
+        <AlertBlock type="success" title="Instalación de rosbridge">
+          <CodeBlock
+            lang="bash"
+            content="# Instalar rosbridge
+sudo apt install ros-humble-rosbridge-suite
+
+# Lanzar servidor WebSocket
+ros2 launch rosbridge_server rosbridge_websocket_launch.xml
+
+# Conectar desde JavaScript
+const ws = new WebSocket('ws://localhost:9090');"
+            :copyable="true"
+          />
+        </AlertBlock>
+      </div>
+    </div>
+
+    <!-- JSON vs PYTHON -->
+    <div class="section-group">
+      <SectionTitle>5. JSON vs Python Dict: Las Diferencias</SectionTitle>
+      <TextBlock>
+        JSON y los diccionarios de Python se ven similares, pero <strong>NO son lo mismo</strong>.
+        Aquí están las diferencias críticas:
+      </TextBlock>
+
+      <div class="comparison-table q-mt-md">
+        <div class="comparison-row header">
+          <div class="comparison-cell">Característica</div>
+          <div class="comparison-cell">Python Dict</div>
+          <div class="comparison-cell">JSON</div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell">Comillas</div>
+          <div class="comparison-cell"><code>'simple'</code> o <code>"doble"</code></div>
+          <div class="comparison-cell">Solo <code>"doble"</code></div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell">Booleanos</div>
+          <div class="comparison-cell"><code>True</code>, <code>False</code></div>
+          <div class="comparison-cell"><code>true</code>, <code>false</code></div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell">Null/None</div>
+          <div class="comparison-cell"><code>None</code></div>
+          <div class="comparison-cell"><code>null</code></div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell">Coma final</div>
+          <div class="comparison-cell">Permitida</div>
+          <div class="comparison-cell">❌ Prohibida</div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell">Comentarios</div>
+          <div class="comparison-cell"><code>#</code> permitido</div>
+          <div class="comparison-cell">❌ No soportado</div>
+        </div>
+      </div>
+
+      <div class="q-mt-lg">
+        <SectionTitle>Conversión en Python</SectionTitle>
+        <CodeBlock
+          title="Trabajar con JSON en Python"
+          lang="python"
+          content="import json
+
+# Python dict to JSON string
+robot_dict = {
+    'nombre': 'TurtleBot',
+    'activo': True,
+    'sensores': None
+}
+json_string = json.dumps(robot_dict)
+print(json_string)
+
+# JSON string to Python dict
+json_data = '{&quot;velocidad&quot;: 2.5}'
+robot_dict = json.loads(json_data)
+print(robot_dict['velocidad'])
+
+# Leer/escribir archivos JSON
+with open('config.json', 'w') as f:
+with open('config.json', 'r') as f:
+    data = json.load(f)"
+          :copyable="true"
+        />
+      </div>
+    </div>
+
+    <!-- ERRORES COMUNES -->
+    <div class="section-group">
+      <SectionTitle>6. Errores Comunes</SectionTitle>
+
+      <div class="errors-grid">
+        <div class="error-card">
+          <div class="error-header">
+            <q-icon name="error" color="red-4" size="lg" />
+            <span>Coma final (Trailing Comma)</span>
+          </div>
+          <div class="error-example">
+            <div class="error-code wrong">
+              <code>{</code>
+              <br />
+              <code>&nbsp;&nbsp;"id": 1,</code>
+              <br />
+              <code>&nbsp;&nbsp;"nombre": "Robot",</code>
+              <span class="error-mark">← ❌ Coma extra</span>
+              <br />
+              <code>}</code>
+            </div>
+            <div class="error-arrow">→</div>
+            <div class="error-code correct">
+              <code>{</code>
+              <br />
+              <code>&nbsp;&nbsp;"id": 1,</code>
+              <br />
+              <code>&nbsp;&nbsp;"nombre": "Robot"</code>
+              <span class="success-mark">← ✅ Sin coma</span>
+              <br />
+              <code>}</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="error-card">
+          <div class="error-header">
+            <q-icon name="error" color="orange-4" size="lg" />
+            <span>Comillas simples</span>
+          </div>
+          <div class="error-example">
+            <div class="error-code wrong">
+              <code>{'nombre': 'Robot'}</code>
+              <br />
+              <span class="error-mark">❌ Comillas simples</span>
+            </div>
+            <div class="error-arrow">→</div>
+            <div class="error-code correct">
+              <code>{"nombre": "Robot"}</code>
+              <br />
+              <span class="success-mark">✅ Comillas dobles</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="error-card">
+          <div class="error-header">
+            <q-icon name="error" color="yellow-6" size="lg" />
+            <span>Booleanos con mayúscula</span>
+          </div>
+          <div class="error-example">
+            <div class="error-code wrong">
+              <code>{"activo": True}</code>
+              <br />
+              <span class="error-mark">❌ Python style</span>
+            </div>
+            <div class="error-arrow">→</div>
+            <div class="error-code correct">
+              <code>{"activo": true}</code>
+              <br />
+              <span class="success-mark">✅ JSON style</span>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 5. JSON vs PYTHON DICT (LA TRAMPA) -->
-    <div class="section-group self-stretch q-mb-xl">
-      <SectionTitle>4. ¡Cuidado! JSON no es un Diccionario de Python</SectionTitle>
-      <div class="tool-card comparison-card row items-center justify-center q-pa-lg">
-        <div class="col-12 col-md-5 text-center">
-          <div class="text-h6 text-green-4 q-mb-sm">Python (Dict)</div>
-          <div class="bg-black q-pa-md rounded-borders font-mono text-body2 text-left border-green">
-            {<br />
-            <span class="text-green-4">'id'</span>: 1,
-            <span class="text-grey-6 text-italic"># Comillas simples OK</span><br />
-            <span class="text-green-4">True</span>,
-            <span class="text-grey-6 text-italic"># T mayúscula</span><br />
-            <span class="text-green-4">None</span>
-            <span class="text-grey-6 text-italic"># N mayúscula</span><br />
-            }
+    <!-- VALIDACIÓN -->
+    <div class="section-group">
+      <SectionTitle>7. Herramientas de Validación</SectionTitle>
+
+      <div class="row q-col-gutter-md">
+        <div class="col-12 col-md-6">
+          <div class="tool-card">
+            <div class="tool-header">
+              <q-icon name="check_circle" color="green-4" />
+              <span>Validar en Python</span>
+            </div>
+            <CodeBlock
+              lang="python"
+              content="import json
+
+json_string = '{&quot;nombre&quot;: &quot;Robot&quot;}'
+
+try:
+    data = json.loads(json_string)
+    print('JSON valido')
+except json.JSONDecodeError as e:
+    print(f'Error: {e}')"
+              :copyable="true"
+            />
           </div>
         </div>
 
-        <div class="col-12 col-md-2 text-center q-my-md">
-          <div class="column items-center">
-            <q-icon name="close" color="red" size="3rem" />
-            <div class="text-caption text-red text-weight-bold">NO SON IGUALES</div>
-          </div>
-        </div>
+        <div class="col-12 col-md-6">
+          <div class="tool-card">
+            <div class="tool-header">
+              <q-icon name="terminal" color="blue-4" />
+              <span>Validar en Terminal</span>
+            </div>
+            <CodeBlock
+              lang="bash"
+              content="# Instalar jq (JSON processor)
+sudo apt install jq
 
-        <div class="col-12 col-md-5 text-center">
-          <div class="text-h6 text-yellow-4 q-mb-sm">JSON (String)</div>
-          <div
-            class="bg-black q-pa-md rounded-borders font-mono text-body2 text-left border-yellow"
-          >
-            {<br />
-            <span class="text-yellow-4">"id"</span>: 1,
-            <span class="text-red-4 text-italic"># Comillas DOBLES obligatorias</span><br />
-            <span class="text-yellow-4">true</span>,
-            <span class="text-red-4 text-italic"># minúscula</span><br />
-            <span class="text-yellow-4">null</span>
-            <span class="text-red-4 text-italic"># minúscula</span><br />
-            }
+# Validar sintaxis
+cat config.json | jq .
+
+# Pretty print
+jq . config.json
+
+# Extraer valor
+jq '.robot.nombre' config.json"
+              :copyable="true"
+            />
           </div>
         </div>
       </div>
-      <div class="text-center q-mt-lg text-grey-5">
-        <q-icon name="info" color="primary" /> Para convertir entre ellos en Python, usa siempre
-        <code>import json</code> y las funciones <code>json.loads()</code> /
-        <code>json.dumps()</code>.
+
+      <div class="q-mt-md">
+        <AlertBlock type="info" title="Validadores Online">
+          <strong>JSONLint:</strong> https://jsonlint.com/
+          <br />
+          <strong>JSON Formatter:</strong> https://jsonformatter.org/
+          <br />
+          <strong>JSON Editor Online:</strong> https://jsoneditoronline.org/
+        </AlertBlock>
       </div>
     </div>
-  </q-page>
+
+    <!-- VIDEO -->
+    <div class="section-group">
+      <SectionTitle>📹 Video Complementario</SectionTitle>
+      <div class="video-container">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="JSON en ROS 2"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+            "
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <q-icon name="info" color="blue-4" size="sm" />
+          Reemplaza dQw4w9WgXcQ con tu video de YouTube
+        </div>
+      </div>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="section-group q-mb-xl">
+      <SectionTitle>📝 Resumen</SectionTitle>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <code>{"clave": "valor"}</code>
+          <span>Estructura básica</span>
+        </div>
+        <div class="summary-item">
+          <code>"string"</code>
+          <span>Comillas dobles obligatorias</span>
+        </div>
+        <div class="summary-item">
+          <code>true/false/null</code>
+          <span>Minúsculas</span>
+        </div>
+        <div class="summary-item">
+          <code>[1, 2, 3]</code>
+          <span>Arrays</span>
+        </div>
+        <div class="summary-item">
+          <code>rosbridge</code>
+          <span>Web ↔ ROS 2</span>
+        </div>
+        <div class="summary-item">
+          <code>json.loads()</code>
+          <span>String → Dict</span>
+        </div>
+      </div>
+
+      <AlertBlock type="success" title="Checklist de JSON Válido" class="q-mt-lg">
+        ✅ Comillas dobles en claves y strings
+        <br />
+        ✅ Sin coma después del último elemento
+        <br />
+        ✅ Booleanos en minúsculas (<code>true</code>, <code>false</code>)
+        <br />
+        ✅ <code>null</code> en minúsculas
+        <br />
+        ✅ Sin comentarios
+        <br />
+        ✅ Validado con <code>jq</code> o <code>json.loads()</code>
+      </AlertBlock>
+    </div>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
-import SectionTitle from 'components/content/SectionTitle.vue';
-import SplitBlock from 'components/content/SplitBlock.vue';
 import CodeBlock from 'components/content/CodeBlock.vue';
+import SectionTitle from 'components/content/SectionTitle.vue';
 </script>
 
 <style scoped>
-/* --- ESTILOS MAESTROS --- */
-.intro-hero,
 .section-group {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 3.5rem auto;
+  margin-bottom: 3.5rem;
 }
 
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(250, 204, 21, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
+/* ANATOMY DEMO */
+.anatomy-demo {
+  background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  margin-top: 1.5rem;
+}
+
+.anatomy-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.json-breakdown {
+  font-family: 'Fira Code', monospace;
+  font-size: 1.5rem;
   text-align: center;
 }
 
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.1;
-  color: #f8fafc;
+.bracket {
+  color: #64748b;
+  font-weight: 700;
 }
 
-/* TOOL CARDS */
-.tool-card {
-  height: 100%;
-  border-radius: 16px;
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+.key {
+  color: #fbbf24;
+  font-weight: 700;
 }
 
-/* DISSECTION CARD */
-.dissection-card {
-  border-top: 4px solid #facc15;
-  background: #0f172a;
+.colon {
+  color: #64748b;
+  margin: 0 0.5rem;
 }
 
-.key-hover:hover {
-  text-shadow: 0 0 10px rgba(250, 204, 21, 0.6);
-  cursor: help;
-}
-.value-hover:hover {
-  text-shadow: 0 0 10px rgba(96, 165, 250, 0.6);
-  cursor: help;
-}
-.list-hover:hover {
-  text-shadow: 0 0 10px rgba(192, 132, 252, 0.6);
-  cursor: help;
+.value.string {
+  color: #22c55e;
 }
 
-/* CODE CARD */
-.tool-card.code-card {
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.tool-card.border-yellow {
-  border-color: #facc15;
+.value.number {
+  color: #60a5fa;
 }
 
-/* COMPARISON CARD */
-.comparison-card {
-  border: 1px dashed rgba(255, 255, 255, 0.2);
-}
-.border-green {
-  border-left: 2px solid #4ade80;
-}
-.border-yellow {
-  border-left: 2px solid #facc15;
+.comma {
+  color: #64748b;
 }
 
-/* UTILS */
-.bg-dark-subtle {
-  background: rgba(0, 0, 0, 0.3);
+.indent {
+  display: inline-block;
+  width: 2rem;
 }
-.bg-slate-900 {
-  background: #0f172a;
+
+.annotations {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
 }
-.border-bottom-light {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+.annotation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
 }
-.border-top-light {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+.key-ann {
+  color: #fbbf24;
 }
-.font-mono {
+
+.value-ann {
+  color: #60a5fa;
+}
+
+/* RULES GRID */
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.rule-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.rule-text {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
+.rule-text code {
   font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
 }
-.tool-list {
-  list-style: none;
-  padding: 0;
+
+/* TYPES GRID */
+.types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.type-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.type-card.string {
+  border-top: 4px solid #22c55e;
+}
+
+.type-card.number {
+  border-top: 4px solid #60a5fa;
+}
+
+.type-card.boolean {
+  border-top: 4px solid #a855f7;
+}
+
+.type-card.null {
+  border-top: 4px solid #64748b;
+}
+
+.type-card.array {
+  border-top: 4px solid #f97316;
+}
+
+.type-card.object {
+  border-top: 4px solid #fbbf24;
+}
+
+.type-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  font-weight: 700;
+  color: #f1f5f9;
+  flex-shrink: 0;
+}
+
+.type-note {
+  padding: 1rem 1.5rem;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-top: auto;
+}
+
+/* ROSBRIDGE CARDS */
+.rosbridge-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.rosbridge-card.publish {
+  border-top: 4px solid #3b82f6;
+}
+
+.rosbridge-card.subscribe {
+  border-top: 4px solid #22c55e;
+}
+
+.rosbridge-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  font-weight: 700;
+  color: #f1f5f9;
+  flex-shrink: 0;
+}
+
+.rosbridge-note {
+  padding: 1rem 1.5rem;
+  background: rgba(59, 130, 246, 0.1);
+  font-size: 0.85rem;
+  color: #93c5fd;
+  margin-top: auto;
+}
+
+/* COMPARISON TABLE */
+.comparison-table {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.comparison-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.comparison-row:last-child {
+  border-bottom: none;
+}
+
+.comparison-row.header {
+  background: rgba(0, 0, 0, 0.3);
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.comparison-cell {
+  padding: 1rem 1.5rem;
+  border-right: 1px solid rgba(148, 163, 184, 0.2);
   color: #cbd5e1;
 }
-.tool-list li {
-  margin-bottom: 8px;
-  font-size: 0.95rem;
+
+.comparison-cell:last-child {
+  border-right: none;
+}
+
+.comparison-cell code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+}
+
+/* ERRORS GRID */
+.errors-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.error-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.error-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.error-example {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1rem;
+  padding: 1.5rem;
+  align-items: center;
+}
+
+.error-code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.error-code.wrong {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.error-code.correct {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.error-mark {
+  color: #fca5a5;
+  font-size: 0.85rem;
+  margin-left: 0.5rem;
+}
+
+.success-mark {
+  color: #86efac;
+  font-size: 0.85rem;
+  margin-left: 0.5rem;
+}
+
+.error-arrow {
+  color: #fbbf24;
+  font-size: 1.5rem;
+}
+
+/* TOOL CARD */
+.tool-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tool-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  font-weight: 700;
+  color: #f1f5f9;
+  flex-shrink: 0;
+}
+
+/* VIDEO */
+.video-container {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* SUMMARY */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.summary-item {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-item code {
+  font-family: 'Fira Code', monospace;
+  color: #22c55e;
+  font-size: 1rem;
+}
+
+.summary-item span {
+  color: #cbd5e1;
+  font-size: 0.85rem;
 }
 
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.2rem;
-  }
   .annotations {
-    display: none;
+    grid-template-columns: 1fr;
+  }
+
+  .error-example {
+    grid-template-columns: 1fr;
+  }
+
+  .error-arrow {
+    transform: rotate(90deg);
+  }
+
+  .comparison-row {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-cell {
+    border-right: none;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
   }
 }
 </style>

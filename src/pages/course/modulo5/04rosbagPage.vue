@@ -1,517 +1,685 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <!-- 1. HERO SECTION -->
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-red-4 text-weight-bold q-mb-sm">
-          MÓDULO 5.4: VIAJE EN EL TIEMPO
+  <LessonContainer>
+    <!-- HERO INTRO -->
+    <TextBlock>
+      <strong>rosbag2</strong> es el sistema de grabación y replay de ROS 2. Permite capturar topics
+      en archivos SQLite3/MCAP para testing, debugging, y análisis offline. Soporta compression,
+      filtering, y playback con rate control.
+    </TextBlock>
+
+    <AlertBlock type="info" title="Capacidades Clave">
+      <strong>Recording:</strong> Grabar topics con filtering y compression
+      <br />
+      <strong>Playback:</strong> Replay con rate control, loop, remapping
+      <br />
+      <strong>Storage:</strong> SQLite3 (default), MCAP (high-performance)
+      <br />
+      <strong>Compression:</strong> zstd, lz4 para reducir tamaño
+    </AlertBlock>
+
+    <!-- RECORDING -->
+    <div class="section-group">
+      <SectionTitle>1. Advanced Recording</SectionTitle>
+
+      <div class="recording-options q-mt-md">
+        <div class="rec-card basic">
+          <div class="rec-header">
+            <q-icon name="fiber_manual_record" />
+            <span>Basic Recording</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Grabar todos los topics
+ros2 bag record -a
+
+# Grabar topics específicos
+ros2 bag record /scan /odom /camera/image
+
+# Output file custom
+ros2 bag record -a -o my_data"
+            :copyable="true"
+          />
         </div>
 
-        <h1 class="hero-title">Rosbag2: La <span class="text-white">Caja Negra</span></h1>
-
-        <TextBlock>
-          Los robots fallan. Y cuando fallan en el mundo real, es difícil saber por qué. ¿Fue un
-          error del sensor? ¿Un fallo en el código?
-          <br /><br />
-          <strong>Rosbag2</strong> te permite grabar todos los mensajes de los tópicos en un
-          archivo. Luego, puedes "reproducir" esos datos en tu casa, engañando a tus nodos para que
-          crean que el robot sigue funcionando.
-        </TextBlock>
-      </div>
-    </section>
-
-    <!-- 2. CONCEPTO RECORD / PLAY -->
-    <div class="section-group self-stretch">
-      <SectionTitle>1. Grabar y Reproducir</SectionTitle>
-
-      <SplitBlock>
-        <template #left>
-          <TextBlock>
-            El flujo de trabajo es simple pero poderoso.
-            <br /><br />
-            🔴 <strong>Record:</strong> Capturas los datos en vivo (cámaras, lidar, odometría) y los
-            guardas en una base de datos (SQLite). <br /><br />
-            ▶️ <strong>Play:</strong> Rosbag inyecta esos mensajes de nuevo en el sistema. Tus
-            algoritmos de navegación no saben que es una grabación; procesan los datos como si
-            fueran frescos.
-          </TextBlock>
-
-          <div class="q-mt-md">
-            <AlertBlock type="warning" title="Espacio en Disco">
-              Grabar video o nubes de puntos (Lidar) consume Gigabytes por minuto. ¡Vigila tu disco
-              duro!
-            </AlertBlock>
+        <div class="rec-card filtering">
+          <div class="rec-header">
+            <q-icon name="filter_alt" />
+            <span>Filtering</span>
           </div>
-        </template>
+          <CodeBlock
+            lang="bash"
+            content="# Regex filtering
+ros2 bag record -e '/camera/.*/compressed'
 
-        <template #right>
-          <!-- VISUALIZATION: TAPE RECORDER METAPHOR -->
-          <div
-            class="tool-card bg-slate-900 q-pa-lg shadow-2 border-red relative-position overflow-hidden"
-            style="height: 280px"
-          >
-            <!-- TAPE REELS ANIMATION -->
-            <div class="absolute-center row q-gutter-x-xl z-top" style="top: 45%">
-              <!-- Left Reel -->
-              <div class="reel reel-spin">
-                <div class="reel-inner bg-grey-9"></div>
-                <div class="reel-holes">
-                  <div class="hole bg-slate-900"></div>
-                  <div class="hole bg-slate-900"></div>
-                  <div class="hole bg-slate-900"></div>
-                </div>
-              </div>
-              <!-- Right Reel -->
-              <div class="reel reel-spin delay-spin">
-                <div class="reel-inner bg-grey-9"></div>
-                <div class="reel-holes">
-                  <div class="hole bg-slate-900"></div>
-                  <div class="hole bg-slate-900"></div>
-                  <div class="hole bg-slate-900"></div>
-                </div>
-              </div>
-            </div>
+# Excluir topics
+ros2 bag record -a -x '/rosout|/diagnostics'
 
-            <!-- TAPE LINE -->
-            <div
-              class="absolute-center bg-grey-8"
-              style="width: 200px; height: 6px; top: 45%; z-index: 1"
-            ></div>
-
-            <!-- DATA PACKETS ON TAPE -->
-            <div class="packet-stream absolute" style="top: 41%; left: 15%; width: 70%; z-index: 2">
-              <div class="data-dot bg-blue-5"></div>
-              <div class="data-dot bg-green-5 delay-1"></div>
-              <div class="data-dot bg-orange-5 delay-2"></div>
-            </div>
-
-            <!-- CONTROLS UI -->
-            <div
-              class="absolute-bottom bg-black q-py-sm row justify-center q-gutter-x-lg border-top-dark"
-            >
-              <div class="control-btn bg-red-6 shadow-glow-red scale-hover">
-                <q-icon name="fiber_manual_record" color="white" />
-              </div>
-              <div class="control-btn bg-green-6 scale-hover">
-                <q-icon name="play_arrow" color="white" />
-              </div>
-              <div class="control-btn bg-grey-8 scale-hover">
-                <q-icon name="pause" color="white" />
-              </div>
-            </div>
-
-            <!-- LCD DISPLAY -->
-            <div
-              class="absolute-top-right q-ma-sm bg-black q-px-sm q-py-xs rounded border-red-dim row items-center"
-            >
-              <div class="text-red-5 font-mono text-xs blink q-mr-sm">REC ●</div>
-              <div class="text-grey-5 font-mono text-xs">00:04:23</div>
-            </div>
-          </div>
-        </template>
-      </SplitBlock>
-    </div>
-
-    <!-- 3. COMANDOS CLI -->
-    <div class="section-group self-stretch">
-      <SectionTitle>2. Comandos Esenciales</SectionTitle>
-      <div class="row q-col-gutter-md">
-        <!-- RECORD ALL -->
-        <div class="col-12 col-md-6">
-          <div class="custom-card border-red h-full bg-slate-800 shadow-2 hover-lift">
-            <div class="card-header q-pa-md border-bottom-dark row justify-between items-center">
-              <div class="text-subtitle1 text-white text-weight-bold">Grabar Todo</div>
-              <q-icon name="save" color="red-4" size="sm" />
-            </div>
-            <div class="q-pa-md">
-              <p class="text-grey-4 text-xs q-mb-md">
-                Captura todos los tópicos activos. Útil, pero genera archivos gigantes.
-              </p>
-              <CodeBlock lang="bash" content="$ ros2 bag record -a" :copyable="true" />
-            </div>
-          </div>
+# Solo topics de un namespace
+ros2 bag record -e '/robot1/.*'"
+            :copyable="true"
+          />
         </div>
 
-        <!-- RECORD SPECIFIC -->
-        <div class="col-12 col-md-6">
-          <div class="custom-card border-orange h-full bg-slate-800 shadow-2 hover-lift">
-            <div class="card-header q-pa-md border-bottom-dark row justify-between items-center">
-              <div class="text-subtitle1 text-white text-weight-bold">Grabar Específico</div>
-              <q-icon name="filter_alt" color="orange-4" size="sm" />
-            </div>
-            <div class="q-pa-md">
-              <p class="text-grey-4 text-xs q-mb-md">
-                Captura solo lo que necesitas (ej: sensores) y ponle nombre al archivo.
-              </p>
-              <CodeBlock
-                lang="bash"
-                content="$ ros2 bag record -o test_1 /cmd_vel /odom"
-                :copyable="true"
-              />
-            </div>
+        <div class="rec-card compression">
+          <div class="rec-header">
+            <q-icon name="compress" />
+            <span>Compression</span>
           </div>
+          <CodeBlock
+            lang="bash"
+            content="# Comprimir con zstd (mejor ratio)
+ros2 bag record -a \
+  --compression-mode file \
+  --compression-format zstd
+
+# Comprimir con lz4 (más rápido)
+ros2 bag record -a \
+  --compression-mode message \
+  --compression-format lz4"
+            :copyable="true"
+          />
+          <div class="rec-metric">⚡ zstd: 3-5x compression ratio</div>
         </div>
 
-        <!-- INFO -->
-        <div class="col-12 col-md-6">
-          <div class="custom-card border-blue h-full bg-slate-800 shadow-2 hover-lift">
-            <div class="card-header q-pa-md border-bottom-dark row justify-between items-center">
-              <div class="text-subtitle1 text-white text-weight-bold">Inspeccionar</div>
-              <q-icon name="info" color="blue-4" size="sm" />
-            </div>
-            <div class="q-pa-md">
-              <p class="text-grey-4 text-xs q-mb-md">
-                Ver cuánto dura, cuánto pesa y qué tópicos hay dentro del bag.
-              </p>
-              <CodeBlock lang="bash" content="$ ros2 bag info test_1" :copyable="true" />
-            </div>
+        <div class="rec-card splitting">
+          <div class="rec-header">
+            <q-icon name="call_split" />
+            <span>Splitting</span>
           </div>
-        </div>
+          <CodeBlock
+            lang="bash"
+            content="# Split por tamaño (1GB)
+ros2 bag record -a --max-bag-size 1000000000
 
-        <!-- PLAY -->
-        <div class="col-12 col-md-6">
-          <div class="custom-card border-green h-full bg-slate-800 shadow-2 hover-lift">
-            <div class="card-header q-pa-md border-bottom-dark row justify-between items-center">
-              <div class="text-subtitle1 text-white text-weight-bold">Reproducir</div>
-              <q-icon name="play_circle" color="green-4" size="sm" />
-            </div>
-            <div class="q-pa-md">
-              <p class="text-grey-4 text-xs q-mb-md">
-                La opción <code>--loop</code> reproduce en bucle infinito.
-              </p>
-              <CodeBlock lang="bash" content="$ ros2 bag play test_1 --loop" :copyable="true" />
-            </div>
-          </div>
+# Split por duración (300s = 5min)
+ros2 bag record -a --max-bag-duration 300
+
+# Útil para:
+# - Evitar archivos gigantes
+# - Facilitar transferencia
+# - Procesamiento paralelo"
+            :copyable="true"
+          />
         </div>
       </div>
     </div>
 
-    <!-- 4. EL FORMATO MCAP (MODERNO) -->
-    <div class="section-group self-stretch q-mt-xl">
-      <SectionTitle>3. Formatos: SQLite3 vs MCAP</SectionTitle>
+    <!-- PLAYBACK -->
+    <div class="section-group">
+      <SectionTitle>2. Playback Strategies</SectionTitle>
 
-      <SplitBlock>
-        <template #left>
-          <TextBlock>
-            Por defecto, ROS 2 guarda los datos en una base de datos
-            <strong>SQLite3</strong> (archivos `.db3`). Es estándar pero puede ser lento para
-            escribir datos masivos. <br /><br />
-            La industria se está moviendo hacia <strong>MCAP</strong> (Foxglove), un formato
-            optimizado para robótica de alto rendimiento.
-          </TextBlock>
-          <div class="q-mt-sm">
-            <div class="code-label bash">Instalar Plugin MCAP</div>
-            <CodeBlock
-              lang="bash"
-              content="$ sudo apt install ros-jazzy-rosbag2-storage-mcap"
-              :copyable="true"
-            />
+      <div class="playback-options q-mt-md">
+        <div class="play-card">
+          <div class="play-header">
+            <q-icon name="play_arrow" color="green-4" />
+            <span>Rate Control</span>
           </div>
-        </template>
+          <div class="play-desc">Controlar velocidad de replay</div>
+          <CodeBlock
+            lang="bash"
+            content="# Replay a velocidad normal
+ros2 bag play my_data.db3
 
-        <template #right>
-          <div class="tool-card bg-slate-800 q-pa-lg border-left-purple shadow-2 rounded-borders">
-            <div class="row items-center q-mb-md">
-              <q-icon name="folder_open" color="purple-4" size="sm" class="q-mr-sm" />
-              <div class="text-purple-4 text-subtitle1 text-weight-bold">
-                Estructura de Carpetas
-              </div>
-            </div>
+# Mitad de velocidad (slow motion)
+ros2 bag play my_data.db3 --rate 0.5
 
-            <!-- Folder Tree Viz -->
-            <div class="font-mono text-xs text-grey-4 bg-black q-pa-md rounded border-light">
-              <div class="row items-center"><span class="text-blue-4">mi_grabacion/</span></div>
-              <div class="row items-center q-pl-md q-mt-xs">
-                <span class="text-grey-7">├──</span>
-                <q-icon name="description" color="yellow-6" class="q-mx-sm" size="xs" />
-                <span class="text-white">metadata.yaml</span>
-              </div>
-              <div class="row items-center q-pl-md q-mt-xs">
-                <span class="text-grey-7">└──</span>
-                <q-icon name="database" color="green-5" class="q-mx-sm" size="xs" />
-                <span class="text-green-3">mi_grabacion_0.db3</span>
-              </div>
-            </div>
+# Doble velocidad
+ros2 bag play my_data.db3 --rate 2.0
 
-            <div class="q-mt-md row items-start bg-slate-900 q-pa-sm rounded border-light">
-              <q-icon name="lightbulb" color="yellow-5" size="xs" class="q-mr-sm q-mt-xs" />
-              <div class="text-xxs text-grey-5">
-                Nota: Un "Bag" no es un archivo único, es una <strong>carpeta</strong> que contiene
-                los datos fragmentados y la metadata.
-              </div>
-            </div>
+# Útil para:
+# - Debugging (slow motion)
+# - Testing rápido (fast forward)"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="play-card">
+          <div class="play-header">
+            <q-icon name="loop" color="blue-4" />
+            <span>Loop Playback</span>
           </div>
-        </template>
-      </SplitBlock>
-    </div>
+          <div class="play-desc">Replay continuo para testing</div>
+          <CodeBlock
+            lang="bash"
+            content="# Loop infinito
+ros2 bag play my_data.db3 --loop
 
-    <!-- 5. CASO DE USO REAL (DEBUGGING) -->
-    <div class="section-group self-stretch q-mt-xl q-mb-xl">
-      <div
-        class="bg-gradient-dark q-pa-lg rounded-borders border-dashed-red text-center relative-position overflow-hidden"
-      >
-        <!-- Background Pattern -->
-        <div class="absolute-full opacity-5 bg-pattern-dots"></div>
+# Útil para:
+# - Testing de algoritmos
+# - Demostración continua
+# - Stress testing"
+            :copyable="true"
+          />
+        </div>
 
-        <div class="relative-position z-top">
-          <q-icon name="bug_report" size="md" color="red-4" class="q-mb-sm" />
-          <div class="text-h6 text-white text-weight-bold">El Truco del Desarrollador Senior</div>
-          <p class="text-grey-4 q-mb-md text-body2" style="max-width: 600px; margin: 1rem auto">
-            No desarrolles tus algoritmos conectando el robot real cada vez.
-            <br /><br />
-            1. Graba 5 minutos de datos reales con el robot.<br />
-            2. Siéntate en tu escritorio con un café.<br />
-            3. Reproduce el bag en bucle mientras programas.<br />
-            <br />
-            <strong>¡Es como tener el robot dentro de tu laptop!</strong>
-          </p>
+        <div class="play-card">
+          <div class="play-header">
+            <q-icon name="swap_horiz" color="purple-4" />
+            <span>Topic Remapping</span>
+          </div>
+          <div class="play-desc">Redirigir topics durante replay</div>
+          <CodeBlock
+            lang="bash"
+            content="# Remap topic
+ros2 bag play my_data.db3 \
+  --remap /old_topic:=/new_topic
+
+# Útil para:
+# - Testing con diferentes nombres
+# - Evitar conflictos
+# - Multi-robot scenarios"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="play-card">
+          <div class="play-header">
+            <q-icon name="schedule" color="orange-4" />
+            <span>Clock Simulation</span>
+          </div>
+          <div class="play-desc">Publicar /clock para simulación de tiempo</div>
+          <CodeBlock
+            lang="bash"
+            content="# Publicar /clock
+ros2 bag play my_data.db3 --clock
+
+# Nodes deben usar use_sim_time:=true
+ros2 run my_pkg my_node --ros-args \
+  -p use_sim_time:=true"
+            :copyable="true"
+          />
         </div>
       </div>
     </div>
-  </q-page>
+
+    <!-- ANALYSIS -->
+    <div class="section-group">
+      <SectionTitle>3. Analysis Tools</SectionTitle>
+
+      <div class="analysis-tools q-mt-md">
+        <div class="analysis-card">
+          <div class="analysis-header">
+            <q-icon name="info" />
+            <span>Bag Info</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Ver metadata
+ros2 bag info my_data.db3
+
+# Output:
+# Files:             my_data_0.db3
+# Bag size:          1.2 GB
+# Storage id:        sqlite3
+# Duration:          120.5s
+# Start:             Jan 11 2026 04:00:00
+# End:               Jan 11 2026 04:02:00
+# Messages:          45230
+# Topic information:
+#   /scan: 1205 msgs (sensor_msgs/LaserScan)
+#   /odom: 12050 msgs (nav_msgs/Odometry)
+#   /camera/image: 3600 msgs (sensor_msgs/Image)"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="analysis-card">
+          <div class="analysis-header">
+            <q-icon name="search" />
+            <span>Message Extraction</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Exportar a CSV (requiere plugin)
+ros2 bag export my_data.db3 --output-format csv
+
+# Procesar con Python
+import rosbag2_py
+from rclpy.serialization import deserialize_message
+
+reader = rosbag2_py.SequentialReader()
+reader.open('my_data.db3')
+
+while reader.has_next():
+    topic, data, timestamp = reader.read_next()
+    # Procesar mensaje"
+            :copyable="true"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- STORAGE PLUGINS -->
+    <div class="section-group">
+      <SectionTitle>4. Storage Plugins</SectionTitle>
+
+      <div class="storage-comparison q-mt-md">
+        <div class="storage-card sqlite">
+          <div class="storage-name">SQLite3</div>
+          <div class="storage-desc">Default storage plugin</div>
+          <div class="storage-pros">
+            <div class="pro-item">✅ Amplio soporte</div>
+            <div class="pro-item">✅ Fácil de usar</div>
+            <div class="pro-item">✅ SQL queries</div>
+          </div>
+          <div class="storage-cons">
+            <div class="con-item">❌ Performance limitado</div>
+            <div class="con-item">❌ No streaming</div>
+          </div>
+        </div>
+
+        <div class="storage-card mcap">
+          <div class="storage-name">MCAP</div>
+          <div class="storage-desc">High-performance storage</div>
+          <div class="storage-pros">
+            <div class="pro-item">✅ 10x más rápido</div>
+            <div class="pro-item">✅ Streaming support</div>
+            <div class="pro-item">✅ Mejor compression</div>
+          </div>
+          <div class="storage-cons">
+            <div class="con-item">❌ Requiere instalación</div>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Instalar MCAP plugin
+sudo apt install ros-humble-rosbag2-storage-mcap
+
+# Usar MCAP
+ros2 bag record -a -s mcap"
+            :copyable="true"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- BENCHMARKS -->
+    <div class="section-group">
+      <SectionTitle>5. Performance Benchmarks</SectionTitle>
+
+      <div class="benchmark-table q-mt-md">
+        <div class="bench-header">
+          <div class="bench-title">Compression Comparison (10 min recording)</div>
+        </div>
+        <div class="bench-rows">
+          <div class="bench-row header">
+            <div class="bench-cell">Method</div>
+            <div class="bench-cell">Size</div>
+            <div class="bench-cell">Ratio</div>
+          </div>
+          <div class="bench-row">
+            <div class="bench-cell">Uncompressed</div>
+            <div class="bench-cell">5.2 GB</div>
+            <div class="bench-cell baseline">1x</div>
+          </div>
+          <div class="bench-row">
+            <div class="bench-cell">lz4</div>
+            <div class="bench-cell">2.8 GB</div>
+            <div class="bench-cell good">1.86x</div>
+          </div>
+          <div class="bench-row">
+            <div class="bench-cell">zstd</div>
+            <div class="bench-cell">1.1 GB</div>
+            <div class="bench-cell excellent">4.73x</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="section-group">
+      <SectionTitle>📹 Video Complementario</SectionTitle>
+      <div class="video-container">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="rosbag2 Advanced Usage"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+            "
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <q-icon name="info" color="blue-4" size="sm" />
+          Reemplaza con video técnico sobre rosbag2
+        </div>
+      </div>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="section-group q-mb-xl">
+      <SectionTitle>📝 Resumen Técnico</SectionTitle>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <code>ros2 bag record</code>
+          <span>Grabar topics</span>
+        </div>
+        <div class="summary-item">
+          <code>-e (regex)</code>
+          <span>Filtering avanzado</span>
+        </div>
+        <div class="summary-item">
+          <code>--compression zstd</code>
+          <span>4.7x compression</span>
+        </div>
+        <div class="summary-item">
+          <code>ros2 bag play</code>
+          <span>Replay con rate control</span>
+        </div>
+        <div class="summary-item">
+          <code>MCAP storage</code>
+          <span>10x performance</span>
+        </div>
+      </div>
+
+      <AlertBlock type="success" title="Best Practices" class="q-mt-lg">
+        ✅ Usar compression zstd para ahorrar espacio (4.7x)
+        <br />
+        ✅ Split bags por tamaño para facilitar manejo
+        <br />
+        ✅ Filtering con regex para grabar solo lo necesario
+        <br />
+        ✅ MCAP storage para high-performance recording
+        <br />
+        ✅ Loop playback para testing continuo
+      </AlertBlock>
+    </div>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
-import SectionTitle from 'components/content/SectionTitle.vue';
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
 import CodeBlock from 'components/content/CodeBlock.vue';
-import SplitBlock from 'components/content/SplitBlock.vue';
+import SectionTitle from 'components/content/SectionTitle.vue';
 </script>
 
 <style scoped>
-/* --- ESTILOS MAESTROS --- */
-.intro-hero,
 .section-group {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 3.5rem auto;
+  margin-bottom: 3.5rem;
 }
 
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(239, 68, 68, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+/* RECORDING OPTIONS */
+.recording-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.rec-card {
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid #14b8a6;
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.rec-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1.1rem;
+}
+
+.rec-metric {
+  padding: 1rem;
+  background: rgba(20, 184, 166, 0.1);
+  border: 1px solid #14b8a6;
+  border-radius: 8px;
+  color: #5eead4;
+  font-weight: 700;
   text-align: center;
 }
 
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.1;
-  color: #f8fafc;
+/* PLAYBACK OPTIONS */
+.playback-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
 }
 
-/* TAPE RECORDER ANIMATION */
-.tool-card {
+.play-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
-}
-.border-red {
-  border: 1px solid #ef4444;
-}
-.border-red-dim {
-  border: 1px solid rgba(239, 68, 68, 0.3);
-}
-.shadow-glow-red {
-  box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.reel {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  border: 6px solid #1e293b;
-  position: relative;
+.play-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: #000;
-}
-.reel-inner {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-}
-.reel-holes {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  animation: spinReel 4s linear infinite;
-}
-.hole {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  position: absolute;
-}
-.hole:nth-child(1) {
-  top: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.hole:nth-child(2) {
-  bottom: 12px;
-  left: 12px;
-}
-.hole:nth-child(3) {
-  bottom: 12px;
-  right: 12px;
+  gap: 0.75rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1.05rem;
 }
 
-@keyframes spinReel {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.delay-spin {
-  animation-delay: -1s;
+.play-desc {
+  color: #94a3b8;
+  font-size: 0.9rem;
 }
 
-.packet-stream {
-  height: 10px;
-  pointer-events: none;
-}
-.data-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  position: absolute;
-  animation: moveTape 2s linear infinite;
-  box-shadow: 0 0 5px currentColor;
-}
-.delay-1 {
-  animation-delay: 0.6s;
-  left: 0;
-}
-.delay-2 {
-  animation-delay: 1.2s;
-  left: 0;
+/* ANALYSIS TOOLS */
+.analysis-tools {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
 }
 
-@keyframes moveTape {
-  from {
-    transform: translateX(0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  to {
-    transform: translateX(120px);
-    opacity: 0;
-  }
+.analysis-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
 }
 
-.control-btn {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
+.analysis-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.1s;
-}
-.scale-hover:hover {
-  transform: scale(1.1);
-}
-.blink {
-  animation: blinkRec 1s infinite;
-}
-@keyframes blinkRec {
-  50% {
-    opacity: 0;
-  }
+  gap: 0.75rem;
+  font-weight: 700;
+  color: #14b8a6;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
 }
 
-/* CLI CARDS */
-.custom-card {
-  border-radius: 12px;
+/* STORAGE COMPARISON */
+.storage-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.storage-card {
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid;
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.storage-card.sqlite {
+  border-color: #06b6d4;
+}
+
+.storage-card.mcap {
+  border-color: #10b981;
+}
+
+.storage-name {
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1.3rem;
+}
+
+.storage-desc {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.storage-pros,
+.storage-cons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pro-item,
+.con-item {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
+/* BENCHMARKS */
+.benchmark-table {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
   overflow: hidden;
 }
-.border-orange {
-  border-left: 4px solid #f97316;
+
+.bench-header {
+  padding: 1rem 1.5rem;
+  background: rgba(20, 184, 166, 0.1);
+  border-bottom: 1px solid rgba(20, 184, 166, 0.3);
 }
-.border-blue {
-  border-left: 4px solid #3b82f6;
+
+.bench-title {
+  font-weight: 700;
+  color: #14b8a6;
+  font-size: 1.1rem;
 }
-.border-green {
-  border-left: 4px solid #22c55e;
+
+.bench-rows {
+  padding: 1.5rem;
 }
-.border-red-card {
-  border-left: 4px solid #ef4444;
+
+.bench-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
 }
-.h-full {
+
+.bench-row.header {
+  font-weight: 700;
+  color: #f1f5f9;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.bench-row:last-child {
+  border-bottom: none;
+}
+
+.bench-cell {
+  color: #cbd5e1;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+}
+
+.bench-cell.baseline {
+  color: #94a3b8;
+}
+
+.bench-cell.good {
+  color: #5eead4;
+  font-weight: 700;
+}
+
+.bench-cell.excellent {
+  color: #6ee7b7;
+  font-weight: 700;
+}
+
+/* VIDEO */
+.video-container {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
 }
-.hover-lift {
-  transition: transform 0.2s;
-}
-.hover-lift:hover {
-  transform: translateY(-5px);
+
+.video-caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.85rem;
 }
 
-/* FOLDER VIZ */
-.border-left-purple {
-  border-left: 4px solid #a855f7;
-}
-.border-dashed-red {
-  border: 2px dashed rgba(248, 113, 113, 0.4);
-}
-.bg-gradient-dark {
-  background: linear-gradient(145deg, #0f172a, #1e293b);
-}
-.bg-pattern-dots {
-  background-image: radial-gradient(#ffffff 1px, transparent 1px);
-  background-size: 20px 20px;
+/* SUMMARY */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
 }
 
-/* UTILS */
-.font-mono {
+.summary-item {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-item code {
   font-family: 'Fira Code', monospace;
-}
-.text-xxs {
-  font-size: 0.7rem;
-}
-.text-xs {
-  font-size: 0.8rem;
-}
-.bg-slate-900 {
-  background: #0f172a;
-}
-.bg-slate-800 {
-  background: #1e293b;
-}
-.border-light {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.border-bottom-dark {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-.border-top-dark {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-.z-top {
-  z-index: 5;
-}
-.opacity-5 {
-  opacity: 0.05;
+  color: #14b8a6;
+  font-size: 0.95rem;
 }
 
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.2rem;
+.summary-item span {
+  color: #cbd5e1;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 1024px) {
+  .recording-options,
+  .playback-options,
+  .analysis-tools,
+  .storage-comparison {
+    grid-template-columns: 1fr;
   }
 }
 </style>

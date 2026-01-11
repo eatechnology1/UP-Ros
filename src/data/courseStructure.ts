@@ -255,6 +255,7 @@ export interface CourseNode {
   title: string;
   path?: string; // Ruta relativa (ej: 'navegacion-terminal')
   icon?: string; // Icono de Material Icons
+  description?: string; // Nuevo: Para el encabezado automático de LessonContainer
   children?: CourseNode[];
 }
 
@@ -282,11 +283,36 @@ export const courseStructure: CourseNode[] = [
     icon: 'code',
     path: 'modulo-1',
     children: [
-      { title: '1.1 Python Scripts', path: '01python-scripts' },
-      { title: '1.2 Módulos y Librerías', path: '02python-modulos' },
-      { title: '1.3 Compilación C++', path: '03cpp-compilacion' },
-      { title: '1.4 Estructura C++', path: '04cpp-estructura' },
-      { title: '1.5 Bash Scripting', path: '05bash-scripting' },
+      {
+        title: '1.1 Python Scripts',
+        path: '01python-scripts',
+        description:
+          'Un script de Python en reposo es solo texto. En ejecución, es el cerebro de tu robot. Aprende el ritual para darle vida: desde la "Línea Maestra" (Shebang) hasta la gestión de memoria.',
+      },
+      {
+        title: '1.2 Módulos y Librerías',
+        path: '02python-modulos',
+        description:
+          'Un robot complejo no se programa en un solo archivo gigante. Aprende a dividir tu código en piezas reutilizables (Módulos) y a organizarlas en cajas de herramientas (Paquetes).',
+      },
+      {
+        title: '1.3 Compilación C++',
+        path: '03cpp-compilacion',
+        description:
+          'Python lee tu código línea por línea mientras funciona. C++ no. Traduce todo a binario antes de empezar. Entender esta "traducción anticipada" es clave para sobrevivir a los errores de colcon build.',
+      },
+      {
+        title: '1.4 Estructura C++',
+        path: '04cpp-estructura',
+        description:
+          'Separamos las Promesas (.hpp) de las Acciones (.cpp). Esta estructura es obligatoria para crear nodos de ROS 2 limpios y compilables.',
+      },
+      {
+        title: '1.5 Bash Scripting',
+        path: '05bash-scripting',
+        description:
+          'Bash es el lenguaje nativo de tu terminal. Aprende a crear "macros" potentes para configurar tu entorno, lanzar múltiples nodos y automatizar tareas repetitivas.',
+      },
     ],
   },
   {
@@ -294,10 +320,30 @@ export const courseStructure: CourseNode[] = [
     icon: 'data_object',
     path: 'modulo-2',
     children: [
-      { title: '2.1 XML Básico', path: '01xmlPage' },
-      { title: '2.2 JSON Básico', path: '02jsonPage' },
-      { title: '2.3 YAML Básico', path: '03yamlPage' },
-      { title: '2.4 Conversión y Uso', path: '04conversionPage' },
+      {
+        title: '2.1 XML Básico',
+        path: '01xmlPage',
+        description:
+          'XML es el lenguaje que usamos para describir estructuras jerárquicas. En ROS 2, es la ley para definir quién es tu robot (física, articulaciones) y qué necesita tu software (dependencias).',
+      },
+      {
+        title: '2.2 JSON Básico',
+        path: '02jsonPage',
+        description:
+          'JSON es el estándar para mover datos en internet. En Robótica, es el puente entre tu máquina y el mundo humano: interfaces web, dashboards de control y bases de datos en la nube.',
+      },
+      {
+        title: '2.3 YAML Básico',
+        path: '03yamlPage',
+        description:
+          'YAML es el formato diseñado para humanos. En ROS 2, es el rey de la configuración. Se usa para definir parámetros de navegación, configurar simulaciones y guardar mapas.',
+      },
+      {
+        title: '2.4 Conversión y Uso',
+        path: '04conversionPage',
+        description:
+          'En el mundo real, los datos no se quedan quietos. Aprende el arte de la Serialización: cómo transformar cualquier formato YAML/JSON/XML en objetos manipulables por tu código (Python Dicts).',
+      },
     ],
   },
   {
@@ -305,13 +351,48 @@ export const courseStructure: CourseNode[] = [
     icon: 'call_split', // Icono de rama/branch
     path: 'modulo-3',
     children: [
-      { title: '3.1 Conceptos Básicos', path: '01conceptosPage' },
-      { title: '3.2 Commits', path: '02commitsPage' },
-      { title: '3.3 Historial', path: '03historialPage' },
-      { title: '3.4 Ramas (Branches)', path: '04ramasPage' },
-      { title: '3.5 Remotos', path: '05remotosPage' },
-      { title: '3.6 Pull Requests', path: '06pull-requestsPage' },
-      { title: '3.7 Gitignore', path: '07gitignorePage' },
+      {
+        title: '3.1 Conceptos Fundamentales',
+        path: '01conceptosPage',
+        description:
+          'Imagina trabajar en tu tesis y guardar archivos como "tesis_final_v2.doc". Git es un sistema profesional para guardar "fotos" (snapshots) de tu código en el tiempo.',
+      },
+      {
+        title: '3.2 Creando Commits',
+        path: '02commitsPage',
+        description:
+          'Un "Commit" es mucho más que guardar archivos. Es una cápsula del tiempo sellada con un mensaje explicativo. Aprende el ritual sagrado: Status, Add y Commit.',
+      },
+      {
+        title: '3.3 Historial y Viajes',
+        path: '03historialPage',
+        description:
+          'De nada sirve guardar versiones si no sabes cómo volver a ellas. Git te permite moverte por la línea de tiempo de tu proyecto, viajar al pasado y deshacer errores fatales.',
+      },
+      {
+        title: '3.4 Ramas (Branches)',
+        path: '04ramasPage',
+        description:
+          'El desarrollo real no es lineal. Las Ramas son realidades paralelas donde puedes experimentar sin romper el código principal. Aprende a crear, cambiar y fusionar universos.',
+      },
+      {
+        title: '3.5 Repositorios Remotos',
+        path: '05remotosPage',
+        description:
+          'Tu código en tu laptop está aislado. Conecta tu repositorio local con GitHub usando los comandos sagrados: Remote, Push y Pull para sincronizar tu trabajo con la nube.',
+      },
+      {
+        title: '3.6 Pull Requests',
+        path: '06pull-requestsPage',
+        description:
+          'En equipos profesionales, nadie toca la rama main directamente. Usa "Solicitudes de Fusión" (Pull Requests) para que tus compañeros revisen y aprueben tu código antes de integrarlo.',
+      },
+      {
+        title: '3.7 .gitignore',
+        path: '07gitignorePage',
+        description:
+          'Git intenta guardar todo, incluso la basura. Configura el escudo .gitignore para mantener tu repositorio limpio de archivos compilados, entornos virtuales y configuraciones locales.',
+      },
     ],
   },
   {
@@ -319,11 +400,36 @@ export const courseStructure: CourseNode[] = [
     icon: 'smart_toy', // Icono de robot
     path: 'modulo-4',
     children: [
-      { title: '4.1 Arquitectura', path: '01arquitecturaPage' },
-      { title: '4.2 Workspace y Paquetes', path: '02workspacePage' },
-      { title: '4.3 Tópicos (Topics)', path: '03topicsPage' },
-      { title: '4.4 Servicios', path: '04serviciosPage' },
-      { title: '4.5 Acciones', path: '05accionesPage' },
+      {
+        title: '4.1 Arquitectura',
+        path: '01arquitecturaPage',
+        description:
+          'Olvida la programación Arduino. ROS 2 es una red de "nodos" independientes. Si la cámara falla, las ruedas siguen girando. Bienvenido a la robustez distribuida.',
+      },
+      {
+        title: '4.2 Workspace y Paquetes',
+        path: '02workspacePage',
+        description:
+          'Estructura tu caos con Workspaces y Paquetes. Aprende el ciclo de vida sagrado: colcon build, source setup.bash y la diferencia entre paquetes Python y C++.',
+      },
+      {
+        title: '4.3 Tópicos (Topics)',
+        path: '03topicsPage',
+        description:
+          'Como una radio FM: unos hablan (Publishers) y otros escuchan (Subscribers). Tuberías de datos unidireccionales para streaming de video, láser y sensores.',
+      },
+      {
+        title: '4.4 Servicios',
+        path: '04serviciosPage',
+        description:
+          'Cuando necesitas una respuesta inmediata ("¿Estás listo?"). Comunicación síncrona Cliente-Servidor para transacciones puntuales y control lógico.',
+      },
+      {
+        title: '4.5 Acciones',
+        path: '05accionesPage',
+        description:
+          'Para tareas largas ("Ve a la cocina"). Combina objetivos, feedback en tiempo real y resultados finales. ¡Puedes cancelar la misión si te arrepientes!',
+      },
     ],
   },
   {
@@ -332,11 +438,36 @@ export const courseStructure: CourseNode[] = [
     path: 'modulo-5',
     // description: 'Domina el diagnóstico y la visualización antes de simular.',
     children: [
-      { title: '5.1 CLI Avanzada & Colcon', path: '01cli-colconPage' }, // Más allá del echo
-      { title: '5.2 RViz2: Visualización', path: '02rviz2Page' }, // Ver lo invisible
-      { title: '5.3 RQT: Gráficas y Logs', path: '03rqtPage' }, // El panel de control
-      { title: '5.4 Rosbag2: Grabación', path: '04rosbagPage' }, // La caja negra
-      { title: '5.5 Debugging TF2', path: '05tf2-debugPage' }, // Arreglando coordenadas
+      {
+        title: '5.1 CLI Avanzada & Colcon',
+        path: '01cli-colconPage',
+        description:
+          'Hasta ahora has usado comandos básicos. Pero, ¿qué pasa si el sistema va lento? ¿O si necesitas compilar solo un paquete entre 50? En este módulo aprenderás las herramientas de línea de comandos (CLI) que distinguen a un usuario de un ingeniero de ROS 2. Dominarás el diagnóstico de red y la compilación selectiva.',
+      },
+      {
+        title: '5.2 RViz2: Visualización',
+        path: '02rviz2Page',
+        description:
+          'Los robots "piensan" en números y matrices. Para que nosotros los entendamos, necesitamos convertir esos números en formas, líneas y colores. RViz (ROS Visualization) no es un simulador; es una ventana a la mente del robot. Si el robot cree que hay una pared delante, RViz te mostrará esa pared, exista o no en la realidad.',
+      },
+      {
+        title: '5.3 RQT: Gráficas y Logs',
+        path: '03rqtPage',
+        description:
+          'Si RViz son los ojos del robot, RQT (ROS Qt) es su monitor de signos vitales. Aquí no verás paredes ni mapas 3D. Verás la salud del sistema: quién habla con quién (Topología), la estabilidad de los sensores (Gráficas) y los gritos de auxilio internos (Logs).',
+      },
+      {
+        title: '5.4 Rosbag2: Grabación',
+        path: '04rosbagPage',
+        description:
+          'Los robots fallan. Y cuando fallan en el mundo real, es difícil saber por qué. ¿Fue un error del sensor? ¿Un fallo en el código? Rosbag2 te permite grabar todos los mensajes de los tópicos en un archivo. Luego, puedes "reproducir" esos datos en tu casa, engañando a tus nodos para que crean que el robot sigue funcionando.',
+      },
+      {
+        title: '5.5 Debugging TF2',
+        path: '05tf2-debugPage',
+        description:
+          'Un robot no es un punto en el espacio; es una colección de partes (ruedas, sensores, chasis) conectadas entre sí. Para que el robot sepa que un obstáculo visto por la cámara (frente) está a 2 metros de las ruedas (atrás), necesita matemáticas. TF2 es el bibliotecario que mantiene el registro de todas estas relaciones de coordenadas (Transforms) en el tiempo. Si el TF falla, el robot "se rompe" geométricamente.',
+      },
     ],
   },
   {
@@ -345,10 +476,30 @@ export const courseStructure: CourseNode[] = [
     path: 'modulo-6',
     // description: 'Construye tu propio robot y entorno desde cero.',
     children: [
-      { title: '6.1 URDF: Modelado del Robot', path: '01urdf-modelingPage' }, // El cuerpo
-      { title: '6.2 Gazebo: Mundos Virtuales', path: '02gazebo-worldsPage' }, // El entorno
-      { title: '6.3 Sensores Simulados', path: '03simulated-sensorsPage' }, // Ojos y oídos (Lidar/Cam)
-      { title: '6.4 Plugins de Control', path: '04gazebo-pluginsPage' }, // Motores virtuales
+      {
+        title: '6.1 URDF: Modelado del Robot',
+        path: '01urdf-modelingPage',
+        description:
+          'Antes de que un robot pueda moverse en una simulación, necesita un cuerpo. URDF (Unified Robot Description Format) es el estándar XML que define la geometría, la física y la cinemática. Sin él, ROS 2 no sabe si controlas un dron o una tostadora.',
+      },
+      {
+        title: '6.2 Gazebo: Mundos Virtuales',
+        path: '02gazebo-worldsPage',
+        description:
+          'Tu robot no sabe si existe en el mundo real o en una simulación. Solo procesa datos. Gazebo genera esa "alucinación consensuada": calcula gravedad, fricción, inercia y luz para engañar a tu robot y permitirte fallar sin costosos desastres de hardware.',
+      },
+      {
+        title: '6.3 Sensores Simulados',
+        path: '03simulated-sensorsPage',
+        description:
+          'Un robot en Gazebo es sordo y ciego por defecto. Para que pueda navegar, inyectamos Plugins. Son pequeños programas que leen la "Matrix" (la geometría perfecta de Gazebo) y generan mensajes ROS con errores calculados, engañando a tu nodo de navegación para que crea que está en el mundo real.',
+      },
+      {
+        title: '6.4 Plugins de Control',
+        path: '04gazebo-pluginsPage',
+        description:
+          'Un modelo URDF es estático como una estatua. Para moverlo, necesitamos inyectar vida. Los Plugins de Control son el puente inverso: escuchan comandos de ROS 2 (como "avanza a 1 m/s") y calculan las fuerzas físicas necesarias para girar las ruedas virtuales en Gazebo.',
+      },
     ],
   },
   {
@@ -357,10 +508,30 @@ export const courseStructure: CourseNode[] = [
     path: 'modulo-7',
     // description: 'Dota de inteligencia espacial a tu robot simulado.',
     children: [
-      { title: '7.1 SLAM: Generación de Mapas', path: '01slam-mappingPage' }, // Crear el mundo
-      { title: '7.2 AMCL: Localización', path: '02localizationPage' }, // Ubicarse en él
-      { title: '7.3 Nav2: Configuración y Tuning', path: '03nav2-configPage' }, // Ajuste de parámetros
-      { title: '7.4 Scripting de Misiones (Python)', path: '04nav-scriptingPage' }, // "Patrullaje autónomo"
+      {
+        title: '7.1 SLAM: Mapeando el Mundo',
+        path: '01slam-mappingPage',
+        description:
+          '¿Cómo puede un robot dibujar un mapa de un lugar que no conoce mientras intenta no perderse en él? SLAM (Simultaneous Localization and Mapping) es el algoritmo huevo-gallina que resuelve este dilema construyendo mapas a partir de rayos láser y matemáticas.',
+      },
+      {
+        title: '7.2 Localización: ¿Dónde estoy?',
+        path: '02localizationPage',
+        description:
+          'Tener un mapa no sirve de nada si no sabes tu ubicación en él. AMCL es el algoritmo probabilístico que usa una "nube de partículas" para adivinar dónde está el robot, filtrando hipótesis falsas hasta converger en la realidad.',
+      },
+      {
+        title: '7.3 Nav2: Configuración',
+        path: '03nav2-configPage',
+        description:
+          'Nav2 es la joya de la corona de ROS 2. Aprende a configurar sus Costmaps (mapas de obstáculos), Planners (GPS global) y Controllers (piloto local) para que tu robot navegue con elegancia y no como un conductor ebrio.',
+      },
+      {
+        title: '7.4 Scripting de Misiones',
+        path: '04nav-scriptingPage',
+        description:
+          'RViz es para humanos. Los robots autónomos necesitan código. Usaremos la Nav2 Simple Commander API en Python para programar misiones complejas: "Ve a la cocina, recoge la carga, y si hay un obstáculo, espera 5 segundos antes de buscar otra ruta".',
+      },
     ],
   },
   {
@@ -369,10 +540,30 @@ export const courseStructure: CourseNode[] = [
     path: 'modulo-8',
     // description: 'Estandarización, empaquetado y despliegue profesional.',
     children: [
-      { title: '8.1 Launch System Pro', path: '01launch-proPage' }, // Un comando para gobernarlos a todos
-      { title: '8.2 Gestión de Configuración (YAML)', path: '02yaml-configPage' }, // Buenas prácticas
-      { title: '8.3 Docker para Robótica', path: '03docker-simPage' }, // "Funciona en mi máquina"
-      { title: '8.4 Proyecto Final Integrador', path: '04proyecto-finalPage' }, // El Gran Cierre
+      {
+        title: '8.1 Launch System Pro',
+        path: '01launch-proPage',
+        description:
+          'Un robot profesional no se arranca abriendo 20 pestañas de terminal. Se usa un Launch File maestro que orquesta el encendido de hardware, navegación y lógica, manejando reinicios automáticos si algo falla.',
+      },
+      {
+        title: '8.2 Gestión de Configuración',
+        path: '02yaml-configPage',
+        description:
+          'Hardcoding es pecado. Aprende a separar la lógica (C++/Python) de la configuración (YAML) para que tu mismo código funcione en diferentes robots sin recompilar.',
+      },
+      {
+        title: '8.3 Docker para Robótica',
+        path: '03docker-simPage',
+        description:
+          '¿"Funciona en mi máquina" pero no en la del cliente? Docker encapsula todo tu entorno (OS + ROS + Librerías) en una caja inmutable. Si corre en tu Docker, corre en cualquier parte.',
+      },
+      {
+        title: '8.4 Proyecto Final Integrador',
+        path: '04proyecto-finalPage',
+        description:
+          'El examen final. Diseña, construye y programa un robot móvil autónomo para operar en un almacén logístico. Sin guías paso a paso. Solo tú y el código.',
+      },
     ],
   },
   // {

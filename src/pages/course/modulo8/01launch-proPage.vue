@@ -1,23 +1,5 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-blue-grey-4 text-weight-bold q-mb-sm">
-          MÓDULO 8.1: ORQUESTACIÓN DE SISTEMAS
-        </div>
-        <h1 class="hero-title">
-          Launch System: <span class="text-white">El Director de Orquesta</span>
-        </h1>
-        <TextBlock>
-          Un robot profesional no se arranca abriendo 20 pestañas de terminal y escribiendo comandos
-          a mano. Se arranca con <strong>un solo botón</strong>. <br /><br />
-          El sistema de Launch de ROS 2 (escrito en Python) te permite orquestar el encendido de
-          nodos, configurar parámetros dinámicamente, incluir otros archivos de lanzamiento y
-          reaccionar si algo falla.
-        </TextBlock>
-      </div>
-    </section>
-
+  <LessonContainer>
     <div class="section-group self-stretch">
       <SectionTitle>1. El Problema de las 10 Terminales</SectionTitle>
       <SplitBlock>
@@ -275,10 +257,11 @@ RegisterEventHandler(
         </div>
       </div>
     </div>
-  </q-page>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
@@ -288,28 +271,10 @@ import CodeBlock from 'components/content/CodeBlock.vue';
 
 <style scoped>
 /* GENERAL */
-.intro-hero,
 .section-group {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto 3.5rem auto;
-}
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(148, 163, 184, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  text-align: center;
-  margin-bottom: 3rem;
-}
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  color: #f8fafc;
 }
 
 /* ORCHESTRA ANIMATION */
@@ -428,12 +393,17 @@ import CodeBlock from 'components/content/CodeBlock.vue';
   min-width: 100px;
 }
 
+/* CARDS */
+.tool-card {
+  height: 100%;
+  border-radius: 16px;
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
 /* UTILS */
 .bg-slate-900 {
   background: #0f172a;
-}
-.bg-slate-800 {
-  background: #1e293b;
 }
 .text-xxs {
   font-size: 0.6rem;
@@ -454,5 +424,20 @@ import CodeBlock from 'components/content/CodeBlock.vue';
   background: rgba(30, 41, 59, 0.5);
   border-left: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
+}
+.border-light {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.border-red {
+  border-color: #f44336;
+}
+.border-orange {
+  border-color: #ff9800;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
 }
 </style>

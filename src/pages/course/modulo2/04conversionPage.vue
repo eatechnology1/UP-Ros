@@ -1,378 +1,1006 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <!-- 1. HERO SECTION -->
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-purple-4 text-weight-bold q-mb-sm">
-          MÓDULO 2.4: INGENIERÍA DE DATOS
-        </div>
+  <LessonContainer>
+    <!-- INTRO -->
+    <TextBlock>
+      En ROS 2, trabajarás con múltiples formatos simultáneamente: YAML para parámetros, JSON para
+      APIs web, XML para URDF. Saber convertir entre ellos es esencial para integrar sistemas y
+      depurar problemas.
+      <br /><br />
+      La clave: <strong>el diccionario de Python</strong> es el formato universal. Todo pasa por
+      ahí.
+    </TextBlock>
 
-        <h1 class="hero-title">Conversión y <span class="text-white">Flujo</span></h1>
+    <AlertBlock type="info" title="¿Por qué convertir formatos?">
+      <strong>Depuración:</strong> Ver parámetros YAML en formato JSON más legible
+      <br />
+      <strong>Integración:</strong> Convertir config YAML a JSON para APIs web
+      <br />
+      <strong>Migración:</strong> Pasar de XML (ROS 1) a YAML (ROS 2)
+      <br />
+      <strong>Validación:</strong> Comparar configuraciones en diferentes formatos
+    </AlertBlock>
 
-        <TextBlock>
-          En el mundo real, los datos no se quedan quietos. Una configuración nace en
-          <strong>YAML</strong>, es procesada por tu nodo en <strong>Python</strong> y termina
-          visualizada en una web en <strong>JSON</strong>. Aprende el arte de la
-          <strong>Serialización</strong>: cómo transformar cualquier formato en objetos manipulables
-          y viceversa.
-        </TextBlock>
-      </div>
-    </section>
-
-    <!-- 2. EL CONCEPTO: EL DICCIONARIO UNIVERSAL -->
-    <div class="section-group self-stretch">
+    <!-- EL HUB CENTRAL -->
+    <div class="section-group">
       <SectionTitle>1. El Diccionario como Hub Central</SectionTitle>
 
-      <div class="row q-col-gutter-lg items-center">
-        <div class="col-12 col-md-5">
-          <TextBlock>
-            No intentamos "traducir" de YAML directamente a JSON. Eso es ineficiente.
-            <br /><br />
-            Lo que hacemos es llevar todo a un terreno neutral:
-            <strong>El Diccionario de Python</strong> (o Hash Map en C++). <br /><br />
-            Una vez que los datos están en una variable de Python, ya no importa de dónde vinieron.
-            Son tuyos para manipular.
-          </TextBlock>
+      <div class="hub-diagram">
+        <div class="hub-center">
+          <div class="hub-circle">
+            <q-icon name="data_object" size="3rem" color="white" />
+            <div class="hub-label">Python Dict</div>
+          </div>
         </div>
 
-        <div class="col-12 col-md-7">
-          <!-- VISUAL HUB -->
-          <div class="tool-card hub-visual relative-position q-pa-xl">
-            <div class="row justify-center items-center relative-position">
-              <!-- INPUTS -->
-              <div class="col-3 column q-gutter-md">
-                <div class="format-badge bg-blue-9 text-caption text-white shadow-2">YAML</div>
-                <div class="format-badge bg-yellow-9 text-black text-caption shadow-2">JSON</div>
-                <div class="format-badge bg-red-9 text-caption text-white shadow-2">XML</div>
-              </div>
-
-              <!-- ARROWS IN -->
-              <div class="col-2 column items-center justify-center q-gutter-sm">
-                <q-icon name="chevron_right" size="1.5rem" color="grey-6" />
-                <q-icon name="chevron_right" size="1.5rem" color="grey-6" />
-                <q-icon name="chevron_right" size="1.5rem" color="grey-6" />
-              </div>
-
-              <!-- THE HUB (PYTHON) -->
-              <div class="col-4 text-center z-top">
-                <div class="python-hub shadow-glow">
-                  <q-icon name="code" size="3rem" color="white" />
-                  <div class="text-white text-weight-bold q-mt-xs font-mono">DICT</div>
-                </div>
-              </div>
-
-              <!-- ARROWS OUT -->
-              <div class="col-2 column items-center justify-center">
-                <q-icon name="chevron_right" size="2rem" color="grey-6" />
-              </div>
-
-              <!-- OUTPUT -->
-              <div class="col-1">
-                <div
-                  class="format-badge bg-green-6 text-black text-caption text-weight-bold shadow-2"
-                >
-                  APP
-                </div>
-              </div>
-            </div>
+        <div class="hub-formats">
+          <div class="format-node yaml">
+            <q-icon name="settings" size="2rem" />
+            <span>YAML</span>
           </div>
+          <div class="format-node json">
+            <q-icon name="code" size="2rem" />
+            <span>JSON</span>
+          </div>
+          <div class="format-node xml">
+            <q-icon name="description" size="2rem" />
+            <span>XML</span>
+          </div>
+        </div>
+
+        <div class="hub-arrows">
+          <div class="arrow arrow-1"></div>
+          <div class="arrow arrow-2"></div>
+          <div class="arrow arrow-3"></div>
         </div>
       </div>
+
+      <TextBlock class="q-mt-lg">
+        No convertimos directamente YAML → JSON. Primero cargamos a un diccionario Python, luego
+        exportamos al formato deseado. Esto nos da flexibilidad para manipular los datos en el
+        medio.
+      </TextBlock>
     </div>
 
-    <!-- 3. CÓDIGO: LEYENDO ARCHIVOS (DESERIALIZACIÓN) -->
-    <div class="section-group self-stretch">
-      <SectionTitle>2. Leyendo Archivos (Deserialización)</SectionTitle>
-      <AlertBlock type="info" title="Librerías Estándar">
-        Python ya trae baterías incluidas. No necesitas instalar nada extra para JSON. Para YAML,
-        necesitarás <code>PyYAML</code> (que ROS 2 ya instala por ti).
-      </AlertBlock>
+    <!-- CONVERSIONES BÁSICAS -->
+    <div class="section-group">
+      <SectionTitle>2. Conversiones Básicas</SectionTitle>
 
-      <div class="row q-col-gutter-md q-mt-sm">
-        <!-- JSON READER -->
-        <div class="col-12 col-md-6">
-          <div class="tool-card code-card border-yellow">
-            <div
-              class="bg-yellow-9 text-black q-px-md q-py-sm text-subtitle2 flex justify-between items-center"
-            >
-              <span class="text-weight-bold">Leer JSON</span>
-              <q-icon name="data_object" />
-            </div>
-            <!-- CORREGIDO: lang & content -->
-            <CodeBlock
-              lang="python"
-              content="import json
-
-# 1. Abrir el archivo
-with open('data.json', 'r') as f:
-    # 2. Convertir a Diccionario
-    datos = json.load(f)
-
-print(datos['velocidad'])  # Acceso fácil"
-            />
+      <div class="conversion-grid">
+        <!-- YAML → Dict -->
+        <div class="conversion-card">
+          <div class="conversion-header yaml">
+            <q-icon name="settings" />
+            <span>YAML → Dict</span>
           </div>
-        </div>
+          <CodeBlock
+            lang="python"
+            content="import yaml
 
-        <!-- YAML READER -->
-        <div class="col-12 col-md-6">
-          <div class="tool-card code-card border-blue">
-            <div
-              class="bg-blue-9 text-white q-px-md q-py-sm text-subtitle2 flex justify-between items-center"
-            >
-              <span class="text-weight-bold">Leer YAML</span>
-              <q-icon name="settings" />
-            </div>
-            <!-- CORREGIDO: lang & content -->
-            <CodeBlock
-              lang="python"
-              content="import yaml
-
-# 1. Abrir el archivo
 with open('config.yaml', 'r') as f:
-    # 2. Convertir (Safe Load es vital)
-    config = yaml.safe_load(f)
+    data = yaml.safe_load(f)
 
-print(config['ros__parameters'])"
-            />
+# data es ahora un dict de Python
+print(type(data))  # <class 'dict'>
+print(data['robot']['velocidad'])"
+            :copyable="true"
+          />
+        </div>
+
+        <!-- Dict → YAML -->
+        <div class="conversion-card">
+          <div class="conversion-header yaml">
+            <q-icon name="settings" />
+            <span>Dict → YAML</span>
           </div>
+          <CodeBlock
+            lang="python"
+            content="import yaml
+
+data = {
+    'robot': {
+        'velocidad': 2.5,
+        'sensores': ['lidar', 'camara']
+    }
+}
+
+with open('output.yaml', 'w') as f:
+    yaml.dump(data, f, default_flow_style=False)"
+            :copyable="true"
+          />
+        </div>
+
+        <!-- JSON → Dict -->
+        <div class="conversion-card">
+          <div class="conversion-header json">
+            <q-icon name="code" />
+            <span>JSON → Dict</span>
+          </div>
+          <CodeBlock
+            lang="python"
+            content="import json
+
+with open('data.json', 'r') as f:
+    data = json.load(f)
+
+# data es ahora un dict de Python
+print(data['nombre'])"
+            :copyable="true"
+          />
+        </div>
+
+        <!-- Dict → JSON -->
+        <div class="conversion-card">
+          <div class="conversion-header json">
+            <q-icon name="code" />
+            <span>Dict → JSON</span>
+          </div>
+          <CodeBlock
+            lang="python"
+            content="import json
+
+data = {
+    'robot': 'TurtleBot',
+    'activo': True,
+    'velocidad': 2.5
+}
+
+with open('output.json', 'w') as f:
+    json.dump(data, f, indent=2)"
+            :copyable="true"
+          />
         </div>
       </div>
     </div>
 
-    <!-- 4. FLUJO COMPLETO: EL CASO DE USO ROS 2 -->
-    <div class="section-group self-stretch q-mt-xl">
-      <SectionTitle>3. El Pipeline de la Vida Real</SectionTitle>
+    <!-- CONVERSIÓN COMPLETA -->
+    <div class="section-group">
+      <SectionTitle>3. Pipeline Completo: YAML → JSON</SectionTitle>
+
+      <CodeBlock
+        title="convert_yaml_to_json.py"
+        lang="python"
+        content="#!/usr/bin/env python3
+import yaml
+import json
+import sys
+
+def yaml_to_json(yaml_file, json_file):
+    # 1. Leer YAML
+    with open(yaml_file, 'r') as f:
+        data = yaml.safe_load(f)
+
+    # 2. (Opcional) Manipular datos
+    # Ejemplo: agregar timestamp
+    from datetime import datetime
+    data['converted_at'] = datetime.now().isoformat()
+
+    # 3. Escribir JSON
+    with open(json_file, 'w') as f:
+        json.dump(data, f, indent=2)
+
+    print(f'Convertido: {yaml_file} -> {json_file}')
+
+if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print('Uso: python convert.py input.yaml output.json')
+        sys.exit(1)
+
+    yaml_to_json(sys.argv[1], sys.argv[2])"
+        :copyable="true"
+      />
+
+      <div class="q-mt-md">
+        <AlertBlock type="success" title="Uso">
+          <CodeBlock
+            lang="bash"
+            content="python convert_yaml_to_json.py robot_params.yaml robot_params.json"
+            :copyable="true"
+          />
+        </AlertBlock>
+      </div>
+    </div>
+
+    <!-- CASO PRÁCTICO ROS 2 -->
+    <div class="section-group">
+      <SectionTitle>4. Caso Práctico: Parámetros ROS 2 → JSON para Web</SectionTitle>
       <TextBlock>
-        Imagina este escenario común en robótica móvil: Cargas la configuración máxima de velocidad
-        desde un archivo <strong>YAML</strong>, tu nodo de <strong>Python</strong> calcula la ruta,
-        y envías el estado actual a una tablet vía Wi-Fi en formato <strong>JSON</strong>.
+        Escenario: Tienes parámetros de navegación en YAML y quieres exponerlos en una API REST para
+        que una interfaz web los visualice.
       </TextBlock>
 
-      <div class="tool-card pipeline-card q-mt-lg q-pa-lg">
-        <div class="row items-center justify-between q-col-gutter-md">
-          <!-- STEP 1 -->
-          <div class="col-12 col-md-3 text-center">
-            <div class="text-h6 text-blue-4 q-mb-sm">1. Entrada</div>
-            <div class="bg-slate-900 q-pa-md rounded-borders border-blue">
-              <q-icon name="description" size="2.5rem" color="blue-4" />
-              <div class="code-mini bg-black q-mt-sm text-blue-2">speed: 5.0</div>
-              <div class="text-caption text-grey-5 q-mt-xs font-mono">config.yaml</div>
+      <div class="row q-col-gutter-md q-mt-md">
+        <div class="col-12 col-md-6">
+          <div class="example-card input">
+            <div class="example-header">
+              <q-icon name="settings" size="md" />
+              <span>Input: nav_params.yaml</span>
             </div>
-          </div>
+            <CodeBlock
+              lang="yaml"
+              content="nav2_controller:
+  ros__parameters:
+    max_vel_x: 0.26
+    min_vel_x: -0.26
+    max_vel_theta: 1.0
 
-          <div class="col-auto gt-sm">
-            <q-icon name="arrow_forward" size="2rem" color="grey-7" />
+    # PID gains
+    xy_goal_tolerance: 0.25
+    yaw_goal_tolerance: 0.25"
+            />
           </div>
+        </div>
 
-          <!-- STEP 2 -->
-          <div class="col-12 col-md-4 text-center">
-            <div class="text-h6 text-green-4 q-mb-sm">2. Proceso (Python)</div>
-            <div
-              class="bg-slate-900 q-pa-md rounded-borders font-mono text-xs text-left border-green shadow-lg"
-            >
-              <span class="text-purple-4">def</span>
-              <span class="text-yellow-4">main</span>():<br />
-              &nbsp;&nbsp;limit = yaml_data[<span class="text-green-4">'speed'</span>]<br />
-              &nbsp;&nbsp;current = get_sensor()<br />
-              &nbsp;&nbsp;<span class="text-grey-5 text-italic"># Lógica...</span><br />
-              &nbsp;&nbsp;msg = {<span class="text-green-4">'val'</span>: current}
+        <div class="col-12 col-md-6">
+          <div class="example-card output">
+            <div class="example-header">
+              <q-icon name="code" size="md" />
+              <span>Output: API Response (JSON)</span>
             </div>
+            <CodeBlock
+              lang="json"
+              content='{
+  "controller": "nav2_controller",
+  "parameters": {
+    "max_vel_x": 0.26,
+    "min_vel_x": -0.26,
+    "max_vel_theta": 1.0,
+    "xy_goal_tolerance": 0.25,
+    "yaw_goal_tolerance": 0.25
+  }
+}'
+            />
           </div>
+        </div>
+      </div>
 
-          <div class="col-auto gt-sm">
-            <q-icon name="arrow_forward" size="2rem" color="grey-7" />
+      <div class="q-mt-md">
+        <CodeBlock
+          title="Script de conversión"
+          lang="python"
+          content="import yaml
+import json
+
+# Leer parámetros ROS 2
+with open('nav_params.yaml', 'r') as f:
+    ros_params = yaml.safe_load(f)
+
+# Extraer y reformatear
+for node_name, config in ros_params.items():
+    if 'ros__parameters' in config:
+        api_response = {
+            'controller': node_name,
+            'parameters': config['ros__parameters']
+        }
+
+        # Guardar como JSON
+        with open(f'{node_name}.json', 'w') as f:
+            json.dump(api_response, f, indent=2)
+
+        print(f'Exportado: {node_name}.json')"
+          :copyable="true"
+        />
+      </div>
+    </div>
+
+    <!-- HERRAMIENTAS CLI -->
+    <div class="section-group">
+      <SectionTitle>5. Herramientas de Terminal</SectionTitle>
+
+      <div class="tools-grid">
+        <div class="tool-item jq">
+          <div class="tool-icon">
+            <div class="tool-badge">jq</div>
           </div>
-
-          <!-- STEP 3 -->
-          <div class="col-12 col-md-3 text-center">
-            <div class="text-h6 text-yellow-4 q-mb-sm">3. Salida</div>
-            <div class="bg-slate-900 q-pa-md rounded-borders border-yellow">
-              <q-icon name="wifi" size="2.5rem" color="yellow-4" />
-              <div class="code-mini bg-black q-mt-sm text-yellow-2">{"val": 2.1}</div>
-              <div class="text-caption text-grey-5 q-mt-xs font-mono">WebSocket</div>
+          <div class="tool-content">
+            <div class="tool-title">JSON Processor</div>
+            <div class="tool-desc">
+              Procesa, filtra y formatea JSON desde la terminal. Indispensable para depuración.
             </div>
+            <CodeBlock
+              lang="bash"
+              content="# Instalar
+sudo apt install jq
+
+# Pretty print
+cat data.json | jq .
+
+# Filtrar valor
+jq '.robot.velocidad' data.json
+
+# Convertir YAML a JSON (con yq)
+yq eval -o=json config.yaml | jq ."
+              :copyable="true"
+            />
+          </div>
+        </div>
+
+        <div class="tool-item yq">
+          <div class="tool-icon">
+            <div class="tool-badge">yq</div>
+          </div>
+          <div class="tool-content">
+            <div class="tool-title">YAML Processor</div>
+            <div class="tool-desc">
+              Como jq pero para YAML. Permite convertir entre formatos directamente.
+            </div>
+            <CodeBlock
+              lang="bash"
+              content="# Instalar
+pip install yq
+
+# YAML a JSON
+yq eval -o=json config.yaml > config.json
+
+# JSON a YAML
+yq eval -P data.json > data.yaml
+
+# Filtrar en YAML
+yq '.robot.velocidad' config.yaml"
+              :copyable="true"
+            />
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 5. HERRAMIENTAS DE CONSOLA (BONUS) -->
-    <div class="section-group self-stretch q-mb-xl q-mt-xl">
-      <SectionTitle>4. Herramientas de Supervivencia (CLI)</SectionTitle>
-      <div class="row q-col-gutter-md">
-        <div class="col-12 col-md-6">
-          <div class="tool-card bg-slate-800 q-pa-md row items-center no-wrap">
-            <div class="col-auto q-mr-md">
-              <div
-                class="bg-black q-pa-sm rounded-borders text-h5 text-green-4 font-mono border-green"
-              >
-                jq
-              </div>
-            </div>
-            <div class="col">
-              <div class="text-weight-bold text-white">JSON Processor</div>
-              <div class="text-caption text-grey-4">
-                Comando mágico para leer, filtrar y colorear JSON en la terminal.
-              </div>
-              <div
-                class="text-code q-mt-xs bg-black q-px-sm rounded-borders text-grey-5 font-mono text-caption q-py-xs inline-block"
-              >
-                cat data.json | jq
-              </div>
-            </div>
+    <!-- TABLA COMPARATIVA -->
+    <div class="section-group">
+      <SectionTitle>6. Comparación de Formatos</SectionTitle>
+      <TextBlock>
+        Cada formato tiene sus fortalezas. Aquí está la comparación lado a lado para ayudarte a
+        elegir el correcto para cada situación en ROS 2.
+      </TextBlock>
+
+      <div class="comparison-table q-mt-md">
+        <div class="comparison-row header">
+          <div class="comparison-cell">Característica</div>
+          <div class="comparison-cell">YAML</div>
+          <div class="comparison-cell">XML</div>
+          <div class="comparison-cell">JSON</div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell">Legibilidad</div>
+          <div class="comparison-cell">⭐⭐⭐⭐⭐</div>
+          <div class="comparison-cell">⭐⭐</div>
+          <div class="comparison-cell">⭐⭐⭐</div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell">Verbosidad</div>
+          <div class="comparison-cell">Mínima</div>
+          <div class="comparison-cell">Máxima</div>
+          <div class="comparison-cell">Media</div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell">Comentarios</div>
+          <div class="comparison-cell">✅ <code>#</code></div>
+          <div class="comparison-cell">✅ <code>&lt;!-- --&gt;</code></div>
+          <div class="comparison-cell">❌</div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell">Anclas/Alias</div>
+          <div class="comparison-cell">✅</div>
+          <div class="comparison-cell">❌</div>
+          <div class="comparison-cell">❌</div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell">Uso en ROS 2</div>
+          <div class="comparison-cell">Parámetros, Launch</div>
+          <div class="comparison-cell">URDF, Launch</div>
+          <div class="comparison-cell">rosbridge, APIs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPARACIÓN -->
+    <div class="section-group">
+      <SectionTitle>7. Mismo Dato, Tres Formatos</SectionTitle>
+
+      <div class="format-comparison">
+        <div class="format-example yaml">
+          <div class="format-label">
+            <q-icon name="settings" />
+            <span>YAML</span>
+          </div>
+          <CodeBlock
+            lang="yaml"
+            content="robot:
+  nombre: TurtleBot
+  velocidad: 2.5
+  sensores:
+    - lidar
+    - camara
+  bateria:
+    voltaje: 12.4
+    nivel: 85"
+          />
+        </div>
+
+        <div class="format-example json">
+          <div class="format-label">
+            <q-icon name="code" />
+            <span>JSON</span>
+          </div>
+          <CodeBlock
+            lang="json"
+            content='{
+  "robot": {
+    "nombre": "TurtleBot",
+    "velocidad": 2.5,
+    "sensores": [
+      "lidar",
+      "camara"
+    ],
+    "bateria": {
+      "voltaje": 12.4,
+      "nivel": 85
+    }
+  }
+}'
+          />
+        </div>
+
+        <div class="format-example xml">
+          <div class="format-label">
+            <q-icon name="description" />
+            <span>XML</span>
+          </div>
+          <CodeBlock
+            lang="xml"
+            content="<robot>
+  <nombre>TurtleBot</nombre>
+  <velocidad>2.5</velocidad>
+  <sensores>
+    <sensor>lidar</sensor>
+    <sensor>camara</sensor>
+  </sensores>
+  <bateria>
+    <voltaje>12.4</voltaje>
+    <nivel>85</nivel>
+  </bateria>
+</robot>"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- ERRORES COMUNES -->
+    <div class="section-group">
+      <SectionTitle>8. Errores Comunes</SectionTitle>
+
+      <div class="errors-grid">
+        <div class="error-card">
+          <div class="error-header">
+            <q-icon name="error" color="red-4" size="lg" />
+            <span>Perder tipos de datos</span>
+          </div>
+          <div class="error-content">
+            <strong>Problema:</strong> YAML interpreta <code>true</code> como booleano, JSON lo
+            mantiene, pero XML lo convierte a string. <br /><br />
+            <strong>Solución:</strong> Validar tipos después de convertir
+            <CodeBlock
+              lang="python"
+              content="# Verificar tipo
+if isinstance(data['activo'], bool):
+    print('Es booleano')
+else:
+    # Convertir si es string
+    data['activo'] = data['activo'].lower() == 'true'"
+            />
           </div>
         </div>
-        <div class="col-12 col-md-6">
-          <div class="tool-card bg-slate-800 q-pa-md row items-center no-wrap">
-            <div class="col-auto q-mr-md">
-              <div
-                class="bg-black q-pa-sm rounded-borders text-h5 text-blue-4 font-mono border-blue"
-              >
-                yq
-              </div>
-            </div>
-            <div class="col">
-              <div class="text-weight-bold text-white">YAML Processor</div>
-              <div class="text-caption text-grey-4">
-                Lo mismo que jq, pero para YAML. Imprescindible para ver archivos de configuración
-                largos.
-              </div>
-            </div>
+
+        <div class="error-card">
+          <div class="error-header">
+            <q-icon name="error" color="orange-4" size="lg" />
+            <span>Encoding issues</span>
+          </div>
+          <div class="error-content">
+            <strong>Problema:</strong> Caracteres especiales (ñ, á, 中文) se rompen al convertir.
+            <br /><br />
+            <strong>Solución:</strong> Especificar encoding UTF-8
+            <CodeBlock
+              lang="python"
+              content="# Siempre usar encoding
+with open('data.yaml', 'r', encoding='utf-8') as f:
+    data = yaml.safe_load(f)
+
+with open('data.json', 'w', encoding='utf-8') as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)"
+            />
           </div>
         </div>
       </div>
     </div>
-  </q-page>
+
+    <!-- VIDEO -->
+    <div class="section-group">
+      <SectionTitle>📹 Video Complementario</SectionTitle>
+      <div class="video-container">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="Conversión de Formatos en ROS 2"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+            "
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <q-icon name="info" color="blue-4" size="sm" />
+          Reemplaza dQw4w9WgXcQ con tu video de YouTube
+        </div>
+      </div>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="section-group q-mb-xl">
+      <SectionTitle>📝 Resumen</SectionTitle>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <code>yaml.safe_load()</code>
+          <span>YAML → Dict</span>
+        </div>
+        <div class="summary-item">
+          <code>yaml.dump()</code>
+          <span>Dict → YAML</span>
+        </div>
+        <div class="summary-item">
+          <code>json.load()</code>
+          <span>JSON → Dict</span>
+        </div>
+        <div class="summary-item">
+          <code>json.dump()</code>
+          <span>Dict → JSON</span>
+        </div>
+        <div class="summary-item">
+          <code>jq</code>
+          <span>Procesar JSON en terminal</span>
+        </div>
+        <div class="summary-item">
+          <code>yq</code>
+          <span>Convertir YAML ↔ JSON</span>
+        </div>
+      </div>
+
+      <AlertBlock type="success" title="Checklist de Conversión" class="q-mt-lg">
+        ✅ Usar <code>encoding='utf-8'</code> siempre
+        <br />
+        ✅ Validar tipos de datos después de convertir
+        <br />
+        ✅ <code>yaml.safe_load()</code> (no <code>yaml.load()</code> por seguridad)
+        <br />
+        ✅ <code>indent=2</code> para JSON legible
+        <br />
+        ✅ <code>default_flow_style=False</code> para YAML legible
+        <br />
+        ✅ Probar con <code>jq</code> o <code>yq</code> antes de código
+      </AlertBlock>
+    </div>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
-import SectionTitle from 'components/content/SectionTitle.vue';
 import CodeBlock from 'components/content/CodeBlock.vue';
+import SectionTitle from 'components/content/SectionTitle.vue';
 </script>
 
 <style scoped>
-/* --- ESTILOS MAESTROS --- */
-.intro-hero,
 .section-group {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 3.5rem auto;
+  margin-bottom: 3.5rem;
 }
 
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(168, 85, 247, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
+/* HUB DIAGRAM */
+.hub-diagram {
+  position: relative;
+  background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(148, 163, 184, 0.2);
-  text-align: center;
-}
-
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.1;
-  color: #f8fafc;
-}
-
-/* TOOL CARDS */
-.tool-card {
-  height: 100%;
   border-radius: 16px;
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 4rem 2rem;
+  margin-top: 1.5rem;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* HUB VISUAL */
-.hub-visual {
-  border-top: 4px solid #a855f7;
-  background: #0f172a;
+.hub-center {
+  position: relative;
+  z-index: 10;
 }
 
-.format-badge {
-  padding: 8px;
-  border-radius: 6px;
-  text-align: center;
-  font-weight: bold;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.python-hub {
-  width: 100px;
-  height: 100px;
-  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+.hub-circle {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
   border-radius: 50%;
-  border: 4px solid #1e293b;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
-}
-.shadow-glow {
-  box-shadow: 0 0 40px rgba(168, 85, 247, 0.4);
+  box-shadow: 0 0 40px rgba(168, 85, 247, 0.5);
+  border: 4px solid rgba(30, 41, 59, 0.8);
 }
 
-/* CODE CARDS */
-.tool-card.code-card {
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.hub-label {
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
 }
-.border-yellow {
-  border-color: #facc15;
+
+.hub-formats {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 2rem;
 }
-.border-blue {
+
+.format-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid rgba(148, 163, 184, 0.3);
+  border-radius: 12px;
+  color: #f1f5f9;
+  font-weight: 700;
+  z-index: 5;
+}
+
+.format-node.yaml {
   border-color: #3b82f6;
+  color: #60a5fa;
 }
-.border-green {
+
+.format-node.json {
+  border-color: #fbbf24;
+  color: #fbbf24;
+}
+
+.format-node.xml {
+  border-color: #ef4444;
+  color: #f87171;
+}
+
+/* CONVERSION GRID */
+.conversion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.conversion-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.conversion-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.conversion-header.yaml {
+  background: rgba(59, 130, 246, 0.2);
+  border-bottom-color: #3b82f6;
+}
+
+.conversion-header.json {
+  background: rgba(251, 191, 36, 0.2);
+  border-bottom-color: #fbbf24;
+}
+
+/* EXAMPLE CARDS */
+.example-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.example-card.input {
+  border-top: 4px solid #3b82f6;
+}
+
+.example-card.output {
+  border-top: 4px solid #fbbf24;
+}
+
+.example-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+/* TOOLS GRID */
+.tools-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.tool-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
+  align-items: start;
+}
+
+.tool-item.jq {
+  border-left: 4px solid #22c55e;
+}
+
+.tool-item.yq {
+  border-left: 4px solid #3b82f6;
+}
+
+.tool-badge {
+  font-family: 'Fira Code', monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 1rem 2rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  border: 2px solid;
+}
+
+.tool-item.jq .tool-badge {
+  color: #22c55e;
   border-color: #22c55e;
 }
 
-/* PIPELINE CARD */
-.pipeline-card {
-  border: 1px dashed rgba(255, 255, 255, 0.2);
-  background: rgba(15, 23, 42, 0.6);
-}
-.code-mini {
-  padding: 4px;
-  border-radius: 4px;
-  font-family: monospace;
-  font-size: 0.8rem;
-}
-.bg-slate-900 {
-  background: #0f172a;
+.tool-item.yq .tool-badge {
+  color: #3b82f6;
+  border-color: #3b82f6;
 }
 
-.text-xs {
-  font-size: 0.75rem;
+.tool-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 0.5rem;
 }
-.font-mono {
+
+.tool-desc {
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+
+/* FORMAT COMPARISON */
+.format-comparison {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.format-example {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.format-example.yaml {
+  border-top: 4px solid #3b82f6;
+}
+
+.format-example.json {
+  border-top: 4px solid #fbbf24;
+}
+
+.format-example.xml {
+  border-top: 4px solid #ef4444;
+}
+
+.format-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+/* ERRORS GRID */
+.errors-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.error-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.error-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.error-content {
+  padding: 1.5rem;
+  color: #cbd5e1;
+}
+
+.error-content strong {
+  color: #f1f5f9;
+}
+
+/* VIDEO */
+.video-container {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* SUMMARY */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.summary-item {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-item code {
   font-family: 'Fira Code', monospace;
+  color: #22c55e;
+  font-size: 1rem;
 }
-.z-top {
-  z-index: 10;
+
+.summary-item span {
+  color: #cbd5e1;
+  font-size: 0.85rem;
+}
+
+/* COMPARISON TABLE */
+.comparison-table {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.comparison-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.comparison-row:last-child {
+  border-bottom: none;
+}
+
+.comparison-row.header {
+  background: rgba(0, 0, 0, 0.3);
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.comparison-cell {
+  padding: 1rem 1.5rem;
+  border-right: 1px solid rgba(148, 163, 184, 0.2);
+  color: #cbd5e1;
+}
+
+.comparison-cell:last-child {
+  border-right: none;
+}
+
+.comparison-cell code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
 }
 
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.2rem;
-  }
-  .hub-visual .row {
+  .hub-formats {
+    position: static;
     flex-direction: column;
-    gap: 10px;
+    gap: 1rem;
+    margin-top: 2rem;
   }
-  .hub-visual .col-2 {
-    transform: rotate(90deg);
-    margin: 10px 0;
+
+  .tool-item {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
-  .pipeline-card .row {
-    flex-direction: column;
-    gap: 20px;
+
+  .comparison-row {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-cell {
+    border-right: none;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
   }
 }
 </style>

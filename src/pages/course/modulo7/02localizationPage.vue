@@ -1,437 +1,578 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-teal-4 text-weight-bold q-mb-sm">
-          MÓDULO 7.2: LOCALIZACIÓN PROBABILÍSTICA
-        </div>
-        <h1 class="hero-title">
-          AMCL: En busca de la <span class="text-white">Ubicación Perdida</span>
-        </h1>
-        <TextBlock>
-          Tener un mapa no sirve de nada si no sabes dónde estás en él. El GPS no funciona en
-          interiores y la odometría acumula errores.
-          <br /><br />
-          <strong>AMCL (Adaptive Monte Carlo Localization)</strong> es un algoritmo probabilístico
-          que usa un "filtro de partículas" para adivinar la posición del robot comparando lo que
-          <em>ve</em> (Lidar) con lo que <em>debería ver</em> según el mapa.
-        </TextBlock>
-      </div>
-    </section>
+  <LessonContainer>
+    <!-- HERO INTRO -->
+    <TextBlock>
+      <strong>AMCL (Adaptive Monte Carlo Localization)</strong> es la implementación estándar en ROS
+      2 para localización probabilística en 2D. Utiliza un <strong>Filtro de Partículas</strong>
+      para estimar la posición y orientación $(x, y, \theta)$ del robot en un mapa conocido.
+    </TextBlock>
 
-    <div class="section-group self-stretch">
-      <SectionTitle>1. La Nube de Posibilidades</SectionTitle>
-      <SplitBlock>
-        <template #left>
-          <TextBlock>
-            AMCL no rastrea <em>un</em> robot. Rastrea
-            <strong>miles de robots virtuales</strong> (partículas). <br /><br />
-            Cada punto rojo es una hipótesis:
-            <em>"Creo que estoy en (x=2, y=5) mirando al Norte"</em>. <br /><br />
-            Al principio, el robot tiene <strong>Incertidumbre Global</strong>: las partículas están
-            por todas partes.
-          </TextBlock>
-        </template>
-        <template #right>
-          <div
-            class="tool-card bg-slate-900 relative-position overflow-hidden full-height border-teal"
-          >
-            <div class="absolute-center text-center z-top pointer-events-none">
-              <div class="text-h6 text-white text-shadow">Incertidumbre</div>
-              <div class="text-caption text-grey-4 text-shadow">"¿Dónde estoy?"</div>
-            </div>
-
-            <div class="particle-container">
-              <div v-for="n in 40" :key="n" class="particle" :style="getRandomStyle()"></div>
-            </div>
-          </div>
-        </template>
-      </SplitBlock>
-    </div>
-
-    <div class="section-group self-stretch">
-      <SectionTitle>2. El Ciclo de Vida (Supervivencia)</SectionTitle>
-      <TextBlock>
-        El algoritmo es un bucle infinito de selección natural. Solo sobreviven los que coinciden
-        con la realidad.
-      </TextBlock>
-
-      <div class="row q-col-gutter-lg q-mt-md">
-        <div class="col-12 col-md-4">
-          <div class="custom-card border-blue q-pa-md text-center full-height transition-hover">
-            <q-icon name="directions_run" color="blue-4" size="3rem" class="q-mb-sm" />
-            <div class="text-h6 text-blue-1">1. Movimiento</div>
-            <p class="text-caption text-grey-4 q-mt-sm">
-              Cuando el robot real se mueve, movemos todas las partículas igual (según odometría) +
-              un poco de ruido aleatorio.
-            </p>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <div class="custom-card border-purple q-pa-md text-center full-height transition-hover">
-            <q-icon name="scale" color="purple-4" size="3rem" class="q-mb-sm" />
-            <div class="text-h6 text-purple-1">2. Pesaje (Score)</div>
-            <p class="text-caption text-grey-4 q-mt-sm">
-              Comparamos Lidar Real vs Mapa Virtual.
-              <br />
-              <span class="text-green-4">Coincide = Peso Alto</span><br />
-              <span class="text-red-4">No coincide = Peso Bajo</span>
-            </p>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <div class="custom-card border-green q-pa-md text-center full-height transition-hover">
-            <q-icon name="casino" color="green-4" size="3rem" class="q-mb-sm" />
-            <div class="text-h6 text-green-1">3. Ruleta (Resample)</div>
-            <p class="text-caption text-grey-4 q-mt-sm">
-              Matamos las partículas malas y clonamos las buenas. La nube se concentra donde es más
-              probable estar.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-group self-stretch">
-      <SectionTitle>3. Convergencia: De la Duda a la Certeza</SectionTitle>
-      <TextBlock>
-        Observa cómo la nube (flechas rojas) se "encoge" alrededor de la posición real (verde) a
-        medida que el robot reconoce el entorno.
-      </TextBlock>
-
-      <div
-        class="tool-card bg-black q-pa-lg q-mt-md relative-position overflow-hidden"
-        style="height: 300px"
+    <AlertBlock type="info" title="Filosofía Bayesiana">
+      El robot nunca sabe "dónde está". Solo tiene una <strong>Creencia</strong> (Belief)
+      representada por una nube de puntos.
+      <br />
+      <em
+        >"Estoy 90% seguro que estoy en la cocina, pero hay un 10% de probabilidad de que esté en el
+        pasillo".</em
       >
-        <div class="absolute-center">
-          <div class="robot-real bg-green-5 shadow-green"></div>
+    </AlertBlock>
 
-          <div class="particle-group">
-            <div class="p-arrow" style="--angle: 0deg; --delay: 0s"></div>
-            <div class="p-arrow" style="--angle: 45deg; --delay: 0.1s"></div>
-            <div class="p-arrow" style="--angle: 90deg; --delay: 0.2s"></div>
-            <div class="p-arrow" style="--angle: 135deg; --delay: 0.3s"></div>
-            <div class="p-arrow" style="--angle: 180deg; --delay: 0.4s"></div>
-            <div class="p-arrow" style="--angle: 225deg; --delay: 0.5s"></div>
-            <div class="p-arrow" style="--angle: 270deg; --delay: 0.6s"></div>
-            <div class="p-arrow" style="--angle: 315deg; --delay: 0.7s"></div>
+    <!-- AMCL MATH -->
+    <div class="section-group">
+      <SectionTitle>1. Teoría Matemática (Bayes Filter)</SectionTitle>
+      <div class="math-grid q-mt-md">
+        <div class="math-card prediction">
+          <div class="math-header">
+            <q-icon name="directions_run" />
+            <span>1. Predicción (Motion Model)</span>
+          </div>
+          <div class="formula">$Bel^-(x_t) = \int p(x_t | u_t, x_{t-1}) Bel(x_{t-1}) dx_{t-1}$</div>
+          <div class="explanation">
+            Movemos todas las partículas según la odometría ($u_t$) + ruido. La incertidumbre crece
+            (la nube se dispersa).
+            <br />
+            Configurado con <code>alpha1..alpha4</code>.
           </div>
         </div>
 
-        <div class="absolute-bottom text-center q-mb-md">
-          <div class="status-badge font-mono text-xs">Estado: CONVERGIENDO...</div>
+        <div class="math-card correction">
+          <div class="math-header">
+            <q-icon name="visibility" />
+            <span>2. Corrección (Sensor Model)</span>
+          </div>
+          <div class="formula">$Bel(x_t) = \eta p(z_t | x_t) Bel^-(x_t)$</div>
+          <div class="explanation">
+            Asignamos un peso ($w$) a cada partícula comparando el escaneo láser real ($z_t$) con el
+            mapa virtual.
+            <br />
+            Configurado con <code>z_hit</code>, <code>z_rand</code>...
+          </div>
+        </div>
+
+        <div class="math-card resampling">
+          <div class="math-header">
+            <q-icon name="casino" />
+            <span>3. Resampling (La Ruleta)</span>
+          </div>
+          <div class="explanation">
+            Supervivencia del más apto. Las partículas con peso bajo mueren. Las de peso alto se
+            duplican.
+            <br />
+            Resultado: La nube se concentra (converge) en la posición real.
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="section-group self-stretch">
-      <SectionTitle>4. El "Dedazo" de Dios (2D Pose Estimate)</SectionTitle>
-      <SplitBlock>
-        <template #left>
-          <TextBlock>
-            A veces el robot está totalmente perdido ("Secuestrado"). Necesita ayuda divina.
-            <br /><br />
-            En RViz, usa el botón <strong>2D Pose Estimate</strong>. Haces clic en el mapa donde
-            <em>sabes</em> que está el robot y arrastras la flecha para indicar hacia dónde mira.
-            <br /><br />
-            Esto resetea todas las partículas alrededor de tu clic.
-          </TextBlock>
-        </template>
-        <template #right>
-          <div
-            class="tool-card bg-slate-800 flex flex-center border-teal relative-position overflow-hidden"
-          >
-            <div class="column items-center full-width">
-              <div
-                class="rviz-btn bg-slate-700 q-px-md q-py-sm rounded-borders text-white q-mb-xl cursor-pointer hover-scale border-light shadow-2"
-              >
-                <q-icon name="navigation" class="rotate-90 q-mr-sm" color="green-4" />
-                2D Pose Estimate
-              </div>
-
-              <div class="text-caption text-grey-5 font-italic q-mb-lg">"¡Estás aquí!"</div>
-
-              <div class="mouse-cursor absolute">
-                <q-icon name="near_me" color="white" size="lg" class="drop-shadow cursor-icon" />
-                <div class="click-ripple"></div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </SplitBlock>
-    </div>
-
-    <div class="section-group self-stretch">
-      <SectionTitle>5. Tuning: Ajustando la Magia</SectionTitle>
+    <!-- PARAMETER TUNING -->
+    <div class="section-group">
+      <SectionTitle>2. Advanced Parameter Tuning</SectionTitle>
       <TextBlock>
-        AMCL se configura en el archivo <code>.yaml</code>. Estos son los parámetros que debes
-        conocer:
+        El tuning incorrecto causa "saltos" (jitter) o que el robot se pierda fácilmente.
       </TextBlock>
 
-      <div class="row q-col-gutter-md q-mt-sm">
-        <div class="col-12 col-md-6">
-          <q-list bordered separator class="bg-slate-900 rounded-borders border-teal-dim">
-            <q-item>
-              <q-item-section>
-                <q-item-label class="text-teal-4 font-mono font-bold">min_particles</q-item-label>
-                <q-item-label caption class="text-grey-4">
-                  Mínimo de hipótesis (ej: 500). Menos = más rápido, pero menos robusto.
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section>
-                <q-item-label class="text-teal-4 font-mono font-bold">max_particles</q-item-label>
-                <q-item-label caption class="text-grey-4">
-                  Máximo (ej: 2000). Cuidado: subir esto consume mucha CPU.
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
+      <div class="tuning-grid q-mt-md">
+        <!-- PARTICLES -->
+        <div class="tuning-card blue">
+          <div class="card-title">Particle Count (KLD Sampling)</div>
+          <div class="card-desc">
+            AMCL ajusta dinámicamente el número de partículas basado en la incertidumbre (algoritmo
+            KLD).
+          </div>
+          <div class="params-list">
+            <div class="param">
+              <code>min_particles</code> (Default: 500)
+              <span>Mínimo para mantener estabilidad. <br />Recom: 500-2000.</span>
+            </div>
+            <div class="param">
+              <code>max_particles</code> (Default: 2000)
+              <span>Tope para no saturar CPU. <br />Recom: 3000-5000 (PC potente).</span>
+            </div>
+          </div>
         </div>
-        <div class="col-12 col-md-6">
-          <q-list bordered separator class="bg-slate-900 rounded-borders border-teal-dim">
-            <q-item>
-              <q-item-section>
-                <q-item-label class="text-teal-4 font-mono font-bold">update_min_d</q-item-label>
-                <q-item-label caption class="text-grey-4">
-                  Moverse X metros antes de recalcular (ej: 0.2m). No gastes CPU si el robot no se
-                  mueve.
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section>
-                <q-item-label class="text-teal-4 font-mono font-bold">update_min_a</q-item-label>
-                <q-item-label caption class="text-grey-4">
-                  Girar X radianes antes de recalcular (ej: 0.5 rad). Girar aporta mucha información
-                  al Lidar.
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
+
+        <!-- ODOMETRY -->
+        <div class="tuning-card purple">
+          <div class="card-title">Odometry Noise (Alphas)</div>
+          <div class="card-desc">
+            Define cuánto "desconfiamos" de las ruedas. Si es muy bajo, AMCL no corregirá el drift.
+            Si es muy alto, las partículas se dispersan demasiado.
+          </div>
+          <div class="params-list">
+            <div class="param">
+              <code>alpha1</code> (Rot -> Rot)
+              <span>Error de rotación generado por rotación.</span>
+            </div>
+            <div class="param">
+              <code>alpha2</code> (Trans -> Rot)
+              <span>Error de rotación generado por traslación.</span>
+            </div>
+            <div class="param">
+              <code>alpha3</code> (Trans -> Trans)
+              <span>Error de traslación generado por traslación.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- LASER -->
+        <div class="tuning-card green">
+          <div class="card-title">Laser Model (Likelihood)</div>
+          <div class="card-desc">Modelo de probabilidad del sensor.</div>
+          <div class="params-list">
+            <div class="param">
+              <code>z_hit</code> (Default: 0.5)
+              <span>Confianza en mediciones correctas.</span>
+            </div>
+            <div class="param">
+              <code>z_rand</code> (Default: 0.5)
+              <span>Ruido aleatorio (fantasmas, gente).</span>
+            </div>
+            <div class="param">
+              <code>sigma_hit</code> (Std Dev)
+              <span>Incertidumbre del láser (ruido gaussiano).</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="section-group self-stretch">
-      <SectionTitle>6. El Fenómeno del Teletransporte</SectionTitle>
-      <AlertBlock type="warning" title="Saltos en el Mapa">
-        A veces verás que el robot "salta" de golpe un metro en RViz. <br />
-        Esto es normal. Significa que AMCL encontró una posición mejor y corrigió el error acumulado
-        de la odometría (/odom -> /map).
+    <!-- KIDNAPPED ROBOT -->
+    <div class="section-group">
+      <SectionTitle>3. The Kidnapped Robot Problem</SectionTitle>
+      <AlertBlock type="warning" title="Recuperación">
+        Si mueves el robot manualmente ("Secuestro"), las partículas divergen y AMCL falla.
+        <br />
+        <strong>Solución:</strong> Relocalización Global.
+      </AlertBlock>
+
+      <div class="recovery-methods q-mt-md">
+        <div class="method-box">
+          <div class="method-title">Opción A: GUI (RViz)</div>
+          <div class="method-content">
+            Herramienta <strong>2D Pose Estimate</strong>. Haces clic manual en el mapa.
+          </div>
+        </div>
+
+        <div class="method-box code">
+          <div class="method-title">Opción B: Service Call (Programático)</div>
+          <div class="method-code">
+            <CodeBlock
+              lang="bash"
+              content="ros2 service call /reinitialize_global_localization nav2_msgs/srv/LoadMap '{}'"
+              :copyable="true"
+            />
+            <div class="note">
+              Esto dispersa partículas aleatoriamente por TODO el mapa (Global Localization). El
+              robot debe moverse para converger.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TF TREE -->
+    <div class="section-group">
+      <SectionTitle>4. El Árbol de Transformadas (TF)</SectionTitle>
+      <TextBlock>
+        La única responsabilidad de AMCL es publicar la transformación <strong>map -> odom</strong>.
+        Esto corrige el drift acumulado por la odometría pura.
+      </TextBlock>
+
+      <div class="tf-viz q-mt-md">
+        <div class="tf-node map">/map</div>
+        <div class="tf-link amcl">
+          <span class="link-label">AMCL Update</span>
+          <span class="link-arrow">⬇</span>
+        </div>
+        <div class="tf-node odom">/odom</div>
+        <div class="tf-link wheel">
+          <span class="link-label">Wheel Encoders</span>
+          <span class="link-arrow">⬇</span>
+        </div>
+        <div class="tf-node base">/base_link</div>
+        <div class="tf-link static">
+          <span class="link-label">URDF</span>
+          <span class="link-arrow">⬇</span>
+        </div>
+        <div class="tf-node laser">/laser_link</div>
+      </div>
+    </div>
+
+    <!-- ANIMATION -->
+    <div class="section-group">
+      <SectionTitle>5. Visualización de Convergencia</SectionTitle>
+      <div class="convergence-viz-container">
+        <div class="viz-stage">
+          <div class="robot-target"></div>
+
+          <!-- CSS Particles -->
+          <div class="particle p1"></div>
+          <div class="particle p2"></div>
+          <div class="particle p3"></div>
+          <div class="particle p4"></div>
+          <div class="particle p5"></div>
+          <div class="particle p6"></div>
+
+          <div class="sensor-fan"></div>
+        </div>
+        <div class="viz-info">
+          <div class="info-badge">Estado: CONVERGIENDO</div>
+          <div class="info-text">
+            Al detectar características únicas (esquinas), las partículas incorrectas mueren.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIDACTIC MINIGAME -->
+    <div class="section-group">
+      <SectionTitle>6. Minijuego: Detective de Partículas</SectionTitle>
+
+      <div class="challenge-card">
+        <div class="challenge-title">🕵️ Caso: El Pasillo Maldito</div>
+        <div class="challenge-desc">
+          El robot está en un pasillo largo, recto y sin puertas. El láser ve paredes a ambos lados.
+          ¿Qué le pasa a la nube de partículas?
+        </div>
+
+        <div class="options-grid">
+          <div class="option wrong">
+            <div class="opt-head">A. Converge rápido</div>
+            <div class="opt-body">Imposible, no hay referencias únicas en X.</div>
+          </div>
+          <div class="option correct">
+            <div class="opt-head">B. Se estira infinito</div>
+            <div class="opt-body">
+              Exacto. En el eje Y (ancho) sabe dónde está, pero en X (largo) la incertidumbre es
+              total. La nube se vuelve una línea larga.
+            </div>
+          </div>
+          <div class="option wrong">
+            <div class="opt-head">C. Se dispersa circularmente</div>
+            <div class="opt-body">No, porque las paredes laterales restringen la rotación y Y.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="section-group q-mb-xl">
+      <SectionTitle>📝 Resumen Técnico</SectionTitle>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <code>MCL</code>
+          <span>Monte Carlo Localization (Bayes Filter)</span>
+        </div>
+        <div class="summary-item">
+          <code>KLD Sampling</code>
+          <span>Ajuste dinámico de población de partículas</span>
+        </div>
+        <div class="summary-item">
+          <code>map -> odom</code>
+          <span>Transformada que publica AMCL</span>
+        </div>
+        <div class="summary-item">
+          <code>Likelihood Field</code>
+          <span>Modelo de sensor para LIDAR</span>
+        </div>
+        <div class="summary-item">
+          <code>Global Localization</code>
+          <span>Reiniciar partículas en todo el mapa</span>
+        </div>
+      </div>
+
+      <AlertBlock type="success" title="Best Practices" class="q-mt-lg">
+        ✅ Si el mapa es muy grande, aumenta <code>max_particles</code>.
+        <br />
+        ✅ Ajusta <code>update_min_d</code> (0.2m) y <code>update_min_a</code> (0.5rad) para ahorrar
+        CPU cuando el robot está quieto.
+        <br />
+        ✅ Usa el modelo <code>likelihood_field</code> para Lidars, es más suave que
+        <code>beam_model</code>.
       </AlertBlock>
     </div>
-
-    <div class="section-group self-stretch q-mb-xl">
-      <SectionTitle>7. Troubleshooting</SectionTitle>
-
-      <div class="row q-col-gutter-md">
-        <div class="col-12">
-          <q-expansion-item
-            icon="rotate_right"
-            label="El robot está perdido, ¿qué hago?"
-            header-class="bg-slate-800 text-white rounded-borders border-light"
-            class="q-mb-sm shadow-1"
-          >
-            <div class="q-pa-md bg-slate-900 text-grey-4 border-light border-top-0">
-              <strong>Solución:</strong> Gira el robot en su propio eje 360 grados. El Lidar verá
-              toda la geometría de la habitación y las partículas convergerán rápidamente.
-            </div>
-          </q-expansion-item>
-
-          <q-expansion-item
-            icon="blur_circular"
-            label="Las partículas oscilan mucho (Jitter)"
-            header-class="bg-slate-800 text-white rounded-borders border-light"
-            class="q-mb-sm shadow-1"
-          >
-            <div class="q-pa-md bg-slate-900 text-grey-4 border-light border-top-0">
-              Posibles causas: 1. El mapa no coincide con la realidad (muebles movidos). 2.
-              Parámetros de ruido de odometría (alpha1...alpha4) demasiado altos.
-            </div>
-          </q-expansion-item>
-        </div>
-      </div>
-    </div>
-  </q-page>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
+import CodeBlock from 'components/content/CodeBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
-import SplitBlock from 'components/content/SplitBlock.vue';
-
-// Helper visualización
-const getRandomStyle = () => {
-  const top = Math.random() * 90 + 5; // Evitar bordes extremos
-  const left = Math.random() * 90 + 5;
-  const delay = Math.random() * 2;
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    animationDelay: `${delay}s`,
-  };
-};
 </script>
 
 <style scoped>
-/* --- ESTILOS MAESTROS (Corregidos e Inyectados) --- */
-
-.intro-hero,
 .section-group {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 3.5rem auto;
+  margin-bottom: 3.5rem;
 }
 
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(45, 212, 191, 0.2), transparent 60%),
-    /* Teal Gradient */ rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
+/* MATH GRID */
+.math-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.math-card {
+  background: rgba(15, 23, 42, 0.8);
   border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.math-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1rem;
+}
+
+.formula {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-family: 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 0.9rem;
   text-align: center;
+  color: #a5f3fc;
+  overflow-x: auto;
 }
 
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.1;
-  color: #f8fafc;
+.explanation {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  line-height: 1.5;
 }
 
-/* CARDS & CONTAINERS */
-.tool-card {
-  height: 100%;
-  border-radius: 16px;
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+/* TUNING GRID */
+.tuning-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
 }
 
-.custom-card {
-  border-radius: 16px;
+.tuning-card {
   background: rgba(30, 41, 59, 0.5);
-  border-top: 4px solid;
-  height: 100%;
-  border-left: 1px solid rgba(255, 255, 255, 0.05);
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
 }
 
-.full-height {
-  height: 100%;
+.tuning-card.blue {
+  border-top: 4px solid #3b82f6;
 }
-.full-width {
+.tuning-card.purple {
+  border-top: 4px solid #a855f7;
+}
+.tuning-card.green {
+  border-top: 4px solid #10b981;
+}
+
+.card-title {
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.card-desc {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  margin-bottom: 1.5rem;
+}
+
+.params-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.param {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-family: 'Fira Code', monospace;
+  color: #e2e8f0;
+  font-size: 0.8rem;
+}
+
+.param span {
+  font-family: sans-serif;
+  color: #94a3b8;
+  font-size: 0.75rem;
+}
+
+/* RECOVERY */
+.recovery-methods {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem;
+}
+
+.method-box {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.method-title {
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 0.5rem;
+}
+
+.method-content {
+  font-size: 0.9rem;
+  color: #cbd5e1;
+}
+
+.note {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* TF VIZ */
+.tf-viz {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.8);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.tf-node {
+  background: #334155;
+  color: #f1f5f9;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #475569;
+  font-family: 'Fira Code', monospace;
+}
+
+.tf-node.map {
+  background: #1e293b;
+  border-color: #3b82f6;
+}
+.tf-node.odom {
+  background: #1e293b;
+  border-color: #a855f7;
+}
+.tf-node.base {
+  background: #1e293b;
+  border-color: #f59e0b;
+}
+
+.tf-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+
+.link-label {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  margin-bottom: -5px;
+}
+
+.link-arrow {
+  color: #64748b;
+  font-size: 1.5rem;
+}
+
+/* ANIMATION */
+.convergence-viz-container {
+  background: #000;
+  border-radius: 12px;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.viz-stage {
+  position: relative;
   width: 100%;
-}
-.pointer-events-none {
-  pointer-events: none;
-}
-.z-top {
-  z-index: 10;
-}
-.text-shadow {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-/* BORDERS & COLORS */
-.border-teal {
-  border-left: 4px solid #2dd4bf;
-}
-.border-teal-dim {
-  border: 1px solid rgba(45, 212, 191, 0.3);
-}
-.border-blue {
-  border-top-color: #3b82f6;
-}
-.border-purple {
-  border-top-color: #a855f7;
-}
-.border-green {
-  border-top-color: #4ade80;
-}
-.border-light {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.border-top-0 {
-  border-top: 0;
-}
-
-.shadow-green {
-  box-shadow: 0 0 15px #4ade80;
-}
-
-/* ANIMATION 1: PARTICLES (Floating) */
-.particle-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
   height: 100%;
 }
-.particle {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: #f87171; /* Red hypothesis */
-  border-radius: 50%;
-  opacity: 0.6;
-  box-shadow: 0 0 4px #f87171;
-  animation: floatRandom 4s infinite ease-in-out;
-}
-@keyframes floatRandom {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(15px, -15px);
-  }
-}
 
-/* ANIMATION 2: CONVERGENCE */
-.robot-real {
+.robot-target {
   width: 20px;
   height: 20px;
+  background: #10b981;
   border-radius: 50%;
-  border: 2px solid #fff;
   position: absolute;
-  z-index: 5;
-  /* Centering */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+  z-index: 10;
 }
-.p-arrow {
+
+.particle {
+  width: 5px;
+  height: 5px;
+  background: #ef4444;
+  border-radius: 50%;
   position: absolute;
   top: 50%;
-  left: 50%; /* Center origin */
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-bottom: 18px solid #f87171;
-  /* El truco: Rotamos, trasladamos lejos (dispersión) y luego acercamos (convergencia) */
-  animation: converge 3s infinite ease-in-out;
+  left: 50%;
+  opacity: 0.6;
+  animation: convergeParticles 4s infinite ease-in-out;
 }
-@keyframes converge {
+
+.p1 {
+  animation-delay: 0s;
+  --angle: 0deg;
+  --dist: 100px;
+}
+.p2 {
+  animation-delay: 0.2s;
+  --angle: 60deg;
+  --dist: 120px;
+}
+.p3 {
+  animation-delay: 0.4s;
+  --angle: 120deg;
+  --dist: 90px;
+}
+.p4 {
+  animation-delay: 0.6s;
+  --angle: 180deg;
+  --dist: 110px;
+}
+.p5 {
+  animation-delay: 0.8s;
+  --angle: 240deg;
+  --dist: 130px;
+}
+.p6 {
+  animation-delay: 1s;
+  --angle: 300deg;
+  --dist: 80px;
+}
+
+@keyframes convergeParticles {
   0% {
-    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(120px) scale(1);
-    opacity: 0.3;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(var(--dist)) scale(1);
+    opacity: 0;
   }
-  50% {
-    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(25px) scale(0.8);
-    opacity: 1;
+  20% {
+    opacity: 0.8;
   }
   80% {
-    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(25px) scale(0.8);
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(10px) scale(0.5);
     opacity: 1;
   }
   100% {
@@ -440,107 +581,74 @@ const getRandomStyle = () => {
   }
 }
 
-.status-badge {
-  background: rgba(45, 212, 191, 0.1);
-  color: #2dd4bf;
+.viz-info {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.info-badge {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
   padding: 4px 12px;
   border-radius: 99px;
-  border: 1px solid rgba(45, 212, 191, 0.3);
-}
-
-/* ANIMATION 3: CLICK ESTIMATE */
-.mouse-cursor {
-  top: 60%;
-  left: 60%;
-  animation: mouseMove 3s infinite;
-}
-.cursor-icon {
-  filter: drop-shadow(2px 4px 4px rgba(0, 0, 0, 0.5));
-}
-
-.click-ripple {
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid #4ade80;
-  opacity: 0;
-  animation: rippleEffect 3s infinite;
-}
-
-@keyframes mouseMove {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  20% {
-    transform: translate(-40px, -40px);
-  } /* Move to target */
-  30% {
-    transform: translate(-40px, -40px) scale(0.9);
-  } /* Click Down */
-  40% {
-    transform: translate(-40px, -40px) scale(1);
-  } /* Click Up */
-  60% {
-    transform: translate(0, 0);
-  } /* Return */
-}
-
-@keyframes rippleEffect {
-  0%,
-  25% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  30% {
-    transform: translate(-40px, -40px) scale(0);
-    opacity: 1;
-  }
-  40% {
-    transform: translate(-40px, -40px) scale(1.5);
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-/* UTILS */
-.bg-slate-900 {
-  background: #0f172a;
-}
-.bg-slate-800 {
-  background: #1e293b;
-}
-.bg-slate-700 {
-  background: #334155;
-}
-.font-mono {
-  font-family: 'Fira Code', monospace;
-}
-.text-xs {
   font-size: 0.8rem;
-}
-.font-bold {
   font-weight: 700;
-}
-.transition-hover {
-  transition: transform 0.2s;
-}
-.transition-hover:hover {
-  transform: translateY(-5px);
-}
-.hover-scale:hover {
-  transform: scale(1.05);
-  background: #475569;
+  display: inline-block;
+  margin-bottom: 0.5rem;
 }
 
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.2rem;
+.info-text {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+/* SUMMARY */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.summary-item {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-item code {
+  color: #6ee7b7;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.95rem;
+}
+
+.summary-item span {
+  color: #cbd5e1;
+  font-size: 0.85rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .math-grid,
+  .tuning-grid,
+  .recovery-methods {
+    grid-template-columns: 1fr;
+  }
+
+  .tf-viz {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .convergence-viz-container {
+    height: 200px;
   }
 }
 </style>

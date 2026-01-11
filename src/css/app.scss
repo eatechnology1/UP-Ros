@@ -1,31 +1,60 @@
 // app global css in SCSS form
 :root {
-  /* Base dark */
-  --glass-bg: rgba(20, 22, 30, 0.65);
-  --glass-bg-strong: rgba(20, 22, 30, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.08);
-
-  /* Highlight */
-  --glass-hover: rgba(255, 255, 255, 0.12);
-  --glass-active: rgba(0, 170, 255, 0.25);
-
-  /* Text */
-  --text-primary: #e6e6e6;
-  --text-secondary: #a0a0a0;
-
-  /* Blur */
-  --glass-blur: blur(14px);
+  /* No necesitamos definir variables CSS nativas si usamos SCSS variables,
+     pero las mantenemos para compatibilidad con scripts si es necesario */
 }
+
 body {
-  background: radial-gradient(circle at top, #141821, #0b0d12);
-  color: var(--text-primary);
-  font-family: 'Inter', 'Poppins', system-ui, sans-serif;
+  background-color: #0b1120; /* $dark-page */
+  color: #cbd5e1; /* $slate-300 */
+  font-family: 'Inter', 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-.glass {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
+
+/* =========================
+   UTILITIES GLOBALES
+========================= */
+
+// 1. TEXTO GRADIENTE (Cyber-Text)
+.text-gradient {
+  background: linear-gradient(to right, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: #38bdf8; /* Fallback */
+}
+
+// 2. EFECTO CRISTAL (Glassmorphism)
+.glass-effect {
+  background: rgba(30, 41, 59, 0.6); /* Slate-800 con transparencia */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+// 3. CARDS STANDARDIZADAS
+.card-standard {
+  @extend .glass-effect;
   border-radius: 16px;
+  padding: 24px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+    border-color: rgba(56, 189, 248, 0.3); // Neon Blue hint
+  }
 }
+
+// 4. ANIMACIONES
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 @import './content-blocks.css';

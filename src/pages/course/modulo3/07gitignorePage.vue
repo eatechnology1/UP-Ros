@@ -1,460 +1,940 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <!-- 1. HERO SECTION -->
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-grey-5 text-weight-bold q-mb-sm">
-          MÓDULO 3.7: HIGIENE DEL REPOSITORIO
-        </div>
+  <LessonContainer>
+    <!-- INTRO -->
+    <TextBlock>
+      El archivo <code>.gitignore</code> es tu filtro de basura. Le dice a Git qué archivos NO debe
+      rastrear. Sin él, tu repositorio se llenará de archivos compilados, configuraciones
+      personales, y potencialmente contraseñas o claves privadas.
+    </TextBlock>
 
-        <h1 class="hero-title">El Escudo <span class="text-white">.gitignore</span></h1>
+    <AlertBlock type="warning" title="¿Por qué es crítico?">
+      <strong>Seguridad:</strong> Evita subir contraseñas, API keys, certificados
+      <br />
+      <strong>Tamaño:</strong> Repositorios limpios (&lt;100MB vs GBs de basura)
+      <br />
+      <strong>Conflictos:</strong> Archivos compilados causan merge conflicts constantes
+      <br />
+      <strong>Profesionalismo:</strong> Un repo sin .gitignore grita "principiante"
+    </AlertBlock>
 
-        <TextBlock>
-          Git es un acaparador: intentará guardar todo lo que vea. Si no le pones límites, tu
-          repositorio se llenará de basura: archivos compilados, carpetas de compilación gigantes
-          (build/install) y configuraciones personales. Aprende a configurar el
-          <strong>Campo de Fuerza</strong> que mantiene tu proyecto limpio y ligero.
-        </TextBlock>
-      </div>
-    </section>
+    <!-- EL PROBLEMA -->
+    <div class="section-group">
+      <SectionTitle>1. El Problema de la Basura</SectionTitle>
+      <TextBlock>
+        Cuando compilas código, generas cientos de archivos temporales. Si subes esta basura a
+        GitHub, tu repositorio pesará GBs inútilmente y tus compañeros tendrán conflictos al
+        compilar.
+      </TextBlock>
 
-    <!-- 2. EL CONCEPTO: ¿QUÉ IGNORAR? -->
-    <div class="section-group self-stretch">
-      <SectionTitle>1. ¿Qué es Basura?</SectionTitle>
-
-      <div class="row q-col-gutter-lg items-center">
-        <div class="col-12 col-md-5">
-          <TextBlock>
-            La regla es simple: <strong>Si se puede generar automáticamente, no se guarda.</strong>
-          </TextBlock>
-          <ul class="q-pl-md q-mt-md text-grey-4 tool-list">
-            <li>
-              🔨 <strong>Artefactos de Build:</strong> En ROS 2, las carpetas <code>build/</code>,
-              <code>install/</code> y <code>log/</code> se crean al compilar. Son gigabytes de
-              basura.
-            </li>
-            <li>
-              🐍 <strong>Entornos Virtuales:</strong> Tu carpeta <code>venv/</code> contiene miles
-              de librerías que se pueden reinstalar con un simple <code>pip install</code>.
-            </li>
-            <li>
-              🔧 <strong>Configuración de IDE:</strong> Carpetas <code>.vscode/</code> o
-              <code>.idea/</code> son tuyas, no del equipo.
-            </li>
-          </ul>
-        </div>
-
-        <div class="col-12 col-md-7">
-          <!-- VISUAL SHIELD ANIMATION -->
-          <div
-            class="tool-card shield-card relative-position q-pa-xl overflow-hidden bg-slate-900 shadow-2"
-          >
-            <!-- GIT REPO (CASTLE) -->
-            <div class="repo-castle absolute-center column items-center z-top">
-              <div class="bg-slate-800 q-pa-md rounded-borders shadow-1 border-light">
-                <q-icon name="fort" size="4rem" color="white" />
-              </div>
-              <div class="text-caption text-center text-white q-mt-sm font-mono text-weight-bold">
-                Repo Puro
-              </div>
-            </div>
-
-            <!-- THE SHIELD -->
-            <div class="force-field absolute-center"></div>
-
-            <!-- INCOMING FILES (ANIMATED) -->
-            <!-- Trash 1 -->
-            <div class="file-trash file-1 absolute row items-center">
-              <q-icon name="folder" color="red-4" size="sm" class="q-mr-xs" />
+      <div class="trash-visual q-mt-md">
+        <div class="trash-side ignored">
+          <div class="side-header">
+            <q-icon name="block" size="2rem" />
+            <span>Ignorado (.gitignore)</span>
+          </div>
+          <div class="file-list">
+            <div class="file-item">
+              <q-icon name="folder" />
               <span>build/</span>
+              <div class="file-note">Archivos compilados</div>
             </div>
-            <!-- Trash 2 -->
-            <div class="file-trash file-2 absolute row items-center">
-              <q-icon name="description" color="grey-5" size="sm" class="q-mr-xs" />
-              <span>.DS_Store</span>
+            <div class="file-item">
+              <q-icon name="folder" />
+              <span>install/</span>
+              <div class="file-note">Binarios instalados</div>
             </div>
-            <!-- Code (Passing) -->
-            <div class="file-code file-3 absolute row items-center">
-              <q-icon name="code" color="green-4" size="sm" class="q-mr-xs" />
-              <span>main.py</span>
+            <div class="file-item">
+              <q-icon name="folder" />
+              <span>log/</span>
+              <div class="file-note">Logs de ejecución</div>
             </div>
+            <div class="file-item">
+              <q-icon name="folder" />
+              <span>__pycache__/</span>
+              <div class="file-note">Python bytecode</div>
+            </div>
+            <div class="file-item">
+              <q-icon name="description" />
+              <span>*.pyc</span>
+              <div class="file-note">Archivos compilados</div>
+            </div>
+          </div>
+        </div>
 
-            <!-- STATUS TEXT -->
-            <div class="absolute-bottom text-center q-pb-md text-grey-5 text-caption z-top">
-              Solo <span class="text-green-4 text-weight-bold">código fuente</span> atraviesa el
-              escudo.
+        <div class="trash-side tracked">
+          <div class="side-header">
+            <q-icon name="check_circle" size="2rem" />
+            <span>Rastreado (Git)</span>
+          </div>
+          <div class="file-list">
+            <div class="file-item">
+              <q-icon name="folder" />
+              <span>src/</span>
+              <div class="file-note">Código fuente</div>
+            </div>
+            <div class="file-item">
+              <q-icon name="description" />
+              <span>package.xml</span>
+              <div class="file-note">Configuración ROS</div>
+            </div>
+            <div class="file-item">
+              <q-icon name="description" />
+              <span>CMakeLists.txt</span>
+              <div class="file-note">Build config</div>
+            </div>
+            <div class="file-item">
+              <q:icon name="description" />
+              <span>README.md</span>
+              <div class="file-note">Documentación</div>
+            </div>
+            <div class="file-item">
+              <q-icon name="description" />
+              <span>.gitignore</span>
+              <div class="file-note">Este archivo!</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 3. SINTAXIS (CÓMO ESCRIBIRLO) -->
-    <div class="section-group self-stretch">
-      <SectionTitle>2. Escribiendo las Reglas</SectionTitle>
-      <SplitBlock>
-        <template #left>
-          <TextBlock>
-            El archivo se debe llamar exactamente <code>.gitignore</code> (con el punto al inicio) y
-            vive en la raíz de tu proyecto. <br /><br />
-            Es una lista de patrones. Puedes usar comodines (*) para bloquear familias enteras de
-            archivos.
-          </TextBlock>
-          <div class="q-mt-lg">
-            <AlertBlock type="warning" title="El error retroactivo">
-              Si ya subiste un archivo basura (ej: <code>build/</code>) y LUEGO creas el .gitignore,
-              <strong>Git lo seguirá guardando</strong>. Debes borrarlo primero de la memoria de Git
-              con <code>git rm -r --cached build/</code>.
-            </AlertBlock>
-          </div>
-        </template>
+    <!-- SINTAXIS -->
+    <div class="section-group">
+      <SectionTitle>2. Sintaxis de .gitignore</SectionTitle>
+      <TextBlock>
+        El archivo <code>.gitignore</code> es una lista simple de patrones. Git lo lee ANTES de
+        hacer <code>git status</code>. Puedes usar comodines (*) para bloquear extensiones enteras.
+      </TextBlock>
 
-        <template #right>
-          <div class="tool-card code-card bg-slate-900 q-pa-none border-grey shadow-2">
-            <div
-              class="window-header row justify-between items-center q-px-md q-py-xs bg-black border-bottom-dark"
-            >
-              <span class="text-grey-5 font-mono text-xs">.gitignore</span>
-              <q-icon name="shield" color="grey-7" size="xs" />
-            </div>
-            <!-- CORREGIDO: lang & content -->
-            <CodeBlock
-              lang="bash"
-              :show-line-numbers="true"
-              content="# --- ROS 2 ---
+      <div class="syntax-examples q-mt-md">
+        <div class="syntax-card">
+          <div class="syntax-header">
+            <q-icon name="description" color="blue-4" />
+            <span>Archivo específico</span>
+          </div>
+          <CodeBlock
+            lang="gitignore"
+            content="config.json
+secrets.env
+database.db"
+            :copyable="true"
+          />
+          <div class="syntax-desc">Ignora archivos por nombre exacto</div>
+        </div>
+
+        <div class="syntax-card">
+          <div class="syntax-header">
+            <q-icon name="star" color="green-4" />
+            <span>Extensión completa</span>
+          </div>
+          <CodeBlock
+            lang="gitignore"
+            content="*.pyc
+*.o
+*.exe
+*.log"
+            :copyable="true"
+          />
+          <div class="syntax-desc">Ignora todos los archivos con esa extensión</div>
+        </div>
+
+        <div class="syntax-card">
+          <div class="syntax-header">
+            <q-icon name="folder" color="purple-4" />
+            <span>Carpeta completa</span>
+          </div>
+          <CodeBlock
+            lang="gitignore"
+            content="build/
+node_modules/
+__pycache__/
+.vscode/"
+            :copyable="true"
+          />
+          <div class="syntax-desc">Ignora carpeta y todo su contenido</div>
+        </div>
+
+        <div class="syntax-card">
+          <div class="syntax-header">
+            <q-icon name="not_interested" color="orange-4" />
+            <span>Excepciones</span>
+          </div>
+          <CodeBlock
+            lang="gitignore"
+            content="# Ignorar todos los .log
+*.log
+
+# EXCEPTO este
+!important.log"
+            :copyable="true"
+          />
+          <div class="syntax-desc">El ! niega una regla anterior</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GITIGNORE PARA ROS 2 -->
+    <div class="section-group">
+      <SectionTitle>3. .gitignore para ROS 2</SectionTitle>
+      <TextBlock>
+        Este es el <code>.gitignore</code> estándar para proyectos de ROS 2. Copia y pega en la raíz
+        de tu workspace.
+      </TextBlock>
+
+      <div class="gitignore-file q-mt-md">
+        <div class="file-header">
+          <q-icon name="description" />
+          <span>.gitignore</span>
+          <div class="file-actions">
+            <q-btn flat dense icon="content_copy" size="sm" color="grey-4">
+              <q-tooltip>Copiar todo</q-tooltip>
+            </q-btn>
+          </div>
+        </div>
+        <div class="file-content">
+          <CodeBlock
+            lang="gitignore"
+            content="# ROS 2 Build Artifacts
 build/
 install/
 log/
-COLCON_IGNORE
 
-# --- Python ---
+# Python
 __pycache__/
 *.py[cod]
-venv/
-.env
-
-# --- C++ ---
-*.o
+*$py.class
 *.so
+.Python
+env/
+venv/
 
-# --- Sistema ---
+# C++
+*.o
+*.a
+*.so
+*.exe
+*.out
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
 .DS_Store
-.vscode/"
-            />
-          </div>
-        </template>
-      </SplitBlock>
+Thumbs.db
+*.tmp
+
+# Secrets (CRÍTICO)
+*.pem
+*.key
+*.env
+secrets.yaml
+credentials.json
+
+# Logs
+*.log
+*.bag
+
+# Documentation builds
+docs/_build/
+*.pdf"
+            :copyable="true"
+          />
+        </div>
+      </div>
+
+      <div class="q-mt-md">
+        <AlertBlock type="danger" title="NUNCA subas credenciales">
+          Si accidentalmente subes una API key o contraseña a GitHub, ESTÁ COMPROMETIDA. Cambiarla
+          inmediatamente. Eliminarla del historial no es suficiente (ya fue indexada).
+        </AlertBlock>
+      </div>
     </div>
 
-    <!-- 4. GITIGNORE GLOBAL (TU HIGIENE PERSONAL) -->
-    <div class="section-group self-stretch q-mt-xl">
-      <SectionTitle>3. Pro Tip: Gitignore Global</SectionTitle>
+    <!-- PATRONES AVANZADOS -->
+    <div class="section-group">
+      <SectionTitle>4. Patrones Avanzados</SectionTitle>
+
+      <div class="patterns-grid">
+        <div class="pattern-card">
+          <div class="pattern-title">Ignorar en subdirectorios</div>
+          <CodeBlock
+            lang="gitignore"
+            content="# Solo en raíz
+/config.json
+
+# En cualquier nivel
+**/config.json"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="pattern-card">
+          <div class="pattern-title">Ignorar excepto en carpeta</div>
+          <CodeBlock
+            lang="gitignore"
+            content="# Ignorar todos los .txt
+*.txt
+
+# Excepto en docs/
+!docs/*.txt"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="pattern-card">
+          <div class="pattern-title">Rango de caracteres</div>
+          <CodeBlock
+            lang="gitignore"
+            content="# Ignorar test1.py a test9.py
+test[0-9].py
+
+# Ignorar archivos que empiezan con temp
+temp*"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="pattern-card">
+          <div class="pattern-title">Comentarios</div>
+          <CodeBlock
+            lang="gitignore"
+            content="# Este es un comentario
+# Git ignora líneas que empiezan con #
+
+# Líneas vacías también se ignoran"
+            :copyable="true"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- GLOBAL GITIGNORE -->
+    <div class="section-group">
+      <SectionTitle>5. Gitignore Global (Higiene Personal)</SectionTitle>
       <TextBlock>
-        Hay archivos que genera TU computadora (como los archivos temporales de Mac
-        <code>.DS_Store</code> o de Windows <code>Thumbs.db</code>) que molestan en todos los
-        proyectos.
-        <br />
-        En lugar de ponerlos en cada proyecto, configura un escudo personal para siempre.
+        Si usas Mac, generas <code>.DS_Store</code> en todos lados. Si usas Windows,
+        <code>Thumbs.db</code>. No obligues a cada proyecto a ignorar TU basura del sistema
+        operativo. Configura un ignore global.
       </TextBlock>
 
-      <div class="row q-mt-lg justify-center">
-        <div class="col-12 col-md-9">
-          <div
-            class="tool-card global-card bg-slate-800 q-pa-lg text-center border-dashed shadow-glow-grey"
-          >
-            <div class="row items-center justify-center q-mb-md">
-              <q-icon name="public" color="grey-5" size="md" class="q-mr-sm" />
-              <div class="text-h6 text-white">Configuración Única</div>
-            </div>
+      <div class="global-setup q-mt-md">
+        <div class="setup-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Crear archivo global</div>
+            <CodeBlock
+              lang="bash"
+              content="# Linux/Mac
+touch ~/.gitignore_global
 
-            <div
-              class="bg-black text-green-4 q-pa-md rounded-borders font-mono text-xs border-light inline-block shadow-1"
-            >
-              git config --global core.excludesfile ~/.gitignore_global
-            </div>
-            <p class="text-caption text-grey-4 q-mt-md">
-              Ahora crea un archivo en tu home llamado <code>.gitignore_global</code> y pon ahí tu
-              basura del sistema operativo.
-            </p>
+# Windows (PowerShell)
+New-Item -Path $HOME\.gitignore_global -ItemType File"
+              :copyable="true"
+            />
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Configurar Git</div>
+            <CodeBlock
+              lang="bash"
+              content="git config --global core.excludesfile ~/.gitignore_global"
+              :copyable="true"
+            />
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Agregar patrones personales</div>
+            <CodeBlock
+              lang="gitignore"
+              content="# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.directory
+
+# IDEs (tu preferencia)
+.vscode/
+.idea/
+*.swp"
+              :copyable="true"
+            />
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 5. PLANTILLAS (NO REINVENTES LA RUEDA) -->
-    <div class="section-group self-stretch q-mt-xl q-mb-xl">
-      <SectionTitle>4. Herramientas</SectionTitle>
-      <div class="row q-col-gutter-lg">
-        <div class="col-12 col-md-6">
-          <div
-            class="tool-card resource-card bg-slate-900 q-pa-lg row items-center border-left-blue shadow-2 transition-hover"
-          >
-            <div class="bg-slate-800 q-pa-md rounded-borders q-mr-md">
-              <q-icon name="link" color="blue-4" size="2rem" />
-            </div>
-            <div>
-              <div class="text-subtitle1 text-white text-weight-bold">gitignore.io</div>
-              <div class="text-caption text-grey-4 q-mt-xs">
-                Escribe "ROS2, Python, VisualStudioCode" y te genera el archivo perfecto
-                automáticamente.
-              </div>
-            </div>
+    <!-- GENERADORES -->
+    <div class="section-group">
+      <SectionTitle>6. Generadores Automáticos</SectionTitle>
+      <TextBlock>
+        No escribas .gitignore a mano. Usa generadores que conocen las mejores prácticas para cada
+        lenguaje y framework.
+      </TextBlock>
+
+      <div class="generators-grid q-mt-md">
+        <div class="generator-card">
+          <div class="generator-icon">
+            <q-icon name="public" size="3rem" color="blue-4" />
+          </div>
+          <div class="generator-title">gitignore.io</div>
+          <div class="generator-desc">
+            El más popular. Escribe "ROS2, Python, VSCode" y genera el archivo completo.
+          </div>
+          <div class="generator-link">
+            <a href="https://gitignore.io" target="_blank">gitignore.io →</a>
           </div>
         </div>
-        <div class="col-12 col-md-6">
-          <div
-            class="tool-card resource-card bg-slate-900 q-pa-lg row items-center border-left-purple shadow-2 transition-hover"
-          >
-            <div class="bg-slate-800 q-pa-md rounded-borders q-mr-md">
-              <q-icon name="auto_fix_high" color="purple-4" size="2rem" />
-            </div>
-            <div>
-              <div class="text-subtitle1 text-white text-weight-bold">GitHub Templates</div>
-              <div class="text-caption text-grey-4 q-mt-xs">
-                Al crear un repo en GitHub, selecciona el template "ROS". Ya viene con todo
-                configurado.
-              </div>
-            </div>
+
+        <div class="generator-card">
+          <div class="generator-icon">
+            <q-icon name="code" size="3rem" color="green-4" />
+          </div>
+          <div class="generator-title">GitHub Templates</div>
+          <div class="generator-desc">
+            Al crear repo en GitHub, selecciona template de .gitignore (Python, C++, ROS, etc.)
+          </div>
+          <div class="generator-link">
+            <a href="https://github.com/github/gitignore" target="_blank">Ver templates →</a>
+          </div>
+        </div>
+
+        <div class="generator-card">
+          <div class="generator-icon">
+            <q-icon name="terminal" size="3rem" color="purple-4" />
+          </div>
+          <div class="generator-title">CLI: gig</div>
+          <div class="generator-desc">Genera .gitignore desde la terminal</div>
+          <CodeBlock
+            lang="bash"
+            content="# Instalar
+npm install -g gig
+
+# Usar
+gig python ros vscode > .gitignore"
+            :copyable="true"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- ERRORES COMUNES -->
+    <div class="section-group">
+      <SectionTitle>7. Errores Comunes</SectionTitle>
+
+      <div class="errors-grid">
+        <div class="error-card">
+          <div class="error-header">
+            <q-icon name="error" color="red-4" />
+            <span>Ya commiteé el archivo</span>
+          </div>
+          <div class="error-desc">
+            Si ya hiciste commit de un archivo, agregarlo a .gitignore NO lo elimina del historial.
+          </div>
+          <div class="error-solution">
+            <strong>Solución:</strong>
+            <CodeBlock
+              lang="bash"
+              content="# Eliminar del tracking (mantener local)
+git rm --cached archivo.log
+
+# Eliminar carpeta del tracking
+git rm -r --cached build/
+
+# Commit el cambio
+git commit -m 'Remove build artifacts from tracking'"
+              :copyable="true"
+            />
+          </div>
+        </div>
+
+        <div class="error-card">
+          <div class="error-header">
+            <q-icon name="error" color="orange-4" />
+            <span>.gitignore no funciona</span>
+          </div>
+          <div class="error-desc">Agregaste un patrón pero Git sigue rastreando el archivo.</div>
+          <div class="error-solution">
+            <strong>Causas:</strong>
+            <ul>
+              <li>El archivo ya estaba commiteado (ver error anterior)</li>
+              <li>Typo en el patrón</li>
+              <li>.gitignore no está en la raíz del repo</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="error-card">
+          <div class="error-header">
+            <q-icon name="error" color="yellow-6" />
+            <span>Ignoré algo importante</span>
+          </div>
+          <div class="error-desc">Agregaste src/ a .gitignore por error y perdiste tu código.</div>
+          <div class="error-solution">
+            <strong>Solución:</strong>
+            <CodeBlock
+              lang="bash"
+              content="# Ver qué está ignorado
+git status --ignored
+
+# Forzar agregar archivo ignorado
+git add -f src/important.py"
+              :copyable="true"
+            />
           </div>
         </div>
       </div>
     </div>
-  </q-page>
+
+    <!-- VIDEO -->
+    <div class="section-group">
+      <SectionTitle>📹 Video Complementario</SectionTitle>
+      <div class="video-container">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="Gitignore Best Practices"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+            "
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <q-icon name="info" color="blue-4" size="sm" />
+          Reemplaza dQw4w9WgXcQ con tu video de YouTube
+        </div>
+      </div>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="section-group q-mb-xl">
+      <SectionTitle>📝 Resumen</SectionTitle>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <code>.gitignore</code>
+          <span>Filtro de archivos</span>
+        </div>
+        <div class="summary-item">
+          <code>build/ install/ log/</code>
+          <span>ROS 2 artifacts</span>
+        </div>
+        <div class="summary-item">
+          <code>*.pyc __pycache__/</code>
+          <span>Python garbage</span>
+        </div>
+        <div class="summary-item">
+          <code>git rm --cached</code>
+          <span>Dejar de rastrear</span>
+        </div>
+        <div class="summary-item">
+          <code>gitignore.io</code>
+          <span>Generador automático</span>
+        </div>
+        <div class="summary-item">
+          <code>~/.gitignore_global</code>
+          <span>Ignore personal</span>
+        </div>
+      </div>
+
+      <AlertBlock type="success" title="Checklist de .gitignore" class="q-mt-lg">
+        ✅ Crea .gitignore ANTES del primer commit
+        <br />
+        ✅ Usa generador (gitignore.io) para tu stack
+        <br />
+        ✅ Incluye: build/, install/, log/, __pycache__/, *.pyc
+        <br />
+        ✅ NUNCA ignores: src/, package.xml, CMakeLists.txt, README
+        <br />
+        ✅ Configura .gitignore_global para tu OS
+        <br />
+        ✅ Revisa con <code>git status --ignored</code>
+        <br />
+        ✅ Si subiste credenciales, CÁMBIALAS inmediatamente
+      </AlertBlock>
+    </div>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
-import SectionTitle from 'components/content/SectionTitle.vue';
-import SplitBlock from 'components/content/SplitBlock.vue';
 import CodeBlock from 'components/content/CodeBlock.vue';
+import SectionTitle from 'components/content/SectionTitle.vue';
 </script>
 
 <style scoped>
-/* --- ESTILOS MAESTROS --- */
-.intro-hero,
 .section-group {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 3.5rem auto;
+  margin-bottom: 3.5rem;
 }
 
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(156, 163, 175, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  text-align: center;
+/* TRASH VISUAL */
+.trash-visual {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
 }
 
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.1;
-  color: #f8fafc;
-}
-
-/* TOOL CARDS */
-.tool-card {
-  height: 100%;
+.trash-side {
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid;
   border-radius: 16px;
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 2rem;
 }
 
-/* SHIELD VISUALIZATION */
-.shield-card {
-  border-top: 4px solid #9ca3af;
-  height: 320px;
-}
-.z-top {
-  z-index: 5;
-  position: relative;
+.trash-side.ignored {
+  border-color: #ef4444;
 }
 
-.force-field {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  border: 2px solid rgba(156, 163, 175, 0.4);
-  background: radial-gradient(circle, rgba(156, 163, 175, 0.1) 0%, transparent 70%);
-  box-shadow: 0 0 30px rgba(156, 163, 175, 0.2);
-  z-index: 2;
-  animation: pulseShield 4s infinite ease-in-out;
+.trash-side.tracked {
+  border-color: #22c55e;
 }
 
-@keyframes pulseShield {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-    border-color: rgba(156, 163, 175, 0.3);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.1);
-    border-color: rgba(156, 163, 175, 0.6);
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    border-color: rgba(156, 163, 175, 0.3);
-  }
+.side-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
 }
 
-.file-trash {
+.trash-side.ignored .side-header {
+  color: #fca5a5;
+}
+
+.trash-side.tracked .side-header {
+  color: #86efac;
+}
+
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
   font-family: 'Fira Code', monospace;
-  font-size: 0.85rem;
-  color: #ef4444;
-  font-weight: bold;
-  animation: bounceOff 3s infinite linear;
-  opacity: 0;
-}
-.file-code {
-  font-family: 'Fira Code', monospace;
-  font-size: 0.85rem;
-  color: #4ade80;
-  font-weight: bold;
-  animation: passThrough 3s infinite linear;
-  opacity: 0;
+  color: #cbd5e1;
 }
 
-.file-1 {
-  top: 30%;
-  left: 0;
-  animation-delay: 0s;
-}
-.file-2 {
-  top: 60%;
-  left: 0;
-  animation-delay: 1.5s;
-}
-.file-3 {
-  top: 45%;
-  left: 0;
-  animation-delay: 0.8s;
+.file-note {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: #64748b;
+  font-family: sans-serif;
 }
 
-/* Physics Animation: Start left -> Hit Shield -> Bounce Back/Fade */
-@keyframes bounceOff {
-  0% {
-    left: 5%;
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  20% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  45% {
-    left: 38%;
-    transform: scale(1);
-  } /* Impact point */
-  50% {
-    left: 35%;
-    transform: scale(0.9) rotate(-10deg);
-    opacity: 0.8;
-  } /* Recoil */
-  100% {
-    left: 20%;
-    top: 80%;
-    transform: scale(0.5) rotate(-90deg);
-    opacity: 0;
-  } /* Fall away */
+/* SYNTAX EXAMPLES */
+.syntax-examples {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
 }
 
-/* Physics Animation: Start left -> Pass Shield -> Enter Castle */
-@keyframes passThrough {
-  0% {
-    left: 5%;
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  20% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    left: 50%;
-    opacity: 1;
-    transform: scale(1.1);
-    text-shadow: 0 0 10px #4ade80;
-  } /* Center */
-  100% {
-    left: 50%;
-    opacity: 0;
-    transform: scale(0);
-  } /* Absorbed by castle */
+.syntax-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-/* CODE CARD */
-.code-card {
+.syntax-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.syntax-desc {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* GITIGNORE FILE */
+.gitignore-file {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
   overflow: hidden;
 }
-.border-grey {
-  border-color: #9ca3af;
-}
-.border-bottom-dark {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
 
-/* GLOBAL CARD */
-.global-card {
-  border: 1px dashed rgba(255, 255, 255, 0.2);
-}
-.shadow-glow-grey {
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-}
-
-/* RESOURCE CARDS */
-.resource-card {
-  transition:
-    transform 0.3s,
-    background 0.3s;
-  cursor: pointer;
-}
-.transition-hover:hover {
-  transform: translateY(-5px);
-  background: rgba(30, 41, 59, 0.6);
-}
-.border-left-blue {
-  border-left: 4px solid #3b82f6;
-}
-.border-left-purple {
-  border-left: 4px solid #a855f7;
-}
-
-/* UTILS */
-.font-mono {
+.file-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(30, 41, 59, 0.8);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
   font-family: 'Fira Code', monospace;
+  color: #f1f5f9;
 }
-.text-xs {
-  font-size: 0.8rem;
+
+.file-actions {
+  margin-left: auto;
 }
-.bg-slate-900 {
-  background: #0f172a;
+
+.file-content {
+  padding: 1.5rem;
 }
-.bg-slate-800 {
-  background: #1e293b;
+
+/* PATTERNS GRID */
+.patterns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
-.border-light {
-  border: 1px solid rgba(255, 255, 255, 0.1);
+
+.pattern-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
-.inline-block {
-  display: inline-block;
+
+.pattern-title {
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1.05rem;
 }
-.tool-list {
-  list-style: none;
+
+/* GLOBAL SETUP */
+.global-setup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.setup-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.step-num {
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.step-content {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.step-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 1rem;
+}
+
+/* GENERATORS GRID */
+.generators-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.generator-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.generator-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.generator-desc {
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+.generator-link a {
+  color: #60a5fa;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.generator-link a:hover {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
+/* ERRORS GRID */
+.errors-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.error-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.error-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.error-desc {
+  color: #cbd5e1;
+}
+
+.error-solution {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.error-solution strong {
+  color: #86efac;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.error-solution ul {
+  color: #cbd5e1;
+  margin: 0.5rem 0 0 1.5rem;
   padding: 0;
 }
-.tool-list li {
-  margin-bottom: 12px;
-  font-size: 1rem;
+
+/* VIDEO */
+.video-container {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* SUMMARY */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.summary-item {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-item code {
+  font-family: 'Fira Code', monospace;
+  color: #22c55e;
+  font-size: 0.9rem;
+}
+
+.summary-item span {
+  color: #cbd5e1;
+  font-size: 0.85rem;
 }
 
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.2rem;
+  .trash-visual {
+    grid-template-columns: 1fr;
   }
 }
 </style>

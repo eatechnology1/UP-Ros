@@ -1,580 +1,994 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <!-- 1. HERO SECTION -->
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-green-4 text-weight-bold q-mb-sm">
-          MÓDULO 4.3: EL FLUJO DE DATOS
+  <LessonContainer>
+    <!-- HERO INTRO -->
+    <TextBlock>
+      Los <strong>Topics</strong> implementan el patrón publish-subscribe desacoplado sobre DDS.
+      Permiten comunicación asíncrona 1-a-N con QoS configurable, fundamental para streaming de
+      datos de sensores y comandos de control en sistemas robóticos distribuidos.
+    </TextBlock>
+
+    <AlertBlock type="info" title="Características Clave">
+      <strong>Desacoplamiento:</strong> Publisher/Subscriber no se conocen entre sí
+      <br />
+      <strong>Asíncrono:</strong> No bloquea, fire-and-forget
+      <br />
+      <strong>1-a-N:</strong> Un publisher, múltiples subscribers
+      <br />
+      <strong>Tipado fuerte:</strong> Interfaces .msg definen estructura
+    </AlertBlock>
+
+    <!-- PUB/SUB PATTERN -->
+    <div class="section-group">
+      <SectionTitle>1. Patrón Publisher-Subscriber</SectionTitle>
+
+      <div class="pubsub-visual q-mt-md">
+        <div class="pubsub-node publisher">
+          <div class="node-icon">
+            <q-icon name="videocam" size="2.5rem" />
+          </div>
+          <div class="node-label">Publisher</div>
+          <div class="node-desc">Camera Node</div>
+          <div class="node-code">
+            <code>pub.publish(msg)</code>
+          </div>
         </div>
 
-        <h1 class="hero-title">Tópicos <span class="text-white">(Topics)</span></h1>
+        <div class="pubsub-pipe">
+          <div class="pipe-line"></div>
+          <div class="pipe-packets">
+            <div class="packet" style="animation-delay: 0s"></div>
+            <div class="packet" style="animation-delay: 1s"></div>
+            <div class="packet" style="animation-delay: 2s"></div>
+          </div>
+          <div class="pipe-label">
+            <div class="topic-name">/camera/image_raw</div>
+            <div class="topic-type">sensor_msgs/Image</div>
+          </div>
+        </div>
 
-        <TextBlock>
-          Los nodos necesitan compartir información constantemente (ej: video a 30fps, datos de
-          láser). Los <strong>Tópicos</strong> son tuberías unidireccionales de datos. Funcionan
-          como una transmisión de radio: un nodo "Publica" información en un canal específico, y
-          cualquier nodo interesado se "Suscribe" para escuchar.
-        </TextBlock>
+        <div class="pubsub-subscribers">
+          <div class="subscriber-node">
+            <q-icon name="monitor" />
+            <span>Display</span>
+          </div>
+          <div class="subscriber-node">
+            <q-icon name="save" />
+            <span>Logger</span>
+          </div>
+          <div class="subscriber-node">
+            <q-icon name="psychology" />
+            <span>Vision AI</span>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <!-- 2. ANATOMÍA PUB/SUB -->
-    <div class="section-group self-stretch">
-      <SectionTitle>1. Publicador y Suscriptor</SectionTitle>
+      <div class="q-mt-lg">
+        <div class="code-comparison">
+          <div class="code-col">
+            <div class="code-header">Publisher (C++)</div>
+            <CodeBlock
+              lang="cpp"
+              content='auto publisher = node->create_publisher<std_msgs::msg::String>(
+  "/topic_name", 10);
 
-      <div class="row q-col-gutter-lg items-center">
-        <div class="col-12 col-md-5">
-          <TextBlock>
-            El patrón es <strong>Desacoplado</strong>. El Publicador (Cámara) no sabe quién es el
-            Suscriptor (Pantalla). Ni siquiera sabe si existe. Solo lanza mensajes al "éter" (DDS)
-            bajo un nombre de tema.
-          </TextBlock>
-          <ul class="q-pl-md q-mt-md text-grey-4 tool-list">
-            <li>📢 <strong>1-a-N:</strong> Un publicador puede tener muchos suscriptores.</li>
-            <li>
-              💬 <strong>Tipado Fuerte:</strong> Todos deben hablar el mismo idioma (Tipo de
-              Mensaje).
-            </li>
-          </ul>
-        </div>
+auto msg = std_msgs::msg::String();
+msg.data = "Hello ROS 2";
+publisher->publish(msg);'
+              :copyable="true"
+            />
+          </div>
+          <div class="code-col">
+            <div class="code-header">Subscriber (Python)</div>
+            <CodeBlock
+              lang="python"
+              content="def callback(msg):
+    print(f'Received: {msg.data}')
 
-        <div class="col-12 col-md-7">
-          <!-- VISUAL ANIMATION PUB/SUB -->
-          <div
-            class="tool-card topic-viz q-pa-lg bg-black relative-position overflow-hidden shadow-2"
-          >
-            <div
-              class="row items-center justify-between relative-position full-height"
-              style="z-index: 2"
-            >
-              <!-- PUBLISHER (LEFT) -->
-              <div class="column items-center z-top">
-                <div class="node-box bg-blue-9 shadow-blue border-light transition-hover">
-                  <q-icon name="videocam" color="white" size="2rem" />
-                </div>
-                <div class="text-weight-bold text-blue-4 q-mt-sm font-mono text-xs">CamNode</div>
-                <div class="badge-pill bg-blue-9-soft text-blue-2 text-xxs border-blue-dim">
-                  PUB
-                </div>
-              </div>
-
-              <!-- PIPE (MIDDLE) -->
-              <div class="col relative-position text-center q-px-md">
-                <!-- The Physical Pipe -->
-                <div class="pipe-line bg-grey-8"></div>
-                <div class="pipe-glow absolute-center"></div>
-
-                <!-- MOVING MESSAGES -->
-                <div class="msg-packet absolute" style="animation-delay: 0s"></div>
-                <div class="msg-packet absolute" style="animation-delay: 1.2s"></div>
-                <div class="msg-packet absolute" style="animation-delay: 2.4s"></div>
-
-                <!-- Topic Label -->
-                <div
-                  class="topic-label bg-slate-900 q-px-sm q-py-xs rounded-borders text-green-4 font-mono text-xs inline-block relative-position shadow-1 border-green-dim"
-                  style="z-index: 3; top: -25px"
-                >
-                  /image_raw
-                </div>
-              </div>
-
-              <!-- SUBSCRIBERS (RIGHT) -->
-              <div class="column q-gutter-lg z-top">
-                <!-- Sub 1 -->
-                <div class="row items-center">
-                  <div
-                    class="badge-pill bg-purple-9-soft text-purple-2 text-xxs q-mr-sm border-purple-dim"
-                  >
-                    SUB
-                  </div>
-                  <div class="column items-center">
-                    <div
-                      class="node-box bg-purple-9 shadow-purple scale-sm border-light transition-hover"
-                    >
-                      <q-icon name="monitor" color="white" size="1.2rem" />
-                    </div>
-                    <div class="text-caption text-purple-4 q-mt-xs font-mono text-xxs">GUI</div>
-                  </div>
-                </div>
-
-                <!-- Sub 2 -->
-                <div class="row items-center">
-                  <div
-                    class="badge-pill bg-orange-9-soft text-orange-2 text-xxs q-mr-sm border-orange-dim"
-                  >
-                    SUB
-                  </div>
-                  <div class="column items-center">
-                    <div
-                      class="node-box bg-orange-9 shadow-orange scale-sm border-light transition-hover"
-                    >
-                      <q-icon name="save" color="white" size="1.2rem" />
-                    </div>
-                    <div class="text-caption text-orange-4 q-mt-xs font-mono text-xxs">Log</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+subscription = node.create_subscription(
+    String, '/topic_name', callback, 10)"
+              :copyable="true"
+            />
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 3. MENSAJES (EL IDIOMA) -->
-    <div class="section-group self-stretch">
-      <SectionTitle>2. El Idioma (Interfaces)</SectionTitle>
-      <SplitBlock>
-        <template #left>
-          <TextBlock>
-            Si la cámara envía una imagen, pero el suscriptor espera un texto, el sistema falla. Por
-            eso existen las <strong>Interfaces (.msg)</strong>. Son contratos estrictos.
-            <br /><br />
-            Ejemplo estándar: <code>geometry_msgs/Twist</code>. Se usa para mover robots. Define
-            velocidad lineal (x,y,z) y angular (x,y,z).
-          </TextBlock>
-        </template>
-
-        <template #right>
-          <div
-            class="tool-card msg-card bg-slate-900 q-pa-none border-green shadow-2 overflow-hidden"
-          >
-            <div
-              class="row justify-between items-center q-px-md q-py-sm bg-black border-bottom-dark"
-            >
-              <span class="text-grey-5 font-mono text-xs">geometry_msgs/msg/Twist</span>
-              <q-icon name="description" color="green-4" size="xs" />
-            </div>
-
-            <div class="code-structure font-mono text-sm q-pa-md bg-slate-800">
-              <!-- Block 1 -->
-              <div class="row items-center q-mb-xs">
-                <span class="text-blue-4 q-mr-md text-weight-bold">Vector3</span>
-                <span class="text-white">linear</span>
-              </div>
-              <div class="q-pl-lg text-grey-5 text-xs q-mb-sm border-left-grey">
-                <div>float64 x</div>
-                <div>float64 y</div>
-                <div>float64 z</div>
-              </div>
-
-              <!-- Block 2 -->
-              <div class="row items-center q-mb-xs">
-                <span class="text-blue-4 q-mr-md text-weight-bold">Vector3</span>
-                <span class="text-white">angular</span>
-              </div>
-              <div class="q-pl-lg text-grey-5 text-xs border-left-grey">
-                <div>float64 x</div>
-                <div>float64 y</div>
-                <div>float64 z</div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </SplitBlock>
-    </div>
-
-    <!-- 4. HERRAMIENTAS CLI (RQT Y TERMINAL) -->
-    <div class="section-group self-stretch q-mt-xl">
-      <SectionTitle>3. Escuchando la Radio (CLI Tools)</SectionTitle>
+    <!-- MESSAGE TYPES -->
+    <div class="section-group">
+      <SectionTitle>2. Message Types e IDL</SectionTitle>
       <TextBlock>
-        Como humano, no puedes ver los datos viajar por el cable. Necesitas herramientas de
-        espionaje.
+        Los mensajes ROS 2 se definen usando <strong>IDL (Interface Definition Language)</strong>,
+        un estándar OMG que permite interoperabilidad entre lenguajes. Se compilan a código C++,
+        Python, etc.
       </TextBlock>
 
-      <div class="row q-col-gutter-lg q-mt-sm">
-        <!-- TOOL 1: LIST -->
-        <div class="col-12 col-md-6">
-          <div class="tool-card cli-card bg-black q-pa-md shadow-2 cursor-pointer group">
-            <div class="window-dots row q-mb-sm">
-              <div class="dot bg-red-5 q-mr-xs"></div>
-              <div class="dot bg-yellow-5 q-mr-xs"></div>
-              <div class="dot bg-green-5"></div>
+      <div class="message-anatomy q-mt-md">
+        <div class="msg-card">
+          <div class="msg-header">
+            <q-icon name="description" />
+            <span>Primitive Types</span>
+          </div>
+          <div class="msg-types">
+            <div class="type-item">
+              <code>bool</code>
+              <span>true/false</span>
             </div>
-            <div class="text-green-4 font-mono text-sm border-bottom-dark q-pb-xs">
-              $ ros2 topic list
+            <div class="type-item">
+              <code>int8, int16, int32, int64</code>
+              <span>Enteros con signo</span>
             </div>
-            <div
-              class="text-grey-4 font-mono text-xs q-mt-sm leading-relaxed opacity-80 group-hover:opacity-100 transition-opacity"
-            >
-              /cmd_vel<br />
-              /camera/image_raw<br />
-              /rosout<br />
-              /tf
+            <div class="type-item">
+              <code>uint8, uint16, uint32, uint64</code>
+              <span>Enteros sin signo</span>
             </div>
-            <div class="text-caption text-grey-6 q-mt-md text-right font-italic">
-              "¿Qué canales están transmitiendo?"
+            <div class="type-item">
+              <code>float32, float64</code>
+              <span>Punto flotante</span>
+            </div>
+            <div class="type-item">
+              <code>string</code>
+              <span>UTF-8 string</span>
             </div>
           </div>
         </div>
 
-        <!-- TOOL 2: ECHO -->
-        <div class="col-12 col-md-6">
-          <div
-            class="tool-card cli-card bg-black q-pa-md border-green-glow shadow-glow-green cursor-pointer group"
-          >
-            <div class="window-dots row q-mb-sm">
-              <div class="dot bg-red-5 q-mr-xs"></div>
-              <div class="dot bg-yellow-5 q-mr-xs"></div>
-              <div class="dot bg-green-5"></div>
-            </div>
-            <div class="text-green-4 font-mono text-sm border-bottom-dark q-pb-xs">
-              $ ros2 topic echo /cmd_vel
-            </div>
-            <div class="text-white font-mono text-xs q-mt-sm leading-relaxed">
-              linear:<br />
-              &nbsp;&nbsp;x: <span class="text-orange-4">0.5</span><br />
-              &nbsp;&nbsp;y: 0.0<br />
-              angular:<br />
-              &nbsp;&nbsp;z: <span class="text-orange-4">-1.2</span>
-              <span class="blinking-cursor">_</span>
-            </div>
-            <div class="text-caption text-green-3 q-mt-md text-right font-italic">
-              "¡Interceptando datos en vivo!"
-            </div>
+        <div class="msg-card">
+          <div class="msg-header">
+            <q-icon name="view_array" />
+            <span>Arrays & Sequences</span>
+          </div>
+          <CodeBlock
+            lang="idl"
+            content="# Fixed-size array
+float64[3] position
+
+# Bounded sequence (max 100 elements)
+float64[<=100] trajectory
+
+# Unbounded sequence
+string[] names"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="msg-card">
+          <div class="msg-header">
+            <q-icon name="account_tree" />
+            <span>Nested Messages</span>
+          </div>
+          <CodeBlock
+            lang="idl"
+            content="# geometry_msgs/Twist.msg
+geometry_msgs/Vector3 linear
+geometry_msgs/Vector3 angular
+
+# geometry_msgs/Vector3.msg
+float64 x
+float64 y
+float64 z"
+            :copyable="true"
+          />
+        </div>
+      </div>
+
+      <div class="q-mt-md">
+        <CodeBlock
+          title="Crear custom message"
+          lang="bash"
+          content='# 1. Crear estructura
+mkdir -p my_msgs/msg
+cat > my_msgs/msg/RobotStatus.msg << EOF
+string robot_id
+float32 battery_level
+geometry_msgs/Pose pose
+bool is_moving
+EOF
+
+# 2. Agregar a CMakeLists.txt
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/RobotStatus.msg"
+  DEPENDENCIES geometry_msgs
+)
+
+# 3. Compilar
+colcon build --packages-select my_msgs'
+          :copyable="true"
+        />
+      </div>
+    </div>
+
+    <!-- QOS DEEP DIVE -->
+    <div class="section-group">
+      <SectionTitle>3. QoS Profiles: Configuración Avanzada</SectionTitle>
+      <TextBlock>
+        Los QoS profiles controlan el comportamiento de la comunicación. La compatibilidad entre
+        publisher y subscriber es crítica para establecer conexión.
+      </TextBlock>
+
+      <div class="qos-matrix q-mt-md">
+        <div class="matrix-header">
+          <div class="matrix-title">Matriz de Compatibilidad QoS</div>
+        </div>
+        <div class="matrix-table">
+          <div class="matrix-row header">
+            <div class="matrix-cell">Publisher ↓ / Subscriber →</div>
+            <div class="matrix-cell">RELIABLE</div>
+            <div class="matrix-cell">BEST_EFFORT</div>
+          </div>
+          <div class="matrix-row">
+            <div class="matrix-cell">RELIABLE</div>
+            <div class="matrix-cell compatible">✅ Compatible</div>
+            <div class="matrix-cell incompatible">❌ Incompatible</div>
+          </div>
+          <div class="matrix-row">
+            <div class="matrix-cell">BEST_EFFORT</div>
+            <div class="matrix-cell compatible">✅ Compatible</div>
+            <div class="matrix-cell compatible">✅ Compatible</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="qos-profiles q-mt-lg">
+        <div class="profile-card sensor">
+          <div class="profile-header">
+            <q-icon name="sensors" />
+            <span>SensorDataQoS</span>
+          </div>
+          <div class="profile-config">
+            <div class="config-item">Reliability: <strong>BEST_EFFORT</strong></div>
+            <div class="config-item">Durability: <strong>VOLATILE</strong></div>
+            <div class="config-item">History: <strong>KEEP_LAST(5)</strong></div>
+          </div>
+          <div class="profile-use">
+            <strong>Uso:</strong> Datos de sensores de alta frecuencia (IMU, Lidar, Camera)
+          </div>
+          <CodeBlock
+            lang="cpp"
+            content='auto qos = rclcpp::SensorDataQoS();
+auto pub = node->create_publisher<sensor_msgs::msg::Image>(
+  "/camera", qos);'
+            :copyable="true"
+          />
+        </div>
+
+        <div class="profile-card system">
+          <div class="profile-header">
+            <q-icon name="settings" />
+            <span>SystemDefaultsQoS</span>
+          </div>
+          <div class="profile-config">
+            <div class="config-item">Reliability: <strong>RELIABLE</strong></div>
+            <div class="config-item">Durability: <strong>VOLATILE</strong></div>
+            <div class="config-item">History: <strong>KEEP_LAST(10)</strong></div>
+          </div>
+          <div class="profile-use">
+            <strong>Uso:</strong> Comandos de control, mensajes de estado
+          </div>
+        </div>
+
+        <div class="profile-card params">
+          <div class="profile-header">
+            <q-icon name="tune" />
+            <span>ParametersQoS</span>
+          </div>
+          <div class="profile-config">
+            <div class="config-item">Reliability: <strong>RELIABLE</strong></div>
+            <div class="config-item">Durability: <strong>TRANSIENT_LOCAL</strong></div>
+            <div class="config-item">History: <strong>KEEP_ALL</strong></div>
+          </div>
+          <div class="profile-use">
+            <strong>Uso:</strong> Parámetros de configuración, late-joiners
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 5. RQT GRAPH (EL MAPA) -->
-    <div class="section-group self-stretch q-mt-xl q-mb-xl">
-      <div class="bg-slate-800 q-pa-lg rounded-borders border-accent text-center shadow-2">
-        <div class="row justify-center items-center q-mb-lg">
-          <div class="bg-slate-700 q-pa-sm rounded-borders q-mr-md">
-            <q-icon name="hub" size="md" color="white" />
+    <!-- INTRA-PROCESS -->
+    <div class="section-group">
+      <SectionTitle>4. Intra-Process Communication</SectionTitle>
+      <TextBlock>
+        Cuando publisher y subscriber están en el mismo proceso, ROS 2 puede usar
+        <strong>zero-copy</strong> mediante punteros compartidos, eliminando serialización y
+        logrando latencias &lt;10μs.
+      </TextBlock>
+
+      <div class="ipc-comparison q-mt-md">
+        <div class="ipc-card standard">
+          <div class="ipc-header">Standard (Inter-Process)</div>
+          <div class="ipc-flow">
+            <div class="flow-step">Publisher</div>
+            <div class="flow-arrow">→ Serialize</div>
+            <div class="flow-step">DDS</div>
+            <div class="flow-arrow">→ Deserialize</div>
+            <div class="flow-step">Subscriber</div>
           </div>
-          <div class="text-h6 text-white">Visualización Total: RQT Graph</div>
+          <div class="ipc-metrics">
+            <div class="metric-item">Latencia: 50-200μs</div>
+            <div class="metric-item">CPU: Alto (serialización)</div>
+            <div class="metric-item">Memoria: 2x (copia)</div>
+          </div>
         </div>
 
-        <div
-          class="graph-mockup bg-white q-pa-md rounded-borders relative-position overflow-hidden shadow-inner"
-          style="height: 180px"
-        >
-          <!-- BACKGROUND GRID -->
-          <div
-            class="absolute-full"
-            style="
-              background-image: radial-gradient(#ccc 1px, transparent 1px);
-              background-size: 10px 10px;
-              opacity: 0.5;
+        <div class="ipc-card optimized">
+          <div class="ipc-header">Intra-Process (Zero-Copy)</div>
+          <div class="ipc-flow">
+            <div class="flow-step">Publisher</div>
+            <div class="flow-arrow">→ Shared Ptr</div>
+            <div class="flow-step">Subscriber</div>
+          </div>
+          <div class="ipc-metrics">
+            <div class="metric-item">Latencia: &lt;10μs</div>
+            <div class="metric-item">CPU: Mínimo</div>
+            <div class="metric-item">Memoria: 1x (sin copia)</div>
+          </div>
+        </div>
+      </div>
+
+      <CodeBlock
+        title="Habilitar intra-process"
+        lang="cpp"
+        content='// Configurar nodo
+auto options = rclcpp::NodeOptions();
+options.use_intra_process_comms(true);
+auto node = std::make_shared<MyNode>(options);
+
+// Publisher con unique_ptr (permite zero-copy)
+auto msg = std::make_unique<std_msgs::msg::String>();
+msg->data = "Hello";
+publisher->publish(std::move(msg));'
+        :copyable="true"
+      />
+    </div>
+
+    <!-- CLI TOOLS -->
+    <div class="section-group">
+      <SectionTitle>5. Herramientas CLI</SectionTitle>
+
+      <div class="cli-grid q-mt-md">
+        <div class="cli-card">
+          <div class="cli-header">
+            <q-icon name="list" />
+            <span>Listar Topics</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Listar todos los topics
+ros2 topic list
+
+# Con tipos
+ros2 topic list -t
+
+# Verbose (incluye QoS)
+ros2 topic list -v"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="cli-card">
+          <div class="cli-header">
+            <q-icon name="info" />
+            <span>Información</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Ver publishers/subscribers
+ros2 topic info /topic_name
+
+# Ver QoS profiles
+ros2 topic info /topic_name --verbose"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="cli-card">
+          <div class="cli-header">
+            <q-icon name="visibility" />
+            <span>Monitorear</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Ver mensajes en tiempo real
+ros2 topic echo /topic_name
+
+# Frecuencia (Hz)
+ros2 topic hz /topic_name
+
+# Bandwidth
+ros2 topic bw /topic_name"
+            :copyable="true"
+          />
+        </div>
+
+        <div class="cli-card">
+          <div class="cli-header">
+            <q-icon name="publish" />
+            <span>Publicar</span>
+          </div>
+          <CodeBlock
+            lang="bash"
+            content="# Publicar una vez
+ros2 topic pub --once /cmd_vel geometry_msgs/Twist \
+  '{linear: {x: 0.5}, angular: {z: 0.0}}'
+
+# Publicar a 10Hz
+ros2 topic pub -r 10 /cmd_vel geometry_msgs/Twist \
+  '{linear: {x: 0.5}}'"
+            :copyable="true"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="section-group">
+      <SectionTitle>📹 Video Complementario</SectionTitle>
+      <div class="video-container">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="ROS 2 Topics Deep Dive"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
             "
-          ></div>
-
-          <!-- FAKE GRAPH NODES -->
-          <div
-            class="absolute bg-blue-1 border-blue-dark q-px-md q-py-sm text-xs text-black rounded shadow-1 font-mono text-weight-bold"
-            style="top: 40%; left: 10%; z-index: 2"
-          >
-            /teleop_key
-          </div>
-
-          <div
-            class="absolute bg-green-1 border-green-dark q-px-md q-py-sm text-xs text-black rounded shadow-1 font-mono text-weight-bold"
-            style="top: 40%; right: 10%; z-index: 2"
-          >
-            /turtlesim
-          </div>
-
-          <!-- ARROW -->
-          <div
-            class="absolute bg-grey-2 border-grey-4 q-px-sm text-xxs text-black rounded font-mono"
-            style="top: 32%; left: 50%; transform: translateX(-50%); z-index: 2"
-          >
-            /cmd_vel
-          </div>
-
-          <svg class="absolute-full" style="pointer-events: none; z-index: 1">
-            <line
-              x1="22%"
-              y1="50%"
-              x2="78%"
-              y2="50%"
-              stroke="#333"
-              stroke-width="2"
-              marker-end="url(#arrowhead)"
-            />
-            <defs>
-              <marker
-                id="arrowhead"
-                markerWidth="10"
-                markerHeight="7"
-                refX="9"
-                refY="3.5"
-                orient="auto"
-              >
-                <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
-              </marker>
-            </defs>
-          </svg>
+            allowfullscreen
+          ></iframe>
         </div>
-
-        <p class="text-grey-4 q-mt-lg text-subtitle2">
-          Ejecuta <code class="bg-black q-px-xs rounded text-pink-4">rqt_graph</code> para ver quién
-          habla con quién en un diagrama automático.
-        </p>
+        <div class="video-caption">
+          <q-icon name="info" color="blue-4" size="sm" />
+          Reemplaza con video técnico sobre Topics y QoS
+        </div>
       </div>
     </div>
-  </q-page>
+
+    <!-- RESUMEN -->
+    <div class="section-group q-mb-xl">
+      <SectionTitle>📝 Resumen Técnico</SectionTitle>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <code>Pub/Sub</code>
+          <span>Desacoplado, asíncrono, 1-a-N</span>
+        </div>
+        <div class="summary-item">
+          <code>IDL Messages</code>
+          <span>Tipado fuerte, interoperable</span>
+        </div>
+        <div class="summary-item">
+          <code>QoS Profiles</code>
+          <span>Reliability, Durability, History</span>
+        </div>
+        <div class="summary-item">
+          <code>Intra-Process</code>
+          <span>&lt;10μs, zero-copy</span>
+        </div>
+        <div class="summary-item">
+          <code>ros2 topic</code>
+          <span>list, info, echo, hz, bw, pub</span>
+        </div>
+      </div>
+
+      <AlertBlock type="success" title="Best Practices" class="q-mt-lg">
+        ✅ Usar SensorDataQoS para datos de alta frecuencia
+        <br />
+        ✅ Habilitar intra-process para comunicación local
+        <br />
+        ✅ Verificar compatibilidad QoS con <code>--verbose</code>
+        <br />
+        ✅ Limitar tamaño de mensajes (&lt;1MB para buen rendimiento)
+        <br />
+        ✅ Usar arrays bounded para evitar allocations dinámicas
+      </AlertBlock>
+    </div>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
+import AlertBlock from 'components/content/AlertBlock.vue';
+import CodeBlock from 'components/content/CodeBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
-import SplitBlock from 'components/content/SplitBlock.vue';
 </script>
 
 <style scoped>
-/* --- ESTILOS MAESTROS --- */
-.intro-hero,
 .section-group {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 3.5rem auto;
+  margin-bottom: 3.5rem;
 }
 
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(74, 222, 128, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  text-align: center;
-}
-
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.1;
-  color: #f8fafc;
-}
-
-/* TOOL CARDS */
-.tool-card {
-  height: 100%;
+/* PUBSUB VISUAL */
+.pubsub-visual {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 2rem;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid rgba(0, 217, 255, 0.3);
   border-radius: 16px;
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 3rem 2rem;
 }
 
-/* TOPIC VIZ */
-.topic-viz {
-  border-top: 4px solid #4ade80;
-  height: 300px;
-}
-.full-height {
-  height: 100%;
-}
-.z-top {
-  z-index: 5;
+.pubsub-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
-.node-box {
-  width: 70px;
-  height: 70px;
-  border-radius: 14px;
+.node-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
+  color: white;
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
 }
-.scale-sm {
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
+
+.node-label {
+  font-weight: 700;
+  color: #00d9ff;
+  font-size: 1.1rem;
+}
+
+.node-desc {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.node-code {
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  font-family: 'Fira Code', monospace;
+  color: #00ff88;
+  font-size: 0.85rem;
+}
+
+.pubsub-pipe {
+  position: relative;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .pipe-line {
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #00d9ff);
+  border-radius: 2px;
+}
+
+.pipe-packets {
   position: absolute;
-  top: 50%;
-  left: 0;
   width: 100%;
-  height: 6px;
+  height: 100%;
+}
+
+.packet {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #00ff88;
+  border-radius: 4px;
+  top: 50%;
   transform: translateY(-50%);
-  z-index: 1;
-  border-radius: 3px;
-}
-.pipe-glow {
-  width: 100%;
-  height: 2px;
-  background: rgba(74, 222, 128, 0.2);
-  box-shadow: 0 0 10px rgba(74, 222, 128, 0.2);
+  animation: packet-flow 3s linear infinite;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.7);
 }
 
-.msg-packet {
-  width: 12px;
-  height: 12px;
-  background: #4ade80;
-  border-radius: 50%;
-  top: 50%;
-  margin-top: -6px;
-  box-shadow:
-    0 0 15px #4ade80,
-    0 0 5px #fff;
-  animation: travel 3.6s linear infinite;
-  opacity: 0;
-}
-
-@keyframes travel {
+@keyframes packet-flow {
   0% {
-    left: 5%;
+    left: 0%;
     opacity: 0;
-    transform: scale(0.5);
   }
   10% {
     opacity: 1;
-    transform: scale(1);
   }
   90% {
     opacity: 1;
-    transform: scale(1);
   }
   100% {
-    left: 85%;
-    opacity: 0;
-    transform: scale(0.5);
-  }
-}
-
-.badge-pill {
-  padding: 3px 6px;
-  border-radius: 4px;
-  font-weight: bold;
-  font-family: 'Fira Code', monospace;
-}
-.bg-blue-9-soft {
-  background: rgba(30, 58, 138, 0.5);
-}
-.bg-purple-9-soft {
-  background: rgba(88, 28, 135, 0.5);
-}
-.bg-orange-9-soft {
-  background: rgba(124, 45, 18, 0.5);
-}
-
-.border-blue-dim {
-  border: 1px solid rgba(59, 130, 246, 0.3);
-}
-.border-purple-dim {
-  border: 1px solid rgba(168, 85, 247, 0.3);
-}
-.border-orange-dim {
-  border: 1px solid rgba(251, 146, 60, 0.3);
-}
-.border-green-dim {
-  border: 1px solid rgba(74, 222, 128, 0.3);
-}
-
-.shadow-blue {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
-}
-.shadow-purple {
-  box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
-}
-.shadow-orange {
-  box-shadow: 0 0 15px rgba(251, 146, 60, 0.4);
-}
-
-.transition-hover {
-  transition: transform 0.2s;
-}
-.transition-hover:hover {
-  transform: scale(1.05);
-}
-
-/* MSG CARD */
-.border-green {
-  border-left: 4px solid #4ade80;
-}
-.border-left-grey {
-  border-left: 2px solid rgba(255, 255, 255, 0.1);
-}
-.border-bottom-dark {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-.bg-slate-800 {
-  background: #1e293b;
-}
-.bg-slate-900 {
-  background: #0f172a;
-}
-
-/* CLI CARD */
-.cli-card {
-  border: 1px solid #333;
-  transition: transform 0.3s;
-}
-.cli-card:hover {
-  transform: translateY(-5px);
-  border-color: #4ade80;
-}
-.border-green-glow {
-  border: 1px solid #4ade80;
-}
-.shadow-glow-green {
-  box-shadow: 0 0 20px rgba(74, 222, 128, 0.15);
-}
-.window-dots .dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-.leading-relaxed {
-  line-height: 1.6;
-}
-.blinking-cursor {
-  animation: blink 1s step-end infinite;
-}
-@keyframes blink {
-  50% {
+    left: 100%;
     opacity: 0;
   }
 }
 
-/* GRAPH MOCKUP */
-.border-blue-dark {
-  border: 1px solid #1d4ed8;
-}
-.border-green-dark {
-  border: 1px solid #15803d;
-}
-.text-xxs {
-  font-size: 0.65rem;
-}
-.shadow-inner {
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+.pipe-label {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }
 
-/* UTILS */
-.font-mono {
+.topic-name {
   font-family: 'Fira Code', monospace;
+  color: #00d9ff;
+  font-weight: 700;
+  font-size: 1.05rem;
 }
-.text-xs {
-  font-size: 0.8rem;
+
+.topic-type {
+  color: #64748b;
+  font-size: 0.75rem;
 }
-.text-sm {
+
+.pubsub-subscribers {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.subscriber-node {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid #a855f7;
+  border-radius: 8px;
+  color: #c4b5fd;
+  font-weight: 700;
+}
+
+/* CODE COMPARISON */
+.code-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.code-header {
+  padding: 0.75rem 1rem;
+  background: rgba(0, 217, 255, 0.1);
+  border-bottom: 1px solid rgba(0, 217, 255, 0.3);
+  font-weight: 700;
+  color: #00d9ff;
+  text-align: center;
+}
+
+/* MESSAGE ANATOMY */
+.message-anatomy {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.msg-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.msg-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.msg-types {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.type-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+}
+
+.type-item code {
+  font-family: 'Fira Code', monospace;
+  color: #00ff88;
+  font-weight: 700;
+}
+
+.type-item span {
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* QOS MATRIX */
+.qos-matrix {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.matrix-header {
+  padding: 1rem 1.5rem;
+  background: rgba(0, 217, 255, 0.1);
+  border-bottom: 1px solid rgba(0, 217, 255, 0.3);
+}
+
+.matrix-title {
+  font-weight: 700;
+  color: #00d9ff;
+  font-size: 1.1rem;
+}
+
+.matrix-table {
+  padding: 1.5rem;
+}
+
+.matrix-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.matrix-row.header {
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.matrix-cell {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  text-align: center;
+  color: #cbd5e1;
+}
+
+.matrix-cell.compatible {
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid #00ff88;
+  color: #00ff88;
+  font-weight: 700;
+}
+
+.matrix-cell.incompatible {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+  font-weight: 700;
+}
+
+/* QOS PROFILES */
+.qos-profiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.profile-card {
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.profile-card.sensor {
+  border-color: #3b82f6;
+}
+
+.profile-card.system {
+  border-color: #00ff88;
+}
+
+.profile-card.params {
+  border-color: #a855f7;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1.1rem;
+}
+
+.profile-config {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.config-item {
+  color: #cbd5e1;
   font-size: 0.9rem;
 }
-.bg-slate-700 {
-  background: #334155;
-}
-.border-light {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.tool-list {
-  list-style: none;
-  padding: 0;
-}
-.tool-list li {
-  margin-bottom: 12px;
-  font-size: 1rem;
+
+.config-item strong {
+  color: #00d9ff;
+  font-family: 'Fira Code', monospace;
 }
 
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.2rem;
+.profile-use {
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* IPC COMPARISON */
+.ipc-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.ipc-card {
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid;
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.ipc-card.standard {
+  border-color: #ff6b35;
+}
+
+.ipc-card.optimized {
+  border-color: #00ff88;
+}
+
+.ipc-header {
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.ipc-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.flow-step {
+  padding: 0.75rem 1.5rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  color: #cbd5e1;
+  font-weight: 700;
+}
+
+.flow-arrow {
+  color: #00d9ff;
+  font-weight: 700;
+}
+
+.ipc-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.metric-item {
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
+/* CLI GRID */
+.cli-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.cli-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cli-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+/* VIDEO */
+.video-container {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* SUMMARY */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.summary-item {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-item code {
+  font-family: 'Fira Code', monospace;
+  color: #00d9ff;
+  font-size: 0.95rem;
+}
+
+.summary-item span {
+  color: #cbd5e1;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 1024px) {
+  .pubsub-visual {
+    grid-template-columns: 1fr;
+  }
+
+  .code-comparison,
+  .ipc-comparison,
+  .cli-grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>

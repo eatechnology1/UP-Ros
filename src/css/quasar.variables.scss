@@ -12,14 +12,35 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$primary: #1976d2;
-$secondary: #26a69a;
-$accent: #9c27b0;
+// Quasar SCSS (& Sass) Variables
+// --------------------------------------------------
 
-$dark: #1d1d1d;
-$dark-page: #121212;
+// --- PALETA CYBER SLATE ---
+$slate-900: #0f172a; // Fondo Principal
+$slate-800: #1e293b; // Fondo Cards/Sections
+$slate-700: #334155; // Bordes suaves
+$slate-300: #cbd5e1; // Texto primario
+$slate-400: #94a3b8; // Texto secundario
 
-$positive: #21ba45;
-$negative: #c10015;
-$info: #31ccec;
-$warning: #f2c037;
+// --- ACENTOS DE ENERGÍA ---
+$neon-blue: #38bdf8; // Primary Action (Sky Blue)
+$neon-purple: #818cf8; // Secondary / Gradient
+$neon-green: #4ade80; // Success / Terminal
+$neon-pink: #f472b6; // Highlights
+
+// --- OVERRIDES DE QUASAR ---
+$primary: $neon-blue;
+$secondary: $neon-purple;
+$accent: $neon-pink;
+
+$dark: $slate-900;
+$dark-page: #0b1120; // Un tono más oscuro que Slate-900 para profundidad
+
+$positive: $neon-green;
+$negative: #ef4444;
+$info: #0ea5e9;
+$warning: #f59e0b;
+
+// --- UTILS ---
+$glass-bg: rgba(30, 41, 59, 0.7);
+$glass-border: rgba(255, 255, 255, 0.1);

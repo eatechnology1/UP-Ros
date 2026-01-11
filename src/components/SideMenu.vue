@@ -25,6 +25,16 @@
             </q-item-section>
           </q-item>
         </div>
+        <div class="menu-group q-mb-md">
+          <q-item clickable v-ripple to="/instalacion" exact class="menu-item single-item">
+            <q-item-section avatar>
+              <q-icon name="school" class="text-blue-grey-3" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label class="text-weight-bold">Instalacion</q-item-label>
+            </q-item-section>
+          </q-item>
+        </div>
 
         <q-separator class="menu-divider" />
         <q-item-label header class="menu-header">Modulos de Aprendizaje Ros2 JAZZY</q-item-label>

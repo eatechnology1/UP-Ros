@@ -1,350 +1,750 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <!-- 1. HERO SECTION -->
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-accent text-weight-bold q-mb-sm">
-          MÓDULO 1.4: ARQUITECTURA C++
-        </div>
+  <LessonContainer>
+    <!-- INTRO -->
+    <TextBlock>
+      C++ divide el código en dos tipos de archivos: <strong>headers (.hpp)</strong> que declaran
+      QUÉ existe, y <strong>source (.cpp)</strong> que implementa CÓMO funciona. Esta separación
+      permite compilación modular y reutilización de código. <br /><br />
+      Esta lección te enseña la estructura de proyectos C++ en ROS 2, smart pointers, namespaces, y
+      las mejores prácticas de organización de código.
+    </TextBlock>
 
-        <h1 class="hero-title">Headers y <span class="text-primary">Sources</span></h1>
+    <!-- .HPP VS .CPP -->
+    <div class="section-group">
+      <SectionTitle>1. La Gran División: .hpp vs .cpp</SectionTitle>
 
-        <TextBlock>
-          En proyectos profesionales de robótica, no escribimos todo el código en un solo lugar.
-          Aprendemos a separar las <strong>Promesas</strong> (Archivos .hpp) de las
-          <strong>Acciones</strong> (Archivos .cpp). Esta estructura es obligatoria para crear nodos
-          de ROS 2 limpios y compilables.
-        </TextBlock>
-      </div>
-    </section>
-
-    <!-- 2. LA METÁFORA: MENÚ VS COCINA -->
-    <div class="section-group self-stretch">
-      <SectionTitle>1. La Gran División (.hpp vs .cpp)</SectionTitle>
-
-      <div class="row q-col-gutter-lg items-stretch">
-        <!-- HEADER FILE -->
-        <div class="col-12 col-md-6">
-          <div class="tool-card file-type header-file relative-position full-height">
-            <div class="file-badge bg-orange-9 text-white shadow-2">.hpp / .h</div>
-
-            <div class="q-pa-lg text-center">
-              <q-icon name="menu_book" color="orange-4" size="4rem" class="q-mb-md" />
-              <h3 class="text-h5 text-white q-my-sm">El "Menú" (Declaración)</h3>
-              <p class="text-body2 text-grey-4">
-                Le dice al compilador <strong>QUÉ</strong> existe. <br />Listas las variables y
-                funciones, pero no escribes su lógica. Es el contrato público de tu robot.
-              </p>
+      <div class="file-comparison">
+        <div class="file-card header">
+          <div class="file-header">
+            <q-icon name="menu_book" size="3rem" color="orange-4" />
+            <div class="file-title">.hpp (Header)</div>
+            <div class="file-subtitle">El "Menú" - Declaración</div>
+          </div>
+          <div class="file-content">
+            <div class="file-desc">
+              Le dice al compilador <strong>QUÉ</strong> existe. Lista las funciones y clases, pero
+              no su implementación. Es el contrato público.
             </div>
+            <CodeBlock
+              title="robot.hpp"
+              lang="cpp"
+              content="#ifndef ROBOT_HPP
+#define ROBOT_HPP
 
-            <div class="code-snippet q-px-md q-pb-md col-grow flex column justify-end">
-              <!-- CORREGIDO: lang & content -->
-              <CodeBlock
-                lang="cpp"
-                content="class Robot {
-  public:
-    void mover(); // Solo prometo que me muevo
-  private:
-    int bateria;
-};"
-              />
-            </div>
+class Robot {
+public:
+  Robot();  // Constructor
+  void mover(double velocidad);
+  int getBateria();
+
+private:
+  int bateria_;
+  double posicion_x_;
+};
+
+#endif  // ROBOT_HPP"
+              :copyable="true"
+            />
           </div>
         </div>
 
-        <!-- SOURCE FILE -->
-        <div class="col-12 col-md-6">
-          <div class="tool-card file-type source-file relative-position full-height">
-            <div class="file-badge bg-blue-9 text-white shadow-2">.cpp</div>
-
-            <div class="q-pa-lg text-center">
-              <q-icon name="soup_kitchen" color="blue-4" size="4rem" class="q-mb-md" />
-              <h3 class="text-h5 text-white q-my-sm">La "Cocina" (Implementación)</h3>
-              <p class="text-body2 text-grey-4">
-                Le dice al compilador <strong>CÓMO</strong> funciona. <br />Aquí está la lógica, las
-                matemáticas y el código sucio. Nadie necesita ver esto para usar tu robot.
-              </p>
+        <div class="file-card source">
+          <div class="file-header">
+            <q-icon name="code" size="3rem" color="blue-4" />
+            <div class="file-title">.cpp (Source)</div>
+            <div class="file-subtitle">La "Cocina" - Implementación</div>
+          </div>
+          <div class="file-content">
+            <div class="file-desc">
+              Le dice al compilador <strong>CÓMO</strong> funciona. Aquí está la lógica real, las
+              matemáticas y el código.
             </div>
+            <CodeBlock
+              title="robot.cpp"
+              lang="cpp"
+              content='#include "robot.hpp"
 
-            <div class="code-snippet q-px-md q-pb-md col-grow flex column justify-end">
-              <!-- CORREGIDO: lang & content -->
-              <CodeBlock
-                lang="cpp"
-                content='#include "robot.hpp"
+Robot::Robot() : bateria_(100), posicion_x_(0.0) {
+  // Constructor
+}
 
-void Robot::mover() {
-  this->bateria -= 10;
-  printf("Avanzando...");
+void Robot::mover(double velocidad) {
+  posicion_x_ += velocidad;
+  bateria_ -= 5;
+}
+
+int Robot::getBateria() {
+  return bateria_;
 }'
-              />
+              :copyable="true"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="q-mt-lg">
+        <AlertBlock type="info" title="¿Por qué separar?">
+          <strong>Compilación más rápida:</strong> Si cambias la implementación (.cpp), solo
+          recompilas ese archivo. Si cambias el header (.hpp), recompilas TODO lo que lo incluye.
+          <br /><br />
+          <strong>Encapsulación:</strong> Otros desarrolladores solo ven el "menú" (API pública), no
+          la "cocina" (detalles internos).
+        </AlertBlock>
+      </div>
+    </div>
+
+    <!-- SCOPE OPERATOR -->
+    <div class="section-group">
+      <SectionTitle>2. El Operador :: (Scope Resolution)</SectionTitle>
+      <TextBlock>
+        Cuando defines una función fuera de la clase (en el .cpp), debes usar
+        <code>::</code> para indicar a qué clase pertenece.
+      </TextBlock>
+
+      <div class="scope-demo q-mt-md">
+        <div class="scope-wrong">
+          <div class="scope-label">❌ Incorrecto</div>
+          <CodeBlock
+            lang="cpp"
+            content="// robot.cpp
+void mover() {  // ¿Quién se mueve?
+  // El compilador no sabe que esto es del Robot
+}"
+          />
+        </div>
+
+        <div class="scope-arrow">
+          <q-icon name="arrow_forward" size="2rem" color="yellow-6" />
+        </div>
+
+        <div class="scope-correct">
+          <div class="scope-label">✅ Correcto</div>
+          <CodeBlock
+            lang="cpp"
+            content="// robot.cpp
+void Robot::mover() {  // Pertenece a Robot
+  // Ahora el compilador sabe
+}"
+          />
+        </div>
+      </div>
+
+      <div class="q-mt-md">
+        <SectionTitle>Otros Usos de ::</SectionTitle>
+        <div class="row q-col-gutter-md">
+          <div class="col-12 col-md-6">
+            <div class="scope-use-card">
+              <div class="use-title">Acceder a Namespace</div>
+              <CodeBlock lang="cpp" content="std::cout << 'Hola';" :copyable="true" />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="scope-use-card">
+              <div class="use-title">Acceder a Miembro Estático</div>
+              <CodeBlock lang="cpp" content="Robot::MAX_VELOCIDAD" :copyable="true" />
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 3. EL ALCANCE (SCOPE) Y :: -->
-    <div class="section-group self-stretch">
-      <SectionTitle>2. El Operador de Pertenencia (::)</SectionTitle>
-      <SplitBlock>
-        <template #left>
-          <TextBlock>
-            Cuando estás en el archivo <code>.cpp</code>, estás fuera de la clase. Para definir una
-            función que prometiste en el <code>.hpp</code>, debes usar el apellido de la clase.
-            <br /><br />
-            El operador <code>::</code> significa <strong>"Pertenece a"</strong>. <br /><br />
-            Sin esto, C++ pensará que <code>mover()</code> es una función suelta que no tiene nada
-            que ver con tu robot.
-          </TextBlock>
-        </template>
-
-        <template #right>
-          <div class="nano-terminal q-pa-md font-mono text-caption rounded-borders shadow-2">
-            <div class="text-grey-5">// En robot.cpp</div>
-            <br />
-            <div class="text-red-4">void mover() { ... }</div>
-            <div class="text-grey-5 q-mb-md border-left-red q-pl-sm">
-              ❌ Error: ¿Quién se mueve? ¿El mundo? El compilador no sabe que esto es del robot.
-            </div>
-
-            <div class="text-green-4">
-              void Robot<span class="text-yellow-4">::</span>mover() { ... }
-            </div>
-            <div class="text-grey-5 border-left-green q-pl-sm">
-              ✅ Correcto: La función 'mover' que <strong>pertenece a</strong> la clase 'Robot'.
-            </div>
-          </div>
-        </template>
-      </SplitBlock>
-    </div>
-
-    <!-- 4. PUNTEROS INTELIGENTES -->
-    <div class="section-group self-stretch">
-      <SectionTitle>3. Memoria Moderna: Smart Pointers</SectionTitle>
-      <AlertBlock type="warning" title="💀 Olvida el 'new' y 'delete'">
-        En C++ antiguo (y en la universidad) te enseñan a gestionar memoria manualmente.
-        <strong>En ROS 2 eso está prohibido.</strong>
-        Usamos "Punteros Inteligentes" que borran la memoria automáticamente cuando ya no se usan.
+    <!-- SMART POINTERS -->
+    <div class="section-group">
+      <SectionTitle>3. Smart Pointers: Memoria Moderna</SectionTitle>
+      <AlertBlock type="warning" title="💀 Olvida new y delete">
+        En C++ moderno (y ROS 2), <strong>NUNCA</strong> uses <code>new</code> y
+        <code>delete</code> manualmente. Los smart pointers gestionan la memoria automáticamente.
       </AlertBlock>
 
-      <div class="row q-col-gutter-lg q-mt-sm items-stretch">
-        <div class="col-12 col-md-6">
-          <div class="tool-card concept-card bg-slate-800 full-height column">
-            <div class="text-subtitle1 text-accent text-weight-bold q-mb-sm">std::shared_ptr</div>
-            <p class="text-grey-4 flex-grow">
-              Es como una correa compartida. Varios sistemas pueden "sostener" al mismo robot. El
-              robot no se destruye hasta que el último sistema suelta la correa.
-              <br /><strong class="text-white">Es el estándar en ROS 2.</strong>
-            </p>
-            <div class="q-mt-auto">
-              <!-- CORREGIDO: lang & content -->
-              <CodeBlock lang="cpp" content="auto nodo = std::make_shared<MiRobot>();" />
+      <div class="smart-pointers q-mt-md">
+        <div class="pointer-card shared">
+          <div class="pointer-header">
+            <q-icon name="share" size="2rem" />
+            <span>std::shared_ptr</span>
+          </div>
+          <div class="pointer-content">
+            <div class="pointer-desc">
+              <strong>Propiedad compartida.</strong> Varios objetos pueden "sostener" el mismo
+              recurso. Se destruye cuando el último dueño desaparece.
+            </div>
+            <CodeBlock
+              lang="cpp"
+              content="auto nodo = std::make_shared<MiNodo>();
+// Cuenta de referencias: 1
+
+auto copia = nodo;
+// Cuenta de referencias: 2
+
+// Cuando ambos salen de scope, se destruye automáticamente"
+              :copyable="true"
+            />
+            <div class="pointer-use">
+              <strong>Uso en ROS 2:</strong> Nodos, publishers, subscriptions
             </div>
           </div>
         </div>
 
-        <div class="col-12 col-md-6">
-          <div class="tool-card concept-card bg-slate-800 full-height column">
-            <div class="text-subtitle1 text-purple-4 text-weight-bold q-mb-sm">std::unique_ptr</div>
-            <p class="text-grey-4 flex-grow">
-              Propiedad exclusiva. "Este sensor es mío y de nadie más". Si intentas copiarlo, el
-              compilador te grita. Se usa para hardware exclusivo o drivers.
-            </p>
-            <div class="q-mt-auto">
-              <!-- CORREGIDO: lang & content -->
-              <CodeBlock
-                lang="cpp"
-                content="std::unique_ptr<Sensor> s = std::make_unique<Sensor>();"
-              />
+        <div class="pointer-card unique">
+          <div class="pointer-header">
+            <q-icon name="lock" size="2rem" />
+            <span>std::unique_ptr</span>
+          </div>
+          <div class="pointer-content">
+            <div class="pointer-desc">
+              <strong>Propiedad exclusiva.</strong> Solo un objeto puede poseerlo. No se puede
+              copiar, solo mover.
+            </div>
+            <CodeBlock
+              lang="cpp"
+              content="auto sensor = std::make_unique<Lidar>();
+// Solo este objeto posee el sensor
+
+// auto copia = sensor;  // ❌ Error de compilación
+auto movido = std::move(sensor);  // ✅ Transferencia de propiedad"
+              :copyable="true"
+            />
+            <div class="pointer-use">
+              <strong>Uso en ROS 2:</strong> Drivers de hardware, recursos exclusivos
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 5. ARQUITECTURA DE CARPETAS ROS 2 -->
-    <div class="section-group self-stretch q-mb-xl">
-      <SectionTitle>4. ¿Dónde guardo mis archivos?</SectionTitle>
-      <div class="tool-card file-tree-card row items-center justify-center">
-        <div class="col-12 col-md-8">
-          <div class="text-caption text-grey-5 q-mb-md text-center font-mono">
-            ESTRUCTURA TÍPICA DE PAQUETE C++ (ament_cmake)
+    <!-- ESTRUCTURA DE PROYECTO -->
+    <div class="section-group">
+      <SectionTitle>4. Estructura de Proyecto C++ en ROS 2</SectionTitle>
+
+      <div class="project-tree q-mt-md">
+        <div class="tree-title">mi_robot_cpp/</div>
+        <div class="tree-content">
+          <div class="tree-item file">
+            <q-icon name="description" color="grey-5" />
+            <span>CMakeLists.txt</span>
+            <div class="item-note">Receta de compilación</div>
+          </div>
+          <div class="tree-item file">
+            <q-icon name="description" color="grey-5" />
+            <span>package.xml</span>
+            <div class="item-note">Metadatos del paquete</div>
           </div>
 
-          <ul class="file-tree font-mono text-body2">
-            <li><q-icon name="folder" color="blue-4" /> my_robot_cpp/</li>
-            <li>
-              <ul>
-                <li>
-                  <q-icon name="description" color="grey-6" /> CMakeLists.txt
-                  <span class="text-grey-6 text-caption q-ml-sm">(La Receta)</span>
-                </li>
-                <li><q-icon name="description" color="grey-6" /> package.xml</li>
+          <div class="tree-item folder highlight">
+            <q-icon name="folder" color="orange-4" />
+            <span>include/mi_robot_cpp/</span>
+            <div class="item-note">Headers (.hpp)</div>
+          </div>
+          <div class="tree-children">
+            <div class="tree-item file">
+              <q-icon name="description" color="orange-3" />
+              <span>control_node.hpp</span>
+            </div>
+            <div class="tree-item file">
+              <q-icon name="description" color="orange-3" />
+              <span>motor_driver.hpp</span>
+            </div>
+          </div>
 
-                <!-- INCLUDE FOLDER -->
-                <li class="bg-highlight-orange rounded-borders q-pa-sm q-my-xs">
-                  <q-icon name="folder_open" color="orange-4" /> include/my_robot_cpp/
-                  <ul>
-                    <li>
-                      <q-icon name="description" color="orange-3" />
-                      <strong>robot_brain.hpp</strong>
-                      <span class="text-accent text-caption q-ml-sm">← Headers aquí</span>
-                    </li>
-                  </ul>
-                </li>
+          <div class="tree-item folder highlight">
+            <q-icon name="folder" color="blue-4" />
+            <span>src/</span>
+            <div class="item-note">Implementación (.cpp)</div>
+          </div>
+          <div class="tree-children">
+            <div class="tree-item file">
+              <q-icon name="description" color="blue-3" />
+              <span>control_node.cpp</span>
+            </div>
+            <div class="tree-item file">
+              <q-icon name="description" color="blue-3" />
+              <span>motor_driver.cpp</span>
+            </div>
+            <div class="tree-item file">
+              <q-icon name="description" color="green-4" />
+              <span>main.cpp</span>
+              <div class="item-note">Punto de entrada</div>
+            </div>
+          </div>
 
-                <!-- SRC FOLDER -->
-                <li class="bg-highlight-blue rounded-borders q-pa-sm q-my-xs">
-                  <q-icon name="folder_open" color="blue-4" /> src/
-                  <ul>
-                    <li>
-                      <q-icon name="description" color="blue-3" /> <strong>robot_brain.cpp</strong>
-                      <span class="text-accent text-caption q-ml-sm">← Código aquí</span>
-                    </li>
-                    <li>
-                      <q-icon name="description" color="blue-3" /> main.cpp
-                      <span class="text-grey-5 text-caption q-ml-sm">(Ejecutable)</span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
+          <div class="tree-item folder">
+            <q-icon name="folder" color="purple-4" />
+            <span>launch/</span>
+          </div>
+          <div class="tree-item folder">
+            <q-icon name="folder" color="cyan-4" />
+            <span>config/</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-mt-lg">
+        <AlertBlock type="info" title="Regla de Oro">
+          Los headers (.hpp) van en <code>include/nombre_paquete/</code>
+          <br />
+          La implementación (.cpp) va en <code>src/</code>
+        </AlertBlock>
+      </div>
+    </div>
+
+    <!-- INCLUDES -->
+    <div class="section-group">
+      <SectionTitle>5. Sistema de Includes</SectionTitle>
+
+      <div class="row q-col-gutter-md">
+        <div class="col-12 col-md-6">
+          <div class="include-card system">
+            <div class="include-header">
+              <q-icon name="library_books" size="md" />
+              <span>Librerías del Sistema</span>
+            </div>
+            <CodeBlock
+              lang="cpp"
+              content="#include <iostream>
+#include <vector>
+#include <rclcpp/rclcpp.hpp>"
+            />
+            <div class="include-note">
+              Usa <code>&lt; &gt;</code> para librerías estándar y de ROS 2
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <div class="include-card local">
+            <div class="include-header">
+              <q-icon name="folder" size="md" />
+              <span>Headers Locales</span>
+            </div>
+            <CodeBlock
+              lang="cpp"
+              content='#include "mi_robot_cpp/control_node.hpp"
+#include "motor_driver.hpp"'
+            />
+            <div class="include-note">Usa <code>" "</code> para tus propios headers</div>
+          </div>
         </div>
       </div>
     </div>
-  </q-page>
+
+    <!-- ERRORES COMUNES -->
+    <div class="section-group">
+      <SectionTitle>Errores Comunes</SectionTitle>
+
+      <q-expansion-item
+        icon="error"
+        label="undefined reference to `Robot::mover()'"
+        header-class="error-header"
+      >
+        <div class="error-content">
+          <strong>Causa:</strong> Declaraste la función en .hpp pero no la implementaste en .cpp, o
+          olvidaste agregar el .cpp a CMakeLists.txt <br /><br />
+          <strong>Solución:</strong>
+          <CodeBlock
+            lang="cmake"
+            content="add_executable(mi_nodo
+  src/main.cpp
+  src/robot.cpp  # ← Asegúrate de incluirlo
+)"
+            :copyable="true"
+          />
+        </div>
+      </q-expansion-item>
+
+      <q-expansion-item
+        icon="error"
+        label="'Robot' does not name a type"
+        header-class="error-header"
+        class="q-mt-sm"
+      >
+        <div class="error-content">
+          <strong>Causa:</strong> Olvidaste incluir el header o hay un include circular <br /><br />
+          <strong>Solución:</strong> Agrega <code>#include "robot.hpp"</code> al inicio del archivo
+        </div>
+      </q-expansion-item>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="section-group">
+      <SectionTitle>📹 Video Complementario</SectionTitle>
+      <div class="video-container">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="Estructura de Proyectos C++ en ROS 2"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+            "
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <q-icon name="info" color="blue-4" size="sm" />
+          Reemplaza dQw4w9WgXcQ con tu video de YouTube
+        </div>
+      </div>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="section-group q-mb-xl">
+      <SectionTitle>📝 Resumen</SectionTitle>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <code>.hpp</code>
+          <span>Declaraciones (QUÉ existe)</span>
+        </div>
+        <div class="summary-item">
+          <code>.cpp</code>
+          <span>Implementación (CÓMO funciona)</span>
+        </div>
+        <div class="summary-item">
+          <code>::</code>
+          <span>Operador de scope (pertenece a)</span>
+        </div>
+        <div class="summary-item">
+          <code>std::shared_ptr</code>
+          <span>Propiedad compartida</span>
+        </div>
+        <div class="summary-item">
+          <code>std::unique_ptr</code>
+          <span>Propiedad exclusiva</span>
+        </div>
+        <div class="summary-item">
+          <code>include/</code>
+          <span>Carpeta para headers</span>
+        </div>
+      </div>
+    </div>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
-import SectionTitle from 'components/content/SectionTitle.vue';
-import SplitBlock from 'components/content/SplitBlock.vue';
 import CodeBlock from 'components/content/CodeBlock.vue';
+import SectionTitle from 'components/content/SectionTitle.vue';
 </script>
 
 <style scoped>
-/* --- ESTILOS MAESTROS --- */
-.intro-hero,
 .section-group {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 3.5rem auto;
+  margin-bottom: 3.5rem;
 }
 
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(59, 130, 246, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
+.file-comparison {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.file-card {
+  background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.file-card.header {
+  border-top: 4px solid #f97316;
+}
+
+.file-card.source {
+  border-top: 4px solid #3b82f6;
+}
+
+.file-header {
+  padding: 2rem;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.file-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-top: 1rem;
+}
+
+.file-subtitle {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin-top: 0.5rem;
+}
+
+.file-content {
+  padding: 1.5rem;
+}
+
+.file-desc {
+  color: #cbd5e1;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.scope-demo {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2rem;
+  align-items: center;
+  padding: 2rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+}
+
+.scope-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.1;
-  color: #f8fafc;
+.scope-arrow {
+  color: #fbbf24;
 }
 
-/* TOOL CARDS */
-.tool-card {
+.scope-use-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
   height: 100%;
-  border-radius: 16px;
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Header vs Source Cards */
-.tool-card.file-type {
+.use-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 1rem;
+}
+
+.smart-pointers {
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s;
+  gap: 1.5rem;
 }
-.tool-card.file-type:hover {
-  transform: translateY(-5px);
-}
-.tool-card.header-file {
-  border-top: 4px solid #f97316;
-} /* Orange */
-.tool-card.source-file {
-  border-top: 4px solid #3b82f6;
-} /* Blue */
 
-.file-badge {
+.pointer-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.pointer-card.shared {
+  border-top: 4px solid #3b82f6;
+}
+
+.pointer-card.unique {
+  border-top: 4px solid #a855f7;
+}
+
+.pointer-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #f1f5f9;
+}
+
+.pointer-content {
+  padding: 1.5rem;
+}
+
+.pointer-desc {
+  color: #cbd5e1;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.pointer-use {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #93c5fd;
+}
+
+.project-tree {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  font-family: 'Fira Code', monospace;
+}
+
+.tree-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #60a5fa;
+  margin-bottom: 1.5rem;
+}
+
+.tree-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tree-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.tree-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tree-item.folder.highlight {
+  background: rgba(59, 130, 246, 0.1);
+  border-left: 3px solid #3b82f6;
+}
+
+.tree-item span {
+  color: #f1f5f9;
+  font-weight: 500;
+}
+
+.item-note {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-family: sans-serif;
+}
+
+.tree-children {
+  margin-left: 2rem;
+  border-left: 1px solid rgba(148, 163, 184, 0.2);
+  padding-left: 1rem;
+}
+
+.include-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.include-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.include-note {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+:deep(.error-header) {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  color: #fca5a5;
+}
+
+.error-content {
+  background: rgba(15, 23, 42, 0.6);
+  padding: 1.5rem;
+  color: #cbd5e1;
+}
+
+.video-container {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
+
+.video-wrapper iframe {
   position: absolute;
   top: 0;
-  right: 0;
-  padding: 6px 16px;
-  border-bottom-left-radius: 12px;
-  font-family: 'Fira Code', monospace;
-  font-weight: bold;
-  z-index: 10;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.concept-card {
-  padding: 24px;
-}
-.flex-grow {
-  flex-grow: 1;
-}
-
-/* FILE TREE */
-.tool-card.file-tree-card {
-  padding: 32px;
-  border-top: 4px solid #94a3b8;
-}
-.file-tree {
-  list-style: none;
-  padding-left: 0;
-  color: #e2e8f0;
-  margin: 0;
-}
-.file-tree ul {
-  list-style: none;
-  padding-left: 24px;
-  border-left: 1px solid #475569;
-  margin-top: 8px;
-}
-.file-tree li {
+.video-caption {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.85rem;
 }
 
-.bg-highlight-orange {
-  background: rgba(251, 146, 60, 0.08);
-  border: 1px dashed rgba(251, 146, 60, 0.3);
-}
-.bg-highlight-blue {
-  background: rgba(59, 130, 246, 0.08);
-  border: 1px dashed rgba(59, 130, 246, 0.3);
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
 }
 
-/* TERMINAL SIMULATION */
-.nano-terminal {
-  background-color: #0f172a;
-  border: 1px solid #334155;
-}
-.border-left-red {
-  border-left: 3px solid #f87171;
-}
-.border-left-green {
-  border-left: 3px solid #4ade80;
+.summary-item {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.font-mono {
+.summary-item code {
   font-family: 'Fira Code', monospace;
+  color: #22c55e;
+  font-size: 1rem;
+}
+
+.summary-item span {
+  color: #cbd5e1;
+  font-size: 0.85rem;
 }
 
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.2rem;
+  .scope-demo {
+    grid-template-columns: 1fr;
+  }
+
+  .scope-arrow {
+    transform: rotate(90deg);
   }
 }
 </style>

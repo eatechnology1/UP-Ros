@@ -1,458 +1,1027 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <!-- 1. HERO SECTION -->
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-green-4 text-weight-bold q-mb-sm">
-          MÓDULO 3.6: EL CONTROL DE CALIDAD
-        </div>
+  <LessonContainer>
+    <!-- INTRO -->
+    <TextBlock>
+      Los Pull Requests (PRs) son el corazón de la colaboración moderna en GitHub. No es solo
+      "fusionar código", es un proceso de revisión, discusión y mejora continua. En proyectos de
+      robótica open-source, los PRs son la forma estándar de contribuir.
+    </TextBlock>
 
-        <h1 class="hero-title">Pull <span class="text-white">Requests</span></h1>
+    <AlertBlock type="info" title="¿Qué es un Pull Request?">
+      <strong>Propuesta de cambio:</strong> "Por favor, revisa y acepta mis cambios"
+      <br />
+      <strong>Code review:</strong> El equipo revisa tu código antes de fusionar
+      <br />
+      <strong>Discusión:</strong> Comentarios, sugerencias y mejoras
+      <br />
+      <strong>Calidad:</strong> Asegura que solo código revisado llegue a main
+    </AlertBlock>
 
-        <TextBlock>
-          En equipos profesionales, nadie toca la rama <code>main</code> directamente. Está
-          prohibido. Para introducir cambios, debes crear una "Solicitud de Fusión" (Pull Request).
-          Es una sala de espera virtual donde tus compañeros revisan, critican y aprueban tu código
-          antes de que toque el robot real.
-        </TextBlock>
-      </div>
-    </section>
-
-    <!-- 2. EL CONCEPTO: ¿QUÉ ES UN PR? -->
-    <div class="section-group self-stretch">
-      <SectionTitle>1. La Sala de Juicios</SectionTitle>
-
-      <div class="row q-col-gutter-lg items-center">
-        <div class="col-12 col-md-5">
-          <TextBlock>
-            Imagina un filtro de seguridad.
-            <br /><br />
-            Tú (el desarrollador) dices:
-            <em
-              >"He terminado la función de navegación en mi rama. Por favor, llévenla (Pull) a la
-              rama principal"</em
-            >. <br /><br />
-            GitHub genera una página web donde se ve <strong>la diferencia exacta</strong> (Diff)
-            entre tu rama y Main. Ahí empieza la discusión.
-          </TextBlock>
-        </div>
-
-        <div class="col-12 col-md-7">
-          <!-- VISUAL PR CARD (DARK MODE GITHUB SIMULATION) -->
-          <div
-            class="tool-card pr-visual relative-position q-pa-lg bg-slate-900 text-white shadow-2"
-          >
-            <!-- HEADER -->
-            <div class="row items-center q-mb-md border-bottom-dark q-pb-sm">
-              <q-icon name="merge_type" color="grey-5" size="1.8rem" class="q-mr-sm" />
-              <div class="text-subtitle1">
-                Add Lidar Sensor Driver <span class="text-grey-6">#42</span>
-              </div>
-            </div>
-
-            <div class="row items-center q-mb-md">
-              <div
-                class="chip-status bg-green-9 text-white q-px-sm rounded-borders text-caption text-weight-bold border-green-glow row items-center"
-              >
-                <q-icon name="adjust" size="xs" class="q-mr-xs" /> Open
-              </div>
-              <div class="text-caption text-grey-4 q-ml-md">
-                <strong>alex-robot</strong> wants to merge 1 commit into
-                <code class="bg-slate-800 q-px-xs rounded border-light font-mono">main</code> from
-                <code class="bg-blue-9-soft q-px-xs rounded font-mono text-blue-2"
-                  >feature/lidar</code
-                >
-              </div>
-            </div>
-
-            <!-- CONVERSATION -->
-            <div class="conversation q-pl-md border-left-grey q-gutter-y-md relative-position">
-              <!-- Comentario 1 -->
-              <div class="row items-start">
-                <q-avatar size="28px" color="blue-7" text-color="white" class="q-mr-sm shadow-1"
-                  >A</q-avatar
-                >
-                <div
-                  class="bg-slate-800 q-pa-sm rounded-borders text-caption col border-light speech-bubble"
-                >
-                  He añadido el driver del RPLidar A1. Ya compila.
-                </div>
-              </div>
-
-              <!-- Comentario 2 (Review) -->
-              <div class="row items-start">
-                <q-avatar size="28px" color="orange-8" text-color="white" class="q-mr-sm shadow-1"
-                  >S</q-avatar
-                >
-                <div
-                  class="bg-red-9-soft q-pa-sm rounded-borders text-caption col border-red-subtle speech-bubble"
-                >
-                  <div class="row items-center q-mb-xs">
-                    <q-icon name="cancel" color="red-4" size="xs" class="q-mr-xs" />
-                    <span class="text-red-4 text-weight-bold">Changes requested</span>
-                  </div>
-                  Falta añadir la dependencia en <code>package.xml</code>. El robot no va a saber
-                  instalarlo.
-                </div>
-              </div>
-            </div>
-
-            <!-- BUTTON -->
-            <div class="q-mt-lg border-top-dark q-pt-md">
-              <div
-                class="row items-center justify-between bg-slate-800 q-pa-sm rounded-borders opacity-50 cursor-not-allowed border-light"
-              >
-                <div class="row items-center">
-                  <div
-                    class="bg-green-7 text-white q-px-md q-py-xs rounded-borders text-weight-bold text-caption q-mr-sm"
-                  >
-                    Merge pull request
-                  </div>
-                  <q-icon name="arrow_drop_down" color="white" />
-                </div>
-                <div class="text-xs text-grey-5 q-mr-sm">
-                  <q-icon name="lock" size="xs" /> Blocked
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. CODE REVIEW (LA REVISIÓN) -->
-    <div class="section-group self-stretch">
-      <SectionTitle>2. Code Review: No es Personal</SectionTitle>
-      <SplitBlock>
-        <template #left>
-          <TextBlock>
-            Recibir comentarios en tu código duele al ego, pero es la forma más rápida de aprender.
-            <br /><br />
-            En un PR, tus compañeros pueden seleccionar una línea específica y dejar un comentario.
-            Hasta que no marques esos comentarios como "Resolved", el botón de
-            <strong>Merge</strong> estará bloqueado (si así se configuró).
-          </TextBlock>
-          <div class="q-mt-lg">
-            <AlertBlock type="info" title="CI/CD Checks">
-              GitHub también puede ejecutar "robots jueces" automáticos. Si tu código no compila o
-              tiene errores de sintaxis, el robot bloqueará el PR antes de que un humano lo vea.
-            </AlertBlock>
-          </div>
-        </template>
-
-        <template #right>
-          <div class="tool-card review-flow bg-slate-900 q-pa-lg">
-            <div class="column items-center q-gutter-y-sm">
-              <!-- STEP 1 -->
-              <div class="row items-center full-width group-hover">
-                <div class="col-2 text-center">
-                  <q-icon name="upload" color="blue-4" size="md" />
-                </div>
-                <div
-                  class="col bg-slate-800 q-pa-md rounded-borders border-left-blue transition-hover"
-                >
-                  <div class="text-blue-4 text-weight-bold text-subtitle2">1. Push</div>
-                  <div class="text-xs text-grey-4">Subes tu rama a GitHub.</div>
-                </div>
-              </div>
-
-              <div class="vertical-line bg-grey-8"></div>
-
-              <!-- STEP 2 -->
-              <div class="row items-center full-width group-hover">
-                <div class="col-2 text-center">
-                  <q-icon name="rate_review" color="yellow-4" size="md" />
-                </div>
-                <div
-                  class="col bg-slate-800 q-pa-md rounded-borders border-left-yellow transition-hover"
-                >
-                  <div class="text-yellow-4 text-weight-bold text-subtitle2">2. Review</div>
-                  <div class="text-xs text-grey-4">Discusión, críticas y correcciones.</div>
-                </div>
-              </div>
-
-              <div class="vertical-line bg-grey-8"></div>
-
-              <!-- STEP 3 -->
-              <div class="row items-center full-width group-hover">
-                <div class="col-2 text-center">
-                  <q-icon name="check_circle" color="green-4" size="md" />
-                </div>
-                <div
-                  class="col bg-slate-800 q-pa-md rounded-borders border-left-green shadow-glow-green transition-hover"
-                >
-                  <div class="text-green-4 text-weight-bold text-subtitle2">3. Merge</div>
-                  <div class="text-xs text-grey-4">Aprobado. El código entra a Main.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </SplitBlock>
-    </div>
-
-    <!-- 4. FORKING (COLABORACIÓN OPEN SOURCE) -->
-    <div class="section-group self-stretch q-mt-xl">
-      <SectionTitle>3. Forking: Colaborando con Desconocidos</SectionTitle>
+    <!-- METÁFORA -->
+    <div class="section-group">
+      <SectionTitle>1. La Metáfora: Propuesta de Ley</SectionTitle>
       <TextBlock>
-        ¿Qué pasa si quieres mejorar un proyecto famoso (como `navigation2`) pero no eres del equipo
-        oficial? No tienes permiso para crear ramas ahí.
-        <br /><br />
-        Usas el <strong>Fork</strong>: una copia completa bajo tu control.
+        Imagina que el código principal (main) es la Constitución. Nadie, ni siquiera el líder del
+        proyecto, escribe directamente en ella. Para hacer un cambio, redactas una "Propuesta de
+        Ley" (Pull Request). Tus compañeros la leen, discuten, sugieren enmiendas y, solo cuando
+        todos están de acuerdo, se fusiona.
       </TextBlock>
 
-      <div class="row q-mt-lg justify-center">
-        <div class="col-12">
-          <div class="tool-card fork-visual q-pa-xl bg-slate-900 relative-position overflow-hidden">
-            <div class="row items-center justify-around relative-position z-top">
-              <!-- OFFICIAL REPO -->
-              <div class="repo-box bg-slate-800 border-red text-center">
-                <q-icon name="verified_user" color="grey-5" size="2rem" />
-                <div class="text-caption text-grey-4 q-mt-sm font-mono">ros-planning/nav2</div>
-                <div class="text-xs text-red-4 text-weight-bold q-mt-xs">🔒 Read Only</div>
-              </div>
+      <div class="pr-visual q-mt-md">
+        <div class="pr-card">
+          <div class="pr-header">
+            <div class="pr-icon">
+              <q-icon name="call_merge" size="2rem" />
+            </div>
+            <div class="pr-title">PR #45: Add autonomous navigation</div>
+            <div class="pr-status open">OPEN</div>
+          </div>
 
-              <!-- ARROWS CENTER -->
-              <div class="column items-center justify-center q-mx-md gt-xs">
-                <div class="row items-center q-mb-md">
-                  <span class="text-xs text-grey-5 q-mr-sm">FORK</span>
-                  <q-icon name="arrow_forward" color="white" />
-                </div>
-                <div class="row items-center">
-                  <q-icon name="arrow_back" color="yellow-4" />
-                  <span class="text-xs text-yellow-4 q-ml-sm">PULL REQUEST</span>
-                </div>
-              </div>
-
-              <!-- MOBILE ARROWS -->
-              <div class="col-12 text-center q-my-md lt-sm">
-                <q-icon name="swap_vert" color="grey-6" size="2rem" />
-              </div>
-
-              <!-- YOUR REPO -->
-              <div class="repo-box bg-slate-800 border-green text-center">
-                <q-icon name="face" color="green-4" size="2rem" />
-                <div class="text-caption text-green-1 q-mt-sm font-mono">alex/nav2</div>
-                <div class="text-xs text-green-4 text-weight-bold q-mt-xs">🔓 Write Access</div>
-              </div>
+          <div class="pr-body">
+            <div class="pr-description">
+              "This PR implements the A* algorithm for obstacle avoidance. The robot can now
+              navigate autonomously in complex environments..."
             </div>
 
-            <!-- BACKGROUND DECORATION -->
-            <div class="absolute-full flex flex-center" style="opacity: 0.05; pointer-events: none">
-              <q-icon name="call_split" size="15rem" color="white" />
+            <div class="pr-meta">
+              <div class="meta-item">
+                <q-icon name="commit" size="sm" />
+                <span>5 commits</span>
+              </div>
+              <div class="meta-item">
+                <q-icon name="add" size="sm" color="green-4" />
+                <span>+234</span>
+              </div>
+              <div class="meta-item">
+                <q-icon name="remove" size="sm" color="red-4" />
+                <span>-87</span>
+              </div>
             </div>
           </div>
-          <div class="text-center text-caption text-grey-5 q-mt-md">
-            Haces cambios en TU copia (Derecha), y luego pides un PR hacia el original (Izquierda).
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- 5. CHECKLIST ANTES DEL PR -->
-    <div class="section-group self-stretch q-mt-xl q-mb-xl">
-      <div class="tool-card checklist-card q-pa-lg border-green-dashed bg-green-9-soft">
-        <div class="text-h6 text-green-2 q-mb-lg text-center row items-center justify-center">
-          <q-icon name="playlist_add_check" class="q-mr-sm" size="md" />
-          Checklist Antes del PR
-        </div>
-
-        <div class="row q-col-gutter-lg">
-          <div class="col-12 col-md-6">
-            <div class="check-item row items-center bg-slate-900 q-pa-md rounded-borders shadow-1">
-              <q-icon name="check_box" color="green-4" class="q-mr-md" size="sm" />
-              <span class="text-grey-3">¿El código compila en mi PC?</span>
-            </div>
-            <div
-              class="check-item row items-center bg-slate-900 q-pa-md rounded-borders shadow-1 q-mt-md"
-            >
-              <q-icon name="check_box" color="green-4" class="q-mr-md" size="sm" />
-              <span class="text-grey-3">¿Eliminé los <code>print()</code> de depuración?</span>
-            </div>
-          </div>
-          <div class="col-12 col-md-6">
-            <div class="check-item row items-center bg-slate-900 q-pa-md rounded-borders shadow-1">
-              <q-icon name="check_box" color="green-4" class="q-mr-md" size="sm" />
-              <span class="text-grey-3">¿El título del PR explica qué hace?</span>
-            </div>
-            <div
-              class="check-item row items-center bg-slate-900 q-pa-md rounded-borders shadow-1 q-mt-md"
-            >
-              <q-icon name="check_box" color="green-4" class="q-mr-md" size="sm" />
-              <span class="text-grey-3">¿Hice <code>pull origin main</code> antes?</span>
+          <div class="pr-reviewers">
+            <div class="reviewers-label">Reviewers:</div>
+            <div class="reviewers-list">
+              <div class="reviewer approved">
+                <div class="reviewer-avatar">JS</div>
+                <q-icon name="check_circle" color="green-4" />
+              </div>
+              <div class="reviewer pending">
+                <div class="reviewer-avatar">MR</div>
+                <q-icon name="schedule" color="orange-4" />
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </q-page>
+
+    <!-- FLUJO DE TRABAJO -->
+    <div class="section-group">
+      <SectionTitle>2. Flujo de Trabajo con PRs</SectionTitle>
+      <TextBlock>
+        Este es el proceso completo desde que decides hacer un cambio hasta que se fusiona en main.
+      </TextBlock>
+
+      <div class="workflow-steps q-mt-md">
+        <div class="workflow-step">
+          <div class="step-icon" style="background: linear-gradient(135deg, #a855f7, #9333ea)">
+            <q-icon name="fork_right" />
+          </div>
+          <div class="step-content">
+            <div class="step-title">1. Fork (opcional)</div>
+            <div class="step-desc">
+              Si no tienes permisos de escritura, haz fork del repositorio a tu cuenta
+            </div>
+            <div class="step-note">Solo necesario para proyectos externos</div>
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb)">
+            <q-icon name="call_split" />
+          </div>
+          <div class="step-content">
+            <div class="step-title">2. Crear rama</div>
+            <CodeBlock
+              lang="bash"
+              content="git checkout main
+git pull origin main
+git checkout -b feature/add-navigation"
+              :copyable="true"
+            />
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-icon" style="background: linear-gradient(135deg, #22c55e, #16a34a)">
+            <q-icon name="code" />
+          </div>
+          <div class="step-content">
+            <div class="step-title">3. Hacer cambios y commits</div>
+            <CodeBlock
+              lang="bash"
+              content="# Editar archivos...
+git add .
+git commit -m 'feat: add A* pathfinding algorithm'
+git commit -m 'test: add navigation unit tests'
+git commit -m 'docs: update README with navigation info'"
+              :copyable="true"
+            />
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-icon" style="background: linear-gradient(135deg, #f97316, #ea580c)">
+            <q-icon name="cloud_upload" />
+          </div>
+          <div class="step-content">
+            <div class="step-title">4. Push a GitHub</div>
+            <CodeBlock
+              lang="bash"
+              content="git push -u origin feature/add-navigation"
+              :copyable="true"
+            />
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-icon" style="background: linear-gradient(135deg, #ec4899, #db2777)">
+            <q-icon name="publish" />
+          </div>
+          <div class="step-content">
+            <div class="step-title">5. Crear Pull Request en GitHub</div>
+            <div class="step-desc">
+              Ve a GitHub → Tu repositorio → "Compare & pull request" → Completa título y
+              descripción → "Create pull request"
+            </div>
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-icon" style="background: linear-gradient(135deg, #fbbf24, #f59e0b)">
+            <q-icon name="rate_review" />
+          </div>
+          <div class="step-content">
+            <div class="step-title">6. Code Review</div>
+            <div class="step-desc">
+              El equipo revisa tu código, deja comentarios, aprueba o pide cambios
+            </div>
+          </div>
+        </div>
+
+        <div class="workflow-step">
+          <div class="step-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed)">
+            <q-icon name="merge_type" />
+          </div>
+          <div class="step-content">
+            <div class="step-title">7. Merge</div>
+            <div class="step-desc">
+              Una vez aprobado, el maintainer fusiona el PR a main. ¡Tu código está en producción!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANATOMÍA DE UN BUEN PR -->
+    <div class="section-group">
+      <SectionTitle>3. Anatomía de un Buen PR</SectionTitle>
+      <TextBlock>
+        Un PR bien hecho facilita la revisión y aumenta las probabilidades de aprobación rápida.
+      </TextBlock>
+
+      <div class="pr-anatomy q-mt-md">
+        <div class="anatomy-card">
+          <div class="anatomy-header">
+            <q-icon name="title" color="blue-4" />
+            <span>Título Descriptivo</span>
+          </div>
+          <div class="anatomy-example good">
+            <div class="example-label">✅ Bueno</div>
+            <code>feat: add A* pathfinding for autonomous navigation</code>
+          </div>
+          <div class="anatomy-example bad">
+            <div class="example-label">❌ Malo</div>
+            <code>Update code</code>
+          </div>
+        </div>
+
+        <div class="anatomy-card">
+          <div class="anatomy-header">
+            <q-icon name="description" color="green-4" />
+            <span>Descripción Clara</span>
+          </div>
+          <div class="anatomy-content">
+            <strong>Incluye:</strong>
+            <ul>
+              <li>Qué cambia</li>
+              <li>Por qué es necesario</li>
+              <li>Cómo probarlo</li>
+              <li>Screenshots/videos (si es UI)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="anatomy-card">
+          <div class="anatomy-header">
+            <q-icon name="commit" color="purple-4" />
+            <span>Commits Atómicos</span>
+          </div>
+          <div class="anatomy-content">
+            <strong>Cada commit debe:</strong>
+            <ul>
+              <li>Hacer una cosa</li>
+              <li>Tener mensaje claro</li>
+              <li>Compilar y pasar tests</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="anatomy-card">
+          <div class="anatomy-header">
+            <q-icon name="compress" color="orange-4" />
+            <span>Tamaño Razonable</span>
+          </div>
+          <div class="anatomy-content">
+            <strong>Ideal:</strong> 200-400 líneas
+            <br />
+            <strong>Máximo:</strong> ~1000 líneas
+            <br />
+            <br />
+            PRs grandes son difíciles de revisar. Divide en múltiples PRs si es necesario.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CODE REVIEW -->
+    <div class="section-group">
+      <SectionTitle>4. Code Review: Feedback Constructivo</SectionTitle>
+      <TextBlock>
+        El code review no es para juzgarte a ti, es para mejorar el código. Es normal que te pidan
+        cambios. No te defiendas; explica tus razones o acepta la mejora.
+      </TextBlock>
+
+      <div class="review-simulation q-mt-md">
+        <div class="simulation-header">
+          <q-icon name="chat" />
+          <span>Ejemplo de conversación en PR</span>
+        </div>
+
+        <div class="review-thread">
+          <div class="code-snippet">
+            <div class="code-header">src/navigation.py</div>
+            <div class="code-line removed">- max_speed = 2.0</div>
+            <div class="code-line added">+ max_speed = 5.0</div>
+          </div>
+
+          <div class="comment reviewer">
+            <div class="comment-author">
+              <div class="author-avatar">MR</div>
+              <span>Senior Dev</span>
+            </div>
+            <div class="comment-body">
+              5.0 m/s seems too fast for indoor navigation. Safety regulations limit to 1.5 m/s. Can
+              you update this?
+            </div>
+          </div>
+
+          <div class="comment author">
+            <div class="comment-author">
+              <div class="author-avatar you">You</div>
+              <span>You</span>
+            </div>
+            <div class="comment-body">
+              Good catch! I was testing in simulation. Updated to 1.5 m/s and added a config
+              parameter for different environments.
+            </div>
+          </div>
+
+          <div class="comment reviewer">
+            <div class="comment-author">
+              <div class="author-avatar">MR</div>
+              <span>Senior Dev</span>
+            </div>
+            <div class="comment-body">
+              <q-icon name="check_circle" color="green-4" />
+              Perfect! Approved.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-mt-lg">
+        <AlertBlock type="success" title="Reglas de Oro del Code Review">
+          <strong>Como autor:</strong> Acepta feedback con humildad. "Tú no eres tu código"
+          <br />
+          <strong>Como revisor:</strong> Critica el código, no a la persona. Sé constructivo
+          <br />
+          <strong>Ambos:</strong> Asume buenas intenciones. Todos quieren mejorar el proyecto
+        </AlertBlock>
+      </div>
+    </div>
+
+    <!-- MERGE STRATEGIES -->
+    <div class="section-group">
+      <SectionTitle>5. Estrategias de Merge</SectionTitle>
+      <TextBlock>
+        GitHub ofrece 3 formas de fusionar un PR. Cada una tiene ventajas y desventajas.
+      </TextBlock>
+
+      <div class="merge-strategies q-mt-md">
+        <div class="strategy-card">
+          <div class="strategy-header">
+            <q-icon name="merge" color="green-4" size="2rem" />
+            <span>Merge Commit</span>
+          </div>
+          <div class="strategy-desc">
+            Crea un commit de merge que preserva toda la historia de la rama
+          </div>
+          <div class="strategy-visual">
+            <div class="commit-line">A → B → C → D → M</div>
+            <div class="commit-line branch">↗ E → F ↗</div>
+          </div>
+          <div class="strategy-pros">
+            <strong>✅ Pros:</strong> Historia completa, fácil de revertir PR completo
+          </div>
+          <div class="strategy-cons">
+            <strong>❌ Cons:</strong> Historial puede verse "sucio" con muchos merges
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="strategy-header">
+            <q-icon name="compress" color="blue-4" size="2rem" />
+            <span>Squash and Merge</span>
+          </div>
+          <div class="strategy-desc">
+            Combina todos los commits del PR en uno solo antes de fusionar
+          </div>
+          <div class="strategy-visual">
+            <div class="commit-line">A → B → C → D → S</div>
+            <div class="commit-note">S = E + F + G (squashed)</div>
+          </div>
+          <div class="strategy-pros">
+            <strong>✅ Pros:</strong> Historial limpio, un commit por feature
+          </div>
+          <div class="strategy-cons">
+            <strong>❌ Cons:</strong> Pierdes historia detallada de la rama
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="strategy-header">
+            <q-icon name="fast_forward" color="purple-4" size="2rem" />
+            <span>Rebase and Merge</span>
+          </div>
+          <div class="strategy-desc">
+            Reaplica los commits de la rama sobre main, sin crear merge commit
+          </div>
+          <div class="strategy-visual">
+            <div class="commit-line">A → B → C → D → E → F</div>
+            <div class="commit-note">Historial lineal</div>
+          </div>
+          <div class="strategy-pros"><strong>✅ Pros:</strong> Historial perfectamente lineal</div>
+          <div class="strategy-cons">
+            <strong>❌ Cons:</strong> Reescribe historia, difícil de revertir PR completo
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEST PRACTICES -->
+    <div class="section-group">
+      <SectionTitle>6. Best Practices</SectionTitle>
+
+      <div class="practices-grid">
+        <div class="practice-card">
+          <div class="practice-icon">
+            <q-icon name="speed" size="2rem" color="green-4" />
+          </div>
+          <div class="practice-title">PRs Pequeños</div>
+          <div class="practice-desc">
+            Más fácil de revisar, más rápido de aprobar. Divide features grandes en múltiples PRs.
+          </div>
+        </div>
+
+        <div class="practice-card">
+          <div class="practice-icon">
+            <q-icon name="science" size="2rem" color="blue-4" />
+          </div>
+          <div class="practice-title">Tests Incluidos</div>
+          <div class="practice-desc">
+            Siempre incluye tests para tu código. Los PRs sin tests son rechazados en proyectos
+            serios.
+          </div>
+        </div>
+
+        <div class="practice-card">
+          <div class="practice-icon">
+            <q-icon name="description" size="2rem" color="purple-4" />
+          </div>
+          <div class="practice-title">Documentación</div>
+          <div class="practice-desc">
+            Actualiza README, comentarios y docs. El código sin documentación es código muerto.
+          </div>
+        </div>
+
+        <div class="practice-card">
+          <div class="practice-icon">
+            <q-icon name="check_circle" size="2rem" color="orange-4" />
+          </div>
+          <div class="practice-title">CI/CD Passing</div>
+          <div class="practice-desc">
+            Asegúrate que todos los checks automáticos (tests, linters) pasen antes de pedir review.
+          </div>
+        </div>
+
+        <div class="practice-card">
+          <div class="practice-icon">
+            <q-icon name="update" size="2rem" color="pink-4" />
+          </div>
+          <div class="practice-title">Mantén Actualizado</div>
+          <div class="practice-desc">
+            Si main avanza mientras tu PR está abierto, haz merge/rebase para evitar conflictos.
+          </div>
+        </div>
+
+        <div class="practice-card">
+          <div class="practice-icon">
+            <q-icon name="chat" size="2rem" color="cyan-4" />
+          </div>
+          <div class="practice-title">Responde Rápido</div>
+          <div class="practice-desc">
+            Responde a comentarios en &lt;24h. PRs abandonados se cierran automáticamente.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO -->
+    <div class="section-group">
+      <SectionTitle>📹 Video Complementario</SectionTitle>
+      <div class="video-container">
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="Pull Requests and Code Review"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+            "
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <q-icon name="info" color="blue-4" size="sm" />
+          Reemplaza dQw4w9WgXcQ con tu video de YouTube
+        </div>
+      </div>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="section-group q-mb-xl">
+      <SectionTitle>📝 Resumen</SectionTitle>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <code>Fork → Branch → Commit</code>
+          <span>Preparar cambios</span>
+        </div>
+        <div class="summary-item">
+          <code>Push → Create PR</code>
+          <span>Proponer cambios</span>
+        </div>
+        <div class="summary-item">
+          <code>Code Review</code>
+          <span>Recibir feedback</span>
+        </div>
+        <div class="summary-item">
+          <code>Merge</code>
+          <span>Fusionar a main</span>
+        </div>
+      </div>
+
+      <AlertBlock type="success" title="Checklist de Pull Requests" class="q-mt-lg">
+        ✅ Título descriptivo con prefijo (feat:, fix:, docs:)
+        <br />
+        ✅ Descripción clara (qué, por qué, cómo probar)
+        <br />
+        ✅ PR pequeño (&lt;400 líneas idealmente)
+        <br />
+        ✅ Tests incluidos y pasando
+        <br />
+        ✅ Documentación actualizada
+        <br />
+        ✅ CI/CD checks en verde
+        <br />
+        ✅ Responde a comentarios en &lt;24h
+        <br />
+        ✅ Acepta feedback con humildad
+      </AlertBlock>
+    </div>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
+import CodeBlock from 'components/content/CodeBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
-import SplitBlock from 'components/content/SplitBlock.vue';
 </script>
 
 <style scoped>
-/* --- ESTILOS MAESTROS --- */
-.intro-hero,
 .section-group {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 3.5rem auto;
+  margin-bottom: 3.5rem;
 }
 
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(74, 222, 128, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
+/* PR VISUAL */
+.pr-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.pr-card {
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid rgba(148, 163, 184, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 700px;
+  width: 100%;
+}
+
+.pr-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.pr-icon {
+  color: #22c55e;
+}
+
+.pr-title {
+  flex: 1;
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1.1rem;
+}
+
+.pr-status {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.pr-status.open {
+  background: #22c55e;
+  color: white;
+}
+
+.pr-body {
+  margin-bottom: 1.5rem;
+}
+
+.pr-description {
+  color: #cbd5e1;
+  font-style: italic;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.pr-meta {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.pr-reviewers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(148, 163, 184, 0.2);
+}
+
+.reviewers-label {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.reviewers-list {
+  display: flex;
+  gap: 1rem;
+}
+
+.reviewer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reviewer-avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: white;
+  font-size: 0.85rem;
+}
+
+/* WORKFLOW STEPS */
+.workflow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.workflow-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.step-icon {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.step-content {
+  background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.step-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 0.75rem;
+}
+
+.step-desc {
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+
+.step-note {
+  color: #64748b;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* PR ANATOMY */
+.pr-anatomy {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.anatomy-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.anatomy-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1.05rem;
+}
+
+.anatomy-example {
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+}
+
+.anatomy-example.good {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid #22c55e;
+  color: #86efac;
+}
+
+.anatomy-example.bad {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+}
+
+.example-label {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.anatomy-content {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
+.anatomy-content ul {
+  margin: 0.5rem 0 0 1.5rem;
+  padding: 0;
+}
+
+/* REVIEW SIMULATION */
+.review-simulation {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.simulation-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.review-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.code-snippet {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.code-header {
+  padding: 0.5rem 1rem;
+  background: rgba(100, 116, 139, 0.3);
+  color: #94a3b8;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+}
+
+.code-line {
+  padding: 0.5rem 1rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+}
+
+.code-line.removed {
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+}
+
+.code-line.added {
+  background: rgba(34, 197, 94, 0.1);
+  color: #86efac;
+}
+
+.comment {
+  background: rgba(30, 41, 59, 0.6);
+  border-radius: 8px;
+  padding: 1rem;
+  border-left: 3px solid;
+}
+
+.comment.reviewer {
+  border-color: #f97316;
+}
+
+.comment.author {
+  border-color: #3b82f6;
+  margin-left: 2rem;
+}
+
+.comment-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.author-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #f97316;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: white;
+}
+
+.author-avatar.you {
+  background: #3b82f6;
+}
+
+.comment-body {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
+/* MERGE STRATEGIES */
+.merge-strategies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.strategy-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.strategy-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.strategy-desc {
+  text-align: center;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+.strategy-visual {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: 'Fira Code', monospace;
   text-align: center;
 }
 
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.1;
-  color: #f8fafc;
+.commit-line {
+  color: #cbd5e1;
+  margin-bottom: 0.5rem;
 }
 
-/* TOOL CARDS */
-.tool-card {
-  height: 100%;
-  border-radius: 16px;
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+.commit-line.branch {
+  color: #fbbf24;
 }
 
-/* VISUAL PR CARD */
-.pr-visual {
-  border-top: 4px solid #4ade80;
-}
-.border-bottom-dark {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-.border-top-dark {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-.border-light {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.border-green-glow {
-  border: 1px solid #4ade80;
-  box-shadow: 0 0 5px rgba(74, 222, 128, 0.3);
-}
-.border-left-grey {
-  border-left: 2px solid #334155;
-}
-.bg-blue-9-soft {
-  background: rgba(30, 58, 138, 0.5);
-}
-.bg-red-9-soft {
-  background: rgba(127, 29, 29, 0.2);
-}
-.border-red-subtle {
-  border: 1px solid rgba(248, 113, 113, 0.3);
-}
-.opacity-50 {
-  opacity: 0.5;
-}
-.cursor-not-allowed {
-  cursor: not-allowed;
+.commit-note {
+  color: #64748b;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
 }
 
-/* REVIEW FLOW */
-.review-flow {
-  border-left: 4px solid #3b82f6;
-}
-.vertical-line {
-  width: 2px;
-  height: 25px;
-  margin: 0 auto;
-}
-.border-left-blue {
-  border-left: 3px solid #60a5fa;
-}
-.border-left-yellow {
-  border-left: 3px solid #facc15;
-}
-.border-left-green {
-  border-left: 3px solid #4ade80;
-}
-.shadow-glow-green {
-  box-shadow: 0 0 15px rgba(74, 222, 128, 0.1);
-}
-.transition-hover {
-  transition: transform 0.2s;
-}
-.group-hover:hover .transition-hover {
-  transform: translateX(5px);
+.strategy-pros,
+.strategy-cons {
+  font-size: 0.9rem;
 }
 
-/* FORK VISUAL */
-.fork-visual {
-  border: 1px dashed rgba(255, 255, 255, 0.1);
+.strategy-pros {
+  color: #86efac;
 }
-.repo-box {
-  padding: 20px;
+
+.strategy-cons {
+  color: #fca5a5;
+}
+
+/* PRACTICES GRID */
+.practices-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.practice-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
-  width: 200px;
-  transition: transform 0.3s;
-}
-.repo-box:hover {
-  transform: translateY(-5px);
-}
-.border-red {
-  border-top: 3px solid #ef4444;
-}
-.border-green {
-  border-top: 3px solid #4ade80;
-}
-.z-top {
-  z-index: 2;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
 }
 
-/* CHECKLIST CARD */
-.checklist-card {
-  background: rgba(20, 83, 45, 0.1);
-}
-.border-green-dashed {
-  border: 1px dashed rgba(74, 222, 128, 0.4);
-}
-.bg-green-9-soft {
-  background: rgba(20, 83, 45, 0.15);
+.practice-title {
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1.05rem;
 }
 
-/* UTILS */
-.font-mono {
+.practice-desc {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
+/* VIDEO */
+.video-container {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* SUMMARY */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.summary-item {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-item code {
   font-family: 'Fira Code', monospace;
-}
-.text-xs {
-  font-size: 0.8rem;
-}
-.bg-slate-900 {
-  background: #0f172a;
-}
-.bg-slate-800 {
-  background: #1e293b;
+  color: #22c55e;
+  font-size: 0.9rem;
 }
 
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.2rem;
-  }
-  .fork-visual .row {
-    flex-direction: column;
-  }
-  .repo-box {
-    width: 100%;
-    margin: 10px 0;
-  }
+.summary-item span {
+  color: #cbd5e1;
+  font-size: 0.85rem;
 }
 </style>

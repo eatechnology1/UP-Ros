@@ -1,452 +1,487 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-amber-4 text-weight-bold q-mb-sm">
-          MÓDULO 7.4: AUTOMATIZACIÓN DE MISIONES
-        </div>
-        <h1 class="hero-title">Python Commander: <span class="text-white">El Jefe</span></h1>
-        <TextBlock>
-          Hacer clic en RViz sirve para pruebas, pero un robot de almacén no tiene a un humano
-          clicando todo el día. Necesitamos lógica:
-          <em
-            >"Ve al punto A, espera 5 segundos, ve al punto B, y si hay un obstáculo, vuelve a
-            casa"</em
-          >. <br /><br />
-          Usaremos la API <strong>Nav2 Simple Commander</strong>, una librería de Python que
-          convierte tareas complejas de ROS 2 (Action Clients) en comandos simples de una sola
-          línea.
-        </TextBlock>
-      </div>
-    </section>
+  <LessonContainer>
+    <!-- HERO INTRO -->
+    <TextBlock>
+      Usar `Nav2` desde RViz está bien para demos, pero en producción el robot navega solo. La API
+      <strong>Nav2 Simple Commander</strong> (Python) es la interfaz principal para ordenar tareas:
+      ir a pose, seguir waypoints, o cancelar misiones.
+    </TextBlock>
 
-    <div class="section-group self-stretch">
-      <SectionTitle>1. La Librería Mágica</SectionTitle>
-      <SplitBlock>
-        <template #left>
-          <TextBlock>
-            Bajo el capó, Nav2 usa <strong>Actions</strong> (comunicaciones asíncronas complejas).
-            Escribir un cliente de acción desde cero toma 100 líneas de código. <br /><br />
-            La librería `nav2_simple_commander` envuelve todo eso.
-            <br />
-            <strong>Tu código se reduce a:</strong>
-          </TextBlock>
-          <CodeBlock
-            lang="python"
-            code="navigator = BasicNavigator()
-navigator.goToPose(goal_pose)"
-            :copyable="false"
-          />
-        </template>
-        <template #right>
-          <div
-            class="tool-card bg-slate-900 flex flex-center h-full relative-position overflow-hidden"
-          >
-            <div class="absolute-center opacity-20">
-              <q-icon name="settings" size="10rem" color="grey" class="spin-slow" />
-            </div>
+    <AlertBlock type="info" title="Action Clients Under the Hood">
+      Cuando llamas a <code>goToPose()</code>, en realidad estás enviando una meta al Action Server
+      <code>/navigate_to_pose</code>. El script actúa como cliente, esperando feedback (progreso) y
+      resultado (éxito/fallo).
+    </AlertBlock>
 
-            <div
-              class="python-wrapper bg-amber-5 text-black q-pa-lg rounded-borders shadow-amber z-top text-center cursor-pointer hover-scale"
-            >
-              <q-icon name="code" size="3rem" />
-              <div class="text-h6 font-mono q-mt-sm">BasicNavigator()</div>
-              <div class="text-caption">La "Caja Mágica"</div>
-            </div>
-
-            <div class="lines absolute-bottom full-width row justify-around q-pb-md">
-              <div class="text-xxs text-grey-5">Action Client</div>
-              <div class="text-xxs text-grey-5">Feedback</div>
-              <div class="text-xxs text-grey-5">Result</div>
-            </div>
-          </div>
-        </template>
-      </SplitBlock>
-    </div>
-
-    <div class="section-group self-stretch">
-      <SectionTitle>2. Paso 1: Establecer la Posición Inicial</SectionTitle>
+    <!-- BASIC API & LIFECYCLE -->
+    <div class="section-group">
+      <SectionTitle>1. Nav2 Lifecycle Management</SectionTitle>
       <TextBlock>
-        Antes de moverse, el robot necesita saber dónde está (similar al botón "2D Pose Estimate" de
-        RViz, pero por código).
+        Nav2 usa <strong>Lifecycle Nodes</strong> (Managed Nodes). No arrancan solos, deben
+        transicionar: Unconfigured → Inactive → Active.
       </TextBlock>
 
-      <CodeBlock
-        title="1_setup.py"
-        lang="python"
-        code="from nav2_simple_commander.robot_navigator import BasicNavigator
-from geometry_msgs.msg import PoseStamped
-import rclpy
+      <div class="lifecycle-viz q-mt-md">
+        <div class="state unconfigured">
+          <div class="state-dot"></div>
+          Unconfigured
+          <div class="state-sub">Carga params</div>
+        </div>
+        <div class="arrow">⬇ configure()</div>
+        <div class="state inactive">
+          <div class="state-dot"></div>
+          Inactive
+          <div class="state-sub">Configura topics (pausa)</div>
+        </div>
+        <div class="arrow">⬇ activate()</div>
+        <div class="state active">
+          <div class="state-dot"></div>
+          Active
+          <div class="state-sub">Processing Data</div>
+        </div>
 
-rclpy.init()
-nav = BasicNavigator()
+        <div class="lifecycle-code">
+          <CodeBlock
+            title="Startup Script"
+            lang="python"
+            content="from nav2_simple_commander.robot_navigator import BasicNavigator
 
-# Definir dónde estamos (X=0, Y=0)
-initial_pose = PoseStamped()
-initial_pose.header.frame_id = 'map'
-initial_pose.header.stamp = nav.get_clock().now().to_msg()
-initial_pose.pose.position.x = 0.0
-initial_pose.pose.position.y = 0.0
-initial_pose.pose.orientation.w = 1.0 # Mirando al frente
+navigator = BasicNavigator()
 
-nav.setInitialPose(initial_pose)
-nav.waitUntilNav2Active() # Esperar a que el sistema arranque"
-      />
-      <AlertBlock type="info" title="Quaternion w=1.0">
-        Recordatorio: En cuaterniones, <code>w=1.0</code> significa rotación cero (0 grados).
-      </AlertBlock>
+# Espera a que Nav2 esté totalmente activo
+navigator.waitUntilNav2Active(localizer='amcl')
+
+# ... ahora es seguro enviar comandos"
+            :copyable="true"
+          />
+        </div>
+      </div>
     </div>
 
-    <div class="section-group self-stretch">
-      <SectionTitle>3. Misión Simple: Ir a la Cocina</SectionTitle>
-      <SplitBlock>
-        <template #left>
-          <TextBlock>
-            La orden básica. Le das una coordenada (x, y) y una orientación (w). El método
-            <code>goToPose()</code> es <strong>no bloqueante</strong>. El robot empieza a moverse, y
-            tu script sigue ejecutándose inmediatamente.
-          </TextBlock>
-        </template>
-        <template #right>
-          <div class="tool-card bg-black relative-position overflow-hidden h-full">
-            <svg width="100%" height="100%" class="absolute">
-              <line
-                x1="20%"
-                y1="80%"
-                x2="80%"
-                y2="20%"
-                stroke="#facc15"
-                stroke-width="2"
-                stroke-dasharray="5,5"
-              />
-              <circle cx="20%" cy="80%" r="5" fill="#4ade80" />
-              <circle cx="80%" cy="20%" r="5" fill="#f87171" />
-            </svg>
-            <div class="robot-moving bg-amber-5 shadow-amber"></div>
-          </div>
-        </template>
-      </SplitBlock>
+    <!-- ADVANCED TASK EXECUTION -->
+    <div class="section-group">
+      <SectionTitle>2. Advanced Task Execution</SectionTitle>
 
-      <div class="q-mt-md">
-        <CodeBlock
-          lang="python"
-          code="goal_pose = PoseStamped()
+      <div class="task-grid q-mt-md">
+        <!-- SINGLE GOAL -->
+        <div class="task-card single">
+          <div class="task-header"><q-icon name="flag" /> Go To Pose</div>
+          <div class="task-desc">Navegación punto a punto con evitación de obstáculos.</div>
+          <CodeBlock
+            lang="python"
+            content="goal_pose = PoseStamped()
 goal_pose.header.frame_id = 'map'
 goal_pose.pose.position.x = 2.5
-goal_pose.pose.position.y = 1.0
 goal_pose.pose.orientation.w = 1.0
 
-nav.goToPose(goal_pose) # ¡El robot se empieza a mover!"
-        />
-      </div>
-    </div>
+navigator.goToPose(goal_pose)
 
-    <div class="section-group self-stretch">
-      <SectionTitle>4. El Bucle de Espera (Feedback)</SectionTitle>
-      <TextBlock>
-        Como <code>goToPose</code> no bloquea, si terminas el script ahí, el programa Python se
-        cierra y el robot se detiene. Necesitas un bucle <code>while</code> para monitorear el
-        progreso mientras el robot trabaja.
-      </TextBlock>
-
-      <div class="row q-col-gutter-lg">
-        <div class="col-12 col-md-7">
-          <CodeBlock
-            lang="python"
-            code="while not nav.isTaskComplete():
-    feedback = nav.getFeedback()
-    if feedback:
-        print(f'Distancia restante: {feedback.distance_remaining:.2f} m')
-
-        # Lógica de seguridad
-        if feedback.navigation_time > 600.0:
-            nav.cancelTask() # Cancelar si tarda mucho
-
-    # No quemar la CPU
-    time.sleep(1.0)
-
-result = nav.getResult()
-if result == TaskResult.SUCCEEDED:
-    print('¡Llegamos a la cocina!')"
+while not navigator.isTaskComplete():
+    feedback = navigator.getFeedback()
+    print(f'Distance: {feedback.distance_remaining:.2f}m')"
+            :copyable="true"
           />
         </div>
 
-        <div class="col-12 col-md-5">
-          <div class="tool-card bg-slate-800 q-pa-md border-amber">
-            <div class="text-caption text-grey-5 q-mb-sm">TERMINAL OUTPUT</div>
-            <div
-              class="console-log font-mono text-xs text-green-4 bg-black q-pa-sm rounded-borders"
-              style="height: 150px; overflow: hidden"
-            >
-              <div>[INFO] Distancia restante: 3.45 m</div>
-              <div>[INFO] Distancia restante: 2.80 m</div>
-              <div>[INFO] Distancia restante: 1.95 m</div>
-              <div>[INFO] Distancia restante: 1.10 m</div>
-              <div class="text-white">...</div>
-              <div class="typing-cursor">_</div>
-            </div>
+        <!-- WAYPOINTS -->
+        <div class="task-card multi">
+          <div class="task-header"><q-icon name="timeline" /> Follow Waypoints</div>
+          <div class="task-desc">Ruta compleja pasando por puntos intermedios (inspección).</div>
+          <CodeBlock
+            lang="python"
+            content="waypoints = [pose1, pose2, pose3, pose4]
+
+# Envía la lista completa
+navigator.followWaypoints(waypoints)
+
+# Monitorea índice actual
+i = navigator.getFeedback().current_waypoint
+print(f'Executing Waypoint {i+1}/{len(waypoints)}')"
+            :copyable="true"
+          />
+        </div>
+
+        <!-- KEEPOUT ZONES -->
+        <div class="task-card zones">
+          <div class="task-header"><q-icon name="block" /> Keepout Zones</div>
+          <div class="task-desc">Usar filtros de costmap para vetar áreas dinámicamente.</div>
+          <div class="viz-mini-map">
+            <div class="map-area"></div>
+            <div class="keepout-zone">NO GO</div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="section-group self-stretch">
-      <SectionTitle>5. Misión Avanzada: Patrullaje de Seguridad</SectionTitle>
-      <SplitBlock>
-        <template #left>
-          <TextBlock>
-            En lugar de ir a un solo punto, podemos darle una lista de puntos. Nav2 calculará la
-            ruta óptima para visitar A, luego B, luego C.
+    <!-- FEEDBACK HANDLING & RECOVERY -->
+    <div class="section-group">
+      <SectionTitle>3. Handling Failures & Recovery</SectionTitle>
+      <TextBlock>
+        En el mundo real, los robots fallan. Quedan atrapados, pierden localización... Tu script
+        debe manejar estos casos.
+      </TextBlock>
 
-            <br /><br />
-            El método es <code>followWaypoints(poses_list)</code>.
-          </TextBlock>
-        </template>
-        <template #right>
-          <div
-            class="tool-card bg-slate-900 relative-position overflow-hidden h-full flex flex-center"
-          >
-            <div class="patrol-path relative-position">
-              <div class="wp wp-1">A</div>
-              <div class="wp wp-2">B</div>
-              <div class="wp wp-3">C</div>
-              <div class="robot-patrol bg-amber-5"></div>
-            </div>
-          </div>
-        </template>
-      </SplitBlock>
+      <CodeBlock
+        title="Robust Navigation Loop"
+        lang="python"
+        content="result = navigator.getResult()
+if result == TaskResult.SUCCEEDED:
+    print('Goal reached!')
+elif result == TaskResult.CANCELED:
+    print('Task was canceled')
+elif result == TaskResult.FAILED:
+    print('Task failed!')
+    # Custom Recovery Strategy
+    navigator.backup(backup_dist=0.5, backup_speed=0.05)
+    navigator.spin(spin_dist=3.14)"
+        :copyable="true"
+      />
+    </div>
 
-      <div class="q-mt-md">
+    <!-- HYBRID NAV -->
+    <div class="section-group">
+      <SectionTitle>4. Hybrid Navigation (GPS -> SLAM)</SectionTitle>
+      <TextBlock>
+        Robots de exteriores usan GPS para acercarse al edificio, y cambian a SLAM (Lidar) al
+        entrar. Esto requiere cambiar el mapa y el localizador al vuelo.
+      </TextBlock>
+
+      <div class="hybrid-viz q-mt-md">
+        <div class="mode gps">
+          <q-icon name="satellite" size="lg" />
+          <span>GPS Navigation</span>
+          <div class="tech">NavSatFix -> EKF -> Odometry</div>
+        </div>
+        <div class="transition-arrow">
+          <q-icon name="sync_alt" />
+          <span>Handover</span>
+        </div>
+        <div class="mode slam">
+          <q-icon name="grid_view" size="lg" />
+          <span>Lidar SLAM</span>
+          <div class="tech">AMCL -> Map Server</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIDACTIC FLEET MANAGEMENT -->
+    <div class="section-group">
+      <SectionTitle>5. Mini-Proyecto: Fleet Coordinator</SectionTitle>
+
+      <div class="challenge-card">
+        <div class="challenge-title">🕵️ Misión: Flota de Patrulla</div>
+        <div class="challenge-desc">
+          Tienes 3 robots (Robot_A, Robot_B, Robot_C). Deben patrullar 3 pasillos diferentes sin
+          chocar.
+          <br />
+          Completa el script del <strong>FleetManager</strong>.
+        </div>
+
         <CodeBlock
+          title="fleet_manager.py (Incompleto)"
           lang="python"
-          code="# Lista de puntos
-wp1 = create_pose(2.0, 0.0)
-wp2 = create_pose(2.0, 2.0)
-wp3 = create_pose(0.0, 2.0)
+          content="class FleetManager:
+    def __init__(self):
+        self.robots = {
+            'waffle_1': BasicNavigator(namespace='robot1'),
+            'waffle_2': BasicNavigator(namespace='robot2')
+        }
 
-waypoints = [wp1, wp2, wp3]
-nav.followWaypoints(waypoints)"
+    def dispatch_patrol(self):
+        # TODO: Asigna targets diferentes para evitar colisiones
+        # Pista: Usa 'navigator.goToPose()' en loop no bloqueante
+
+        target_A = self.get_pose(x=5.0, y=0.0)
+        target_B = self.get_pose(x=0.0, y=5.0)
+
+        # 1. Enviar órdenes (Async)
+        self.robots['waffle_1'].goToPose(target_A)
+        self.robots['waffle_2'].goToPose(target_B)
+
+        # 2. Monitor Loop
+        while not self.all_idle():
+            # Completa lógica de chequeo...
+            pass"
+          :copyable="true"
         />
       </div>
     </div>
 
-    <div class="section-group self-stretch">
-      <SectionTitle>6. Pro Tip: Adiós a los Cuaterniones</SectionTitle>
-      <AlertBlock type="success" title="Helper Function">
-        Nadie piensa en cuaterniones ("Gira 0.707 en Z"). Pensamos en grados ("Gira 90 grados").
-        Copia esta función en tus scripts para convertir <strong>Ángulos de Euler (Yaw)</strong> a
-        Cuaterniones.
-      </AlertBlock>
-
-      <CodeBlock
-        lang="python"
-        code="import math
-from geometry_msgs.msg import Quaternion
-
-def euler_to_quaternion(yaw_degrees):
-    yaw = math.radians(yaw_degrees)
-    q = Quaternion()
-    q.z = math.sin(yaw / 2.0)
-    q.w = math.cos(yaw / 2.0)
-    return q
-
-# Uso:
-pose.orientation = euler_to_quaternion(90) # Mirar a la izquierda"
-      />
-    </div>
-
-    <div class="section-group self-stretch q-mb-xl">
-      <SectionTitle>7. Mi script no funciona</SectionTitle>
-
-      <div class="row q-col-gutter-md">
-        <div class="col-12">
-          <q-expansion-item
-            icon="timer_off"
-            label="El script se queda en 'Esperando Nav2' eternamente"
-            header-class="bg-slate-800 text-white rounded-borders"
-            class="q-mb-sm border-light"
-          >
-            <div class="q-pa-md bg-slate-900 text-grey-4">
-              Asegúrate de haber lanzado primero el stack de Nav2 y la simulación.
-              <br /><code>ros2 launch nav2_bringup tb3_simulation_launch.py</code> <br />El script
-              es solo el cliente, necesita que el servidor esté vivo.
-            </div>
-          </q-expansion-item>
-
-          <q-expansion-item
-            icon="cancel"
-            label="Task Canceled / Failed inmediatamente"
-            header-class="bg-slate-800 text-white rounded-borders"
-            class="q-mb-sm border-light"
-          >
-            <div class="q-pa-md bg-slate-900 text-grey-4">
-              ¿Estás enviando al robot a una coordenada fuera del mapa o dentro de una pared?
-              <br />Verifica las coordenadas (X, Y) en RViz usando la herramienta "Publish Point"
-              para ver sus valores reales antes de ponerlos en código.
-            </div>
-          </q-expansion-item>
+    <!-- RESUMEN -->
+    <div class="section-group q-mb-xl">
+      <SectionTitle>📝 Resumen Técnico</SectionTitle>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <code>BasicNavigator</code>
+          <span>Clase Python helper para Nav2 Action Clients</span>
+        </div>
+        <div class="summary-item">
+          <code>LifecycleNode</code>
+          <span>Nodos gestionados (Configure -> Activate)</span>
+        </div>
+        <div class="summary-item">
+          <code>TaskResult</code>
+          <span>Enum de resultados (SUCCEEDED, FAILED, CANCELED)</span>
+        </div>
+        <div class="summary-item">
+          <code>followWaypoints</code>
+          <span>Ejecutar secuencia de poses</span>
+        </div>
+        <div class="summary-item">
+          <code>KeepoutFilter</code>
+          <span>Costmap layer para zonas prohibidas virtuales</span>
         </div>
       </div>
+
+      <AlertBlock type="success" title="Best Practices" class="q-mt-lg">
+        ✅ Siempre implementa un timeout en tus bucles <code>while/wait</code>.
+        <br />
+        ✅ Usa <code>navigator.lifecycleStartup()</code> si quieres que tu script arranque Nav2.
+        <br />
+        ✅ Monitorea <code>distance_remaining</code> para decelarar o activar actuadores antes de
+        llegar.
+      </AlertBlock>
     </div>
-  </q-page>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
-import SectionTitle from 'components/content/SectionTitle.vue';
-import SplitBlock from 'components/content/SplitBlock.vue';
 import CodeBlock from 'components/content/CodeBlock.vue';
+import SectionTitle from 'components/content/SectionTitle.vue';
 </script>
 
 <style scoped>
-/* GENERAL */
-.intro-hero,
 .section-group {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 3.5rem auto;
+  margin-bottom: 3.5rem;
 }
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(251, 191, 36, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
+
+/* LIFECYCLE VIZ */
+.lifecycle-viz {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 12px;
+  padding: 2rem;
+  align-items: center;
+}
+
+.state {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 1rem;
+  background: rgba(30, 41, 59, 0.8);
   border: 1px solid rgba(148, 163, 184, 0.2);
-  text-align: center;
-  margin-bottom: 3rem;
-}
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  color: #f8fafc;
-}
-
-/* ANIMATIONS */
-.spin-slow {
-  animation: spin 10s infinite linear;
-}
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.hover-scale {
-  transition: transform 0.2s;
-}
-.hover-scale:hover {
-  transform: scale(1.05);
-}
-
-.robot-moving {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  position: absolute;
-  animation: moveLinear 3s infinite ease-in-out;
-}
-@keyframes moveLinear {
-  0% {
-    left: 20%;
-    top: 80%;
-  }
-  50% {
-    left: 80%;
-    top: 20%;
-  }
-  100% {
-    left: 20%;
-    top: 80%;
-  }
-}
-
-/* PATROL ANIMATION */
-.patrol-path {
-  width: 200px;
-  height: 200px;
+  border-radius: 8px;
   position: relative;
+  width: 150px;
 }
-.wp {
-  width: 30px;
-  height: 30px;
-  background: #334155;
+
+.state.active {
+  border-color: #22c55e;
+}
+.state.inactive {
+  border-color: #f59e0b;
+}
+.state.unconfigured {
+  border-color: #94a3b8;
+}
+
+.state-dot {
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.active .state-dot {
+  background: #22c55e;
+  box-shadow: 0 0 10px #22c55e;
+}
+.inactive .state-dot {
+  background: #f59e0b;
+}
+.unconfigured .state-dot {
+  background: #94a3b8;
+}
+
+.state-sub {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  margin-top: 0.25rem;
+}
+
+.arrow {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.8rem;
+  font-family: 'Fira Code', monospace;
+  margin: 0.5rem 0;
+}
+
+/* TASK GRID */
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.task-card {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.task-card.single {
+  border-top: 4px solid #3b82f6;
+}
+.task-card.multi {
+  border-top: 4px solid #a855f7;
+}
+.task-card.zones {
+  border-top: 4px solid #ef4444;
+}
+
+.task-header {
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.task-desc {
+  font-size: 0.9rem;
+  color: #cbd5e1;
+}
+
+.viz-mini-map {
+  height: 100px;
+  background: #0f172a;
+  border-radius: 8px;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  color: white;
-  z-index: 2;
-  border: 2px solid #facc15;
-}
-.wp-1 {
-  bottom: 0;
-  left: 0;
-}
-.wp-2 {
-  bottom: 0;
-  right: 0;
-}
-.wp-3 {
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
-.robot-patrol {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  position: absolute;
-  offset-path: path('M 15 185 L 185 185 L 100 15 Z');
-  animation: patrolMove 6s infinite linear;
-}
-@keyframes patrolMove {
-  0% {
-    offset-distance: 0%;
-  }
-  100% {
-    offset-distance: 100%;
-  }
+.keepout-zone {
+  width: 60px;
+  height: 60px;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(239, 68, 68, 0.2),
+    rgba(239, 68, 68, 0.2) 10px,
+    rgba(239, 68, 68, 0.4) 10px,
+    rgba(239, 68, 68, 0.4) 20px
+  );
+  border: 2px solid #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ef4444;
+  font-weight: 900;
+  font-size: 0.8rem;
 }
 
-/* UTILS */
-.bg-slate-900 {
-  background: #0f172a;
+/* HYBRID VIZ */
+.hybrid-viz {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.6) 100%);
+  padding: 2rem;
+  border-radius: 12px;
 }
-.bg-slate-800 {
-  background: #1e293b;
+
+.mode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #f1f5f9;
 }
-.shadow-amber {
-  box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+
+.mode span {
+  font-weight: 700;
 }
-.border-amber {
-  border: 1px solid rgba(251, 191, 36, 0.3);
+.mode .tech {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 6px;
+  border-radius: 4px;
 }
-.text-xxs {
-  font-size: 0.6rem;
+
+.transition-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #eab308;
 }
-.font-mono {
+
+.transition-arrow span {
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+/* SUMMARY */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.summary-item {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-item code {
+  color: #6ee7b7;
   font-family: 'Fira Code', monospace;
+  font-size: 0.95rem;
 }
-.h-full {
-  height: 100%;
+
+.summary-item span {
+  color: #cbd5e1;
+  font-size: 0.85rem;
 }
-.z-top {
-  z-index: 10;
-}
-.typing-cursor {
-  display: inline-block;
-  animation: blink 1s infinite;
-}
-@keyframes blink {
-  50% {
-    opacity: 0;
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .lifecycle-viz {
+    grid-template-columns: 1fr;
+  }
+
+  .task-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hybrid-viz {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .transition-arrow {
+    transform: rotate(90deg);
   }
 }
 </style>

@@ -1,23 +1,5 @@
 <template>
-  <q-page class="q-pa-lg column items-center">
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-deep-orange-4 text-weight-bold q-mb-sm">
-          MÓDULO 8.2: CONFIGURACIÓN PROFESIONAL
-        </div>
-        <h1 class="hero-title">Archivos YAML: <span class="text-white">El Comportamiento</span></h1>
-        <TextBlock>
-          ¿Recompilas tu código cada vez que quieres cambiar la velocidad del robot?
-          <strong>¡Error de novato!</strong>
-          <br /><br />
-          En ingeniería robótica profesional, separamos la <strong>Lógica</strong> (Código
-          Python/C++) de la <strong>Configuración</strong> (Archivos YAML). Esto permite que un
-          mismo binario funcione en simulación, en un robot real o en pruebas, simplemente cargando
-          un archivo distinto.
-        </TextBlock>
-      </div>
-    </section>
-
+  <LessonContainer>
     <div class="section-group self-stretch">
       <SectionTitle>1. La Regla de Oro: No Hardcoding</SectionTitle>
       <SplitBlock>
@@ -74,7 +56,7 @@
           <CodeBlock
             lang="yaml"
             title="config/my_robot.yaml"
-            content="my_node_name:           # 1. Nombre del Nodo
+            code="my_node_name:           # 1. Nombre del Nodo
   ros__parameters:      # 2. LA CLAVE MÁGICA
     max_speed: 2.5      # Float
     waypoints: [1, 2, 3] # Lista
@@ -112,7 +94,7 @@
       <CodeBlock
         lang="yaml"
         title="global_params.yaml"
-        content="/**:                    # Aplica a CUALQUIER nodo
+        code="/**:                    # Aplica a CUALQUIER nodo
   ros__parameters:
     use_sim_time: true    # Vital para Gazebo"
         :copyable="true"
@@ -128,7 +110,7 @@
       <CodeBlock
         lang="python"
         title="bringup_launch.py"
-        content="config = os.path.join(
+        code="config = os.path.join(
     get_package_share_directory('my_bot'),
     'config',
     'my_params.yaml'
@@ -154,7 +136,7 @@ Node(
             robot. Simplemente inyecta el nuevo valor.
           </TextBlock>
           <div class="code-label bash q-mt-md">Terminal</div>
-          <CodeBlock lang="bash" content="ros2 param set /my_node max_speed 5.0" :copyable="true" />
+          <CodeBlock lang="bash" code="ros2 param set /my_node max_speed 5.0" :copyable="true" />
         </template>
 
         <template #right>
@@ -258,7 +240,7 @@ Node(
           <div class="code-label python">Python</div>
           <CodeBlock
             lang="python"
-            content="self.declare_parameter('max_speed', 1.0)
+            code="self.declare_parameter('max_speed', 1.0)
 speed = self.get_parameter('max_speed').value"
             :copyable="true"
           />
@@ -267,7 +249,7 @@ speed = self.get_parameter('max_speed').value"
           <div class="code-label cpp">C++</div>
           <CodeBlock
             lang="cpp"
-            content="this->declare_parameter('max_speed', 1.0);
+            code="this->declare_parameter('max_speed', 1.0);
 double speed = this->get_parameter('max_speed').as_double();"
             :copyable="true"
           />
@@ -309,11 +291,12 @@ double speed = this->get_parameter('max_speed').as_double();"
         </div>
       </div>
     </div>
-  </q-page>
+  </LessonContainer>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
+import LessonContainer from 'components/content/LessonContainer.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
@@ -325,7 +308,6 @@ const speedVal = ref(1.0);
 const speedPos = ref(0);
 let direction = 1;
 
-// CORRECCIÓN AQUÍ:
 let interval: ReturnType<typeof setInterval> | undefined;
 
 onMounted(() => {
@@ -336,43 +318,22 @@ onMounted(() => {
     speedVal.value += 0.05 * direction;
 
     // Update robot position faster based on CURRENT speed
-    // The higher the speedVal, the bigger the jump
     speedPos.value += speedVal.value * 0.4;
     if (speedPos.value > 110) speedPos.value = -10; // Wrap around
   }, 50);
 });
 
 onUnmounted(() => {
-  // CORRECCIÓN AQUÍ (Verificar que existe antes de limpiar):
   if (interval) clearInterval(interval);
 });
 </script>
 
 <style scoped>
-/* --- ESTILOS MAESTROS INYECTADOS --- */
-
-.intro-hero,
+/* GENERAL */
 .section-group {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto 3.5rem auto;
-}
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at center, rgba(255, 87, 34, 0.2), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  text-align: center;
-}
-.hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.1;
-  color: #f8fafc;
 }
 
 /* CARDS */
