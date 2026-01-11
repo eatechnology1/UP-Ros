@@ -327,43 +327,52 @@ export const courseStructure: CourseNode[] = [
     ],
   },
   {
-    title: 'Módulo 5: Herramientas',
-    icon: 'build',
+    title: 'Módulo 5: Herramientas de Desarrollo',
+    icon: 'handyman',
     path: 'modulo-5',
+    // description: 'Domina el diagnóstico y la visualización antes de simular.',
     children: [
-      { title: '5.1 Launch System', path: '01launchPage' },
-      { title: '5.2 Parámetros', path: '02parametrosPage' },
-      { title: '5.3 Visualización', path: '03visualizacionPage' },
-      { title: '5.4 Rosbag', path: '04rosbagPage' },
+      { title: '5.1 CLI Avanzada & Colcon', path: '01cli-colconPage' }, // Más allá del echo
+      { title: '5.2 RViz2: Visualización', path: '02rviz2Page' }, // Ver lo invisible
+      { title: '5.3 RQT: Gráficas y Logs', path: '03rqtPage' }, // El panel de control
+      { title: '5.4 Rosbag2: Grabación', path: '04rosbagPage' }, // La caja negra
+      { title: '5.5 Debugging TF2', path: '05tf2-debugPage' }, // Arreglando coordenadas
     ],
   },
   {
-    title: 'Módulo 6: Simulación',
-    icon: 'public', // Icono de mundo
+    title: 'Módulo 6: Simulación (Lab Virtual)',
+    icon: 'science',
     path: 'modulo-6',
+    // description: 'Construye tu propio robot y entorno desde cero.',
     children: [
-      { title: '6.1 Transformaciones (TF)', path: 'tf2' },
-      { title: '6.2 URDF y Xacro', path: 'urdf' },
-      { title: '6.3 Gazebo', path: 'gazebo' },
+      { title: '6.1 URDF: Modelado del Robot', path: '01urdf-modelingPage' }, // El cuerpo
+      { title: '6.2 Gazebo: Mundos Virtuales', path: '02gazebo-worldsPage' }, // El entorno
+      { title: '6.3 Sensores Simulados', path: '03simulated-sensorsPage' }, // Ojos y oídos (Lidar/Cam)
+      { title: '6.4 Plugins de Control', path: '04gazebo-pluginsPage' }, // Motores virtuales
     ],
   },
   {
-    title: 'Módulo 7: Navegación (Nav2)',
+    title: 'Módulo 7: Navegación Autónoma (Nav2)',
     icon: 'explore',
     path: 'modulo-7',
+    // description: 'Dota de inteligencia espacial a tu robot simulado.',
     children: [
-      { title: '7.1 Stack Nav2', path: 'nav2-stack' },
-      { title: '7.2 SLAM y Mapas', path: 'slam' },
+      { title: '7.1 SLAM: Generación de Mapas', path: '01slam-mappingPage' }, // Crear el mundo
+      { title: '7.2 AMCL: Localización', path: '02localizationPage' }, // Ubicarse en él
+      { title: '7.3 Nav2: Configuración y Tuning', path: '03nav2-configPage' }, // Ajuste de parámetros
+      { title: '7.4 Scripting de Misiones (Python)', path: '04nav-scriptingPage' }, // "Patrullaje autónomo"
     ],
   },
   {
-    title: 'Módulo 8: Despliegue Pro',
-    icon: 'rocket_launch',
+    title: 'Módulo 8: Ingeniería de Software',
+    icon: 'integration_instructions',
     path: 'modulo-8',
+    // description: 'Estandarización, empaquetado y despliegue profesional.',
     children: [
-      { title: '8.1 Docker', path: 'docker' },
-      { title: '8.2 CI/CD', path: 'ci-cd' },
-      { title: '8.3 Edge Deployment', path: 'edge' },
+      { title: '8.1 Launch System Pro', path: '01launch-proPage' }, // Un comando para gobernarlos a todos
+      { title: '8.2 Gestión de Configuración (YAML)', path: '02yaml-configPage' }, // Buenas prácticas
+      { title: '8.3 Docker para Robótica', path: '03docker-simPage' }, // "Funciona en mi máquina"
+      { title: '8.4 Proyecto Final Integrador', path: '04proyecto-finalPage' }, // El Gran Cierre
     ],
   },
   // {
