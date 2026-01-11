@@ -155,7 +155,7 @@ pub_->publish(std::move(loaned_msg));"
           <div class="option correct">
             <div class="opt-head">B. Incompatibilidad QoS (Rx > Tx)</div>
             <div class="opt-body">
-              Exacto. Regla: <code>Reliability(Subscriber) <= Reliability(Publisher)</code>. No
+              Exacto. Regla: <code>Reliability(Subscriber) &lt;= Reliability(Publisher)</code>. No
               puedes pedir fiabilidad (Reliable) a alguien que no la ofrece (Best Effort).
             </div>
           </div>

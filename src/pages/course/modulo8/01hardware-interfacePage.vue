@@ -168,7 +168,7 @@ private:
             <div class="opt-body">No, las CPUs modernas procesan double igual de rápido.</div>
           </div>
           <div class="option correct">
-            <div class="opt-head">B. cout << "Encoder: " << val << endl;</div>
+            <div class="opt-head">B. cout &lt;&lt; "Encoder: " &lt;&lt; val &lt;&lt; endl;</div>
             <div class="opt-body">
               ¡CORRECTO! Imprimir a consola bloquea el hilo y rompe el determinismo temporal. NUNCA
               uses <code>std::cout</code> en realtime loops.

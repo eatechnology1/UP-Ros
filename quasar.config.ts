@@ -207,8 +207,8 @@ export default defineConfig((/* ctx */) => {
         },
 
         win: {
-          target: 'nsis', // Instalador NSIS para Windows
-          arch: ['x64'], // Arquitectura x64
+          target: ['nsis', 'portable'], // Instalador NSIS para Windows
+          // arch: ['x64'], // Arquitectura x64
         },
       },
     },
