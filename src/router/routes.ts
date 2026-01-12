@@ -61,7 +61,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'home', component: () => import('pages/HomePage.vue') },
       ...dynamicRoutes,
       { path: 'glosario', component: () => import('pages/GlosarioPage.vue') },
-      { path: 'creditos', component: () => import('pages/CreditosPage.vue') },
+      { path: 'creditos', name: 'creditos', component: () => import('pages/CreditosPage.vue') },
       { path: 'introduccion', component: () => import('pages/IntroduccionPage.vue') },
       { path: 'instalacion', component: () => import('pages/InstalacionPage.vue') },
     ],

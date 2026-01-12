@@ -422,7 +422,7 @@ rosdep update"
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            src="https://youtu.be/Romc22GgusU"
             title="Instalación de Software en Linux"
             frameborder="0"
             allow="
@@ -438,7 +438,7 @@ rosdep update"
         </div>
         <div class="video-caption">
           <q-icon name="info" color="blue-4" size="sm" />
-          Reemplaza dQw4w9WgXcQ con tu video de YouTube
+          Video En progreso
         </div>
       </div>
     </div>
@@ -482,6 +482,30 @@ rosdep update"
         <br />
         <strong>Para dependencias de ROS 2:</strong> rosdep
       </AlertBlock>
+    </div>
+    <!-- ========== CTA FINAL ========== -->
+    <div class="section-group q-mt-xl self-stretch column items-center">
+      <div class="final-cta">
+        <q-icon name="celebration" size="xl" color="primary" class="q-mb-md" />
+        <h2 class="text-h4 text-white text-center q-mb-md">¡Has finalizado el módulo! 🎉</h2>
+        <p class="text-body1 text-grey-4 text-center q-mb-lg">
+          Has finalizado el módulo de fundamentos de Linux.
+        </p>
+
+        <div class="row q-gutter-md justify-center">
+          <q-btn
+            color="primary"
+            unelevated
+            rounded
+            size="lg"
+            padding="14px 40px"
+            to="/modulo-1/01python-scripts"
+            icon="rocket_launch"
+            label="Comenzar con Fundamentos de Programación"
+            class="text-weight-bold"
+          />
+        </div>
+      </div>
     </div>
   </LessonContainer>
 </template>
@@ -845,5 +869,15 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   .use-cases-grid {
     grid-template-columns: 1fr;
   }
+}
+/* ========== CTA FINAL ========== */
+.final-cta {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.6));
+  border-radius: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
 }
 </style>

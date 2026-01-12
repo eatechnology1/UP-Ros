@@ -508,7 +508,7 @@ git add -f src/important.py"
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            src="https://youtu.be/Romc22GgusU"
             title="Gitignore Best Practices"
             frameborder="0"
             allow="
@@ -524,7 +524,7 @@ git add -f src/important.py"
         </div>
         <div class="video-caption">
           <q-icon name="info" color="blue-4" size="sm" />
-          Reemplaza dQw4w9WgXcQ con tu video de YouTube
+          Video En progreso
         </div>
       </div>
     </div>
@@ -574,6 +574,31 @@ git add -f src/important.py"
         <br />
         ✅ Si subiste credenciales, CÁMBIALAS inmediatamente
       </AlertBlock>
+    </div>
+
+    <!-- ========== CTA FINAL ========== -->
+    <div class="section-group q-mt-xl self-stretch column items-center">
+      <div class="final-cta">
+        <q-icon name="celebration" size="xl" color="primary" class="q-mb-md" />
+        <h2 class="text-h4 text-white text-center q-mb-md">¡Has finalizado el módulo! 🎉</h2>
+        <p class="text-body1 text-grey-4 text-center q-mb-lg">
+          Has finalizado el módulo de Git y GitHub.
+        </p>
+
+        <div class="row q-gutter-md justify-center">
+          <q-btn
+            color="primary"
+            unelevated
+            rounded
+            size="lg"
+            padding="14px 40px"
+            to="/modulo-4/01arquitecturaPage"
+            icon="rocket_launch"
+            label="Comenzar con Fundamentos de ROS2"
+            class="text-weight-bold"
+          />
+        </div>
+      </div>
     </div>
   </LessonContainer>
 </template>
@@ -936,5 +961,10 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   .trash-visual {
     grid-template-columns: 1fr;
   }
+}
+/* ========== CTA FINAL ========== */
+.final-cta {
+  text-align: center;
+  margin: 0 auto;
 }
 </style>

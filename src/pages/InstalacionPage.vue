@@ -438,9 +438,40 @@
         </div>
       </div>
     </div>
+    <!-- ============================================ -->
+    <!-- SECCIÓN 9: VIDEO COMPLEMENTARIO -->
+    <!-- ============================================ -->
+    <div class="section-group">
+      <SectionTitle>📹 Video Complementario</SectionTitle>
+      <TextBlock>
+        Refuerza lo aprendido con este video tutorial que demuestra estos comandos en acción:
+      </TextBlock>
 
+      <div class="video-container q-mt-md">
+        <div class="video-wrapper">
+          <iframe
+            src="https://youtu.be/Romc22GgusU"
+            title="Instalación de ROS 2 Jazzy"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+            "
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="video-caption">
+          <q-icon name="info" color="blue-4" size="sm" class="q-mr-sm" />
+          Video de instalación de ROS 2 Jazzy
+        </div>
+      </div>
+    </div>
     <!-- ========== CTA FINAL ========== -->
-    <div class="section-group self-stretch column items-center q-mt-xl">
+    <div class="section-group q-mt-xl self-stretch column items-center">
       <div class="final-cta">
         <q-icon name="celebration" size="xl" color="primary" class="q-mb-md" />
         <h2 class="text-h4 text-white text-center q-mb-md">¡Instalación Completada! 🎉</h2>
@@ -456,19 +487,10 @@
             rounded
             size="lg"
             padding="14px 40px"
-            to="/modulo-0/01nav-sistema"
+            to="/modulo-0/01navsistemaPage"
             icon="rocket_launch"
-            label="Comenzar con Linux"
+            label="Comenzar con Fundamentos de Linux"
             class="text-weight-bold"
-          />
-          <q-btn
-            flat
-            rounded
-            size="lg"
-            color="white"
-            icon="arrow_back"
-            label="Volver a Introducción"
-            to="/introduccion"
           />
         </div>
       </div>
@@ -1066,7 +1088,43 @@ source ~/.bashrc`;
   font-family: 'Fira Code', monospace;
   font-size: 0.85rem;
 }
+/* ============================================ */
+/* VIDEO CONTAINER */
+/* ============================================ */
+.video-container {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
 
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-caption {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 8px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
 /* ========== CTA FINAL ========== */
 .final-cta {
   text-align: center;

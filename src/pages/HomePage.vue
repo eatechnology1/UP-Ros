@@ -32,36 +32,6 @@
               en proyectos industriales.
             </p>
 
-            <div class="row q-gutter-md">
-              <q-btn
-                unelevated
-                rounded
-                color="primary"
-                class="cta-btn shadow-glow"
-                padding="12px 32px"
-                to="/introduccion"
-              >
-                <div class="column items-start">
-                  <span class="text-weight-bold">introduccion</span>
-                  <span class="text-caption text-blue-2" style="font-size: 0.7rem"
-                    >Módulo 0: Setup</span
-                  >
-                </div>
-                <q-icon name="arrow_forward" class="q-ml-md" />
-              </q-btn>
-
-              <q-btn
-                outline
-                rounded
-                color="white"
-                class="cta-btn-outline"
-                padding="12px 24px"
-                label="Ver Instalación"
-                icon="terminal"
-                to="/instalacion"
-              />
-            </div>
-
             <!-- STATS -->
             <div class="row q-mt-xl q-gutter-x-lg text-grey-5 stats-row">
               <div class="row items-center stat-item">
@@ -196,7 +166,7 @@
 
           <div class="roadmap-card">
             <img
-              src="~assets/images/upros_roadmap.png"
+              src="~assets/images/Ruta_aprendizaje.png"
               alt="Roadmap del Curso"
               class="roadmap-img"
             />
@@ -755,7 +725,7 @@ const getChipColor = (path: string) => {
 }
 
 .roadmap-img {
-  width: 50%;
+  width: 99%;
   border-radius: 12px;
   min-width: 350px;
   max-width: 100%;

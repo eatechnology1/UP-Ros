@@ -16,20 +16,6 @@
           Del "Hello World" al despliegue de flotas autónomas.<br />
           <strong>Sin dolor, sin PDF aburridos.</strong>
         </p>
-
-        <div class="hero-cta q-mt-lg animate-fade-in-delay">
-          <q-btn
-            color="primary"
-            unelevated
-            rounded
-            size="lg"
-            padding="14px 40px"
-            to="/modulo-0/01nav-sistema"
-            icon="rocket_launch"
-            label="Comenzar Ahora"
-            class="text-weight-bold cta-pulse"
-          />
-        </div>
       </div>
     </section>
 
@@ -117,8 +103,15 @@
           indicator-color="primary"
           align="justify"
         >
-          <q-tab name="native" label="Nativo (Recomendado)" icon="speed">
-            <q-badge color="positive" floating>Mejor Rendimiento</q-badge>
+          <q-tab name="native" class="q-px-lg">
+            <div class="column items-center relative-position q-pt-xs">
+              <q-icon name="speed" size="24px" class="q-mb-xs" />
+              <div class="text-weight-medium">Nativo (Recomendado)</div>
+
+              <q-badge color="positive" floating style="top: -1px; right: 7px">
+                Mejor Rendimiento
+              </q-badge>
+            </div>
           </q-tab>
           <q-tab name="docker" label="Docker (Avanzado)" icon="widgets" />
           <q-tab name="vm" label="Máquina Virtual (Seguro)" icon="computer" />
@@ -311,47 +304,33 @@
     </div>
 
     <!-- ========== SECCIÓN 7: CTA FINAL ========== -->
+    <SectionTitle>🔍 Plan de estudios detallado</SectionTitle>
     <div class="section-group self-stretch column items-center q-mt-xl">
-      <div class="final-cta">
-        <h2 class="text-h4 text-white text-center q-mb-md">¿Listo para el Despegue?</h2>
-        <p class="text-body1 text-grey-4 text-center q-mb-lg">
-          Comienza con el Módulo 0 y domina la terminal de Linux antes de escribir tu primer nodo
-          ROS 2.
-        </p>
-
-        <div class="row q-gutter-md justify-center">
-          <q-btn
-            color="primary"
-            unelevated
-            rounded
-            size="lg"
-            padding="14px 40px"
-            to="/modulo-0/01nav-sistema"
-            icon="terminal"
-            label="Ir al Módulo 0"
-            class="text-weight-bold"
-          />
-          <q-btn
-            flat
-            rounded
-            size="lg"
-            color="white"
-            icon="arrow_back"
-            label="Volver al Inicio"
-            to="/"
-          />
-        </div>
-      </div>
-
-      <div class="full-width q-mt-xl" style="max-width: 800px">
+      <div class="full-width q-mt-xl">
         <PdfBlock
           title="Syllabus Completo"
           description="Descarga el plan de estudios detallado con todos los módulos y proyectos."
           size="2.4 MB"
-          src="src/assets/upros-roadmap.pdf"
+          :src="roadmapPdf"
         />
       </div>
     </div>
+    <q-btn
+      unelevated
+      rounded
+      color="primary"
+      class="cta-btn shadow-glow"
+      padding="12px 32px"
+      to="/instalacion"
+    >
+      <div class="column items-start">
+        <span class="text-weight-bold">Instalación</span>
+        <span class="text-caption text-blue-2" style="font-size: 0.7rem">Instala ROS 2</span>
+      </div>
+      <q-icon name="arrow_forward" class="q-ml-md" /> </q-btn
+    ><br />
+    <br />
+    <br />
   </q-page>
 </template>
 
@@ -364,6 +343,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 import SplitBlock from 'components/content/SplitBlock.vue';
 import StepsBlock from 'components/content/StepsBlock.vue';
 import PdfBlock from 'components/content/PdfBlock.vue';
+import roadmapPdf from 'src/assets/pdf/upros-roadmap.pdf';
 
 // ========== TAB DEL SISTEMA OPERATIVO ==========
 const selectedOsTab = ref('native');

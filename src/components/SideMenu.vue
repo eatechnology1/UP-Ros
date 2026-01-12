@@ -167,10 +167,6 @@
             <q-item-section avatar><q-icon name="info" class="text-grey-5" /></q-item-section>
             <q-item-section>Créditos</q-item-section>
           </q-item>
-          <q-item clickable v-ripple to="/plantilla" class="menu-item single-item">
-            <q-item-section avatar><q-icon name="style" class="text-pink-4" /></q-item-section>
-            <q-item-section>Plantilla Dev</q-item-section>
-          </q-item>
         </div>
       </q-list>
     </q-scroll-area>
@@ -234,6 +230,26 @@ function clearSearch() {
   searchQuery.value = '';
   openModule.value = '';
 }
+
+// AUTO-EXPAND BASED ON ROUTE
+import { watch } from 'vue';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+
+watch(
+  () => route.path,
+  (newPath) => {
+    // Buscar si el path actual pertenece a algún módulo
+    const foundModule = courseStructure.find(
+      (m) => m.path && newPath.includes(m.path) && m.children?.length,
+    );
+
+    if (foundModule && foundModule.path) {
+      openModule.value = foundModule.path;
+    }
+  },
+  { immediate: true },
+);
 
 // SISTEMA DE COLORES
 function getModuleColorClass(path: string): string {

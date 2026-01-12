@@ -447,7 +447,7 @@ sudo apt install ros-humble-rclcpp"
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            src="https://youtu.be/Romc22GgusU"
             title="Compilación de C++ en ROS 2"
             frameborder="0"
             allow="
@@ -463,7 +463,7 @@ sudo apt install ros-humble-rclcpp"
         </div>
         <div class="video-caption">
           <q-icon name="info" color="blue-4" size="sm" />
-          Reemplaza dQw4w9WgXcQ con tu video de YouTube
+          Video En progreso
         </div>
       </div>
     </div>

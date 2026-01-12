@@ -817,7 +817,7 @@ T =A [
           <iframe
             width="100%"
             height="100%"
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            src="https://youtu.be/Romc22GgusU"
             title="YouTube video player"
             frameborder="0"
             allow="
@@ -875,18 +875,6 @@ T =A [
         ✅ <strong>Joints:</strong> Verificar orientación de ejes en
         <code>solid_to_urdf</code> antes de exportar.
       </AlertBlock>
-
-      <div class="next-step q-mt-xl">
-        <div class="next-label">Siguiente Módulo</div>
-        <div class="next-title">Mundos Virtuales Avanzados (SDF & Physics Tuning)</div>
-        <q-btn
-          color="primary"
-          icon-right="arrow_forward"
-          label="Continuar a Gazebo Worlds"
-          class="q-mt-md"
-          :to="{ name: '02gazebo-worldsPage' }"
-        />
-      </div>
     </div>
   </LessonContainer>
 </template>

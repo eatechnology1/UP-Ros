@@ -181,8 +181,11 @@ cmake -DCMAKE_INSTALL_PREFIX=install/pkg_name \
           <div class="stage-content">
             <div class="stage-title">Parallel Compilation</div>
             <div class="stage-desc">
-              Compila paquetes en paralelo respetando dependencias. Usa todos los cores disponibles
-              por defecto
+              Compila paquetes en paralelo respetando dependencias (Topological Sort).
+              <div class="text-caption text-orange-3 q-mt-xs">
+                Tip: Usa <code>colcon mixin</code> para perfiles de compilación estándar (ccache,
+                release, etc).
+              </div>
             </div>
             <CodeBlock
               lang="bash"
@@ -454,6 +457,10 @@ setup(
         </div>
       </div>
 
+      <div class="q-my-xl">
+        <DependencySolver />
+      </div>
+
       <div class="q-mt-lg">
         <CodeBlock
           title="package.xml completo"
@@ -518,8 +525,11 @@ rosdep install --from-paths src --ignore-src -r -y --simulate"
       <SectionTitle>5. Overlay/Underlay: Extensión Modular</SectionTitle>
       <TextBlock>
         ROS 2 permite <strong>encadenar workspaces</strong> mediante el mecanismo de
-        overlay/underlay. Un workspace puede extender otro sin modificarlo, permitiendo desarrollo
-        aislado y testing de cambios.
+        overlay/underlay.
+        <br />
+        Esto se logra modificando <code>AMENT_PREFIX_PATH</code>, <code>PYTHONPATH</code> y
+        <code>CMAKE_PREFIX_PATH</code> para que busquen primero en tu overlay
+        (<code>~/ros2_ws</code>) y luego en el sistema (<code>/opt/ros/humble</code>).
       </TextBlock>
 
       <div class="overlay-visual q-mt-md">
@@ -692,7 +702,7 @@ colcon build --packages-skip heavy_pkg"
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            src="https://youtu.be/Romc22GgusU"
             title="ROS 2 Workspace and Build System"
             frameborder="0"
             allow="
@@ -766,6 +776,7 @@ import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
 import CodeBlock from 'components/content/CodeBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
+import DependencySolver from 'components/content/interactive/DependencySolver.vue';
 </script>
 
 <style scoped>

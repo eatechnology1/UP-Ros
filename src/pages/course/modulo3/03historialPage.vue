@@ -494,7 +494,7 @@ git revert a1b2c3d..4e5f6g7"
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            src="https://youtu.be/Romc22GgusU"
             title="Git History and Time Travel"
             frameborder="0"
             allow="
@@ -510,7 +510,7 @@ git revert a1b2c3d..4e5f6g7"
         </div>
         <div class="video-caption">
           <q-icon name="info" color="blue-4" size="sm" />
-          Reemplaza dQw4w9WgXcQ con tu video de YouTube
+          Video En progreso
         </div>
       </div>
     </div>

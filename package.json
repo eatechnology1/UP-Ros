@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
+    "aos": "^2.3.4",
+    "katex": "^0.16.27",
     "marked": "^17.0.1",
     "quasar": "^2.16.0",
     "quasar-extras-svg-icons": "^2.2.0",
@@ -29,6 +31,7 @@
     "@electron/packager": "^18.4.4",
     "@eslint/js": "^9.14.0",
     "@quasar/app-vite": "^2.1.0",
+    "@types/aos": "^3.0.7",
     "@types/node": "^20.5.9",
     "@vue/eslint-config-prettier": "^10.1.0",
     "@vue/eslint-config-typescript": "^14.4.0",

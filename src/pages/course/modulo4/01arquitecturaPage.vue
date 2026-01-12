@@ -22,6 +22,15 @@
     <div class="section-group">
       <SectionTitle>1. Arquitectura Monolítica vs. Distribuida</SectionTitle>
 
+      <AlertBlock type="warning" title="Doctoral Insight: Node != Process" class="q-mb-md">
+        Un error común es pensar que <strong>1 Nodo = 1 Proceso de SO</strong>. En sistemas
+        avanzados, usamos <strong>Component Containers</strong> para ejecutar múltiples nodos en un
+        solo proceso (Composition).
+        <br />
+        Esto combina el <em>desacoplamiento lógico</em> de la arquitectura distribuida con la
+        <em>eficiencia de memoria</em> del monolito.
+      </AlertBlock>
+
       <div class="architecture-comparison q-mt-md">
         <div class="arch-card monolithic">
           <div class="arch-header">
@@ -162,7 +171,11 @@
         <div class="dds-layer">
           <div class="layer-title">ROS 2 Middleware Interface (RMW)</div>
           <div class="layer-content">
-            <code>rmw_fastrtps, rmw_cyclonedds</code>
+            <code>rmw_fastrtps</code> (Default) vs <code>rmw_cyclonedds</code>
+            <div class="text-caption q-mt-xs text-grey-4">
+              Abstrae la implementación del vendor. Permite cambiar de backend en runtime (e.g.,
+              <code>RMW_IMPLEMENTATION=rmw_cyclonedds_cpp</code>).
+            </div>
           </div>
         </div>
         <div class="dds-arrow">↓</div>
@@ -194,8 +207,12 @@
             <div class="phase-content">
               <div class="phase-title">SPDP (Simple Participant Discovery Protocol)</div>
               <div class="phase-desc">
-                Los participantes (nodos) envían mensajes multicast periódicos anunciando su
-                existencia. Cada participante mantiene una tabla de participantes conocidos.
+                Los participantes envían mensajes <strong>Multicast UDP</strong> periódicos.
+                <br />
+                <span class="text-caption text-orange-3">
+                  ⚠️ Precaución en WiFi: El tráfico de descubrimiento escala con N², pudiendo
+                  saturar redes inalámbricas ("Discovery Storm").
+                </span>
               </div>
               <CodeBlock
                 lang="cpp"
@@ -355,9 +372,13 @@ auto param_qos = rclcpp::ParametersQoS();
     <div class="section-group">
       <SectionTitle>4. Performance: Latencia y Throughput</SectionTitle>
       <TextBlock>
-        El rendimiento de ROS 2 depende del modo de comunicación utilizado. Existen tres modos
-        principales con trade-offs diferentes.
+        El rendimiento de ROS 2 depende del modo de comunicación utilizado. La elección del
+        transporte (UDP vs SHM vs Intra-process) define la latencia del sistema.
       </TextBlock>
+
+      <div class="q-my-xl">
+        <RmwVisualizer />
+      </div>
 
       <div class="performance-comparison q-mt-md">
         <div class="perf-card">
@@ -565,7 +586,7 @@ rclpy.init(domain_id=42)"
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            src="https://youtu.be/Romc22GgusU"
             title="ROS 2 Architecture Deep Dive"
             frameborder="0"
             allow="
@@ -639,6 +660,7 @@ import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
 import CodeBlock from 'components/content/CodeBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
+import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
 </script>
 
 <style scoped>

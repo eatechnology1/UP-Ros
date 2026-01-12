@@ -340,7 +340,7 @@ Node(
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            src="https://youtu.be/Romc22GgusU"
             title="rqt Plugins Tutorial"
             frameborder="0"
             allow="

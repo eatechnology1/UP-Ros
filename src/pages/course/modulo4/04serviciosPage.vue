@@ -52,6 +52,16 @@
         </div>
       </div>
 
+      <AlertBlock type="warning" title="Anti-Pattern: Synchronous Calls">
+        NUNCA llames a un servicio síncronamente (<code>client.call()</code>) dentro de un callback.
+        <br />
+        Esto causa <strong>Deadlocks</strong> porque el SingleThreadedExecutor no puede procesar la
+        respuesta mientras está bloqueado esperando la llamada.
+        <br />
+        <strong>Solución:</strong> Usa `call_async()` y `spin_until_future_complete` (en main) o
+        callbacks.
+      </AlertBlock>
+
       <div class="q-mt-lg">
         <div class="code-comparison">
           <div class="code-col">
@@ -264,6 +274,10 @@ if (rclcpp::spin_until_future_complete(
         apagado controlados.
       </TextBlock>
 
+      <div class="q-my-xl">
+        <LifecycleDashboard />
+      </div>
+
       <div class="lifecycle-diagram q-mt-md">
         <div class="state-machine">
           <div class="state unconfigured">
@@ -439,7 +453,7 @@ ros2 node info /my_node"
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            src="https://youtu.be/Romc22GgusU"
             title="ROS 2 Services Deep Dive"
             frameborder="0"
             allow="
@@ -507,6 +521,7 @@ import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
 import CodeBlock from 'components/content/CodeBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
+import LifecycleDashboard from 'components/content/interactive/LifecycleDashboard.vue';
 </script>
 
 <style scoped>

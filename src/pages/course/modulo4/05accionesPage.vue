@@ -309,19 +309,17 @@ colcon build --packages-select my_interfaces'
       </div>
 
       <div class="q-mt-md">
-        <AlertBlock type="warning" title="Preemption Policy">
-          Cuando llega un nuevo goal mientras otro está ejecutando, el servidor puede:
+        <AlertBlock type="warning" title="Design Choice: Goal Policy">
+          Por defecto, <code>SimpleActionServer</code> (C++) usa <strong>Reject</strong> si ya hay
+          un goal activo.
           <br />
-          <br />
-          <strong>REJECT:</strong> Rechazar nuevo goal (mantener actual)
-          <br />
-          <strong>ABORT:</strong> Abortar goal actual, aceptar nuevo
-          <br />
-          <strong>QUEUE:</strong> Encolar nuevo goal (ejecutar después)
-          <br />
-          <br />
-          La política se define en el callback de aceptación del servidor.
+          Para comportamientos avanzados (Navigation), debes implementar tu propia lógica de
+          aceptación en `handle_goal`.
         </AlertBlock>
+
+        <div class="q-my-xl">
+          <ActionPolicyViz />
+        </div>
       </div>
     </div>
 
@@ -466,7 +464,7 @@ ros2 action info /fibonacci
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            src="https://youtu.be/Romc22GgusU"
             title="ROS 2 Actions Deep Dive"
             frameborder="0"
             allow="
@@ -527,6 +525,31 @@ ros2 action info /fibonacci
         ✅ Para tareas rápidas (&lt;100ms), usar Services en su lugar
       </AlertBlock>
     </div>
+
+    <!-- ========== CTA FINAL ========== -->
+    <div class="section-group q-mt-xl self-stretch column items-center">
+      <div class="final-cta">
+        <q-icon name="celebration" size="xl" color="primary" class="q-mb-md" />
+        <h2 class="text-h4 text-white text-center q-mb-md">¡Has finalizado el módulo! 🎉</h2>
+        <p class="text-body1 text-grey-4 text-center q-mb-lg">
+          Has finalizado el módulo de Fundamentos de ROS2.
+        </p>
+
+        <div class="row q-gutter-md justify-center">
+          <q-btn
+            color="primary"
+            unelevated
+            rounded
+            size="lg"
+            padding="14px 40px"
+            to="/modulo-5/01cli-colconPage"
+            icon="rocket_launch"
+            label="Comenzar con Herramientas de Desarrollo"
+            class="text-weight-bold"
+          />
+        </div>
+      </div>
+    </div>
   </LessonContainer>
 </template>
 
@@ -536,6 +559,7 @@ import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
 import CodeBlock from 'components/content/CodeBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
+import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue';
 </script>
 
 <style scoped>
@@ -948,5 +972,10 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   .state-split {
     grid-template-columns: 1fr;
   }
+}
+/* ========== CTA FINAL ========== */
+.final-cta {
+  text-align: center;
+  margin: 0 auto;
 }
 </style>

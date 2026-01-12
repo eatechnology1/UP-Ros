@@ -465,7 +465,7 @@ git push --force-with-lease origin main"
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            src="https://youtu.be/Romc22GgusU"
             title="Git Remotes and GitHub"
             frameborder="0"
             allow="
@@ -481,7 +481,7 @@ git push --force-with-lease origin main"
         </div>
         <div class="video-caption">
           <q-icon name="info" color="blue-4" size="sm" />
-          Reemplaza dQw4w9WgXcQ con tu video de YouTube
+          Video En progreso
         </div>
       </div>
     </div>

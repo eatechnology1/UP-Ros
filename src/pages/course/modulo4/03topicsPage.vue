@@ -65,17 +65,22 @@
       <div class="q-mt-lg">
         <div class="code-comparison">
           <div class="code-col">
-            <div class="code-header">Publisher (C++)</div>
+            <div class="code-header">Subscriber (C++)</div>
             <CodeBlock
               lang="cpp"
-              content='auto publisher = node->create_publisher<std_msgs::msg::String>(
-  "/topic_name", 10);
-
-auto msg = std_msgs::msg::String();
-msg.data = "Hello ROS 2";
-publisher->publish(msg);'
+              content="auto subscriber = node->create_subscription<std_msgs::msg::String>(
+  '/topic_name',
+  10, // QoS (History Depth)
+  [](const std_msgs::msg::String & msg) {
+    RCLCPP_INFO(node->get_logger(), 'I heard: %s', msg.data.c_str());
+    // WARNING: Long callbacks block the executor!
+  });"
               :copyable="true"
             />
+            <div class="text-caption text-grey-5 q-mt-sm">
+              Nota: Para callbacks paralelos, se necesitan
+              <strong>ReentrantCallbackGroups</strong> y un <strong>MultiThreadedExecutor</strong>.
+            </div>
           </div>
           <div class="code-col">
             <div class="code-header">Subscriber (Python)</div>
@@ -201,9 +206,18 @@ colcon build --packages-select my_msgs'
     <div class="section-group">
       <SectionTitle>3. QoS Profiles: Configuración Avanzada</SectionTitle>
       <TextBlock>
-        Los QoS profiles controlan el comportamiento de la comunicación. La compatibilidad entre
-        publisher y subscriber es crítica para establecer conexión.
+        El flujo de información en ROS 2 es asíncrono y desacoplado. Los nodos publican mensajes sin
+        saber quién escucha, y se suscriben sin saber quién publica.
       </TextBlock>
+
+      <AlertBlock type="info" title="Doctoral Insight: CDR Serialization">
+        Los mensajes no viajan como objetos C++/Python. Se serializan a formato
+        <strong>CDR (Common Data Representation)</strong>.
+        <br />
+        Esto significa que cada campo (int32, string, array) se empaca en bytes crudos (Little
+        Endian por defecto). La eficiencia de este proceso es crítica para high-throughput sensors
+        (Lidar/Camera).
+      </AlertBlock>
 
       <div class="qos-matrix q-mt-md">
         <div class="matrix-header">
@@ -344,6 +358,10 @@ publisher->publish(std::move(msg));'
     <div class="section-group">
       <SectionTitle>5. Herramientas CLI</SectionTitle>
 
+      <div class="q-my-xl">
+        <QosLabSimulator />
+      </div>
+
       <div class="cli-grid q-mt-md">
         <div class="cli-card">
           <div class="cli-header">
@@ -425,7 +443,7 @@ ros2 topic pub -r 10 /cmd_vel geometry_msgs/Twist \
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            src="https://youtu.be/Romc22GgusU"
             title="ROS 2 Topics Deep Dive"
             frameborder="0"
             allow="
@@ -493,6 +511,7 @@ import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
 import CodeBlock from 'components/content/CodeBlock.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
+import QosLabSimulator from 'components/content/interactive/QosLabSimulator.vue';
 </script>
 
 <style scoped>
