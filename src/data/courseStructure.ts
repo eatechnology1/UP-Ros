@@ -255,7 +255,15 @@ export interface CourseNode {
   title: string;
   path?: string; // Ruta relativa (ej: 'navegacion-terminal')
   icon?: string; // Icono de Material Icons
-  description?: string; // Nuevo: Para el encabezado automático de LessonContainer
+  description?: string; // Para el encabezado automático de LessonContainer
+
+  // === DASHBOARD INTELLIGENCE METADATA ===
+  tooltip?: string; // Resumen técnico rápido para el menú
+  difficulty?: 'beginner' | 'intermediate' | 'advanced'; // Nivel de dificultad
+  estimatedTime?: string; // Tiempo estimado (ej: '45 min', '2 horas')
+  tags?: string[]; // Etiquetas técnicas (ej: ['CLI', 'Linux', 'Terminal'])
+  prerequisite?: string[]; // Paths de lecciones prerequisito
+
   children?: CourseNode[];
 }
 
@@ -269,6 +277,10 @@ export const courseStructure: CourseNode[] = [
     title: 'Módulo 0: Fundamentos Linux',
     icon: 'terminal',
     path: 'modulo-0',
+    tooltip: 'Domina la terminal Linux: navegación, permisos, editores y gestión de paquetes',
+    difficulty: 'beginner',
+    estimatedTime: '6 horas',
+    tags: ['Linux', 'CLI', 'Terminal', 'Bash'],
     children: [
       { title: '0.1 Navegación Terminal', path: '01navsistemaPage' },
       { title: '0.2 Gestión de Archivos', path: '02gestionarchivosPage' },
@@ -282,6 +294,11 @@ export const courseStructure: CourseNode[] = [
     title: 'Módulo 1: Programación',
     icon: 'code',
     path: 'modulo-1',
+    tooltip: 'Python, C++ y Bash: los 3 lenguajes esenciales para ROS 2',
+    difficulty: 'beginner',
+    estimatedTime: '8 horas',
+    tags: ['Python', 'C++', 'Bash', 'Scripting'],
+    prerequisite: ['modulo-0'],
     children: [
       {
         title: '1.1 Python Scripts',
@@ -319,6 +336,11 @@ export const courseStructure: CourseNode[] = [
     title: 'Módulo 2: Formatos de Datos',
     icon: 'data_object',
     path: 'modulo-2',
+    tooltip: 'XML, JSON y YAML: serialización y configuración en robótica',
+    difficulty: 'beginner',
+    estimatedTime: '4 horas',
+    tags: ['XML', 'JSON', 'YAML', 'Serialización'],
+    prerequisite: ['modulo-1'],
     children: [
       {
         title: '2.1 XML Básico',
@@ -348,8 +370,13 @@ export const courseStructure: CourseNode[] = [
   },
   {
     title: 'Módulo 3: Git y GitHub',
-    icon: 'call_split', // Icono de rama/branch
+    icon: 'call_split',
     path: 'modulo-3',
+    tooltip: 'Control de versiones profesional: commits, ramas, colaboración y GitHub',
+    difficulty: 'intermediate',
+    estimatedTime: '7 horas',
+    tags: ['Git', 'GitHub', 'Control de Versiones', 'Colaboración'],
+    prerequisite: ['modulo-0'],
     children: [
       {
         title: '3.1 Conceptos Fundamentales',
@@ -397,8 +424,13 @@ export const courseStructure: CourseNode[] = [
   },
   {
     title: 'Módulo 4: ROS 2 Fundamentos',
-    icon: 'smart_toy', // Icono de robot
+    icon: 'smart_toy',
     path: 'modulo-4',
+    tooltip: 'Arquitectura distribuida: nodos, tópicos, servicios y acciones',
+    difficulty: 'intermediate',
+    estimatedTime: '10 horas',
+    tags: ['ROS2', 'DDS', 'Middleware', 'Pub/Sub'],
+    prerequisite: ['modulo-1', 'modulo-2'],
     children: [
       {
         title: '4.1 Arquitectura',
@@ -436,7 +468,11 @@ export const courseStructure: CourseNode[] = [
     title: 'Módulo 5: Herramientas de Desarrollo',
     icon: 'handyman',
     path: 'modulo-5',
-    // description: 'Domina el diagnóstico y la visualización antes de simular.',
+    tooltip: 'RViz2, RQT, Rosbag2 y TF2: diagnóstico y visualización profesional',
+    difficulty: 'intermediate',
+    estimatedTime: '6 horas',
+    tags: ['RViz', 'RQT', 'Debugging', 'Visualización', 'TF2'],
+    prerequisite: ['modulo-4'],
     children: [
       {
         title: '5.1 CLI Avanzada & Colcon',
@@ -474,7 +510,11 @@ export const courseStructure: CourseNode[] = [
     title: 'Módulo 6: Simulación (Lab Virtual)',
     icon: 'science',
     path: 'modulo-6',
-    // description: 'Construye tu propio robot y entorno desde cero.',
+    tooltip: 'URDF, Gazebo y plugins: construye robots virtuales con física realista',
+    difficulty: 'advanced',
+    estimatedTime: '8 horas',
+    tags: ['URDF', 'Gazebo', 'Simulación', 'Física'],
+    prerequisite: ['modulo-4', 'modulo-5'],
     children: [
       {
         title: '6.1 URDF: Modelado del Robot',
@@ -506,7 +546,11 @@ export const courseStructure: CourseNode[] = [
     title: 'Módulo 7: Navegación Autónoma (Nav2)',
     icon: 'explore',
     path: 'modulo-7',
-    // description: 'Dota de inteligencia espacial a tu robot simulado.',
+    tooltip: 'SLAM, localización y planificación: navegación autónoma completa',
+    difficulty: 'advanced',
+    estimatedTime: '12 horas',
+    tags: ['Nav2', 'SLAM', 'AMCL', 'Planificación', 'Autonomía'],
+    prerequisite: ['modulo-6'],
     children: [
       {
         title: '7.1 SLAM: Mapeando el Mundo',
@@ -538,7 +582,11 @@ export const courseStructure: CourseNode[] = [
     title: 'Módulo 8: Ingeniería de Software',
     icon: 'integration_instructions',
     path: 'modulo-8',
-    // description: 'Estandarización, empaquetado y despliegue profesional.',
+    tooltip: 'Launch avanzado, Docker y despliegue: ingeniería de nivel producción',
+    difficulty: 'advanced',
+    estimatedTime: '10 horas',
+    tags: ['Docker', 'DevOps', 'CI/CD', 'Producción'],
+    prerequisite: ['modulo-7'],
     children: [
       {
         title: '8.1 Launch System Pro',

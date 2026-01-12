@@ -17,6 +17,10 @@ async function createWindow() {
     show: false, // ⬅️ SIEMPRE false
     webPreferences: {
       contextIsolation: true,
+      nodeIntegration: false,
+      // ⚠️ CRÍTICO: Deshabilitar webSecurity para permitir iframes de YouTube
+      // Esta es la ÚNICA solución que funciona para Error 153 en Electron
+      webSecurity: false,
       preload: path.resolve(
         currentDir,
         path.join(

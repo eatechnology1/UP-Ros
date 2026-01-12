@@ -1,10 +1,27 @@
 <template>
   <div class="side-menu-container">
+    <!-- BUSCADOR RÁPIDO -->
+    <div class="search-bar q-pa-md">
+      <q-input
+        v-model="searchQuery"
+        dense
+        standout="bg-grey-9"
+        placeholder="Buscar lecciones..."
+        class="search-input"
+        @update:model-value="handleSearch"
+      >
+        <template v-slot:prepend>
+          <q-icon name="search" class="text-grey-5" />
+        </template>
+        <template v-slot:append v-if="searchQuery">
+          <q-icon name="close" class="cursor-pointer text-grey-5" @click="clearSearch" />
+        </template>
+      </q-input>
+    </div>
+
     <q-scroll-area class="menu-scroll-area" :thumb-style="{ width: '4px', opacity: '0.5' }">
       <q-list padding class="menu-list">
-        <!-- =======================
-             1. DASHBOARD
-        ======================== -->
+        <!-- HOME -->
         <div class="menu-group q-mb-md">
           <q-item clickable v-ripple to="/" exact class="menu-item single-item">
             <q-item-section avatar>
@@ -15,6 +32,7 @@
             </q-item-section>
           </q-item>
         </div>
+
         <div class="menu-group q-mb-md">
           <q-item clickable v-ripple to="/introduccion" exact class="menu-item single-item">
             <q-item-section avatar>
@@ -25,27 +43,24 @@
             </q-item-section>
           </q-item>
         </div>
+
         <div class="menu-group q-mb-md">
           <q-item clickable v-ripple to="/instalacion" exact class="menu-item single-item">
             <q-item-section avatar>
-              <q-icon name="school" class="text-blue-grey-3" />
+              <q-icon name="download" class="text-blue-grey-3" />
             </q-item-section>
             <q-item-section>
-              <q-item-label class="text-weight-bold">Instalacion</q-item-label>
+              <q-item-label class="text-weight-bold">Instalación</q-item-label>
             </q-item-section>
           </q-item>
         </div>
 
         <q-separator class="menu-divider" />
-        <q-item-label header class="menu-header">Modulos de Aprendizaje Ros2 JAZZY</q-item-label>
+        <q-item-label header class="menu-header">Módulos de Aprendizaje ROS2 JAZZY</q-item-label>
 
-        <!-- =======================
-             2. MÓDULOS DINÁMICOS
-        ======================== -->
+        <!-- MÓDULOS DINÁMICOS CON TOOLTIPS -->
         <div class="menu-group">
-          <!-- Bucle principal sobre los módulos -->
-          <template v-for="module in courseStructure" :key="module.path || 'unknown'">
-            <!-- CORRECCIÓN: Usamos module.path || '' para evitar undefined -->
+          <template v-for="module in filteredModules" :key="module.path || 'unknown'">
             <q-expansion-item
               v-if="module.children && module.children.length > 0"
               group="modules"
@@ -57,7 +72,7 @@
               @show="openModule = module.path || ''"
               @hide="openModule = ''"
             >
-              <!-- SLOT DE CABECERA PERSONALIZADO -->
+              <!-- HEADER CON TOOLTIP -->
               <template v-slot:header>
                 <q-item-section avatar>
                   <q-icon
@@ -72,15 +87,53 @@
                   >
                     {{ module.title }}
                   </q-item-label>
+                  <!-- INDICADORES DE METADATA -->
+                  <q-item-label caption class="module-meta q-mt-xs">
+                    <span
+                      v-if="module.difficulty"
+                      class="difficulty-badge"
+                      :class="`difficulty-${module.difficulty}`"
+                    >
+                      {{ getDifficultyLabel(module.difficulty) }}
+                    </span>
+                    <span v-if="module.estimatedTime" class="time-badge">
+                      <q-icon name="schedule" size="12px" /> {{ module.estimatedTime }}
+                    </span>
+                  </q-item-label>
                 </q-item-section>
+
+                <!-- TOOLTIP TÉCNICO -->
+                <q-tooltip
+                  v-if="module.tooltip"
+                  anchor="center right"
+                  self="center left"
+                  :offset="[10, 0]"
+                  class="technical-tooltip"
+                  transition-show="scale"
+                  transition-hide="scale"
+                >
+                  <div class="tooltip-content">
+                    <div class="tooltip-title">{{ module.title }}</div>
+                    <div class="tooltip-description">{{ module.tooltip }}</div>
+                    <div v-if="module.tags && module.tags.length > 0" class="tooltip-tags q-mt-sm">
+                      <q-chip
+                        v-for="tag in module.tags"
+                        :key="tag"
+                        dense
+                        size="sm"
+                        class="tag-chip"
+                      >
+                        {{ tag }}
+                      </q-chip>
+                    </div>
+                  </div>
+                </q-tooltip>
               </template>
 
-              <!-- CONTENIDO DEL MÓDULO (LECCIONES) -->
+              <!-- LECCIONES -->
               <q-list class="topic-list-container">
-                <!-- Línea guía vertical -->
                 <div class="guide-line" :class="getBorderColorClass(module.path || '')"></div>
 
-                <!-- Lista plana de lecciones -->
                 <q-item
                   v-for="lesson in module.children"
                   :key="lesson.path || 'unknown-lesson'"
@@ -104,9 +157,7 @@
         <q-separator class="menu-divider q-mt-lg" />
         <q-item-label header class="menu-header">HERRAMIENTAS</q-item-label>
 
-        <!-- =======================
-             3. EXTRAS
-        ======================== -->
+        <!-- EXTRAS -->
         <div class="menu-group">
           <q-item clickable v-ripple to="/glosario" class="menu-item single-item">
             <q-item-section avatar><q-icon name="menu_book" class="text-cyan-4" /></q-item-section>
@@ -129,31 +180,76 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-// CAMBIO IMPORTANTE: Usamos la nueva estructura
-import { courseStructure } from 'src/data/courseStructure';
+import { ref, computed } from 'vue';
+import { courseStructure, type CourseNode } from 'src/data/courseStructure';
 
-// Estado para saber qué módulo está abierto y resaltarlo
 const openModule = ref('');
+const searchQuery = ref('');
 
 const isModuleOpen = (path: string) => openModule.value === path;
 
-// 1. SISTEMA DE COLORES (Actualizado para usar 'path' en lugar de 'id')
+// BÚSQUEDA INTELIGENTE
+const filteredModules = computed(() => {
+  if (!searchQuery.value.trim()) {
+    return courseStructure;
+  }
+
+  const query = searchQuery.value.toLowerCase();
+
+  return courseStructure
+    .map((module) => {
+      // Buscar en el título del módulo
+      const moduleMatches = module.title.toLowerCase().includes(query);
+
+      // Buscar en las lecciones hijas
+      const matchingChildren = module.children?.filter(
+        (lesson) =>
+          lesson.title.toLowerCase().includes(query) ||
+          lesson.description?.toLowerCase().includes(query),
+      );
+
+      // Si el módulo coincide, devolver todo
+      if (moduleMatches) {
+        return module;
+      }
+
+      // Si hay lecciones que coinciden, devolver módulo con solo esas lecciones
+      if (matchingChildren && matchingChildren.length > 0) {
+        return { ...module, children: matchingChildren };
+      }
+
+      return null;
+    })
+    .filter((module): module is CourseNode => module !== null);
+});
+
+function handleSearch() {
+  // Auto-expandir el primer módulo con resultados
+  if (filteredModules.value.length > 0 && searchQuery.value.trim()) {
+    openModule.value = filteredModules.value[0]?.path || '';
+  }
+}
+
+function clearSearch() {
+  searchQuery.value = '';
+  openModule.value = '';
+}
+
+// SISTEMA DE COLORES
 function getModuleColorClass(path: string): string {
   if (!path) return 'text-grey-4';
-  if (path.includes('modulo-0')) return 'text-green-4'; // Toolset -> Green
-  if (path.includes('modulo-1')) return 'text-purple-4'; // Core -> Purple
-  if (path.includes('modulo-2')) return 'text-blue-4'; // Tools -> Blue
-  if (path.includes('modulo-3')) return 'text-amber-4'; // Git -> Gold (Ajustado a tu estructura)
-  if (path.includes('modulo-4')) return 'text-red-4'; // ROS -> Red
-  if (path.includes('modulo-5')) return 'text-cyan-4'; // Tools -> Cyan
-  if (path.includes('modulo-6')) return 'text-orange-4'; // Sim -> Orange
-  if (path.includes('modulo-7')) return 'text-indigo-4'; // Nav -> Indigo
-  if (path.includes('modulo-8')) return 'text-teal-4'; // Deploy -> Teal
+  if (path.includes('modulo-0')) return 'text-green-4';
+  if (path.includes('modulo-1')) return 'text-purple-4';
+  if (path.includes('modulo-2')) return 'text-blue-4';
+  if (path.includes('modulo-3')) return 'text-amber-4';
+  if (path.includes('modulo-4')) return 'text-red-4';
+  if (path.includes('modulo-5')) return 'text-cyan-4';
+  if (path.includes('modulo-6')) return 'text-orange-4';
+  if (path.includes('modulo-7')) return 'text-indigo-4';
+  if (path.includes('modulo-8')) return 'text-teal-4';
   return 'text-grey-4';
 }
 
-// 2. SISTEMA DE BORDES (Para la línea guía vertical)
 function getBorderColorClass(path: string): string {
   if (!path) return 'bg-grey-6';
   if (path.includes('modulo-0')) return 'bg-green-5';
@@ -167,23 +263,59 @@ function getBorderColorClass(path: string): string {
   if (path.includes('modulo-8')) return 'bg-teal-5';
   return 'bg-grey-6';
 }
+
+function getDifficultyLabel(difficulty: string): string {
+  const labels: Record<string, string> = {
+    beginner: 'Básico',
+    intermediate: 'Intermedio',
+    advanced: 'Avanzado',
+  };
+  return labels[difficulty] || difficulty;
+}
 </script>
 
 <style scoped>
-/* CONTAINER */
+/* ========================================
+   CONTAINER
+   ======================================== */
 .side-menu-container {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: rgba(15, 23, 42, 0.98); /* Fondo muy oscuro */
+  background: rgba(15, 23, 42, 0.98);
   border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ========================================
+   BUSCADOR RÁPIDO
+   ======================================== */
+.search-bar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.search-input :deep(.q-field__control) {
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.3s ease;
+}
+
+.search-input :deep(.q-field__control):hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.search-input :deep(.q-field__control):focus-within {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3);
 }
 
 .menu-scroll-area {
   flex: 1;
 }
 
-/* HEADERS */
+/* ========================================
+   HEADERS Y DIVIDERS
+   ======================================== */
 .menu-header {
   color: #475569;
   font-size: 0.7rem;
@@ -192,19 +324,20 @@ function getBorderColorClass(path: string): string {
   padding-left: 20px;
   margin-top: 12px;
 }
+
 .menu-divider {
   background: rgba(255, 255, 255, 0.05);
   margin: 16px 20px;
 }
 
-/* =========================================
-   ITEMS SIMPLES (DASHBOARD / EXTRAS)
-   ========================================= */
+/* ========================================
+   ITEMS SIMPLES
+   ======================================== */
 .menu-item {
   margin: 2px 12px;
   border-radius: 8px;
   color: #94a3b8;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   min-height: 38px;
   font-size: 0.9rem;
 }
@@ -214,41 +347,139 @@ function getBorderColorClass(path: string): string {
 }
 
 .menu-item:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.06);
   color: #f1f5f9;
-  transform: translateX(3px);
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* =========================================
-   MÓDULOS (NIVEL 1) - LA MAGIA DEL COLOR
-   ========================================= */
+/* ========================================
+   MÓDULOS (EXPANSIÓN)
+   ======================================== */
 .module-expansion {
   border-radius: 12px;
-  overflow: hidden; /* Para que el highlight no se salga */
-  transition: background 0.3s;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin: 4px 8px;
 }
 
-/* Cuando el módulo está abierto, oscurecemos un poco el fondo */
+.module-expansion:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
 .module-open {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+:deep(.module-header) {
+  padding: 10px 16px;
+  min-height: 52px;
+  transition: all 0.2s ease;
+}
+
+:deep(.module-header):hover {
   background: rgba(255, 255, 255, 0.02);
 }
 
-/* Ajuste del header del módulo */
-:deep(.module-header) {
-  padding: 8px 16px;
-  min-height: 48px;
+/* ========================================
+   METADATA BADGES
+   ======================================== */
+.module-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 4px;
 }
 
-/* CONTENEDOR DE TEMAS CON LÍNEA GUÍA */
+.difficulty-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.difficulty-beginner {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.15);
+}
+
+.difficulty-intermediate {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.15);
+}
+
+.difficulty-advanced {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.15);
+}
+
+.time-badge {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ========================================
+   TOOLTIPS TÉCNICOS
+   ======================================== */
+.technical-tooltip {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.98));
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  max-width: 320px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.tooltip-content {
+  color: #e2e8f0;
+}
+
+.tooltip-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #38bdf8;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.tooltip-description {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #cbd5e1;
+}
+
+.tooltip-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-chip {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  font-size: 0.65rem;
+  font-weight: 600;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+/* ========================================
+   LECCIONES (HIJOS)
+   ======================================== */
 .topic-list-container {
   position: relative;
   padding-bottom: 8px;
 }
 
-/* LÍNEA VERTICAL DE COLOR */
 .guide-line {
   position: absolute;
-  left: 27px; /* Alineado con el icono del padre */
+  left: 27px;
   top: 0;
   bottom: 10px;
   width: 2px;
@@ -256,30 +487,35 @@ function getBorderColorClass(path: string): string {
   border-radius: 2px;
 }
 
-/* =========================================
-   SUBTEMAS (NIVEL 3 - LINKS) - AHORA NIVEL 2
-   ========================================= */
 .sub-item {
-  margin: 1px 4px 1px 24px; /* Indentación profunda para alinearse con la línea */
+  margin: 1px 4px 1px 24px;
   padding-left: 12px;
-  border-left: 2px solid transparent; /* Preparado para borde activo */
-  border-radius: 0 6px 6px 0; /* Borde solo derecha */
+  border-left: 2px solid transparent;
+  border-radius: 0 6px 6px 0;
+  transition: all 0.2s ease;
+}
+
+.sub-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateX(2px);
 }
 
 .sub-label {
   font-size: 0.8rem;
-  line-height: 1.3;
+  line-height: 1.4;
 }
 
-/* ESTADO ACTIVO (SELECCIONADO) */
 .active-link {
-  background: linear-gradient(90deg, rgba(56, 189, 248, 0.1), transparent);
-  color: #38bdf8 !important; /* Azul Sky brillante */
-  border-left-color: #38bdf8; /* Borde sólido a la izquierda */
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.15), transparent);
+  color: #38bdf8 !important;
+  border-left-color: #38bdf8;
   font-weight: 600;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.2);
 }
 
-/* FOOTER */
+/* ========================================
+   FOOTER
+   ======================================== */
 .menu-footer {
   padding: 12px;
   text-align: center;
@@ -287,5 +523,25 @@ function getBorderColorClass(path: string): string {
   color: #475569;
   font-family: 'Fira Code', monospace;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* ========================================
+   ANIMACIONES
+   ======================================== */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.menu-item,
+.module-expansion {
+  animation: slideIn 0.3s ease-out;
 }
 </style>
