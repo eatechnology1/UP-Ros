@@ -1,53 +1,56 @@
 <template>
-  <q-page class="q-pa-lg column items-center bg-slate-dark">
-    <!-- 1. HERO: PROYECTO UP-ROS -->
-    <section class="intro-hero self-stretch">
-      <div class="hero-content">
-        <div class="text-overline text-accent text-weight-bold q-mb-sm">Opción de Grado</div>
-        <h1 class="hero-title">Proyecto <span class="text-primary">UP-Ros</span></h1>
+  <q-page class="credits-page">
+    <div class="credits-container">
+      <!-- ========================================
+           1. HERO SECTION - PROYECTO UP-ROS
+           ======================================== -->
+      <section class="hero-section" data-aos="fade-down">
+        <div class="hero-content">
+          <div class="text-overline text-accent text-weight-bold q-mb-sm">Opción de Grado</div>
+          <h1 class="hero-title">Proyecto <span class="text-gradient">UP-Ros Academy</span></h1>
 
-        <TextBlock>
-          UP-Ros surge como una síntesis entre la formación académica y la experiencia práctica. Es
-          una solución educativa integral diseñada para abordar el aprendizaje de la robótica
-          moderna desde una perspectiva sistémica, uniendo diseño de software, fundamentos de
-          control y experiencia de usuario.
-        </TextBlock>
-      </div>
-    </section>
+          <p class="hero-description">
+            <strong>UP-Ros Academy</strong> representa la convergencia entre rigor académico y
+            excelencia técnica en la enseñanza de sistemas robóticos autónomos. Este proyecto
+            constituye una contribución al ecosistema educativo de ROS 2, diseñado bajo principios
+            de arquitectura de software modular, experiencia de usuario centrada en el aprendizaje
+            progresivo y estándares de calidad doctoral.
+          </p>
+        </div>
+      </section>
 
-    <!-- 2. EQUIPO DE DESARROLLO (Cards Estilo Perfil) -->
-    <div class="section-group self-stretch">
-      <SectionTitle>Equipo de Desarrollo</SectionTitle>
+      <!-- ========================================
+           2. EQUIPO DE DESARROLLO (QCard Premium)
+           ======================================== -->
+      <section class="team-section">
+        <h2 class="section-title" data-aos="fade-right">
+          <q-icon name="groups" size="32px" class="q-mr-sm" />
+          Equipo de Desarrollo
+        </h2>
 
-      <div class="team-grid">
-        <!-- TARJETA 1: ALEXANDER (AUTOR) -->
-        <div class="profile-card">
-          <div class="profile-img-container">
-            <img src="~assets/images/alex.png" alt="Alexander Calderon" class="profile-img" />
-          </div>
+        <div class="team-grid">
+          <!-- AUTOR PRINCIPAL -->
+          <q-card class="profile-card" data-aos="fade-up" data-aos-delay="100">
+            <q-card-section class="profile-header">
+              <div class="avatar-container">
+                <img src="~assets/images/alex.png" alt="Alexander Calderon" class="avatar-img" />
+              </div>
+              <h3 class="profile-name">Alexander Calderón Leal</h3>
+              <div class="profile-role primary-role">Desarrollador Principal & Arquitecto</div>
+              <div class="profile-institution">Universidad de Pamplona</div>
+            </q-card-section>
 
-          <div class="profile-content">
-            <h2 class="text-h5 text-white q-my-sm">Alexander Calderon Leal</h2>
-            <div class="text-subtitle2 text-secondary text-weight-bold">
-              Desarrollador Principal & Arquitecto de UP-Ros
-            </div>
-            <div class="text-caption text-grey-4 q-mb-md">Universidad de Pamplona</div>
+            <q-card-section class="profile-body">
+              <p class="profile-bio">
+                Ingeniero Mecatrónico especializado en sistemas embebidos, IoT, robótica aplicada y
+                soluciones de automatización industrial. Experiencia en diseño electrónico, redes
+                industriales, visión térmica e inteligencia aplicada a sistemas autónomos. Creador
+                de la arquitectura UP-Ros y desarrollador de plataformas educativas interactivas
+                para ROS 2.
+              </p>
+            </q-card-section>
 
-            <p class="text-grey-4 text-body2 text-justify">
-              Alexander Calderon Leal es ingeniero mecatrónico con experiencia en el diseño e
-              integración de sistemas embebidos, soluciones IoT, infraestructura inalámbrica y
-              seguridad electrónica. Ha dirigido proyectos tecnológicos orientados a domótica,
-              seguridad perimetral, transmisión de datos y automatización para entornos industriales
-              y residenciales. <br />Sus áreas de especialización incluyen robótica aplicada, diseño
-              electrónico, redes industriales, visión térmica e inteligencia aplicada a sistemas
-              IoT, con énfasis en monitorización y control. Actualmente desarrolla soluciones
-              basadas en cámaras térmicas, domótica y sistemas autónomos, incluyendo plataformas de
-              gestión energética y supervisión remota. Es creador de la arquitectura UP-Ros.
-            </p>
-
-            <!-- BOTONES SOCIALES (ALEX) -->
-            <div class="row justify-center q-gutter-sm q-mt-md">
-              <!-- 1. Correo -->
+            <q-card-actions class="profile-actions">
               <q-btn
                 flat
                 round
@@ -57,10 +60,8 @@
                 href="mailto:edwin.calderon@unipamplona.edu.co"
                 target="_blank"
               >
-                <q-tooltip>Correo</q-tooltip>
+                <q-tooltip>Correo Institucional</q-tooltip>
               </q-btn>
-
-              <!-- 2. Telegram -->
               <q-btn
                 flat
                 round
@@ -72,8 +73,6 @@
               >
                 <q-tooltip>Telegram</q-tooltip>
               </q-btn>
-
-              <!-- 6. YouTube -->
               <q-btn
                 flat
                 round
@@ -85,8 +84,6 @@
               >
                 <q-tooltip>YouTube</q-tooltip>
               </q-btn>
-
-              <!-- 7. GitHub -->
               <q-btn
                 flat
                 round
@@ -98,35 +95,31 @@
               >
                 <q-tooltip>GitHub</q-tooltip>
               </q-btn>
-            </div>
-          </div>
-        </div>
+            </q-card-actions>
+          </q-card>
 
-        <!-- TARJETA 2: DIRECTOR / COLABORADOR -->
-        <!-- (Edita los datos aquí abajo) -->
-        <div class="profile-card">
-          <div class="profile-img-container">
-            <!-- Usa una foto real si tienes, si no, deja este icono -->
-            <img src="~assets/images/alex.png" alt="Oscar Duque" class="profile-img" />
-          </div>
+          <!-- DIRECTOR DE PROYECTO -->
+          <q-card class="profile-card" data-aos="fade-up" data-aos-delay="200">
+            <q-card-section class="profile-header">
+              <div class="avatar-container">
+                <img src="~assets/images/alex.png" alt="Oscar Duque" class="avatar-img" />
+              </div>
+              <h3 class="profile-name">BSc. Ing. Oscar Manuel Duque Suárez</h3>
+              <div class="profile-role director-role">Director de Proyecto</div>
+              <div class="profile-institution">Docente - Facultad de Ingenierías</div>
+            </q-card-section>
 
-          <div class="profile-content">
-            <h2 class="text-h5 text-white q-my-sm">BSc. Ing.Duque Suarez Oscar Manuel</h2>
-            <div class="text-subtitle2 text-primary text-weight-bold">Director de Proyecto</div>
-            <div class="text-caption text-grey-4 q-mb-md">Docente - Facultad de Ingenierías</div>
+            <q-card-section class="profile-body">
+              <p class="profile-bio">
+                Ingeniero Mecatrónico (2007), Especialista en Mecatrónica Industrial y MSc. en
+                Controles Industriales. Docente del Departamento de Ingeniería Mecatrónica desde
+                2009, con estudios doctorales en Proyectos. Miembro del Grupo de Investigación en
+                Automatización y Control (A&C). Líneas de investigación: sistemas de control,
+                robótica e inteligencia artificial aplicada.
+              </p>
+            </q-card-section>
 
-            <p class="text-grey-4 text-body2 text-justify">
-              Duque Suarez Oscar Manuel recibió el BSc. Ing. en Ingeniería Mecatrónica de la
-              Universidad de Pamplona, Colombia, en 2007. Especialista en mecatrónica industrial y
-              Msc. en Controles Industriales de la misma Universidad. Actualmente, es docente en el
-              Departamento de Ingeniería Mecatrónica de la Universidad de pamplona, Villa del
-              Rosario, Colombia desde 2009 con estudios doctorales en Proyectos -línea de
-              investigación de ingeniería. Además, es miembro de del grupo de investigación de
-              Automatización y control (A&C). Su investigación se basa en sistemas de control,
-              Robótica e Inteligencia Artificial.
-            </p>
-
-            <div class="row justify-center q-gutter-sm q-mt-md">
+            <q-card-actions class="profile-actions">
               <q-btn
                 flat
                 round
@@ -138,7 +131,6 @@
               >
                 <q-tooltip>CvLAC / Perfil Académico</q-tooltip>
               </q-btn>
-              <!-- Correo -->
               <q-btn
                 flat
                 round
@@ -150,7 +142,6 @@
               >
                 <q-tooltip>Correo Institucional</q-tooltip>
               </q-btn>
-              <!-- 6. YouTube -->
               <q-btn
                 flat
                 round
@@ -160,293 +151,575 @@
                 href="https://www.youtube.com/@BRANKS-ROBOTICACOLABORATIVA"
                 target="_blank"
               >
-                <q-tooltip>BRANKS - ROBÓTICA COLABORATIVA</q-tooltip>
+                <q-tooltip>BRANKS - Robótica Colaborativa</q-tooltip>
               </q-btn>
-              <!-- 6. YouTube -->
-              <q-btn
-                flat
-                round
-                dense
-                color="red-5"
-                :icon="remYoutubeFill"
-                href="https://www.youtube.com/@Dynamic3_"
-                target="_blank"
-              >
-                <q-tooltip>Dynamic 3</q-tooltip>
-              </q-btn>
-              <!-- 6. YouTube -->
-              <q-btn
-                flat
-                round
-                dense
-                color="red-5"
-                :icon="remYoutubeFill"
-                href="https://www.youtube.com/@RoboPro-pp6go"
-                target="_blank"
-              >
-                <q-tooltip>RoboPro</q-tooltip>
-              </q-btn>
-              <!-- 6. YouTube -->
-              <q-btn
-                flat
-                round
-                dense
-                color="red-5"
-                :icon="remYoutubeFill"
-                href="https://www.youtube.com/@RedesYComunicaciones_UP"
-                target="_blank"
-              >
-                <q-tooltip>RedesYComunicaciones_UP</q-tooltip>
-              </q-btn>
-              <!-- ////////////////////////// -->
+            </q-card-actions>
+          </q-card>
+        </div>
+      </section>
+
+      <!-- ========================================
+           3. STACK TECNOLÓGICO EXPANDIDO
+           ======================================== -->
+      <section class="tech-section">
+        <h2 class="section-title" data-aos="fade-right">
+          <q-icon name="code" size="32px" class="q-mr-sm" />
+          Stack Tecnológico
+        </h2>
+
+        <!-- CORE ROBOTICS -->
+        <div class="tech-category" data-aos="fade-up">
+          <h3 class="category-title">
+            <q-icon name="smart_toy" class="q-mr-sm" />
+            Core Robotics (ROS 2 Ecosystem)
+          </h3>
+          <div class="tech-grid">
+            <div v-for="tech in stackRobotics" :key="tech.name" class="tech-item">
+              <q-icon :name="tech.icon" size="40px" :color="tech.color" />
+              <div class="tech-name">{{ tech.name }}</div>
+              <div class="tech-role">{{ tech.role }}</div>
             </div>
           </div>
         </div>
+
+        <!-- FRONTEND & UX -->
+        <div class="tech-category" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="category-title">
+            <q-icon name="web" class="q-mr-sm" />
+            Frontend & User Experience
+          </h3>
+          <div class="tech-grid">
+            <div v-for="tech in stackFrontend" :key="tech.name" class="tech-item">
+              <q-icon :name="tech.icon" size="40px" :color="tech.color" />
+              <div class="tech-name">{{ tech.name }}</div>
+              <div class="tech-role">{{ tech.role }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DEVELOPMENT & DEVOPS -->
+        <div class="tech-category" data-aos="fade-up" data-aos-delay="200">
+          <h3 class="category-title">
+            <q-icon name="build_circle" class="q-mr-sm" />
+            Development & DevOps
+          </h3>
+          <div class="tech-grid">
+            <div v-for="tech in stackDevOps" :key="tech.name" class="tech-item">
+              <q-icon :name="tech.icon" size="40px" :color="tech.color" />
+              <div class="tech-name">{{ tech.name }}</div>
+              <div class="tech-role">{{ tech.role }}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================
+           5. RESPALDO INSTITUCIONAL
+           ======================================== -->
+      <section class="institutional-section">
+        <h2 class="section-title" data-aos="fade-right">
+          <q-icon name="school" size="32px" class="q-mr-sm" />
+          Sello de Calidad Académica
+        </h2>
+
+        <div class="institutional-container" data-aos="fade-up">
+          <!-- ENCABEZADO -->
+          <div class="institutional-header">
+            <h3 class="university-name">Universidad de Pamplona</h3>
+            <div class="university-year">FUNDADA EN 1960</div>
+            <p class="university-quote">
+              "Formando nuevas generaciones con sello de excelencia comprometidos<br />
+              con la transformación social de las regiones y un país en paz"
+            </p>
+          </div>
+
+          <!-- AGRADECIMIENTOS -->
+          <div class="acknowledgments">
+            <h4 class="acknowledgments-title">Agradecimientos</h4>
+            <p class="acknowledgments-text">
+              Este trabajo es el resultado de la formación integral recibida en la
+              <strong>Universidad de Pamplona</strong>, institución con Acreditación Institucional
+              de Alta Calidad otorgada por el Ministerio de Educación Nacional de Colombia.
+            </p>
+            <p class="acknowledgments-text">
+              Agradecimiento especial al <strong>Programa de Ingeniería Mecatrónica</strong> por su
+              compromiso con la excelencia académica, la investigación aplicada en robótica y
+              control, y la proyección internacional de sus egresados.
+            </p>
+            <p class="acknowledgments-text">
+              Al <strong>Grupo de Investigación en Automatización y Control (A&C)</strong>, por su
+              liderazgo en el desarrollo de soluciones tecnológicas que impactan la región y el
+              país.
+            </p>
+          </div>
+
+          <!-- BADGES INSTITUCIONALES -->
+          <div class="badges-grid">
+            <div class="badge-card" data-aos="flip-left" data-aos-delay="100">
+              <div class="logo-box">
+                <img src="~assets/images/escudounipamplona.png" alt="Escudo Unipamplona" />
+              </div>
+              <div class="badge-info">
+                <div class="badge-title">Alma Mater</div>
+                <div class="badge-desc">Tradición y Excelencia Académica</div>
+              </div>
+            </div>
+
+            <div class="badge-card" data-aos="flip-left" data-aos-delay="200">
+              <div class="logo-box">
+                <img src="~assets/images/Mecatronica.png" alt="Ingeniería Mecatrónica" />
+              </div>
+              <div class="badge-info">
+                <div class="badge-title">Ingeniería Mecatrónica</div>
+                <div class="badge-desc">Innovación y Desarrollo Tecnológico</div>
+              </div>
+            </div>
+
+            <div class="badge-card" data-aos="flip-left" data-aos-delay="300">
+              <div class="logo-box">
+                <img src="~assets/images/logo_acreditacion_png.png" alt="CNA Acreditación" />
+              </div>
+              <div class="badge-info">
+                <div class="badge-title">Alta Calidad</div>
+                <div class="badge-desc">Reconocimiento del Ministerio de Educación</div>
+              </div>
+            </div>
+
+            <div class="badge-card" data-aos="flip-left" data-aos-delay="400">
+              <div class="logo-box">
+                <img src="~assets/images/logo-equaa.png" alt="EQUAA Internacional" />
+              </div>
+              <div class="badge-info">
+                <div class="badge-title">Certificación Global</div>
+                <div class="badge-desc">Estándares Internacionales EQUAA</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <div class="credits-footer">
+        © {{ new Date().getFullYear() }} Alexander Calderón Leal. Desarrollado en Colombia con
+        <q-icon name="favorite" color="red-5" size="16px" /> y ROS 2.
       </div>
-    </div>
-
-    <!-- 3. STACK TECNOLÓGICO (Resumido) -->
-    <div class="section-group self-stretch">
-      <SectionTitle>Tecnologías Clave</SectionTitle>
-      <div class="tech-category q-mt-lg">
-        <div class="tech-grid">
-          <div v-for="tech in stackRobotics" :key="tech.name" class="tech-item">
-            <q-icon :name="tech.icon" size="md" :color="tech.color" />
-            <div class="tech-name">{{ tech.name }}</div>
-            <div class="tech-role">{{ tech.role }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. RESPALDO INSTITUCIONAL (Mezcla Premium: Elogio + Logos Detallados) -->
-    <div class="section-group self-stretch q-mb-xl">
-      <SectionTitle>Sello de Calidad Académica</SectionTitle>
-
-      <div class="institutional-container">
-        <!-- A. Encabezado de Reconocimiento -->
-        <div class="text-center q-mb-xl intro-institutional">
-          <h3 class="text-h4 text-white q-mb-sm">Universidad de Pamplona</h3>
-          <div class="text-overline text-grey-4 q-mb-md tracking-wide">FUNDADA EN 1960</div>
-
-          <p class="text-body1 text-grey-4 citation-text">
-            "Formando nuevas generaciones con sello de excelencia comprometidos<br />
-            con la transformación social de las regiones y un país en paz"
-          </p>
-
-          <TextBlock class="q-mt-md text-justify-center box-text-limit">
-            Este proyecto es el resultado de la formación integral recibida en una institución con
-            <strong>Acreditación Institucional de Alta Calidad</strong>. El programa de Ingeniería
-            Mecatrónica se destaca por su compromiso con la excelencia, la investigación aplicada y
-            la proyección internacional.
-          </TextBlock>
-        </div>
-
-        <!-- B. Grid de Badges (Logos con Descripción) -->
-        <div class="badges-grid">
-          <!-- 1. ALMA MATER -->
-          <div class="badge-card">
-            <div class="logo-box">
-              <img src="~assets/images/escudounipamplona.png" alt="Escudo Unipamplona" />
-            </div>
-            <div class="badge-info">
-              <div class="badge-title">Alma Mater</div>
-              <div class="badge-desc">Tradición y Excelencia Académica</div>
-            </div>
-          </div>
-
-          <!-- 2. PROGRAMA -->
-          <div class="badge-card">
-            <div class="logo-box">
-              <img src="~assets/images/Mecatronica.png" alt="Ingeniería Mecatrónica" />
-            </div>
-            <div class="badge-info">
-              <div class="badge-title">Ingeniería Mecatrónica</div>
-              <div class="badge-desc">Innovación y Desarrollo Tecnológico</div>
-            </div>
-          </div>
-
-          <!-- 3. CALIDAD -->
-          <div class="badge-card">
-            <div class="logo-box">
-              <img src="~assets/images/logo_acreditacion_png.png" alt="CNA Acreditación" />
-            </div>
-            <div class="badge-info">
-              <div class="badge-title">Alta Calidad</div>
-              <div class="badge-desc">Reconocimiento del Ministerio de Educación</div>
-            </div>
-          </div>
-
-          <!-- 4. INTERNACIONAL -->
-          <div class="badge-card">
-            <div class="logo-box">
-              <img src="~assets/images/logo-equaa.png" alt="EQUAA Internacional" />
-            </div>
-            <div class="badge-info">
-              <div class="badge-title">Certificación Global</div>
-              <div class="badge-desc">Estándares Internacionales EQUAA</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="text-center text-grey-6 q-pb-xl text-caption">
-      &copy; {{ new Date().getFullYear() }} Alexander Calderon Leal. Desarrollado en Colombia.
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import TextBlock from 'components/content/TextBlock.vue';
-import SectionTitle from 'components/content/SectionTitle.vue';
+import { onMounted } from 'vue';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import {
   remGithubFill,
-  // remLinkedinBoxFill, <--- BORRADO PORQUE NO SE USA EN EL TEMPLATE AÚN
   remMailSendFill,
   remTelegramFill,
   remYoutubeFill,
-  // remSchoolFill, <--- NO EXISTE, REEMPLAZADO ABAJO
-  remBuilding2Fill, // Icono de edificio/universidad
+  remBuilding2Fill,
 } from 'quasar-extras-svg-icons/remix-icons';
 
-// STACK ROBÓTICA (Solo lo más relevante)
+// Inicializar AOS (Animate On Scroll)
+onMounted(() => {
+  AOS.init({
+    duration: 800,
+    easing: 'ease-out-cubic',
+    once: true,
+    offset: 50,
+  });
+});
+
+// STACK ROBÓTICA (ROS 2 Ecosystem)
 const stackRobotics = [
-  { name: 'ROS 2 Jazzy', role: 'Middleware', icon: 'smart_toy', color: 'purple-5' },
-  { name: 'Gazebo', role: 'Simulación', icon: 'public', color: 'orange-5' },
-  { name: 'Nav2', role: 'Navegación', icon: 'explore', color: 'green-5' },
-  { name: 'Vue & Quasar', role: 'Interfaz HMI', icon: 'layers', color: 'blue-5' },
+  { name: 'ROS 2 Jazzy', role: 'Middleware DDS', icon: 'smart_toy', color: 'purple-5' },
+  { name: 'Nav2', role: 'Navegación Autónoma', icon: 'explore', color: 'green-5' },
+  { name: 'SLAM Toolbox', role: 'Mapeo y Localización', icon: 'map', color: 'blue-5' },
+  { name: 'Gazebo Harmonic', role: 'Simulación Física', icon: 'public', color: 'orange-5' },
+  { name: 'RViz2', role: 'Visualización 3D', icon: 'visibility', color: 'cyan-5' },
+];
+
+// STACK FRONTEND
+const stackFrontend = [
+  { name: 'Vue 3', role: 'Composition API', icon: 'layers', color: 'green-6' },
+  { name: 'Quasar Framework', role: 'UI Components', icon: 'widgets', color: 'blue-6' },
+  { name: 'TypeScript', role: 'Type Safety', icon: 'code', color: 'blue-7' },
+  { name: 'Vite', role: 'Build Tool', icon: 'bolt', color: 'purple-6' },
+];
+
+// STACK DEVOPS
+const stackDevOps = [
+  { name: 'Git & GitHub', role: 'Control de Versiones', icon: 'source', color: 'grey-7' },
+  { name: 'Docker', role: 'Containerización', icon: 'inventory_2', color: 'blue-8' },
+  { name: 'VS Code', role: 'IDE Principal', icon: 'terminal', color: 'blue-5' },
 ];
 </script>
 
 <style scoped>
-/* --- BASE --- */
-.bg-slate-dark {
-  background-color: #0f172a;
+/* ========================================
+   BASE STYLES
+   ======================================== */
+.credits-page {
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
   min-height: 100vh;
-  color: #f8fafc;
+  padding: 2rem 1rem;
 }
-.intro-hero,
-.section-group {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 3.5rem auto;
-}
-.text-justify-center {
-  text-align: justify;
-  text-align-last: center;
-} /* Truco para centrar última línea */
 
-/* --- HERO --- */
-.intro-hero {
-  padding: 3rem 2rem;
-  background:
-    radial-gradient(circle at bottom, rgba(139, 92, 246, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.8);
-  border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  text-align: center;
+.credits-container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+.hero-section {
+  background:
+    radial-gradient(circle at top, rgba(139, 92, 246, 0.15), transparent 70%), rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 24px;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-bottom: 4rem;
+  backdrop-filter: blur(10px);
+}
+
 .hero-title {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 1.5rem 0;
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin: 0 0 2rem 0;
   line-height: 1.1;
   color: #f8fafc;
 }
 
-/* --- TEAM GRID --- */
+.text-gradient {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #cbd5e1;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: justify;
+}
+
+/* ========================================
+   SECTION TITLES
+   ======================================== */
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid rgba(56, 189, 248, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+/* ========================================
+   TEAM SECTION (QCard Premium)
+   ======================================== */
+.team-section {
+  margin-bottom: 4rem;
+}
+
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Tarjetas más anchas */
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
 }
 
 .profile-card {
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(148, 163, 184, 0.1);
-  border-radius: 16px;
-  padding: 30px;
-  text-align: center;
-  transition:
-    transform 0.3s ease,
-    border-color 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 20px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
 }
 
 .profile-card:hover {
-  transform: translateY(-5px);
-  background: rgba(30, 41, 59, 0.6);
-  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-8px) rotateX(2deg);
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow:
+    0 20px 40px rgba(56, 189, 248, 0.2),
+    0 0 0 1px rgba(56, 189, 248, 0.3);
 }
 
-.profile-img-container {
-  width: 120px;
-  height: 120px;
+.profile-header {
+  text-align: center;
+  padding: 2rem 1.5rem 1rem;
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.05), transparent);
+}
+
+.avatar-container {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 1.5rem;
+  padding: 4px;
+  background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
   border-radius: 50%;
-  padding: 3px;
-  background: linear-gradient(135deg, #38bdf8, #818cf8); /* Anillo gradiente */
-  margin-bottom: 1.2rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.3);
+  animation: pulse-ring 3s ease-in-out infinite;
 }
 
-.profile-img {
+@keyframes pulse-ring {
+  0%,
+  100% {
+    box-shadow: 0 8px 24px rgba(56, 189, 248, 0.3);
+  }
+  50% {
+    box-shadow: 0 8px 32px rgba(56, 189, 248, 0.5);
+  }
+}
+
+.avatar-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
-  border: 3px solid #0f172a; /* Borde interno para separar del anillo */
+  border: 4px solid #0f172a;
 }
 
-.placeholder-icon {
-  width: 100%;
-  height: 100%;
-  background: #1e293b;
-  border-radius: 50%;
-  border: 3px solid #0f172a;
+.profile-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 0.5rem 0;
+}
+
+.profile-role {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.primary-role {
+  color: #38bdf8;
+}
+
+.director-role {
+  color: #818cf8;
+}
+
+.profile-institution {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+.profile-body {
+  padding: 1.5rem;
+}
+
+.profile-bio {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #cbd5e1;
+  text-align: justify;
+  margin: 0;
+}
+
+.profile-actions {
+  justify-content: center;
+  padding: 1rem 1.5rem 1.5rem;
+  gap: 0.5rem;
+}
+
+.profile-actions .q-btn {
+  transition: all 0.3s ease;
+}
+
+.profile-actions .q-btn:hover {
+  transform: scale(1.15);
+  animation: pulse 0.6s ease-in-out;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1.15);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+}
+
+/* ========================================
+   TECH STACK SECTION
+   ======================================== */
+.tech-section {
+  margin-bottom: 4rem;
+}
+
+.tech-category {
+  margin-bottom: 2.5rem;
+}
+
+.category-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
-/* --- TECH GRID --- */
 .tech-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.5rem;
 }
+
 .tech-item {
-  background: rgba(30, 41, 59, 0.4);
+  background: rgba(30, 41, 59, 0.5);
   border: 1px solid rgba(148, 163, 184, 0.1);
-  padding: 16px;
-  border-radius: 12px;
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
   text-align: center;
+  transition: all 0.3s ease;
 }
+
+.tech-item:hover {
+  transform: translateY(-4px) scale(1.05);
+  background: rgba(30, 41, 59, 0.7);
+  border-color: rgba(148, 163, 184, 0.3);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
 .tech-name {
   color: #f1f5f9;
   font-weight: 700;
-  margin-top: 8px;
+  margin-top: 0.75rem;
   font-size: 1rem;
 }
+
 .tech-role {
   color: #94a3b8;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
 }
 
-/* --- INSTITUCIONAL PREMIUM --- */
+/* ========================================
+   AI SECTION (NUEVA)
+   ======================================== */
+.ai-section {
+  margin-bottom: 4rem;
+}
+
+.ai-card {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(56, 189, 248, 0.15));
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.ai-header {
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.1), transparent);
+}
+
+.ai-icon-container {
+  margin-bottom: 1rem;
+}
+
+.ai-icon {
+  color: #c084fc;
+  animation: rotate-glow 4s linear infinite;
+}
+
+@keyframes rotate-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(192, 132, 252, 0.9));
+  }
+}
+
+.ai-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 1rem 0;
+}
+
+.ai-badge {
+  font-size: 0.75rem;
+  padding: 0.5rem 1rem;
+  letter-spacing: 0.05em;
+}
+
+.ai-body {
+  padding: 2rem;
+}
+
+.ai-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #e2e8f0;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.ai-contributions {
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.contributions-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #c084fc;
+  margin: 0 0 1rem 0;
+}
+
+.contributions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contributions-list li {
+  padding: 0.5rem 0 0.5rem 2rem;
+  color: #cbd5e1;
+  position: relative;
+}
+
+.contributions-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #38bdf8;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+/* ========================================
+   INSTITUTIONAL SECTION
+   ======================================== */
+.institutional-section {
+  margin-bottom: 4rem;
+}
+
 .institutional-container {
-  background: linear-gradient(180deg, rgba(30, 41, 59, 0.3) 0%, rgba(15, 23, 42, 0.6) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.6));
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
   padding: 3rem 2rem;
   position: relative;
   overflow: hidden;
 }
 
-/* Línea superior decorativa (Rojo Unipamplona aprox) */
 .institutional-container::before {
   content: '';
   position: absolute;
@@ -455,26 +728,68 @@ const stackRobotics = [
   right: 0;
   height: 4px;
   background: linear-gradient(90deg, #aa1c3a, #d90429, #aa1c3a);
-  opacity: 0.8;
 }
 
-.citation-text {
+.institutional-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.university-name {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 0.5rem 0;
+}
+
+.university-year {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  letter-spacing: 0.15em;
+  margin-bottom: 1.5rem;
+}
+
+.university-quote {
   font-style: italic;
   font-family: 'Times New Roman', serif;
   color: #e2e8f0;
-  font-size: 1.1rem;
-}
-.box-text-limit {
-  max-width: 800px;
-  margin: 0 auto;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin: 0;
 }
 
-/* Grid de Badges */
+.acknowledgments {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.acknowledgments-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #38bdf8;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+}
+
+.acknowledgments-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #cbd5e1;
+  text-align: justify;
+  margin-bottom: 1rem;
+}
+
+.acknowledgments-text:last-child {
+  margin-bottom: 0;
+}
+
 .badges-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 24px;
-  margin-top: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
 }
 
 .badge-card {
@@ -482,62 +797,109 @@ const stackRobotics = [
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 16px;
-  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  padding: 1.5rem;
   border: 1px solid transparent;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .badge-card:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(56, 189, 248, 0.3);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
 
 .logo-box {
-  background: white; /* Fondo blanco para respetar colores originales de los logos */
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   width: 100%;
-  height: 90px;
-  border-radius: 12px;
+  height: 110px;
+  border-radius: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 12px;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+  border: 2px solid rgba(56, 189, 248, 0.1);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.badge-card:hover .logo-box {
+  transform: scale(1.05);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow:
+    0 8px 24px rgba(56, 189, 248, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
 }
 
 .logo-box img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  filter: saturate(0.95);
+  transition: filter 0.3s ease;
+}
+
+.badge-card:hover .logo-box img {
+  filter: saturate(1.1);
 }
 
 .badge-title {
   color: #f8fafc;
   font-weight: 700;
-  font-size: 1.05rem;
-  margin-bottom: 4px;
-}
-.badge-desc {
-  color: #94a3b8;
-  font-size: 0.85rem;
-  line-height: 1.4;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
 }
 
-/* RESPONSIVE */
+.badge-desc {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.credits-footer {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.9rem;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
 @media (max-width: 768px) {
   .hero-title {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
   }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
   .badges-grid {
     grid-template-columns: 1fr;
     max-width: 320px;
-    margin-inline: auto;
+    margin: 0 auto;
   }
-  .team-grid {
-    grid-template-columns: 1fr;
+
+  .section-title {
+    font-size: 1.5rem;
   }
 }
 </style>
