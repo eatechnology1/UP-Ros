@@ -464,7 +464,7 @@ git commit -m 'docs: update README with navigation info'"
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://youtu.be/Romc22GgusU"
+            src="https://www.youtube.com/embed/Romc22GgusU"
             title="Pull Requests and Code Review"
             frameborder="0"
             allow="

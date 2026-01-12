@@ -464,7 +464,7 @@ ros2 action info /fibonacci
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://youtu.be/Romc22GgusU"
+            src="https://www.youtube.com/embed/Romc22GgusU"
             title="ROS 2 Actions Deep Dive"
             frameborder="0"
             allow="

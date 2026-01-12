@@ -32,6 +32,15 @@ const generateRoutesFromStructure = (nodes: CourseNode[]): RouteRecordRaw[] => {
           });
         }
       });
+
+      // [NUEVO] Ruta Raíz del Módulo (Landing Page)
+      if (node.path) {
+        generatedRoutes.push({
+          path: node.path,
+          name: node.path,
+          component: () => import('pages/ModuleLandingPage.vue'),
+        });
+      }
     }
     // Caso 2: Páginas sueltas
     else if (node.path) {

@@ -508,7 +508,7 @@ git add -f src/important.py"
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://youtu.be/Romc22GgusU"
+            src="https://www.youtube.com/embed/Romc22GgusU"
             title="Gitignore Best Practices"
             frameborder="0"
             allow="

@@ -398,7 +398,7 @@ PLUGINLIB_EXPORT_CLASS(MyCustomDisplay, rviz_common::Display)'
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://youtu.be/Romc22GgusU"
+            src="https://www.youtube.com/embed/Romc22GgusU"
             title="RViz2 Advanced Features"
             frameborder="0"
             allow="

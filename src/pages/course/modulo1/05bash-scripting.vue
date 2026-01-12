@@ -459,7 +459,7 @@ wait"
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://youtu.be/Romc22GgusU"
+            src="https://www.youtube.com/embed/Romc22GgusU"
             title="Bash Scripting para ROS 2"
             frameborder="0"
             allow="

@@ -443,7 +443,7 @@ ros2 topic pub -r 10 /cmd_vel geometry_msgs/Twist \
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://youtu.be/Romc22GgusU"
+            src="https://www.youtube.com/embed/Romc22GgusU"
             title="ROS 2 Topics Deep Dive"
             frameborder="0"
             allow="

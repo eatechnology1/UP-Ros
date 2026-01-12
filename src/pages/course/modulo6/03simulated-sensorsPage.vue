@@ -1104,7 +1104,7 @@ namespace gazebo {
           <iframe
             width="100%"
             height="100%"
-            src="https://youtu.be/Romc22GgusU"
+            src="https://www.youtube.com/embed/Romc22GgusU"
             title="Sensor Suite Tutorial"
             frameborder="0"
             allow="

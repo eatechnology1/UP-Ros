@@ -576,7 +576,7 @@ ros2 param load /mi_nodo params.yaml"
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://youtu.be/Romc22GgusU"
+            src="https://www.youtube.com/embed/Romc22GgusU"
             title="YAML en ROS 2"
             frameborder="0"
             allow="

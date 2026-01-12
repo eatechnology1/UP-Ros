@@ -450,7 +450,7 @@
       <div class="video-container q-mt-md">
         <div class="video-wrapper">
           <iframe
-            src="https://youtu.be/Romc22GgusU"
+            src="https://www.youtube.com/embed/Romc22GgusU"
             title="Instalación de ROS 2 Jazzy"
             frameborder="0"
             allow="

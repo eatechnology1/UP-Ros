@@ -494,7 +494,7 @@ git revert a1b2c3d..4e5f6g7"
       <div class="video-container">
         <div class="video-wrapper">
           <iframe
-            src="https://youtu.be/Romc22GgusU"
+            src="https://www.youtube.com/embed/Romc22GgusU"
             title="Git History and Time Travel"
             frameborder="0"
             allow="

@@ -510,7 +510,7 @@ ls"
       <div class="video-container q-mt-md">
         <div class="video-wrapper">
           <iframe
-            src="https://youtu.be/Romc22GgusU"
+            src="https://www.youtube.com/embed/Romc22GgusU"
             title="Navegación en Terminal Linux"
             frameborder="0"
             allow="
@@ -526,7 +526,7 @@ ls"
         </div>
         <div class="video-caption">
           <q-icon name="info" color="blue-4" size="sm" class="q-mr-sm" />
-          Reemplaza el ID del video (dQw4w9WgXcQ) en el código fuente con tu video real de YouTube
+          Video en Progreso
         </div>
       </div>
     </div>
