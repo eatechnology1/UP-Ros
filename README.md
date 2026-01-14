@@ -4,7 +4,7 @@
 
 ## 🎓 Introducción
 
-**UP Ros** representa la vanguardia en la educación de ingeniería robótica. Concebida como una **plataforma educativa doctoral**, este proyecto trasciende la enseñanza tradicional para ofrecer una experiencia **lúdico-didáctica** inmersiva centrada en **ROS 2 (Robot Operating System 2)**.
+**UP Ros** representa la vanguardia en la educación de ingeniería robótica. Concebida como una **plataforma educativa **, este proyecto trasciende la enseñanza tradicional para ofrecer una experiencia **lúdico-didáctica** inmersiva centrada en **ROS 2 (Robot Operating System 2)**.
 
 Diseñada meticulosamente para estudiantes de ingeniería, la plataforma desmitifica la complejidad de la robótica moderna mediante una arquitectura pedagógica progresiva. Desde los fundamentos de Linux hasta el despliegue profesional con Docker y CI/CD, UP Ros guía al estudiante a través de un viaje interactivo, combinando teoría rigurosa con animaciones de alta calidad y ejercicios prácticos.
 
