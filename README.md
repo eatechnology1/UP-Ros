@@ -8,7 +8,7 @@
 
 Diseñada meticulosamente para estudiantes de ingeniería, la plataforma desmitifica la complejidad de la robótica moderna mediante una arquitectura pedagógica progresiva. Desde los fundamentos de Linux hasta el despliegue profesional con Docker y CI/CD, UP Ros guía al estudiante a través de un viaje interactivo, combinando teoría rigurosa con animaciones de alta calidad y ejercicios prácticos.
 
-Esta tesis doctoral no es solo un software; es una metodología de enseñanza que busca formar a la próxima generación de arquitectos de robots.
+Esta tesis no es solo un software; es una metodología de enseñanza que busca formar a la próxima generación de arquitectos de robots.
 
 ---
 
