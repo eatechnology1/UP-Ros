@@ -33,7 +33,11 @@
           <q-card class="profile-card" data-aos="fade-up" data-aos-delay="100">
             <q-card-section class="profile-header">
               <div class="avatar-container">
-                <img src="~assets/images/alex.png" alt="Alexander Calderon" class="avatar-img" />
+                <img
+                  src="~assets/images/Alexander.png"
+                  alt="Alexander Calderon"
+                  class="avatar-img"
+                />
               </div>
               <h3 class="profile-name">Alexander Calderón Leal</h3>
               <div class="profile-role primary-role">
