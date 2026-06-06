@@ -36,17 +36,19 @@
                 <img src="~assets/images/alex.png" alt="Alexander Calderon" class="avatar-img" />
               </div>
               <h3 class="profile-name">Alexander Calderón Leal</h3>
-              <div class="profile-role primary-role">Desarrollador Principal & Arquitecto</div>
+              <div class="profile-role primary-role">
+                Estudiante de Ingeniería Mecatrónica | Fundador y Gerente de EA Technology
+              </div>
               <div class="profile-institution">Universidad de Pamplona</div>
             </q-card-section>
 
             <q-card-section class="profile-body">
               <p class="profile-bio">
-                Ingeniero Mecatrónico especializado en sistemas embebidos, IoT, robótica aplicada y
-                soluciones de automatización industrial. Experiencia en diseño electrónico, redes
-                industriales, visión térmica e inteligencia aplicada a sistemas autónomos. Creador
-                de la arquitectura UP-Ros y desarrollador de plataformas educativas interactivas
-                para ROS 2.
+                Próximo a titularse como Ingeniero Mecatrónico por la Universidad de Pamplona y
+                creador de UpROS Academy. Actualmente lidera su propia empresa, EA Technology, donde
+                aplica su visión técnica y espíritu emprendedor para gestionar soluciones
+                tecnológicas. Combina su sólido aprendizaje académico con la experiencia real del
+                liderazgo empresarial.
               </p>
             </q-card-section>
 
@@ -374,8 +376,7 @@ const stackDevOps = [
    ======================================== */
 .hero-section {
   background:
-    radial-gradient(circle at top, rgba(139, 92, 246, 0.15), transparent 70%),
-    var(--bg-surface);
+    radial-gradient(circle at top, rgba(139, 92, 246, 0.15), transparent 70%), var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: 24px;
   padding: 4rem 2rem;
