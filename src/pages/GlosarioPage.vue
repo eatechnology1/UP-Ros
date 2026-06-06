@@ -16,7 +16,7 @@
         <div class="toolbar-content">
           <q-input
             v-model="search"
-            dark
+            :dark="isDark"
             dense
             standout
             placeholder="Buscar concepto..."
@@ -33,8 +33,8 @@
               v-for="cat in categories"
               :key="cat"
               clickable
-              :color="selectedCategory === cat ? getCategoryColor(cat) : 'blue-grey-9'"
-              :text-color="selectedCategory === cat ? 'white' : 'grey-4'"
+              :color="selectedCategory === cat ? getCategoryColor(cat) : (isDark ? 'blue-grey-9' : 'blue-grey-2')"
+              :text-color="selectedCategory === cat ? 'white' : (isDark ? 'grey-4' : 'grey-8')"
               :icon="selectedCategory === cat ? 'check' : undefined"
               @click="toggleCategory(cat)"
               class="filter-chip"
@@ -118,6 +118,10 @@
 import { ref, computed } from 'vue';
 import { useQuasar } from 'quasar';
 import { glossaryTerms, type Category, type Term } from 'src/data/glossaryTerms';
+import { useTheme } from 'src/composables/useTheme';
+
+const { currentTheme } = useTheme();
+const isDark = computed(() => currentTheme.value === 'dark');
 
 const $q = useQuasar();
 
@@ -204,9 +208,9 @@ function getCategoryColor(cat: string): string {
 <style scoped>
 /* BASE */
 .bg-slate-dark {
-  background-color: #0f172a;
+  background-color: var(--bg-page);
   min-height: 100vh;
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 .content-width {
   max-width: 1200px;
@@ -220,7 +224,7 @@ function getCategoryColor(cat: string): string {
 
 /* HERO SECTION */
 .header-wrapper {
-  background: #0f172a;
+  background: var(--bg-surface);
   position: relative;
   z-index: 100;
 }
@@ -237,7 +241,7 @@ function getCategoryColor(cat: string): string {
   letter-spacing: -1px;
 }
 .hero-desc {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 1.1rem;
   max-width: 600px;
   margin: 1rem auto 0;
@@ -248,9 +252,9 @@ function getCategoryColor(cat: string): string {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(15, 23, 42, 0.85);
+  background: var(--bg-surface);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-subtle);
   display: flex;
   justify-content: center;
 }
@@ -282,8 +286,8 @@ function getCategoryColor(cat: string): string {
 }
 
 .glossary-card {
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  background: var(--bg-surface-solid);
+  border: 1px solid var(--border-subtle);
   border-radius: 16px;
   padding: 24px;
   display: flex;
@@ -295,14 +299,14 @@ function getCategoryColor(cat: string): string {
 
 .glossary-card:hover {
   transform: translateY(-4px);
-  background: rgba(30, 41, 59, 0.8);
-  border-color: rgba(56, 189, 248, 0.3);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  background: var(--bg-surface-solid);
+  border-color: var(--border-hover);
+  box-shadow: 0 10px 30px -10px var(--shadow-lg);
 }
 
 /* Colores de Borde Hover */
 .glossary-card.Core:hover {
-  border-top-color: #a855f7;
+  border-top-color: var(--text-primary);
 }
 .glossary-card.Comm:hover {
   border-top-color: #f97316;
@@ -311,7 +315,7 @@ function getCategoryColor(cat: string): string {
   border-top-color: #06b6d4;
 }
 .glossary-card.Sim:hover {
-  border-top-color: #22c55e;
+  border-top-color: var(--text-code);
 }
 .glossary-card.Math:hover {
   border-top-color: #ef4444;
@@ -321,31 +325,31 @@ function getCategoryColor(cat: string): string {
 .term-name {
   font-size: 1.35rem;
   font-weight: 700;
-  color: white;
+  color: var(--text-primary);
   letter-spacing: -0.5px;
 }
 .term-def {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.95rem;
   line-height: 1.6;
   margin: 12px 0;
   flex-grow: 1;
 }
 .term-context {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   border-radius: 6px;
   padding: 8px 12px;
   font-family: 'Fira Code', monospace;
   font-size: 0.8rem;
-  color: #fbbf24;
-  border-left: 3px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-warning, #d97706);
+  border-left: 3px solid var(--border-medium);
   align-self: flex-start;
 }
 
 /* HIGHLIGHT TEXT STYLE */
 :deep(.highlight) {
   background: rgba(251, 191, 36, 0.2);
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   font-weight: bold;
   border-radius: 2px;
   padding: 0 2px;

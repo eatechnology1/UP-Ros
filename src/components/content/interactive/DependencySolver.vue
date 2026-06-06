@@ -145,7 +145,7 @@ const resetGame = () => {
 
 <style scoped>
 .dependency-solver {
-  background: rgba(15, 23, 42, 0.9);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   overflow: hidden;
@@ -156,7 +156,7 @@ const resetGame = () => {
 
 .solver-header {
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--bg-surface-hover);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -165,7 +165,7 @@ const resetGame = () => {
 
 .header-title {
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -187,28 +187,28 @@ const resetGame = () => {
 .completion-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .completion-desc {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .scenario-box {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border-radius: 8px;
   padding: 1rem;
   border: 1px solid rgba(148, 163, 184, 0.1);
 }
 
 .scenario-text {
-  color: #e2e8f0;
+  color: var(--text-secondary);
   font-size: 0.95rem;
   margin-bottom: 0.5rem;
 }
 
 .code-snippet {
-  background: #0f172a;
+  background: var(--bg-surface);
   padding: 0.75rem;
   border-radius: 6px;
   border-left: 3px solid #3b82f6;
@@ -224,7 +224,7 @@ const resetGame = () => {
 
 .problem-statement {
   font-size: 1rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   text-align: center;
 }
 
@@ -235,9 +235,9 @@ const resetGame = () => {
 }
 
 .option-btn {
-  background: rgba(30, 41, 59, 0.8);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.3);
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   padding: 0.75rem;
   border-radius: 6px;
   cursor: pointer;
@@ -257,7 +257,7 @@ const resetGame = () => {
 }
 
 .result-box {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   padding: 1rem;
   border-radius: 8px;
   display: flex;
@@ -282,12 +282,12 @@ const resetGame = () => {
 
 .result-title {
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .result-expl {
   font-size: 0.85rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   margin-top: 0.25rem;
 }
 

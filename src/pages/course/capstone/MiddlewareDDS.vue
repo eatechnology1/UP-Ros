@@ -195,7 +195,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 
 /* Diagramas de Arquitectura simplificados */
 .architecture-box {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
@@ -206,7 +206,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
   gap: 5px;
 }
 .box-node {
-  background: #334155;
+  background: var(--bg-surface-solid);
   padding: 4px 12px;
   border-radius: 4px;
   font-size: 0.8rem;
@@ -231,14 +231,14 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 
 /* Tarjetas Conceptuales */
 .concept-card {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
   height: 100%;
 }
 .concept-card p {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.95rem;
 }
 

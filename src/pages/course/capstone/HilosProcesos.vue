@@ -194,7 +194,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 }
 
 .concept-card {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1rem;

@@ -145,7 +145,7 @@ const sendGoal = () => {
 
 <style scoped>
 .action-policy-viz {
-  background: rgba(15, 23, 42, 0.9);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   overflow: hidden;
@@ -156,7 +156,7 @@ const sendGoal = () => {
 
 .viz-header {
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--bg-surface-hover);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -165,7 +165,7 @@ const sendGoal = () => {
 }
 
 .header-title {
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -182,7 +182,7 @@ const sendGoal = () => {
 
 .server-box {
   flex: 1;
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border: 2px solid #475569;
   border-radius: 8px;
   padding: 1rem;
@@ -193,7 +193,7 @@ const sendGoal = () => {
 
 .server-label {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-weight: 700;
   text-transform: uppercase;
   text-align: center;
@@ -238,7 +238,7 @@ const sendGoal = () => {
   width: 80%;
   padding: 0.5rem;
   background: #f59e0b;
-  color: white;
+  color: var(--text-primary);
   font-weight: bold;
   border-radius: 4px;
   text-align: center;
@@ -260,12 +260,12 @@ const sendGoal = () => {
   left: 0;
   height: 4px;
   width: 100%;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
 }
 
 .fill {
   height: 100%;
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--bg-surface-hover);
   transition: width 0.05s linear;
 }
 
@@ -283,7 +283,7 @@ const sendGoal = () => {
 
 .viz-log {
   padding: 0.5rem 1rem;
-  background: #0f172a;
+  background: var(--bg-surface);
   text-align: center;
   font-family: 'Fira Code', monospace;
   font-size: 0.8rem;

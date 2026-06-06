@@ -184,7 +184,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 }
 
 .argument-list {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.8;
   font-size: 0.95rem;
 }
@@ -195,7 +195,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 }
 
 .file-card {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.2rem;
@@ -221,13 +221,13 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 .file-card .title {
   font-weight: bold;
   font-size: 1.1rem;
-  color: #f8fafc;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
   font-family: 'Fira Code', monospace;
 }
 .file-card p {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   line-height: 1.4;
 }
 </style>

@@ -1,18 +1,112 @@
 // app global css in SCSS form
+
+// ============================================================
+// DESIGN TOKENS — Sistema de variables CSS para temas
+// ============================================================
 :root {
-  /* No necesitamos definir variables CSS nativas si usamos SCSS variables,
-     pero las mantenemos para compatibilidad con scripts si es necesario */
+  // --- TEMA OSCURO (Por defecto) ---
+  --bg-page:          #0f172a;
+  --bg-deep:          #0b1120;
+  --bg-surface:       rgba(30, 41, 59, 0.6);
+  --bg-surface-solid: #1e293b;
+  --bg-surface-hover: rgba(30, 41, 59, 0.85);
+  --bg-glass:         rgba(15, 23, 42, 0.75);
+  --bg-glass-drawer:  rgba(15, 25, 40, 0.6);
+  --bg-code:          rgba(56, 189, 248, 0.1);
+
+  --border-subtle:    rgba(148, 163, 184, 0.15);
+  --border-medium:    rgba(148, 163, 184, 0.25);
+  --border-hover:     rgba(56, 189, 248, 0.4);
+  --border-accent:    rgba(255, 255, 255, 0.08);
+
+  --text-primary:     #f1f5f9;
+  --text-secondary:   #cbd5e1;
+  --text-muted:       #94a3b8;
+  --text-strong:      #ffffff;
+  --text-code:        #38bdf8;
+  --text-link:        #60a5fa;
+  --text-link-hover:  #93c5fd;
+
+  --shadow-sm:        rgba(0, 0, 0, 0.3);
+  --shadow-md:        rgba(0, 0, 0, 0.4);
+  --shadow-lg:        rgba(0, 0, 0, 0.5);
+
+  --header-bg:        rgba(18, 28, 45, 0.75);
+  --footer-bg:        rgba(15, 25, 40, 0.55);
+  --drawer-bg:        rgba(15, 25, 40, 0.6);
+
+  // Transición del tema
+  --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+// ============================================================
+// TEMA CLARO
+// ============================================================
+[data-theme='light'] {
+  --bg-page:          #f0f4f8;
+  --bg-deep:          #e2e8f0;
+  --bg-surface:       rgba(255, 255, 255, 0.85);
+  --bg-surface-solid: #ffffff;
+  --bg-surface-hover: rgba(248, 250, 252, 0.95);
+  --bg-glass:         rgba(255, 255, 255, 0.8);
+  --bg-glass-drawer:  rgba(248, 250, 252, 0.92);
+  --bg-code:          rgba(14, 165, 233, 0.08);
+
+  --border-subtle:    rgba(100, 116, 139, 0.18);
+  --border-medium:    rgba(100, 116, 139, 0.28);
+  --border-hover:     rgba(14, 165, 233, 0.5);
+  --border-accent:    rgba(0, 0, 0, 0.06);
+
+  --text-primary:     #0f172a;
+  --text-secondary:   #334155;
+  --text-muted:       #64748b;
+  --text-strong:      #020617;
+  --text-code:        #0369a1;
+  --text-link:        #2563eb;
+  --text-link-hover:  #1d4ed8;
+
+  --shadow-sm:        rgba(15, 23, 42, 0.08);
+  --shadow-md:        rgba(15, 23, 42, 0.12);
+  --shadow-lg:        rgba(15, 23, 42, 0.18);
+
+  --header-bg:        rgba(255, 255, 255, 0.88);
+  --footer-bg:        rgba(241, 245, 249, 0.92);
+  --drawer-bg:        rgba(248, 250, 252, 0.92);
+}
+
+// ============================================================
+// TRANSICIÓN GLOBAL SUAVE ENTRE TEMAS
+// ============================================================
+*,
+*::before,
+*::after {
+  transition: var(--theme-transition);
+}
+
+// Excluimos animaciones de transición para que no interfieran
+// con animaciones de CSS específicas de los componentes
+.animated,
+[class*='animation'],
+[class*='-animation'],
+.floating-robot,
+.animated-nodes,
+.q-linear-progress__track,
+.q-linear-progress__model {
+  transition: none !important;
+}
+
+// ============================================================
+// BASE
+// ============================================================
 body {
-  background-color: #0b1120; /* $dark-page */
-  color: #cbd5e1; /* $slate-300 */
+  background-color: var(--bg-deep);
+  color: var(--text-secondary);
   font-family: 'Inter', 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-/* =========================
-   UTILITIES GLOBALES
-========================= */
+// ============================================================
+// UTILITIES GLOBALES
+// ============================================================
 
 // 1. TEXTO GRADIENTE (Cyber-Text)
 .text-gradient {
@@ -23,12 +117,19 @@ body {
   color: #38bdf8; /* Fallback */
 }
 
+[data-theme='light'] .text-gradient {
+  background: linear-gradient(to right, #0284c7, #6d28d9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 // 2. EFECTO CRISTAL (Glassmorphism)
 .glass-effect {
-  background: rgba(30, 41, 59, 0.6); /* Slate-800 con transparencia */
+  background: var(--bg-surface);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-accent);
 }
 
 // 3. CARDS STANDARDIZADAS
@@ -42,12 +143,12 @@ body {
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
-    border-color: rgba(56, 189, 248, 0.3); // Neon Blue hint
+    box-shadow: 0 10px 30px -5px var(--shadow-md);
+    border-color: var(--border-hover);
   }
 }
 
-// 4. ANIMACIONES
+// 4. ANIMACIONES DE RUTA
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
@@ -58,3 +159,301 @@ body {
 }
 
 @import './content-blocks.css';
+
+// ============================================================
+// OVERRIDES GLOBALES PARA TEMA CLARO
+// Cubren patrones comunes en todas las páginas sin modificar
+// cada archivo .vue individualmente.
+// ============================================================
+
+// Fondos de página (IntroduccionPage, InstalacionPage, etc.)
+[data-theme='light'] {
+  // ============================================================
+  // AUTO-FIX PARA TEXTOS CLAROS FIJOS EN MODO CLARO
+  // ============================================================
+  p, div, span, ul, li, a,
+  .text-body1, .text-body2, .text-caption, .text-subtitle1, .text-subtitle2 {
+    &.text-white, &.text-grey-1, &.text-grey-2, &.text-grey-3, &.text-grey-4, &.text-grey-5, &.text-grey-6 {
+      &:not(.q-btn):not(.q-chip):not(.q-badge):not([class*="bg-blue"]):not([class*="bg-green"]):not([class*="bg-red"]):not([class*="bg-purple"]):not([class*="bg-indigo"]):not([class*="bg-cyan"]):not([class*="bg-orange"]):not([class*="bg-amber"]):not([class*="bg-pink"]):not([class*="bg-dark"]):not([class*="bg-slate-"]) {
+        color: var(--text-secondary) !important;
+      }
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6 {
+    &.text-white, &.text-grey-1, &.text-grey-2, &.text-grey-3, &.text-grey-4, &.text-grey-5, &.text-grey-6 {
+      &:not([class*="bg-"]) {
+        color: var(--text-primary) !important;
+      }
+    }
+  }
+
+  // Ajuste de colores de acento (pastel) para que sean legibles en fondos claros
+  .text-red-2, .text-red-3, .text-red-4, .text-red-5 { color: #991b1b !important; }
+  .text-pink-2, .text-pink-3, .text-pink-4, .text-pink-5 { color: #9d174d !important; }
+  .text-purple-2, .text-purple-3, .text-purple-4, .text-purple-5 { color: #5b21b6 !important; }
+  .text-indigo-2, .text-indigo-3, .text-indigo-4, .text-indigo-5 { color: #3730a3 !important; }
+  .text-blue-2, .text-blue-3, .text-blue-4, .text-blue-5, .text-light-blue-2, .text-light-blue-4 { color: #1e40af !important; }
+  .text-cyan-2, .text-cyan-3, .text-cyan-4, .text-cyan-5 { color: #155e75 !important; }
+  .text-teal-2, .text-teal-3, .text-teal-4, .text-teal-5 { color: #115e59 !important; }
+  .text-green-2, .text-green-3, .text-green-4, .text-green-5, .text-light-green-2, .text-light-green-4 { color: #166534 !important; }
+  .text-yellow-2, .text-yellow-3, .text-yellow-4, .text-yellow-5, .text-amber-2, .text-amber-3, .text-amber-4, .text-amber-400 { color: #b45309 !important; }
+  .text-orange-2, .text-orange-3, .text-orange-4, .text-orange-5, .text-deep-orange-4 { color: #c2410c !important; }
+
+  // Ajuste de fondos oscuros hardcodeados en HTML
+  .bg-black,
+  .bg-dark,
+  .bg-dark-alt,
+  .bg-grey-8,
+  .bg-grey-9,
+  .bg-grey-10,
+  .bg-blue-grey-8,
+  .bg-blue-grey-9,
+  .bg-blue-grey-10 {
+    background: var(--bg-surface-solid) !important;
+  }
+
+  // Páginas principales con background fijo
+  .intro-page,
+  .installation-page,
+  .glosario-page,
+  .module-landing-page {
+    background: var(--bg-page) !important;
+  }
+
+  // Heroes (secciones con fondo oscuro semi-transparente)
+  .hero-epic,
+  .installation-hero,
+  .hero-section {
+    background:
+      radial-gradient(circle at top center, rgba(99, 102, 241, 0.08), transparent 70%),
+      radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.05), transparent 60%),
+      var(--bg-surface) !important;
+    border-color: var(--border-medium) !important;
+  }
+
+  // Títulos de hero (en claro deben ser oscuros)
+  .hero-title {
+    color: var(--text-primary) !important;
+  }
+
+  .hero-subtitle,
+  .hero-description {
+    color: var(--text-secondary) !important;
+  }
+
+  // Cards de preflight / setup OS
+  .preflight-card,
+  .os-setup-card {
+    background: var(--bg-surface) !important;
+    border-color: var(--border-subtle) !important;
+  }
+
+  .preflight-item {
+    background: var(--bg-surface) !important;
+    border-color: var(--border-subtle) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .preflight-item:hover {
+    background: var(--bg-surface-hover) !important;
+    border-color: var(--border-hover) !important;
+  }
+
+  .preflight-checkbox,
+  .progress-label {
+    color: var(--text-primary) !important;
+  }
+
+  .preflight-detail {
+    color: var(--text-muted) !important;
+  }
+
+  // Stepper de instalación
+  .stepper-item {
+    background: var(--bg-surface) !important;
+    border-color: var(--border-subtle) !important;
+  }
+
+  .stepper-item.active {
+    background: var(--bg-surface-hover) !important;
+    border-color: var(--border-hover) !important;
+  }
+
+  .stepper-title {
+    color: var(--text-primary) !important;
+  }
+
+  .stepper-desc {
+    color: var(--text-muted) !important;
+  }
+
+  // Bloques de código scoped en páginas individuales
+  .command-card,
+  .concept-card,
+  .shortcut-card,
+  .install-card {
+    background: var(--bg-surface) !important;
+    border-color: var(--border-subtle) !important;
+    color: var(--text-secondary) !important;
+  }
+
+  .command-card:hover,
+  .concept-card:hover,
+  .shortcut-card:hover {
+    border-color: var(--border-hover) !important;
+    background: var(--bg-surface-hover) !important;
+  }
+
+  // Textos de cards
+  .command-desc,
+  .concept-desc,
+  .shortcut-desc,
+  .stepper-desc,
+  .timeline-desc {
+    color: var(--text-secondary) !important;
+  }
+
+  // Ejemplos de código o atajos
+  .shortcut-example,
+  .command-example,
+  .command-use-case {
+    background: var(--bg-code) !important;
+    color: var(--text-secondary) !important;
+  }
+  
+  .command-name,
+  .shortcut-command {
+    color: var(--text-code) !important;
+  }
+
+  // Terminal mockups (dentro de las lecciones)
+  .filesystem-tree,
+  .prompt-anatomy,
+  .terminal-window,
+  .terminal-mockup {
+    background: var(--bg-surface-solid) !important;
+    border-color: var(--border-medium) !important;
+  }
+
+  // Tablas de resumen y compatibilidad
+  .summary-table,
+  .compatibility-table {
+    background: var(--bg-surface) !important;
+    border-color: var(--border-subtle) !important;
+  }
+
+  .summary-row,
+  .compat-row {
+    border-color: var(--border-subtle) !important;
+    color: var(--text-secondary) !important;
+  }
+
+  .summary-header,
+  .compat-row.header {
+    background: var(--bg-surface-hover) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .summary-cell code {
+    background: var(--bg-code) !important;
+    color: var(--text-code) !important;
+  }
+
+  // Acordeón de errores comunes
+  .error-accordion .q-expansion-item {
+    background: var(--bg-surface) !important;
+  }
+
+  // Títulos de sección scoped
+  h1, h2, h3, h4 {
+    color: var(--text-primary);
+  }
+
+  // Tags en chips del glosario
+  .q-chip {
+    color: var(--text-primary) !important;
+  }
+
+  // Videos
+  .video-container {
+    background: var(--bg-surface) !important;
+    border-color: var(--border-medium) !important;
+  }
+  .video-caption {
+    color: var(--text-muted) !important;
+  }
+
+  // Timeline del roadmap (IntroduccionPage)
+  .timeline-card {
+    background: var(--bg-surface) !important;
+    color: var(--text-secondary) !important;
+  }
+
+  .timeline-content h3,
+  .timeline-header h3 {
+    color: var(--text-primary) !important;
+  }
+
+  // Prompt anatomy (lección 01navsistema)
+  .prompt-display {
+    background: #f8fafc !important;
+    border-color: var(--border-medium) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .legend-desc {
+    color: var(--text-secondary) !important;
+  }
+
+  // Robot nervous system (IntroduccionPage)
+  .robot-nervous-system {
+    background: var(--bg-surface) !important;
+    border-color: var(--border-subtle) !important;
+  }
+
+  // Roadmap timeline line
+  .roadmap-timeline::before {
+    opacity: 0.4;
+  }
+
+  // Footer de los acordeones de error y otros items
+  .error-content {
+    background: var(--bg-surface) !important;
+    color: var(--text-secondary) !important;
+  }
+  
+  .concept-item,
+  .legend-item {
+    background: var(--bg-surface-hover) !important;
+  }
+
+  // Celdas de tabla
+  .summary-cell,
+  .compat-row div {
+    color: var(--text-secondary) !important;
+  }
+
+  // Texto del q-page-container
+  .q-page {
+    color: var(--text-secondary);
+  }
+
+  // Quasar q-card override
+  .q-card {
+    background: var(--bg-surface-solid) !important;
+    color: var(--text-primary) !important;
+  }
+
+  // q-separator
+  .q-separator {
+    background: var(--border-subtle) !important;
+  }
+
+  // q-expansion-item header
+  .q-expansion-item__header {
+    color: var(--text-primary) !important;
+  }
+}
+

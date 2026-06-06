@@ -1,642 +1,388 @@
 <template>
   <LessonContainer>
-    <!-- ============================================ -->
-    <!-- SECCIÓN 1: CONTEXTO E IMPORTANCIA -->
-    <!-- ============================================ -->
-    <TextBlock>
-      Ya sabes moverte por el sistema. Ahora aprenderás a
-      <strong>manipular la materia digital</strong>: crear archivos, duplicarlos, moverlos y
-      destruirlos. <br /><br />
-      En robótica, esto es el día a día: organizar logs de sensores, hacer backups de
-      configuraciones, limpiar archivos temporales de simulaciones, y estructurar tu workspace de
-      ROS 2. <strong>Un sistema desorganizado es un robot que falla.</strong>
-    </TextBlock>
 
-    <AlertBlock type="info" title="La Filosofía Unix: Todo es un Archivo">
-      En Linux, <strong>todo</strong> es un archivo. Tu código Python es un archivo. La
-      configuración de tu robot es un archivo. Incluso los dispositivos de hardware (cámara, lidar)
-      aparecen como archivos en <code>/dev</code>. <br /><br />
-      Dominar la gestión de archivos es dominar el sistema operativo.
-    </AlertBlock>
-
-    <!-- ============================================ -->
-    <!-- SECCIÓN 2: MKDIR - CREAR DIRECTORIOS -->
-    <!-- ============================================ -->
+    <!-- ══════════════════════════════════════════
+         SECCIÓN 1: CONTEXTO
+    ══════════════════════════════════════════ -->
     <div class="section-group">
-      <SectionTitle>1. Crear Directorios: mkdir (Make Directory)</SectionTitle>
+      <TextBlock>
+        Ya sabes moverte por el sistema. Ahora aprenderás a
+        <strong>manipular la materia digital</strong>: crear archivos, duplicarlos, moverlos y
+        destruirlos.<br /><br />
+        En robótica, esto es el día a día: organizar logs de sensores, hacer backups de
+        configuraciones, limpiar archivos temporales de simulaciones, y estructurar tu workspace de
+        ROS 2. <strong>Un sistema desorganizado es un robot que falla.</strong>
+      </TextBlock>
+
+      <div class="fact-pills q-mt-lg">
+        <div class="fact-pill" v-for="f in facts" :key="f.label">
+          <span class="fact-icon">{{ f.icon }}</span>
+          <span class="fact-label">{{ f.label }}</span>
+        </div>
+      </div>
+
+      <AlertBlock type="info" title="La Filosofía Unix: Todo es un Archivo">
+        En Linux, <strong>todo</strong> es un archivo. Tu código Python es un archivo. La
+        configuración de tu robot es un archivo. Incluso los dispositivos de hardware (cámara,
+        lidar) aparecen como archivos en <code>/dev</code>.<br /><br />
+        Dominar la gestión de archivos es dominar el sistema operativo.
+      </AlertBlock>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SECCIÓN 2: MKDIR
+    ══════════════════════════════════════════ -->
+    <div class="section-group">
+      <SectionTitle>
+        <span class="cmd-badge green">01</span>
+        Crear Directorios — <code class="cmd-inline">mkdir</code>
+      </SectionTitle>
+
       <SplitBlock>
         <template #left>
           <TextBlock>
-            Antes de crear archivos, necesitas un lugar donde guardarlos. El comando
-            <code>mkdir</code> crea carpetas (directorios). <br /><br />
-            <strong>Regla de oro:</strong> Organiza tu código en carpetas lógicas desde el día 1. Un
-            proyecto robótico puede tener cientos de archivos.
+            Antes de crear archivos necesitas un lugar donde guardarlos.
+            <code>mkdir</code> crea carpetas al instante.<br /><br />
+            <strong>Regla de oro:</strong> Organiza tu código en carpetas lógicas desde el día 1.
+            Un proyecto robótico puede tener cientos de archivos.
           </TextBlock>
 
-          <CodeBlock
-            title="Crear una carpeta simple"
-            lang="bash"
+          <CodeBlock title="Uso básico" lang="bash"
             content="mkdir mi_robot
-ls -l"
-            :copyable="true"
-          />
+ls -l" :copyable="true" />
 
-          <div class="q-mt-md">
-            <AlertBlock type="success" title="Bandera -p: Crear Jerarquías">
-              La bandera <code>-p</code> (parents) crea toda la estructura de carpetas de una vez,
-              incluso si las carpetas intermedias no existen.
-            </AlertBlock>
-          </div>
+          <AlertBlock type="success" title="Bandera -p: Crea toda la jerarquía de una vez">
+            Sin <code>-p</code> tendrías que crear cada carpeta una por una.
+            Con <code>-p</code> creas todo el árbol en un comando.
+          </AlertBlock>
         </template>
 
         <template #right>
-          <div class="hierarchy-demo">
-            <div class="demo-title">Estructura de Workspace ROS 2</div>
-            <CodeBlock
-              :hide-header="true"
-              lang="bash"
-              content="mkdir -p ros2_ws/src/mi_robot/launch
+          <div class="tree-demo-card">
+            <div class="tree-demo-header">
+              <q-icon name="account_tree" size="16px" color="primary" />
+              <span>Workspace ROS 2 con <code>-p</code></span>
+            </div>
+            <div class="tree-demo-body">
+              <CodeBlock :hide-header="true" lang="bash"
+                content="mkdir -p ros2_ws/src/mi_robot/launch
 mkdir -p ros2_ws/src/mi_robot/config
-mkdir -p ros2_ws/src/mi_robot/scripts
-
-# Resultado:
-# ros2_ws/
-# └── src/
-#     └── mi_robot/
-#         ├── launch/
-#         ├── config/
-#         └── scripts/"
-            />
-            <div class="demo-note">
-              <q-icon name="lightbulb" color="yellow-6" size="sm" />
-              <span>Sin <code>-p</code>, tendrías que crear cada carpeta una por una.</span>
+mkdir -p ros2_ws/src/mi_robot/scripts" />
+            </div>
+            <div class="tree-result">
+              <div class="tr-node root"><q-icon name="folder_open" size="14px" style="color:#eab308" /> ros2_ws/</div>
+              <div class="tr-children">
+                <div class="tr-node"><q-icon name="folder" size="13px" style="color:#60a5fa" /> src/</div>
+                <div class="tr-children">
+                  <div class="tr-node"><q-icon name="folder" size="13px" style="color:#4ade80" /> mi_robot/</div>
+                  <div class="tr-children">
+                    <div class="tr-node"><q-icon name="folder" size="12px" style="color:#c084fc" /> launch/</div>
+                    <div class="tr-node"><q-icon name="folder" size="12px" style="color:#fb923c" /> config/</div>
+                    <div class="tr-node"><q-icon name="folder" size="12px" style="color:#f472b6" /> scripts/</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tree-note">
+              <q-icon name="lightbulb" size="13px" color="warning" class="q-mr-xs" />
+              Crea todos los niveles aunque los intermedios no existan
             </div>
           </div>
         </template>
       </SplitBlock>
     </div>
 
-    <!-- ============================================ -->
-    <!-- SECCIÓN 3: TOUCH - CREAR ARCHIVOS -->
-    <!-- ============================================ -->
+    <!-- ══════════════════════════════════════════
+         SECCIÓN 3: TOUCH
+    ══════════════════════════════════════════ -->
     <div class="section-group">
-      <SectionTitle>2. Crear Archivos Vacíos: touch</SectionTitle>
-      <div class="row q-col-gutter-md">
-        <div class="col-12 col-md-6">
-          <div class="concept-card">
-            <div class="concept-header">
-              <q-icon name="note_add" color="green-4" size="lg" />
-              <div class="concept-title">Uso Principal</div>
-            </div>
-            <div class="concept-body">
-              <TextBlock>
-                <code>touch</code> crea un archivo totalmente vacío (0 bytes). Es como sacar una
-                hoja de papel en blanco. <br /><br />
-                <strong>¿Por qué crear archivos vacíos?</strong> Para reservar el nombre antes de
-                escribir código, o para crear placeholders en tu estructura de proyecto.
-              </TextBlock>
-              <CodeBlock
-                lang="bash"
-                content="touch nodo_control.py
-touch config.yaml
-ls -lh"
-                :copyable="true"
-              />
-            </div>
+      <SectionTitle>
+        <span class="cmd-badge cyan">02</span>
+        Crear Archivos Vacíos — <code class="cmd-inline">touch</code>
+      </SectionTitle>
+
+      <div class="two-col-grid q-mt-lg">
+        <div class="info-card" style="--ic-color: #4ade80">
+          <div class="ic-header">
+            <q-icon name="note_add" size="22px" style="color:#4ade80" />
+            <span class="ic-title">Uso Principal — Crear</span>
           </div>
+          <p class="ic-desc">
+            <code>touch</code> crea un archivo totalmente vacío (0 bytes).
+            Es como sacar una hoja de papel en blanco.<br /><br />
+            <strong>¿Para qué crear archivos vacíos?</strong> Para reservar el nombre antes de
+            escribir código, o crear placeholders en tu estructura de proyecto.
+          </p>
+          <CodeBlock lang="bash"
+            content="touch nodo_control.py
+touch config.yaml
+ls -lh" :copyable="true" />
         </div>
 
-        <div class="col-12 col-md-6">
-          <div class="concept-card">
-            <div class="concept-header">
-              <q-icon name="schedule" color="blue-4" size="lg" />
-              <div class="concept-title">Uso Secundario</div>
-            </div>
-            <div class="concept-body">
-              <TextBlock>
-                Si el archivo <strong>ya existe</strong>, <code>touch</code> solo actualiza su
-                "timestamp" (fecha de modificación) sin borrar el contenido. <br /><br />
-                Esto es útil para "marcar" archivos como recién modificados en sistemas de
-                compilación.
-              </TextBlock>
-              <CodeBlock
-                lang="bash"
-                content="# Archivo existe con contenido
+        <div class="info-card" style="--ic-color: #60a5fa">
+          <div class="ic-header">
+            <q-icon name="schedule" size="22px" style="color:#60a5fa" />
+            <span class="ic-title">Uso Secundario — Actualizar Timestamp</span>
+          </div>
+          <p class="ic-desc">
+            Si el archivo <strong>ya existe</strong>, <code>touch</code> solo actualiza su
+            fecha de modificación sin borrar el contenido.<br /><br />
+            Útil en sistemas de compilación (Make) donde la fecha determina qué archivos recompilar.
+          </p>
+          <CodeBlock lang="bash"
+            content="# Archivo existe con contenido
 touch archivo_viejo.txt
 
 # Solo cambia la fecha, contenido intacto
-ls -l archivo_viejo.txt"
-                :copyable="true"
-              />
-            </div>
-          </div>
+ls -l archivo_viejo.txt" :copyable="true" />
         </div>
       </div>
 
-      <div class="q-mt-md">
-        <AlertBlock type="info" title="Crear Múltiples Archivos a la Vez">
-          Puedes crear varios archivos en un solo comando separándolos con espacios:
-          <br />
-          <code>touch archivo1.txt archivo2.txt archivo3.txt</code>
-        </AlertBlock>
-      </div>
+      <AlertBlock type="info" title="Crear múltiples archivos de una vez" class="q-mt-md">
+        Separa los nombres con espacios en un solo comando:
+        <br /><code>touch archivo1.txt archivo2.txt archivo3.txt</code>
+      </AlertBlock>
     </div>
 
-    <!-- ============================================ -->
-    <!-- SECCIÓN 4: CP - COPIAR -->
-    <!-- ============================================ -->
+    <!-- ══════════════════════════════════════════
+         SECCIÓN 4: CP
+    ══════════════════════════════════════════ -->
     <div class="section-group">
-      <SectionTitle>3. Copiar Archivos y Directorios: cp (Copy)</SectionTitle>
+      <SectionTitle>
+        <span class="cmd-badge purple">03</span>
+        Copiar Archivos y Directorios — <code class="cmd-inline">cp</code>
+      </SectionTitle>
+
       <TextBlock>
-        El comando <code>cp</code> duplica archivos. Necesita dos argumentos:
-        <strong>Origen</strong> (qué copiar) y <strong>Destino</strong> (dónde copiarlo).
+        <code>cp</code> duplica archivos. Siempre necesita dos argumentos:
+        <strong>origen</strong> (qué copiar) y <strong>destino</strong> (a dónde).
       </TextBlock>
 
+      <!-- Syntax display -->
       <div class="syntax-card q-mt-md">
-        <div class="syntax-label">Sintaxis General</div>
-        <div class="syntax-pattern">
-          <span class="syntax-cmd">cp</span>
-          <span class="syntax-arg">[opciones]</span>
-          <span class="syntax-arg origin">origen</span>
-          <span class="syntax-arg dest">destino</span>
+        <span class="syntax-eyebrow">SINTAXIS</span>
+        <div class="syntax-line">
+          <span class="syn-cmd">cp</span>
+          <span class="syn-arg muted">[opciones]</span>
+          <span class="syn-arg blue">origen</span>
+          <span class="syn-arrow">→</span>
+          <span class="syn-arg purple">destino</span>
         </div>
       </div>
 
-      <div class="row q-col-gutter-md q-mt-lg">
-        <div class="col-12 col-md-4">
-          <div class="operation-card">
-            <div class="operation-icon">
-              <q-icon name="content_copy" color="cyan-4" size="xl" />
-            </div>
-            <div class="operation-title">Copiar Archivo</div>
-            <div class="operation-desc">Duplica un archivo en el mismo directorio o en otro</div>
-            <CodeBlock
-              :hide-header="true"
-              lang="bash"
-              content="# Mismo directorio
-cp robot.py robot_backup.py
-
-# Otro directorio
-cp robot.py ~/backups/"
-            />
-            <div class="operation-note">El original permanece intacto</div>
+      <div class="op-cards-grid q-mt-lg">
+        <div v-for="op in cpOps" :key="op.title" class="op-card" :style="{ '--op-color': op.color }">
+          <div class="op-icon-wrap" :style="{ background: op.color + '18' }">
+            <q-icon :name="op.icon" size="24px" :style="{ color: op.color }" />
           </div>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <div class="operation-card">
-            <div class="operation-icon">
-              <q-icon name="folder_copy" color="purple-4" size="xl" />
-            </div>
-            <div class="operation-title">Copiar Directorio</div>
-            <div class="operation-desc">
-              Requiere la bandera <code>-r</code> (recursive) para copiar todo el contenido
-            </div>
-            <CodeBlock
-              :hide-header="true"
-              lang="bash"
-              content="# Copiar carpeta completa
-cp -r mi_robot/ mi_robot_backup/
-
-# Copia TODO: archivos y subcarpetas"
-            />
-            <div class="operation-note">Sin <code>-r</code>, obtendrás un error</div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <div class="operation-card">
-            <div class="operation-icon">
-              <q-icon name="update" color="orange-4" size="xl" />
-            </div>
-            <div class="operation-title">Copiar con Confirmación</div>
-            <div class="operation-desc">
-              La bandera <code>-i</code> (interactive) pregunta antes de sobrescribir
-            </div>
-            <CodeBlock
-              :hide-header="true"
-              lang="bash"
-              content="# Pregunta si el destino existe
-cp -i robot.py robot_backup.py
-
-# Output: overwrite 'robot_backup.py'? (y/n)"
-            />
-            <div class="operation-note">Evita pérdidas accidentales de datos</div>
+          <div class="op-title">{{ op.title }}</div>
+          <div class="op-flag"><code>{{ op.flag }}</code></div>
+          <p class="op-desc">{{ op.desc }}</p>
+          <CodeBlock :hide-header="true" lang="bash" :content="op.code" />
+          <div class="op-note">
+            <q-icon name="info" size="12px" class="q-mr-xs" />{{ op.note }}
           </div>
         </div>
       </div>
 
-      <div class="q-mt-lg">
-        <AlertBlock type="warning" title="Caso de Uso Real: Backup de Configuraciones">
-          Antes de modificar un archivo crítico (como un launch file o YAML de Nav2), siempre haz
-          una copia de seguridad:
-          <br /><br />
-          <code>cp nav2_params.yaml nav2_params.yaml.backup</code>
-          <br /><br />
-          Si algo sale mal, puedes restaurar el original con
-          <code>cp nav2_params.yaml.backup nav2_params.yaml</code>
-        </AlertBlock>
-      </div>
+      <AlertBlock type="warning" title="Caso de uso real: Backup antes de modificar">
+        Antes de tocar un archivo crítico (launch file, YAML de Nav2), siempre haz copia:
+        <br /><br />
+        <code>cp nav2_params.yaml nav2_params.yaml.backup</code>
+        <br /><br />
+        Si algo sale mal: <code>cp nav2_params.yaml.backup nav2_params.yaml</code>
+      </AlertBlock>
     </div>
 
-    <!-- ============================================ -->
-    <!-- SECCIÓN 5: MV - MOVER Y RENOMBRAR -->
-    <!-- ============================================ -->
+    <!-- ══════════════════════════════════════════
+         SECCIÓN 5: MV
+    ══════════════════════════════════════════ -->
     <div class="section-group">
-      <SectionTitle>4. Mover y Renombrar: mv (Move)</SectionTitle>
+      <SectionTitle>
+        <span class="cmd-badge amber">04</span>
+        Mover y Renombrar — <code class="cmd-inline">mv</code>
+      </SectionTitle>
+
       <TextBlock>
-        En Linux, <strong>Mover</strong> y <strong>Renombrar</strong> son la misma operación:
-        <code>mv</code>. La diferencia está en el destino que especifiques.
+        En Linux <strong>mover</strong> y <strong>renombrar</strong> son la misma operación: <code>mv</code>.
+        La diferencia está en el destino que indiques.
       </TextBlock>
 
-      <div class="mv-comparison q-mt-md">
-        <div class="mv-case">
-          <div class="mv-case-header case-move">
-            <q-icon name="drive_file_move" size="md" />
-            <span>Caso A: Mover a Otra Carpeta</span>
+      <div class="mv-grid q-mt-lg">
+        <div v-for="m in mvCases" :key="m.title" class="mv-card" :style="{ '--mv-color': m.color }">
+          <div class="mv-card-header">
+            <div class="mv-letter" :style="{ background: m.color + '22', color: m.color }">{{ m.letter }}</div>
+            <div>
+              <div class="mv-card-title">{{ m.title }}</div>
+              <div class="mv-card-sub">{{ m.sub }}</div>
+            </div>
           </div>
-          <div class="mv-case-body">
-            <TextBlock>
-              Si el destino es una <strong>carpeta existente</strong>, el archivo se mueve dentro de
-              ella manteniendo su nombre.
-            </TextBlock>
-            <CodeBlock
-              lang="bash"
-              content="# Estructura inicial:
-# .
-# ├── robot.py
-# └── scripts/
-
-mv robot.py scripts/
-
-# Resultado:
-# .
-# └── scripts/
-#     └── robot.py"
-              :copyable="true"
-            />
-          </div>
-        </div>
-
-        <div class="mv-case">
-          <div class="mv-case-header case-rename">
-            <q-icon name="edit" size="md" />
-            <span>Caso B: Renombrar en el Mismo Lugar</span>
-          </div>
-          <div class="mv-case-body">
-            <TextBlock>
-              Si el destino es un <strong>nombre nuevo</strong> (no una carpeta existente), el
-              archivo cambia de nombre en el mismo directorio.
-            </TextBlock>
-            <CodeBlock
-              lang="bash"
-              content="# Renombrar archivo
-mv robot_viejo.py robot_nuevo.py
-
-# Renombrar carpeta
-mv carpeta_vieja/ carpeta_nueva/"
-              :copyable="true"
-            />
-          </div>
-        </div>
-
-        <div class="mv-case">
-          <div class="mv-case-header case-both">
-            <q-icon name="compare_arrows" size="md" />
-            <span>Caso C: Mover Y Renombrar</span>
-          </div>
-          <div class="mv-case-body">
-            <TextBlock>
-              Puedes hacer ambas cosas a la vez: mover a otra carpeta y cambiar el nombre.
-            </TextBlock>
-            <CodeBlock
-              lang="bash"
-              content="# Mover y renombrar simultáneamente
-mv robot.py scripts/control_node.py
-
-# El archivo cambia de nombre Y de ubicación"
-              :copyable="true"
-            />
-          </div>
+          <CodeBlock :hide-header="true" lang="bash" :content="m.code" />
         </div>
       </div>
 
-      <div class="q-mt-lg">
-        <AlertBlock type="success" title="Tip Pro: Renombrar Múltiples Archivos">
-          Para renombrar muchos archivos a la vez, usa un loop en bash:
-          <br /><br />
-          <code>for f in *.txt; do mv "$f" "${f%.txt}.log"; done</code>
-          <br /><br />
-          Esto convierte todos los <code>.txt</code> en <code>.log</code>
-        </AlertBlock>
-      </div>
+      <AlertBlock type="success" title="Pro tip: Renombrar múltiples archivos con un loop">
+        <code>for f in *.txt; do mv "$f" "${f%.txt}.log"; done</code><br /><br />
+        Convierte todos los <code>.txt</code> a <code>.log</code> en un solo comando.
+      </AlertBlock>
     </div>
 
-    <!-- ============================================ -->
-    <!-- SECCIÓN 6: RM - ELIMINAR (PELIGRO) -->
-    <!-- ============================================ -->
+    <!-- ══════════════════════════════════════════
+         SECCIÓN 6: RM — ZONA DE PELIGRO
+    ══════════════════════════════════════════ -->
     <div class="section-group">
-      <SectionTitle>5. Eliminar Archivos y Directorios: rm (Remove)</SectionTitle>
+      <SectionTitle>
+        <span class="cmd-badge red">05</span>
+        Eliminar — <code class="cmd-inline">rm</code>
+        <span class="danger-tag">PELIGRO</span>
+      </SectionTitle>
 
-      <div class="danger-zone">
-        <div class="danger-header">
-          <q-icon name="warning" size="xl" color="red-5" />
-          <div class="danger-title">⚠️ ZONA DE PELIGRO ⚠️</div>
-        </div>
-        <div class="danger-body">
-          <TextBlock>
-            En la terminal <strong>NO EXISTE LA PAPELERA DE RECICLAJE</strong>.
-            <br />
-            Cuando borras algo con <code>rm</code>, desaparece para siempre. No hay "Ctrl+Z". No hay
-            "Restaurar". <br /><br />
-            <strong>Regla de supervivencia:</strong> Siempre verifica dos veces antes de presionar
-            Enter en un comando <code>rm</code>.
-          </TextBlock>
-        </div>
-      </div>
-
-      <div class="row q-col-gutter-md q-mt-lg">
-        <div class="col-12 col-md-4">
-          <div class="rm-card rm-file">
-            <div class="rm-header">
-              <q-icon name="description" size="lg" />
-              <div class="rm-title">Borrar Archivo</div>
-            </div>
-            <CodeBlock :hide-header="true" lang="bash" content="rm archivo.txt" />
-            <div class="rm-note">Simple y directo. El archivo desaparece.</div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <div class="rm-card rm-interactive">
-            <div class="rm-header">
-              <q-icon name="help" size="lg" />
-              <div class="rm-title">Borrar con Confirmación</div>
-            </div>
-            <CodeBlock :hide-header="true" lang="bash" content="rm -i archivo.txt" />
-            <div class="rm-note">
-              Pregunta antes de borrar: <code>remove archivo.txt? (y/n)</code>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <div class="rm-card rm-recursive">
-            <div class="rm-header">
-              <q-icon name="folder_delete" size="lg" />
-              <div class="rm-title">Borrar Directorio</div>
-            </div>
-            <CodeBlock :hide-header="true" lang="bash" content="rm -r carpeta/" />
-            <div class="rm-note">
-              <code>-r</code> (recursive) borra la carpeta y todo su contenido
+      <!-- Danger banner -->
+      <div class="danger-banner q-mt-lg">
+        <div class="danger-stripe"></div>
+        <div class="danger-content">
+          <q-icon name="warning" size="2.5rem" color="negative" />
+          <div class="danger-text">
+            <div class="danger-title">EN LA TERMINAL NO EXISTE LA PAPELERA</div>
+            <div class="danger-sub">
+              Cuando borras con <code>rm</code>, desaparece para siempre.
+              No hay <kbd>Ctrl+Z</kbd>. No hay "Restaurar". <strong>Verifica dos veces antes de Enter.</strong>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="q-mt-lg">
-        <AlertBlock type="danger" title="El Comando Más Peligroso del Universo">
-          <code>rm -rf /</code> (con permisos de root) borraría <strong>TODO</strong> tu sistema
-          operativo. <br /><br />
-          <strong>Nunca</strong> copies comandos de internet sin entenderlos. Un espacio mal puesto
-          puede destruir tu trabajo de meses. <br /><br />
-          Ejemplo peligroso: <code>rm -rf carpeta /</code> (nota el espacio antes de <code>/</code>)
-          borraría la carpeta Y la raíz del sistema.
-        </AlertBlock>
+      <!-- rm variants -->
+      <div class="rm-grid q-mt-lg">
+        <div v-for="r in rmVariants" :key="r.title" class="rm-card" :style="{ '--rm-color': r.color }">
+          <div class="rm-top">
+            <q-icon :name="r.icon" size="20px" :style="{ color: r.color }" />
+            <code class="rm-flag">{{ r.flag }}</code>
+          </div>
+          <div class="rm-title">{{ r.title }}</div>
+          <CodeBlock :hide-header="true" lang="bash" :content="r.code" />
+          <div class="rm-note">{{ r.note }}</div>
+        </div>
       </div>
+
+      <AlertBlock type="danger" title="El comando más destructivo del universo" class="q-mt-lg">
+        <code>rm -rf /</code> con permisos de root borraría <strong>TODO</strong> tu sistema operativo.<br /><br />
+        <strong>Nunca</strong> copies comandos de internet sin entenderlos. Un espacio mal puesto puede destruirlo todo:<br />
+        <code>rm -rf carpeta /</code> — nota el espacio antes de <code>/</code>: borraría la carpeta <em>y</em> la raíz.
+      </AlertBlock>
 
       <div class="q-mt-md">
         <SplitBlock>
           <template #left>
-            <AlertBlock type="info" title="Alternativa Segura: Mover a Papelera">
-              Algunos sistemas tienen el comando <code>trash</code> o <code>gio trash</code> que
-              mueve archivos a la papelera en lugar de borrarlos permanentemente. <br /><br />
-              <code>gio trash archivo.txt</code>
+            <AlertBlock type="info" title="Alternativa segura: Mover a Papelera">
+              <code>gio trash archivo.txt</code><br /><br />
+              Mueve el archivo a la papelera del sistema en lugar de borrarlo permanentemente.
             </AlertBlock>
           </template>
-
           <template #right>
-            <AlertBlock type="success" title="Protección: Alias Seguro">
-              Agrega esto a tu <code>~/.bashrc</code> para que <code>rm</code> siempre pregunte:
-              <br /><br />
-              <code>alias rm='rm -i'</code>
-              <br /><br />
-              Después de editar, ejecuta <code>source ~/.bashrc</code>
+            <AlertBlock type="success" title="Protección: Alias en ~/.bashrc">
+              <code>alias rm='rm -i'</code><br /><br />
+              Así <code>rm</code> siempre pedirá confirmación. Aplica con <code>source ~/.bashrc</code>.
             </AlertBlock>
           </template>
         </SplitBlock>
       </div>
     </div>
 
-    <!-- ============================================ -->
-    <!-- SECCIÓN 7: WILDCARDS (COMODINES) -->
-    <!-- ============================================ -->
+    <!-- ══════════════════════════════════════════
+         SECCIÓN 7: WILDCARDS
+    ══════════════════════════════════════════ -->
     <div class="section-group">
-      <SectionTitle>6. Wildcards: Operaciones en Masa</SectionTitle>
+      <SectionTitle>Wildcards — Operaciones en Masa</SectionTitle>
       <TextBlock>
-        Los <strong>wildcards</strong> (comodines) son caracteres especiales que representan
-        múltiples archivos a la vez. Son esenciales para trabajar eficientemente.
+        Los <strong>wildcards</strong> (comodines) representan múltiples archivos a la vez.
+        Son esenciales para trabajar eficientemente con docenas de archivos.
       </TextBlock>
 
-      <div class="wildcards-grid q-mt-md">
-        <div class="wildcard-card">
-          <div class="wildcard-symbol">*</div>
-          <div class="wildcard-name">Asterisco</div>
-          <div class="wildcard-desc">
-            Representa <strong>cualquier cantidad</strong> de caracteres
-          </div>
-          <div class="wildcard-examples">
-            <div class="example-item"><code>*.py</code> → Todos los archivos Python</div>
-            <div class="example-item">
-              <code>robot_*</code> → robot_v1.py, robot_v2.py, robot_final.py
-            </div>
-            <div class="example-item"><code>*</code> → Absolutamente todos los archivos</div>
-          </div>
-        </div>
-
-        <div class="wildcard-card">
-          <div class="wildcard-symbol">?</div>
-          <div class="wildcard-name">Signo de Interrogación</div>
-          <div class="wildcard-desc">Representa <strong>exactamente un</strong> carácter</div>
-          <div class="wildcard-examples">
-            <div class="example-item"><code>log?.txt</code> → log1.txt, log2.txt, logA.txt</div>
-            <div class="example-item">
-              <code>????.py</code> → Archivos Python de exactamente 4 letras
-            </div>
-          </div>
-        </div>
-
-        <div class="wildcard-card">
-          <div class="wildcard-symbol">[]</div>
-          <div class="wildcard-name">Corchetes</div>
-          <div class="wildcard-desc">
-            Representa <strong>uno de</strong> los caracteres listados
-          </div>
-          <div class="wildcard-examples">
-            <div class="example-item"><code>log[123].txt</code> → log1.txt, log2.txt, log3.txt</div>
-            <div class="example-item">
-              <code>[A-Z]*.py</code> → Archivos que empiezan con mayúscula
+      <div class="wc-grid q-mt-lg">
+        <div v-for="w in wildcards" :key="w.symbol" class="wc-card">
+          <div class="wc-symbol" :style="{ color: w.color }">{{ w.symbol }}</div>
+          <div class="wc-name">{{ w.name }}</div>
+          <div class="wc-desc">{{ w.desc }}</div>
+          <div class="wc-examples">
+            <div v-for="ex in w.examples" :key="ex.pattern" class="wc-example">
+              <code class="wc-pattern" :style="{ color: w.color }">{{ ex.pattern }}</code>
+              <span class="wc-result">→ {{ ex.result }}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="q-mt-lg">
-        <SectionTitle>Ejemplos Prácticos con Wildcards</SectionTitle>
-        <div class="row q-col-gutter-md q-mt-sm">
-          <div class="col-12 col-md-6">
-            <CodeBlock
-              title="Copiar todos los archivos Python a backup"
-              lang="bash"
-              content="cp *.py backup/"
-              :copyable="true"
-            />
-          </div>
-          <div class="col-12 col-md-6">
-            <CodeBlock
-              title="Borrar todos los logs temporales"
-              lang="bash"
-              content="rm temp_*.log"
-              :copyable="true"
-            />
-          </div>
-          <div class="col-12 col-md-6">
-            <CodeBlock
-              title="Mover archivos de configuración"
-              lang="bash"
-              content="mv *.yaml config/"
-              :copyable="true"
-            />
-          </div>
-          <div class="col-12 col-md-6">
-            <CodeBlock
-              title="Listar solo archivos de rosbag"
-              lang="bash"
-              content="ls *.db3"
-              :copyable="true"
-            />
+      <!-- Wildcard practice table -->
+      <div class="wc-practice q-mt-xl">
+        <div class="wcp-header">
+          <q-icon name="terminal" size="16px" color="primary" />
+          Ejemplos Prácticos en ROS 2
+        </div>
+        <div class="wcp-rows">
+          <div v-for="p in wcPractice" :key="p.cmd" class="wcp-row">
+            <code class="wcp-cmd">{{ p.cmd }}</code>
+            <span class="wcp-desc">{{ p.desc }}</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ============================================ -->
-    <!-- SECCIÓN 8: ERRORES COMUNES -->
-    <!-- ============================================ -->
+    <!-- ══════════════════════════════════════════
+         SECCIÓN 8: ERRORES COMUNES
+    ══════════════════════════════════════════ -->
     <div class="section-group">
-      <SectionTitle>Errores Comunes y Soluciones</SectionTitle>
+      <SectionTitle>Errores Comunes y Cómo Resolverlos</SectionTitle>
 
-      <div class="error-accordion">
-        <q-expansion-item
-          icon="error"
-          label="mkdir: cannot create directory 'carpeta': File exists"
-          header-class="error-header"
-        >
-          <div class="error-content">
-            <div class="error-cause">
-              <strong>Causa:</strong> Intentaste crear una carpeta que ya existe.
+      <div class="error-list q-mt-lg">
+        <div v-for="(err, i) in commonErrors" :key="i" class="error-item">
+          <div class="err-header" @click="err.open = !err.open">
+            <div class="err-left">
+              <div class="err-number">{{ i + 1 }}</div>
+              <div>
+                <code class="err-msg">{{ err.msg }}</code>
+                <div class="err-summary">{{ err.summary }}</div>
+              </div>
             </div>
-            <div class="error-solution">
+            <q-icon :name="err.open ? 'expand_less' : 'expand_more'" size="20px" style="color: var(--text-muted)" />
+          </div>
+          <div v-show="err.open" class="err-body">
+            <div class="err-cause">
+              <q-icon name="search" size="14px" class="q-mr-xs" />
+              <strong>Causa:</strong> {{ err.cause }}
+            </div>
+            <div class="err-solution">
+              <q-icon name="check_circle" size="14px" class="q-mr-xs" color="positive" />
               <strong>Solución:</strong>
-              <ul>
-                <li>Usa <code>ls</code> para verificar qué carpetas existen</li>
-                <li>Usa <code>mkdir -p</code> que no da error si ya existe</li>
-                <li>Elige otro nombre para la carpeta</li>
-              </ul>
+              <ol><li v-for="s in err.steps" :key="s">{{ s }}</li></ol>
             </div>
           </div>
-        </q-expansion-item>
-
-        <q-expansion-item
-          icon="error"
-          label="cp: cannot stat 'archivo.txt': No such file or directory"
-          header-class="error-header"
-        >
-          <div class="error-content">
-            <div class="error-cause">
-              <strong>Causa:</strong> El archivo origen no existe o escribiste mal el nombre.
-            </div>
-            <div class="error-solution">
-              <strong>Solución:</strong>
-              <ol>
-                <li>Verifica que estás en el directorio correcto con <code>pwd</code></li>
-                <li>Lista los archivos disponibles con <code>ls</code></li>
-                <li>Usa TAB para autocompletar nombres</li>
-                <li>Recuerda que Linux es case-sensitive (Archivo.txt ≠ archivo.txt)</li>
-              </ol>
-            </div>
-          </div>
-        </q-expansion-item>
-
-        <q-expansion-item
-          icon="error"
-          label="rm: cannot remove 'carpeta': Is a directory"
-          header-class="error-header"
-        >
-          <div class="error-content">
-            <div class="error-cause">
-              <strong>Causa:</strong> Intentaste borrar una carpeta sin la bandera <code>-r</code>.
-            </div>
-            <div class="error-solution">
-              <strong>Solución:</strong>
-              <ul>
-                <li>Usa <code>rm -r carpeta/</code> para borrar la carpeta y su contenido</li>
-                <li>Usa <code>rm -ri carpeta/</code> si quieres confirmación para cada archivo</li>
-                <li>
-                  Alternativamente, usa <code>rmdir carpeta/</code> (solo funciona si está vacía)
-                </li>
-              </ul>
-            </div>
-          </div>
-        </q-expansion-item>
-
-        <q-expansion-item
-          icon="error"
-          label="Borré un archivo importante por accidente, ¿puedo recuperarlo?"
-          header-class="error-header"
-        >
-          <div class="error-content">
-            <div class="error-cause">
-              <strong>Situación:</strong> Ejecutaste <code>rm</code> y te arrepentiste
-              inmediatamente.
-            </div>
-            <div class="error-solution">
-              <strong>Respuesta dura:</strong> Si usaste <code>rm</code>, el archivo está perdido
-              para siempre. No hay papelera de reciclaje. <br /><br />
-              <strong>Prevención futura:</strong>
-              <ul>
-                <li>Usa Git para versionar tu código (puedes recuperar versiones antiguas)</li>
-                <li>
-                  Haz backups regulares con <code>cp</code> o herramientas como <code>rsync</code>
-                </li>
-                <li>
-                  Configura el alias <code>alias rm='rm -i'</code> para confirmación automática
-                </li>
-                <li>
-                  Considera usar <code>trash-cli</code> en lugar de <code>rm</code> para tener
-                  papelera
-                </li>
-              </ul>
-            </div>
-          </div>
-        </q-expansion-item>
+        </div>
       </div>
     </div>
 
-    <!-- ============================================ -->
-    <!-- SECCIÓN 9: RETO PRÁCTICO -->
-    <!-- ============================================ -->
+    <!-- ══════════════════════════════════════════
+         SECCIÓN 9: RETO PRÁCTICO
+    ══════════════════════════════════════════ -->
     <div class="section-group">
-      <SectionTitle>🏆 Reto de Ingeniería: Organizar un Workspace</SectionTitle>
-      <TextBlock>
-        Simula la creación de un workspace de ROS 2 desde cero. Ejecuta estos comandos línea por
-        línea y observa cómo se construye la estructura:
-      </TextBlock>
+      <SectionTitle>Reto de Ingeniería — Organizar un Workspace</SectionTitle>
 
-      <CodeBlock
-        title="Construcción de Workspace Completo"
-        lang="bash"
-        content="# 1. Crear estructura base
+      <div class="challenge-box">
+        <div class="challenge-header">
+          <div class="challenge-icon">
+            <q-icon name="emoji_events" size="28px" color="warning" />
+          </div>
+          <div>
+            <div class="challenge-title">Construye un workspace ROS 2 desde cero</div>
+            <div class="challenge-subtitle">
+              Ejecuta los comandos línea por línea y observa cómo se construye la estructura.
+            </div>
+          </div>
+          <div class="challenge-badge">NIVEL BÁSICO</div>
+        </div>
+
+        <CodeBlock title="Construcción de Workspace Completo" lang="bash"
+          content="# 1. Crear estructura base
 mkdir -p ~/ros2_ws/src/mi_robot/{launch,config,scripts,msg}
 
 # 2. Crear archivos de configuración
@@ -645,610 +391,676 @@ touch package.xml setup.py
 touch config/nav2_params.yaml
 touch launch/robot_bringup.launch.py
 touch scripts/control_node.py
-
-# 3. Crear mensaje custom
 touch msg/SensorData.msg
 
-# 4. Verificar estructura
+# 3. Verificar estructura
 cd ~/ros2_ws
-tree src/  # (o usa 'find src/' si no tienes tree)
+find src/ -type f
 
-# 5. Hacer backup de la configuración
+# 4. Hacer backup de configuración
 cp config/nav2_params.yaml config/nav2_params.yaml.backup
 
-# 6. Simular limpieza de archivos temporales
-cd ~/ros2_ws
-touch build.log install.log
+# 5. Simular limpieza de temporales
+cd ~/ros2_ws && touch build.log install.log
 rm *.log
 
-# 7. Verificar resultado final
-ls -lah"
-        :copyable="true"
-      />
+# 6. Verificar resultado final
+ls -lah" :copyable="true" />
 
-      <div class="q-mt-md">
-        <AlertBlock type="success" title="Resultado Esperado">
-          Deberías tener una estructura completa de paquete ROS 2 con carpetas organizadas, archivos
-          placeholder, y un backup de configuración. Los archivos <code>.log</code> temporales
-          fueron eliminados.
-        </AlertBlock>
+        <q-expansion-item
+          icon="lightbulb"
+          label="Ver resultado esperado (no hagas trampa)"
+          header-class="answer-header"
+          class="q-mt-md"
+        >
+          <div class="answer-body">
+            <div class="answer-row">
+              <span class="answer-key">📂 Estructura creada:</span>
+              <span>ros2_ws/src/mi_robot/ con launch/, config/, scripts/, msg/</span>
+            </div>
+            <div class="answer-row">
+              <span class="answer-key">📄 Archivos creados:</span>
+              <span>package.xml, setup.py, nav2_params.yaml, robot_bringup.launch.py, control_node.py, SensorData.msg</span>
+            </div>
+            <div class="answer-row">
+              <span class="answer-key">💾 Backup:</span>
+              <code>config/nav2_params.yaml.backup</code>
+            </div>
+            <div class="answer-row">
+              <span class="answer-key">🧹 Limpieza:</span>
+              <span>Los archivos build.log e install.log fueron eliminados con el wildcard <code>*.log</code></span>
+            </div>
+          </div>
+        </q-expansion-item>
       </div>
     </div>
 
-    <!-- ============================================ -->
-    <!-- SECCIÓN 10: VIDEO COMPLEMENTARIO -->
-    <!-- ============================================ -->
+    <!-- ══════════════════════════════════════════
+         SECCIÓN 10: VIDEO
+    ══════════════════════════════════════════ -->
     <div class="section-group">
-      <SectionTitle>📹 Video Complementario</SectionTitle>
-      <TextBlock>
-        Mira este video tutorial que demuestra estas operaciones de gestión de archivos en acción:
-      </TextBlock>
+      <SectionTitle>Video Complementario</SectionTitle>
+      <TextBlock>Mira estas operaciones de gestión de archivos en acción:</TextBlock>
 
-      <div class="video-container q-mt-md">
+      <div class="video-card q-mt-md">
         <div class="video-wrapper">
-          <iframe
-            src="https://www.youtube.com/embed/Romc22GgusU"
-            title="Gestión de Archivos en Linux"
-            frameborder="0"
-            allow="
-              accelerometer;
-              autoplay;
-              clipboard-write;
-              encrypted-media;
-              gyroscope;
-              picture-in-picture;
-            "
-            allowfullscreen
-          ></iframe>
+          <iframe src="https://www.youtube.com/embed/Romc22GgusU"
+            title="Gestión de Archivos en Linux" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
         </div>
         <div class="video-caption">
-          <q-icon name="info" color="blue-4" size="sm" class="q-mr-sm" />
-          Video en Progreso
+          <q-icon name="info" size="16px" color="info" class="q-mr-sm" />
+          Video en progreso — será reemplazado con contenido del curso.
         </div>
       </div>
     </div>
 
-    <!-- ============================================ -->
-    <!-- SECCIÓN 11: RESUMEN -->
-    <!-- ============================================ -->
+    <!-- ══════════════════════════════════════════
+         SECCIÓN 11: RESUMEN
+    ══════════════════════════════════════════ -->
     <div class="section-group q-mb-xl">
-      <SectionTitle>📝 Resumen de Comandos Esenciales</SectionTitle>
+      <SectionTitle>Resumen — Comandos Esenciales</SectionTitle>
 
-      <div class="summary-table">
-        <div class="summary-row summary-header">
-          <div class="summary-cell">Comando</div>
-          <div class="summary-cell">Descripción</div>
-          <div class="summary-cell">Ejemplo</div>
-        </div>
-        <div class="summary-row">
-          <div class="summary-cell"><code>mkdir -p</code></div>
-          <div class="summary-cell">Crear directorios (con jerarquía)</div>
-          <div class="summary-cell"><code>mkdir -p a/b/c</code></div>
-        </div>
-        <div class="summary-row">
-          <div class="summary-cell"><code>touch</code></div>
-          <div class="summary-cell">Crear archivo vacío</div>
-          <div class="summary-cell"><code>touch robot.py</code></div>
-        </div>
-        <div class="summary-row">
-          <div class="summary-cell"><code>cp -r</code></div>
-          <div class="summary-cell">Copiar archivos/directorios</div>
-          <div class="summary-cell"><code>cp -r src/ backup/</code></div>
-        </div>
-        <div class="summary-row">
-          <div class="summary-cell"><code>mv</code></div>
-          <div class="summary-cell">Mover o renombrar</div>
-          <div class="summary-cell"><code>mv old.txt new.txt</code></div>
-        </div>
-        <div class="summary-row">
-          <div class="summary-cell"><code>rm -r</code></div>
-          <div class="summary-cell">Eliminar archivos/directorios</div>
-          <div class="summary-cell"><code>rm -r temp/</code></div>
-        </div>
-        <div class="summary-row">
-          <div class="summary-cell"><code>*.ext</code></div>
-          <div class="summary-cell">Wildcard para múltiples archivos</div>
-          <div class="summary-cell"><code>rm *.log</code></div>
+      <div class="summary-grid q-mt-lg">
+        <div v-for="s in summaryCommands" :key="s.cmd" class="summary-card" :style="{ '--sc-color': s.color }">
+          <code class="sc-cmd">{{ s.cmd }}</code>
+          <div class="sc-desc">{{ s.desc }}</div>
+          <div class="sc-example">
+            <q-icon name="terminal" size="12px" class="q-mr-xs" />{{ s.example }}
+          </div>
         </div>
       </div>
 
-      <AlertBlock type="success" title="Próximo Paso" class="q-mt-lg">
-        Ahora que dominas la creación y gestión de archivos, el siguiente módulo te enseñará sobre
-        <strong>permisos y usuarios</strong>: cómo controlar quién puede leer, escribir o ejecutar
-        tus archivos. ¡Esencial para la seguridad de tu robot!
+      <AlertBlock type="success" title="¡Siguiente paso!" class="q-mt-xl">
+        Ahora que dominas la gestión de archivos, el siguiente módulo te enseñará sobre
+        <strong>permisos y usuarios</strong>: controlar quién puede leer, escribir o ejecutar tus archivos.
+        ¡Esencial para la seguridad de tu robot!
       </AlertBlock>
     </div>
+
   </LessonContainer>
 </template>
 
 <script setup lang="ts">
+import { reactive } from 'vue';
 import LessonContainer from 'components/content/LessonContainer.vue';
 import SectionTitle from 'components/content/SectionTitle.vue';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
 import CodeBlock from 'components/content/CodeBlock.vue';
 import SplitBlock from 'components/content/SplitBlock.vue';
+
+// ── Fact pills ────────────────────────────────────────────────────
+const facts = [
+  { icon: '📁', label: 'mkdir — crea directorios y jerarquías' },
+  { icon: '📄', label: 'touch — crea archivos vacíos al instante' },
+  { icon: '📋', label: 'cp/mv/rm — copia, mueve y elimina' },
+];
+
+// ── cp operations ─────────────────────────────────────────────────
+const cpOps = [
+  {
+    title: 'Copiar Archivo', flag: '(sin flags)', color: '#22d3ee',
+    icon: 'content_copy',
+    desc: 'Duplica un archivo en el mismo directorio o en otro. El original permanece intacto.',
+    code: '# Mismo directorio\ncp robot.py robot_backup.py\n\n# A otro directorio\ncp robot.py ~/backups/',
+    note: 'El archivo origen permanece intacto',
+  },
+  {
+    title: 'Copiar Directorio', flag: '-r (recursive)', color: '#c084fc',
+    icon: 'folder_copy',
+    desc: 'Copia carpetas completas incluyendo todos sus archivos y subdirectorios.',
+    code: '# Copiar carpeta completa\ncp -r mi_robot/ mi_robot_backup/\n\n# Copia TODO el árbol',
+    note: 'Sin -r obtendrás error: "omitting directory"',
+  },
+  {
+    title: 'Copiar con Confirmación', flag: '-i (interactive)', color: '#fb923c',
+    icon: 'help_outline',
+    desc: 'Pregunta antes de sobrescribir un archivo existente en el destino.',
+    code: '# Pregunta si el destino existe\ncp -i robot.py robot_backup.py\n# overwrite \'robot_backup.py\'? (y/n)',
+    note: 'Evita pérdidas accidentales de datos',
+  },
+];
+
+// ── mv cases ──────────────────────────────────────────────────────
+const mvCases = [
+  {
+    letter: 'A', title: 'Mover a otra carpeta', color: '#22d3ee',
+    sub: 'El destino es una carpeta existente',
+    code: '# Mueve robot.py dentro de scripts/\nmv robot.py scripts/\n\n# Antes: ./robot.py\n# Después: scripts/robot.py',
+  },
+  {
+    letter: 'B', title: 'Renombrar en el mismo lugar', color: '#a78bfa',
+    sub: 'El destino es un nombre nuevo (no una carpeta)',
+    code: '# Renombrar archivo\nmv robot_viejo.py robot_nuevo.py\n\n# Renombrar carpeta\nmv carpeta_vieja/ carpeta_nueva/',
+  },
+  {
+    letter: 'C', title: 'Mover Y renombrar', color: '#4ade80',
+    sub: 'Mueve a otra carpeta y cambia el nombre a la vez',
+    code: '# Mover y renombrar simultáneamente\nmv robot.py scripts/control_node.py\n\n# Cambia de nombre Y de ubicación',
+  },
+];
+
+// ── rm variants ───────────────────────────────────────────────────
+const rmVariants = [
+  {
+    title: 'Borrar archivo', flag: 'rm archivo', color: '#94a3b8',
+    icon: 'description',
+    code: 'rm archivo.txt',
+    note: 'Simple y directo. El archivo desaparece permanentemente.',
+  },
+  {
+    title: 'Borrar con confirmación', flag: 'rm -i', color: '#fbbf24',
+    icon: 'help_outline',
+    code: 'rm -i archivo.txt\n# remove archivo.txt? (y/n)',
+    note: 'Pregunta antes de borrar. Usa -i siempre que tengas dudas.',
+  },
+  {
+    title: 'Borrar directorio', flag: 'rm -r', color: '#f87171',
+    icon: 'folder_delete',
+    code: 'rm -r carpeta/\n\n# -ri: borra con confirmación\nrm -ri carpeta/',
+    note: '-r (recursive) borra la carpeta y todo su contenido',
+  },
+];
+
+// ── Wildcards ─────────────────────────────────────────────────────
+const wildcards = [
+  {
+    symbol: '*', name: 'Asterisco', color: '#f59e0b',
+    desc: 'Cualquier cantidad de caracteres (incluso ninguno)',
+    examples: [
+      { pattern: '*.py', result: 'Todos los archivos Python' },
+      { pattern: 'robot_*', result: 'robot_v1.py, robot_v2.py…' },
+      { pattern: 'log_*_2024*', result: 'Archivos de log de 2024' },
+    ],
+  },
+  {
+    symbol: '?', name: 'Interrogación', color: '#a78bfa',
+    desc: 'Exactamente UN carácter (el que sea)',
+    examples: [
+      { pattern: 'log?.txt', result: 'log1.txt, log2.txt, logA.txt' },
+      { pattern: 'node_?.py', result: 'node_1.py, node_2.py' },
+      { pattern: 'v?.?.?', result: 'v1.0.0, v2.3.1' },
+    ],
+  },
+  {
+    symbol: '[]', name: 'Corchetes', color: '#22d3ee',
+    desc: 'UNO de los caracteres dentro de los corchetes',
+    examples: [
+      { pattern: 'log[123].txt', result: 'log1.txt, log2.txt, log3.txt' },
+      { pattern: '[A-Z]*.py', result: 'Archivos que empiezan con mayúscula' },
+      { pattern: '*.[ch]', result: 'Archivos .c y .h (C/C++)' },
+    ],
+  },
+];
+
+const wcPractice = [
+  { cmd: 'cp *.py backup/', desc: 'Copia todos los scripts Python a la carpeta de backup' },
+  { cmd: 'rm temp_*.log', desc: 'Elimina todos los logs temporales de simulación' },
+  { cmd: 'mv *.yaml config/', desc: 'Mueve todos los archivos YAML a la carpeta config' },
+  { cmd: 'ls *.db3', desc: 'Lista todos los rosbags grabados' },
+  { cmd: 'touch test_{1,2,3}.py', desc: 'Crea test_1.py, test_2.py y test_3.py a la vez' },
+];
+
+// ── Common errors ─────────────────────────────────────────────────
+const commonErrors = reactive([
+  {
+    msg: "mkdir: cannot create directory 'carpeta': File exists",
+    summary: 'Intentaste crear una carpeta que ya existe',
+    cause: 'El directorio ya existe en esa ruta.',
+    steps: [
+      'Usa ls para verificar qué carpetas ya existen.',
+      'Usa mkdir -p que ignora el error si la carpeta ya existe.',
+      'Elige otro nombre para el directorio.',
+    ],
+    open: false,
+  },
+  {
+    msg: "cp: cannot stat 'archivo.txt': No such file or directory",
+    summary: 'El archivo origen no existe o el nombre está mal escrito',
+    cause: 'El archivo que intentas copiar no existe en el directorio actual.',
+    steps: [
+      'Verifica que estás en el directorio correcto con pwd.',
+      'Lista los archivos disponibles con ls.',
+      'Usa TAB para autocompletar nombres y evitar errores tipográficos.',
+      'Recuerda: Linux es case-sensitive (Archivo.txt ≠ archivo.txt).',
+    ],
+    open: false,
+  },
+  {
+    msg: "rm: cannot remove 'carpeta': Is a directory",
+    summary: 'Intentaste borrar una carpeta sin la bandera -r',
+    cause: 'rm sin flags solo borra archivos. Para carpetas necesitas -r.',
+    steps: [
+      'Usa rm -r carpeta/ para borrar la carpeta y todo su contenido.',
+      'Usa rm -ri carpeta/ si quieres confirmar cada archivo.',
+      'Si la carpeta está vacía, puedes usar rmdir carpeta/.',
+    ],
+    open: false,
+  },
+  {
+    msg: 'Borré un archivo importante por accidente',
+    summary: 'rm eliminó algo que necesitabas',
+    cause: 'rm es permanente — no existe papelera de reciclaje en la terminal.',
+    steps: [
+      'Si usas Git, puedes recuperar versiones con git checkout -- archivo.',
+      'Haz backups regulares con cp o rsync antes de borrar.',
+      'Configura alias rm=\'rm -i\' en ~/.bashrc para pedir confirmación siempre.',
+      'Considera instalar trash-cli para tener papelera: gio trash archivo.',
+    ],
+    open: false,
+  },
+]);
+
+// ── Summary ───────────────────────────────────────────────────────
+const summaryCommands = [
+  { cmd: 'mkdir -p',  desc: 'Crear directorio (toda la jerarquía de una vez)', example: 'mkdir -p a/b/c', color: '#4ade80' },
+  { cmd: 'touch',     desc: 'Crear archivo vacío o actualizar timestamp',       example: 'touch robot.py', color: '#22d3ee' },
+  { cmd: 'cp -r',     desc: 'Copiar archivos o directorios',                    example: 'cp -r src/ bak/', color: '#c084fc' },
+  { cmd: 'mv',        desc: 'Mover o renombrar archivos y carpetas',            example: 'mv old.txt new.txt', color: '#f59e0b' },
+  { cmd: 'rm -r',     desc: 'Eliminar archivos o directorios (¡irreversible!)', example: 'rm -r temp/', color: '#f87171' },
+  { cmd: '* ? []',    desc: 'Wildcards para operar sobre múltiples archivos',   example: 'rm *.log', color: '#fb923c' },
+];
 </script>
 
 <style scoped>
-/* ============================================ */
-/* LAYOUT GENERAL */
-/* ============================================ */
-.section-group {
-  margin-bottom: 3.5rem;
+/* ══════════════════════════════════════════
+   BASE
+══════════════════════════════════════════ */
+.section-group { margin-bottom: 3.5rem; }
+
+code {
+  background: var(--bg-code);
+  color: var(--text-code);
+  padding: 2px 7px;
+  border-radius: 5px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9em;
+}
+kbd {
+  background: var(--bg-surface-hover);
+  border: 1px solid var(--border-medium);
+  border-bottom-width: 3px;
+  color: var(--text-primary);
+  padding: 2px 7px;
+  border-radius: 5px;
+  font-size: 0.85em;
 }
 
-/* ============================================ */
-/* HIERARCHY DEMO */
-/* ============================================ */
-.hierarchy-demo {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 16px;
-  padding: 1.5rem;
-  height: 100%;
+/* ── Section title enhancements */
+.cmd-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 8px;
+  font-size: 0.75rem; font-weight: 800;
+  margin-right: 8px; vertical-align: middle;
+}
+.cmd-badge.green  { background: rgba( 74,222,128,.15); color: #4ade80; }
+.cmd-badge.cyan   { background: rgba( 34,211,238,.15); color: #22d3ee; }
+.cmd-badge.purple { background: rgba(192,132,252,.15); color: #c084fc; }
+.cmd-badge.amber  { background: rgba(251,191, 36,.15); color: #fbbf24; }
+.cmd-badge.red    { background: rgba(248,113,113,.15); color: #f87171; }
+
+.cmd-inline { font-family:'Fira Code',monospace; font-size:.95em; background:none; color:var(--text-code); padding:0; }
+
+.danger-tag {
+  display: inline-flex; align-items: center;
+  font-size: 0.65rem; font-weight: 800; letter-spacing: .1em;
+  background: rgba(239,68,68,.15); color: #ef4444;
+  border: 1px solid rgba(239,68,68,.3);
+  padding: 2px 8px; border-radius: 999px;
+  margin-left: 10px; vertical-align: middle;
 }
 
-.demo-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #60a5fa;
-  margin-bottom: 1rem;
+/* ── Fact pills */
+.fact-pills { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:1.5rem; }
+.fact-pill {
+  display:flex; align-items:center; gap:8px;
+  background: var(--bg-surface); border: 1px solid var(--border-subtle);
+  border-radius: 999px; padding: 7px 16px;
+  font-size: 0.84rem; color: var(--text-secondary);
+  transition: transform .2s;
+}
+.fact-pill:hover { transform: translateY(-2px); }
+.fact-icon { font-size: 1rem; }
+
+/* ══════════════════════════════════════════
+   MKDIR TREE DEMO
+══════════════════════════════════════════ */
+.tree-demo-card {
+  background: var(--bg-surface); border: 1px solid var(--border-subtle);
+  border-radius: 16px; overflow: hidden; height: 100%;
+  display: flex; flex-direction: column;
+}
+.tree-demo-header {
+  background: var(--bg-deep); border-bottom: 1px solid var(--border-subtle);
+  padding: 10px 16px; display: flex; align-items: center; gap: 8px;
+  font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+}
+.tree-demo-body { padding: 0 12px; }
+.tree-result {
+  padding: 1rem 1.25rem;
+  font-family: 'Fira Code', monospace; font-size: 0.88rem;
+}
+.tr-node {
+  display: flex; align-items: center; gap: 6px;
+  padding: 3px 8px; border-radius: 5px; color: var(--text-secondary);
+  transition: background .2s;
+}
+.tr-node:hover { background: var(--bg-surface-hover); }
+.tr-children {
+  margin-left: 16px;
+  border-left: 2px dashed var(--border-medium);
+  padding-left: 10px;
+}
+.tree-note {
+  margin: 0 1rem 1rem 1rem;
+  display: flex; align-items: center;
+  font-size: 0.82rem; color: var(--text-muted);
+  background: var(--bg-surface-hover); border-radius: 8px; padding: 8px 12px;
 }
 
-.demo-note {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 1rem;
-  padding: 0.75rem;
-  background: rgba(234, 179, 8, 0.1);
-  border-radius: 8px;
-  color: #fbbf24;
-  font-size: 0.9rem;
+/* ══════════════════════════════════════════
+   TOUCH — INFO CARDS (2 col)
+══════════════════════════════════════════ */
+.two-col-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
 }
-
-/* ============================================ */
-/* CONCEPT CARDS */
-/* ============================================ */
-.concept-card {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 16px;
-  padding: 1.5rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+.info-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-top: 3px solid var(--ic-color, var(--border-medium));
+  border-radius: 14px; padding: 1.25rem;
+  display: flex; flex-direction: column; gap: 12px;
+  min-width: 0;
 }
+.ic-header { display:flex; align-items:center; gap:10px; }
+.ic-title { font-size:1rem; font-weight:700; color:var(--text-primary); }
+.ic-desc { font-size:0.9rem; color:var(--text-secondary); line-height:1.55; margin:0; }
 
-.concept-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 1.5rem;
-}
-
-.concept-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #f1f5f9;
-}
-
-.concept-body {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-/* ============================================ */
-/* SYNTAX CARD */
-/* ============================================ */
+/* ══════════════════════════════════════════
+   CP — SYNTAX + OP CARDS
+══════════════════════════════════════════ */
 .syntax-card {
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  border-radius: 12px;
+  background: var(--bg-surface); border: 1px solid var(--border-subtle);
+  border-radius: 12px; padding: 1.25rem 1.5rem;
+}
+.syntax-eyebrow {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: .1em;
+  color: var(--text-muted); display: block; margin-bottom: 10px;
+}
+.syntax-line {
+  font-family: 'Fira Code', monospace; font-size: 1.15rem;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.syn-cmd   { color: var(--text-code); font-weight: 800; }
+.syn-arg   { padding: 3px 10px; border-radius: 6px; font-size: 0.95rem; }
+.syn-arg.muted  { background: var(--bg-surface-hover); color: var(--text-muted); }
+.syn-arg.blue   { background: rgba(96,165,250,.15); color: #60a5fa; }
+.syn-arg.purple { background: rgba(167,139,250,.15); color: #a78bfa; }
+.syn-arrow { color: var(--text-muted); font-size: 1.1rem; }
+
+.op-cards-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.op-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-top: 3px solid var(--op-color, var(--border-medium));
+  border-radius: 14px; padding: 1.25rem;
+  display: flex; flex-direction: column; gap: 10px;
+  min-width: 0; transition: all .25s;
+}
+.op-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.op-icon-wrap {
+  width:48px; height:48px; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+}
+.op-title { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
+.op-flag code { font-family:'Fira Code',monospace; font-size:0.82rem; color:var(--op-color); background:none; padding:0; }
+.op-desc { font-size:0.88rem; color:var(--text-secondary); line-height:1.5; margin:0; flex:1; }
+.op-note {
+  display:flex; align-items:center; font-size:0.8rem; color:var(--text-muted);
+  background:var(--bg-surface-hover); border-radius:7px; padding:7px 10px;
+}
+
+/* ══════════════════════════════════════════
+   MV — GRID
+══════════════════════════════════════════ */
+.mv-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.mv-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--mv-color, var(--border-medium));
+  border-radius: 12px; padding: 1.25rem;
+  display: flex; flex-direction: column; gap: 10px;
+  min-width: 0; transition: all .25s;
+}
+.mv-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.mv-card-header { display:flex; align-items:flex-start; gap:12px; }
+.mv-letter {
+  width:36px; height:36px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1rem; font-weight:900; flex-shrink:0;
+}
+.mv-card-title { font-size:0.95rem; font-weight:700; color:var(--text-primary); line-height:1.3; }
+.mv-card-sub   { font-size:0.78rem; color:var(--text-muted); margin-top:2px; }
+.mv-card :deep(pre), .mv-card :deep(code) { overflow-x:auto; max-width:100%; }
+
+/* ══════════════════════════════════════════
+   RM — DANGER BANNER + GRID
+══════════════════════════════════════════ */
+.danger-banner {
+  background: linear-gradient(135deg, rgba(127,29,29,.18), rgba(153,27,27,.18));
+  border: 2px solid rgba(239,68,68,.45);
+  border-radius: 16px; overflow: hidden;
+}
+.danger-stripe {
+  height: 6px;
+  background: repeating-linear-gradient(
+    45deg, #ef4444 0, #ef4444 8px, transparent 8px, transparent 16px
+  );
+  opacity: .7;
+}
+.danger-content {
+  display: flex; align-items: flex-start; gap: 1.25rem;
   padding: 1.5rem;
 }
-
-.syntax-label {
-  font-size: 0.85rem;
-  color: #94a3b8;
-  margin-bottom: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.syntax-pattern {
-  font-family: 'Fira Code', monospace;
-  font-size: 1.25rem;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.syntax-cmd {
-  color: #22c55e;
-  font-weight: 700;
-}
-
-.syntax-arg {
-  color: #94a3b8;
-  padding: 0.25rem 0.75rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 6px;
-}
-
-.syntax-arg.origin {
-  color: #60a5fa;
-  background: rgba(59, 130, 246, 0.1);
-}
-
-.syntax-arg.dest {
-  color: #a78bfa;
-  background: rgba(167, 139, 250, 0.1);
-}
-
-/* ============================================ */
-/* OPERATION CARDS */
-/* ============================================ */
-.operation-card {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 12px;
-  padding: 1.5rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
-}
-
-.operation-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
-}
-
-.operation-icon {
-  margin-bottom: 1rem;
-}
-
-.operation-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #f1f5f9;
-  margin-bottom: 0.75rem;
-}
-
-.operation-desc {
-  color: #cbd5e1;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-  flex-grow: 1;
-}
-
-.operation-note {
-  margin-top: 1rem;
-  padding: 0.5rem;
-  background: rgba(59, 130, 246, 0.1);
-  border-radius: 6px;
-  font-size: 0.85rem;
-  color: #94a3b8;
-}
-
-/* ============================================ */
-/* MV COMPARISON */
-/* ============================================ */
-.mv-comparison {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.mv-case {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.mv-case-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 1rem 1.5rem;
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.mv-case-header.case-move {
-  background: rgba(6, 182, 212, 0.1);
-  border-bottom: 2px solid #06b6d4;
-  color: #22d3ee;
-}
-
-.mv-case-header.case-rename {
-  background: rgba(139, 92, 246, 0.1);
-  border-bottom: 2px solid #8b5cf6;
-  color: #a78bfa;
-}
-
-.mv-case-header.case-both {
-  background: rgba(34, 197, 94, 0.1);
-  border-bottom: 2px solid #22c55e;
-  color: #4ade80;
-}
-
-.mv-case-body {
-  padding: 1.5rem;
-}
-
-/* ============================================ */
-/* DANGER ZONE */
-/* ============================================ */
-.danger-zone {
-  background: linear-gradient(135deg, rgba(127, 29, 29, 0.2), rgba(153, 27, 27, 0.2));
-  border: 2px solid rgba(239, 68, 68, 0.5);
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.danger-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 1.5rem;
-  background: rgba(127, 29, 29, 0.3);
-  border-bottom: 2px solid rgba(239, 68, 68, 0.5);
-}
-
+.danger-text { flex: 1; }
 .danger-title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #fca5a5;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 1.15rem; font-weight: 900; color: #ef4444;
+  text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px;
 }
+.danger-sub { font-size:0.9rem; color:var(--text-secondary); line-height:1.6; }
+.danger-sub code { color: #f87171; }
 
-.danger-body {
-  padding: 1.5rem;
+.rm-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
 }
-
-/* ============================================ */
-/* RM CARDS */
-/* ============================================ */
 .rm-card {
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 12px;
-  padding: 1.25rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-top: 3px solid var(--rm-color, var(--border-medium));
+  border-radius: 12px; padding: 1.1rem;
+  display: flex; flex-direction: column; gap: 8px;
+  min-width: 0;
 }
+.rm-top { display:flex; align-items:center; gap:8px; }
+.rm-flag { font-family:'Fira Code',monospace; font-size:0.85rem; color:var(--rm-color); background:none; padding:0; }
+.rm-title { font-size:0.95rem; font-weight:700; color:var(--text-primary); }
+.rm-note { font-size:0.8rem; color:var(--text-muted); background:var(--bg-surface-hover); border-radius:6px; padding:7px 10px; }
 
-.rm-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #f1f5f9;
+/* ══════════════════════════════════════════
+   WILDCARDS
+══════════════════════════════════════════ */
+.wc-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
 }
-
-.rm-title {
-  font-size: 1.1rem;
-  font-weight: 700;
+.wc-card {
+  background: var(--bg-surface); border: 1px solid var(--border-subtle);
+  border-radius: 16px; padding: 1.5rem;
+  text-align: center; transition: all .25s;
 }
-
-.rm-note {
-  background: rgba(255, 255, 255, 0.03);
-  padding: 0.75rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  color: #94a3b8;
+.wc-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.wc-symbol {
+  font-family:'Fira Code',monospace; font-size:2.8rem; font-weight:900;
+  margin-bottom: 6px; line-height:1;
 }
-
-/* ============================================ */
-/* WILDCARDS GRID */
-/* ============================================ */
-.wildcards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+.wc-name { font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:6px; }
+.wc-desc { font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem; line-height:1.5; }
+.wc-examples { display:flex; flex-direction:column; gap:8px; text-align:left; }
+.wc-example {
+  background: var(--bg-surface-hover); border-radius:7px; padding:8px 10px;
+  display:flex; flex-direction:column; gap:3px;
 }
+.wc-pattern { font-family:'Fira Code',monospace; font-size:0.88rem; font-weight:700; background:none; padding:0; }
+.wc-result  { font-size:0.78rem; color:var(--text-muted); }
 
-.wildcard-card {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 16px;
-  padding: 1.5rem;
-  text-align: center;
+.wc-practice {
+  background: var(--bg-surface); border: 1px solid var(--border-subtle);
+  border-radius: 14px; overflow: hidden;
 }
-
-.wildcard-symbol {
-  font-family: 'Fira Code', monospace;
-  font-size: 3rem;
-  font-weight: 700;
-  color: #fbbf24;
-  margin-bottom: 0.5rem;
+.wcp-header {
+  background: var(--bg-deep); border-bottom: 1px solid var(--border-subtle);
+  padding: 10px 16px; display:flex; align-items:center; gap:8px;
+  font-size:0.85rem; font-weight:600; color:var(--text-secondary);
 }
-
-.wildcard-name {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #f1f5f9;
-  margin-bottom: 0.75rem;
+.wcp-rows { display:flex; flex-direction:column; }
+.wcp-row {
+  display:flex; align-items:baseline; gap:16px; padding:10px 16px;
+  border-bottom:1px solid var(--border-subtle);
+  transition: background .15s;
 }
+.wcp-row:last-child { border-bottom:none; }
+.wcp-row:hover { background: var(--bg-surface-hover); }
+.wcp-cmd { font-family:'Fira Code',monospace; font-size:0.9rem; color:var(--text-code); flex-shrink:0; background:none; padding:0; }
+.wcp-desc { font-size:0.88rem; color:var(--text-secondary); }
 
-.wildcard-desc {
-  color: #cbd5e1;
-  font-size: 0.95rem;
-  margin-bottom: 1.5rem;
+/* ══════════════════════════════════════════
+   ERROR LIST (same as lesson 01)
+══════════════════════════════════════════ */
+.error-list { display:flex; flex-direction:column; gap:10px; }
+.error-item {
+  background:var(--bg-surface); border:1px solid var(--border-subtle);
+  border-left:3px solid #ef4444; border-radius:12px; overflow:hidden;
 }
-
-.wildcard-examples {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  text-align: left;
+.err-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1rem 1.25rem; cursor:pointer; gap:12px; transition:background .2s;
 }
-
-.example-item {
-  background: rgba(0, 0, 0, 0.3);
-  padding: 0.75rem;
-  border-radius: 8px;
-  font-family: 'Fira Code', monospace;
-  font-size: 0.85rem;
-  color: #94a3b8;
-  border-left: 3px solid #3b82f6;
+.err-header:hover { background:var(--bg-surface-hover); }
+.err-left { display:flex; align-items:flex-start; gap:12px; min-width:0; }
+.err-number {
+  min-width:28px; width:28px; height:28px; border-radius:50%;
+  background:rgba(239,68,68,.15); color:#ef4444;
+  font-size:.8rem; font-weight:800;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
 }
-
-/* ============================================ */
-/* ERROR ACCORDION */
-/* ============================================ */
-.error-accordion {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+.err-msg { font-size:.88rem; display:block; margin-bottom:4px; color:#ef4444; background:none; padding:0; word-break:break-all; }
+.err-summary { font-size:.82rem; color:var(--text-muted); }
+.err-body {
+  padding:1rem 1.5rem 1.25rem 1.5rem; border-top:1px solid var(--border-subtle);
+  display:flex; flex-direction:column; gap:10px;
 }
-
-:deep(.error-header) {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: 8px;
-  color: #fca5a5;
+.err-cause, .err-solution {
+  font-size:.9rem; color:var(--text-secondary);
+  display:flex; align-items:flex-start; gap:6px; line-height:1.5;
 }
+.err-solution ol { margin:4px 0 0 16px; padding:0; }
+.err-solution li { margin-bottom:4px; }
 
-.error-content {
-  background: rgba(15, 23, 42, 0.6);
-  padding: 1.5rem;
-  border-radius: 0 0 8px 8px;
+/* ══════════════════════════════════════════
+   CHALLENGE BOX (same as lesson 01)
+══════════════════════════════════════════ */
+.challenge-box {
+  background:var(--bg-surface); border:1px solid var(--border-subtle);
+  border-radius:20px; padding:1.75rem; border-top:3px solid #f59e0b;
 }
-
-.error-cause {
-  margin-bottom: 1rem;
-  color: #fca5a5;
+.challenge-header { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.25rem; flex-wrap:wrap; }
+.challenge-icon {
+  width:52px; height:52px; background:rgba(245,158,11,.15); border-radius:14px;
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
 }
-
-.error-solution {
-  color: #cbd5e1;
+.challenge-title { font-size:1.05rem; font-weight:700; color:var(--text-primary); margin-bottom:4px; }
+.challenge-subtitle { font-size:.9rem; color:var(--text-secondary); }
+.challenge-badge {
+  margin-left:auto; font-size:.72rem; font-weight:800; letter-spacing:.07em;
+  padding:4px 12px; border-radius:999px;
+  background:rgba(34,197,94,.12); color:#22c55e; border:1px solid rgba(34,197,94,.3); white-space:nowrap;
 }
-
-.error-solution ol,
-.error-solution ul {
-  margin-top: 0.5rem;
-  padding-left: 1.5rem;
+:deep(.answer-header) {
+  background:rgba(34,197,94,.08); border:1px solid rgba(34,197,94,.25);
+  border-radius:10px; color:#22c55e;
 }
-
-.error-solution li {
-  margin-bottom: 0.5rem;
+.answer-body {
+  background:var(--bg-surface-hover); padding:1.25rem 1.5rem;
+  border-radius:0 0 10px 10px; display:flex; flex-direction:column; gap:10px;
 }
+.answer-row { display:flex; align-items:baseline; flex-wrap:wrap; gap:8px; font-size:.9rem; color:var(--text-secondary); }
+.answer-key { font-weight:600; color:var(--text-primary); white-space:nowrap; }
 
-/* ============================================ */
-/* VIDEO CONTAINER */
-/* ============================================ */
-.video-container {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 16px;
-  padding: 1.5rem;
+/* ══════════════════════════════════════════
+   VIDEO CARD
+══════════════════════════════════════════ */
+.video-card {
+  background:var(--bg-surface); border:1px solid var(--border-subtle);
+  border-radius:16px; padding:1.25rem; overflow:hidden;
 }
-
 .video-wrapper {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
-  border-radius: 12px;
-  background: #000;
+  position:relative; padding-bottom:56.25%; height:0;
+  overflow:hidden; border-radius:10px; background:#000;
 }
-
-.video-wrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
+.video-wrapper iframe { position:absolute; top:0; left:0; width:100%; height:100%; }
 .video-caption {
-  display: flex;
-  align-items: center;
-  margin-top: 1rem;
-  padding: 0.75rem;
-  background: rgba(59, 130, 246, 0.1);
-  border-radius: 8px;
-  color: #94a3b8;
-  font-size: 0.85rem;
+  display:flex; align-items:center; margin-top:12px; font-size:.82rem;
+  color:var(--text-muted); padding:8px 12px; background:var(--bg-surface-hover); border-radius:8px;
 }
 
-/* ============================================ */
-/* SUMMARY TABLE */
-/* ============================================ */
-.summary-table {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 12px;
-  overflow: hidden;
+/* ══════════════════════════════════════════
+   SUMMARY GRID
+══════════════════════════════════════════ */
+.summary-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.summary-card {
+  background:var(--bg-surface); border:1px solid var(--border-subtle);
+  border-left:4px solid var(--sc-color,var(--border-medium));
+  border-radius:12px; padding:1rem 1.25rem; transition:all .25s;
+}
+.summary-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-sm); }
+.sc-cmd { display:block; font-family:'Fira Code',monospace; font-size:1.05rem; font-weight:700; color:var(--sc-color,var(--text-code)); background:none; padding:0; margin-bottom:6px; }
+.sc-desc { font-size:.88rem; color:var(--text-secondary); margin-bottom:8px; line-height:1.45; }
+.sc-example { display:flex; align-items:center; font-family:'Fira Code',monospace; font-size:.78rem; color:var(--text-muted); }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .op-cards-grid { grid-template-columns: 1fr 1fr; }
+  .mv-grid        { grid-template-columns: 1fr 1fr; }
+  .rm-grid        { grid-template-columns: 1fr 1fr; }
+  .wc-grid        { grid-template-columns: 1fr 1fr; }
+  .summary-grid   { grid-template-columns: 1fr 1fr; }
 }
 
-.summary-row {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1.5fr;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
-}
-
-.summary-row:last-child {
-  border-bottom: none;
-}
-
-.summary-header {
-  background: rgba(59, 130, 246, 0.1);
-  font-weight: 700;
-  color: #60a5fa;
-}
-
-.summary-cell {
-  display: flex;
-  align-items: center;
-  color: #e2e8f0;
-  font-size: 0.95rem;
-}
-
-.summary-cell code {
-  background: rgba(0, 0, 0, 0.3);
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-family: 'Fira Code', monospace;
-  color: #22c55e;
-}
-
-/* ============================================ */
-/* RESPONSIVE */
-/* ============================================ */
 @media (max-width: 768px) {
-  .syntax-pattern {
-    font-size: 1rem;
-  }
+  .two-col-grid   { grid-template-columns: 1fr; }
+  .op-cards-grid  { grid-template-columns: 1fr; }
+  .mv-grid        { grid-template-columns: 1fr; }
+  .rm-grid        { grid-template-columns: 1fr; }
+  .wc-grid        { grid-template-columns: 1fr; }
+  .summary-grid   { grid-template-columns: 1fr 1fr; }
+  .fact-pills     { flex-direction: column; gap: 8px; }
+  .fact-pill      { border-radius: 12px; }
+  .danger-content { flex-direction: column; }
+  .wcp-row        { flex-direction: column; gap: 4px; }
+  .challenge-header { flex-direction: column; }
+  .challenge-badge  { margin-left: 0; }
+}
 
-  .summary-row {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-
-  .wildcards-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .mv-comparison {
-    gap: 1rem;
-  }
+@media (max-width: 480px) {
+  .summary-grid { grid-template-columns: 1fr; }
+  .op-card :deep(pre), .mv-card :deep(pre), .rm-card :deep(pre) { overflow-x: auto; }
+  .mv-card-header { flex-direction: column; gap: 8px; }
 }
 </style>

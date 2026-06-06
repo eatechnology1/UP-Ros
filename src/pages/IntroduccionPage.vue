@@ -69,10 +69,14 @@
             </div>
 
             <!-- Líneas de conexión animadas -->
-            <svg class="connection-lines" viewBox="0 0 300 300">
-              <line x1="50" y1="50" x2="150" y2="150" class="connection-line line-1" />
-              <line x1="250" y1="50" x2="150" y2="150" class="connection-line line-2" />
-              <line x1="150" y1="250" x2="150" y2="150" class="connection-line line-3" />
+            <!-- viewBox 0 0 100 100 == unidades porcentuales del contenedor -->
+            <svg class="connection-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <!-- Cámara (top-left ~20%,15%) → cerebro (50%,50%) -->
+              <line x1="20" y1="15" x2="50" y2="50" class="connection-line line-1" />
+              <!-- LIDAR (top-right ~80%,15%) → cerebro -->
+              <line x1="80" y1="15" x2="50" y2="50" class="connection-line line-2" />
+              <!-- Rueda (bottom-center ~50%,87%) → cerebro -->
+              <line x1="50" y1="87" x2="50" y2="50" class="connection-line line-3" />
             </svg>
           </div>
         </template>
@@ -98,7 +102,7 @@
         <q-tabs
           v-model="selectedOsTab"
           dense
-          class="text-grey-3"
+          :class="isDark ? 'text-grey-3' : 'text-grey-7'"
           active-color="primary"
           indicator-color="primary"
           align="justify"
@@ -122,8 +126,8 @@
         <q-tab-panels v-model="selectedOsTab" animated class="bg-transparent">
           <!-- Panel Nativo -->
           <q-tab-panel name="native">
-            <div class="text-h6 text-white q-mb-sm">
-              <q-icon name="rocket" color="positive" /> Ubuntu 22.04 LTS (Nativo)
+            <div class="text-h6 panel-title q-mb-sm">
+              <q-icon name="rocket" color="positive" /> Ubuntu 24.04 LTS (Nativo)
             </div>
             <TextBlock>
               Instala Ubuntu directamente en tu máquina (dual boot) o como sistema principal.
@@ -131,7 +135,7 @@
             </TextBlock>
             <StepsBlock
               :steps="[
-                'Descarga Ubuntu 22.04 LTS desde ubuntu.com',
+                'Descarga Ubuntu 24.04 LTS desde ubuntu.com',
                 'Crea un USB booteable con Rufus o Etcher',
                 'Particiona tu disco (mínimo 50GB para ROS 2)',
                 'Instala y configura GRUB para dual boot',
@@ -141,7 +145,7 @@
 
           <!-- Panel Docker -->
           <q-tab-panel name="docker">
-            <div class="text-h6 text-white q-mb-sm">
+            <div class="text-h6 panel-title q-mb-sm">
               <q-icon name="widgets" color="info" /> Docker (Para usuarios avanzados)
             </div>
             <TextBlock>
@@ -164,7 +168,7 @@
 
           <!-- Panel VM -->
           <q-tab-panel name="vm">
-            <div class="text-h6 text-white q-mb-sm">
+            <div class="text-h6 panel-title q-mb-sm">
               <q-icon name="computer" color="warning" /> Máquina Virtual (Principiantes)
             </div>
             <TextBlock>
@@ -174,7 +178,7 @@
             <StepsBlock
               :steps="[
                 'Instala VirtualBox o VMware Workstation Player',
-                'Descarga Ubuntu 22.04 ISO',
+                'Descarga Ubuntu 24.04 ISO',
                 'Crea VM con 4GB RAM y 50GB disco',
                 'Habilita aceleración 3D en configuración',
                 'Instala Guest Additions para mejor rendimiento',
@@ -308,10 +312,10 @@
     <div class="section-group self-stretch column items-center q-mt-xl">
       <div class="full-width q-mt-xl">
         <PdfBlock
-          title="Syllabus Completo"
-          description="Descarga el plan de estudios detallado con todos los módulos y proyectos."
-          size="2.4 MB"
-          :src="roadmapPdf"
+          title="Syllabus Completo — UP-Ros Academy"
+          description="Descarga el plan de estudios oficial con todos los módulos, lecciones, objetivos y criterios de evaluación del curso."
+          size="PDF · Documento oficial"
+          :src="syllabusUrl"
         />
       </div>
     </div>
@@ -325,7 +329,7 @@
     >
       <div class="column items-start">
         <span class="text-weight-bold">Instalación</span>
-        <span class="text-caption text-blue-2" style="font-size: 0.7rem">Instala ROS 2</span>
+        <span class="cta-caption" style="font-size: 0.7rem">Instala ROS 2</span>
       </div>
       <q-icon name="arrow_forward" class="q-ml-md" /> </q-btn
     ><br />
@@ -336,6 +340,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useTheme } from 'src/composables/useTheme';
 import TextBlock from 'components/content/TextBlock.vue';
 import AlertBlock from 'components/content/AlertBlock.vue';
 import CodeBlock from 'components/content/CodeBlock.vue';
@@ -343,7 +348,11 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 import SplitBlock from 'components/content/SplitBlock.vue';
 import StepsBlock from 'components/content/StepsBlock.vue';
 import PdfBlock from 'components/content/PdfBlock.vue';
-import roadmapPdf from 'src/assets/pdf/upros-roadmap.pdf';
+import syllabusUrl from 'src/assets/pdf/Syllabus.pdf';
+
+// ========== TEMA ==========
+const { currentTheme } = useTheme();
+const isDark = computed(() => currentTheme.value === 'dark');
 
 // ========== TAB DEL SISTEMA OPERATIVO ==========
 const selectedOsTab = ref('native');
@@ -449,7 +458,7 @@ const preflightItems = ref([
   },
   {
     label: 'Máquina virtual configurada o equipo con Linux',
-    detail: 'Ubuntu 22.04 LTS recomendado',
+    detail: 'Ubuntu 24.04 LTS recomendado',
     checked: false,
   },
   {
@@ -482,7 +491,7 @@ echo "¡Todo listo para ROS 2 Jazzy!"`.trim();
 <style scoped>
 /* ========== PÁGINA BASE ========== */
 .intro-page {
-  background: #0f172a;
+  background: var(--bg-surface);
 }
 
 .section-group {
@@ -501,10 +510,10 @@ echo "¡Todo listo para ROS 2 Jazzy!"`.trim();
   background:
     radial-gradient(circle at top center, rgba(99, 102, 241, 0.2), transparent 70%),
     radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.15), transparent 60%),
-    rgba(15, 23, 42, 0.95);
+    var(--bg-surface);
   backdrop-filter: blur(30px);
   border-radius: 32px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  border: 1px solid var(--border-subtle);
   text-align: center;
   overflow: hidden;
 }
@@ -546,7 +555,7 @@ echo "¡Todo listo para ROS 2 Jazzy!"`.trim();
   font-weight: 900;
   margin: 0 0 1rem 0;
   line-height: 1.1;
-  color: #f8fafc;
+  color: var(--text-primary);
   letter-spacing: -0.02em;
 }
 
@@ -559,7 +568,7 @@ echo "¡Todo listo para ROS 2 Jazzy!"`.trim();
 
 .hero-subtitle {
   font-size: 1.25rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.6;
   max-width: 700px;
   margin: 0 auto;
@@ -632,10 +641,10 @@ echo "¡Todo listo para ROS 2 Jazzy!"`.trim();
   align-items: center;
   gap: 12px;
   padding: 12px;
-  background: rgba(30, 41, 59, 0.4);
+  background: var(--bg-surface-solid);
   border-radius: 8px;
   border-left: 3px solid currentColor;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 /* Visualización del sistema nervioso */
@@ -643,9 +652,9 @@ echo "¡Todo listo para ROS 2 Jazzy!"`.trim();
   position: relative;
   width: 100%;
   height: 350px;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border-radius: 16px;
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  border: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -655,44 +664,62 @@ echo "¡Todo listo para ROS 2 Jazzy!"`.trim();
   position: absolute;
   width: 70px;
   height: 70px;
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
-  border: 2px solid rgba(99, 102, 241, 0.5);
+  background: var(--bg-surface);
+  border: 2px solid var(--border-hover);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #06b6d4;
+  color: var(--text-code);
   animation: nodePulse 3s ease-in-out infinite;
 }
 
 .component-node.camera {
-  top: 20px;
-  left: 20px;
+  top: 16px;
+  left: 16px;
   animation-delay: 0s;
 }
 
 .component-node.lidar {
-  top: 20px;
-  right: 20px;
+  top: 16px;
+  right: 16px;
   animation-delay: 1s;
 }
 
+/* wheel usa translate para centrar; el keyframe de nodePulse debe preservar eso */
 .component-node.wheel {
-  bottom: 20px;
+  bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
   animation-delay: 2s;
 }
 
+/* Sobrescribe la animación para wheel para mantener el translateX */
+.component-node.wheel:is(.component-node) {
+  animation-name: nodePulseWheel;
+}
+
 @keyframes nodePulse {
-  0%,
-  100% {
-    transform: scale(1);
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.3);
     border-color: rgba(99, 102, 241, 0.5);
   }
   50% {
-    transform: scale(1.1);
+    box-shadow: 0 0 12px 4px rgba(236, 72, 153, 0.4);
     border-color: rgba(236, 72, 153, 0.8);
+  }
+}
+
+@keyframes nodePulseWheel {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.3);
+    border-color: rgba(99, 102, 241, 0.5);
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    box-shadow: 0 0 12px 4px rgba(236, 72, 153, 0.4);
+    border-color: rgba(236, 72, 153, 0.8);
+    transform: translateX(-50%) scale(1.05);
   }
 }
 
@@ -761,20 +788,20 @@ echo "¡Todo listo para ROS 2 Jazzy!"`.trim();
 
 /* ========== TARJETA DE SETUP DE OS ========== */
 .os-setup-card {
-  background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 16px;
   overflow: hidden;
 }
 
 kbd {
-  background: rgba(30, 41, 59, 0.8);
-  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: var(--bg-surface-solid);
+  border: 1px solid var(--border-medium);
   border-radius: 4px;
   padding: 2px 6px;
   font-family: 'Fira Code', monospace;
   font-size: 0.9em;
-  color: #06b6d4;
+  color: var(--text-code);
 }
 
 /* ========== ROADMAP TIMELINE ========== */
@@ -820,7 +847,7 @@ kbd {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 4px solid #0f172a;
+  border: 4px solid var(--bg-surface);
   z-index: 2;
   transition: transform 0.3s ease;
 }
@@ -845,8 +872,8 @@ kbd {
 }
 
 .timeline-card {
-  background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-left: 4px solid;
   border-radius: 12px;
   padding: 1.5rem;
@@ -857,7 +884,7 @@ kbd {
 
 .timeline-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-lg);
 }
 
 .timeline-header {
@@ -871,11 +898,11 @@ kbd {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 .timeline-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin: 0 0 1rem 0;
 }
@@ -887,9 +914,9 @@ kbd {
 
 /* ========== PRE-FLIGHT CARD ========== */
 .preflight-card {
-  background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
+  background: var(--bg-surface);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  border: 1px solid var(--border-subtle);
   border-radius: 16px;
   padding: 2rem;
   max-width: 800px;
@@ -902,14 +929,14 @@ kbd {
   gap: 16px;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .preflight-header h3 {
   margin: 0;
   font-size: 1.75rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 .preflight-items {
@@ -919,8 +946,8 @@ kbd {
 }
 
 .preflight-item {
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  background: var(--bg-surface-solid);
+  border: 1px solid var(--border-subtle);
   border-radius: 12px;
   padding: 1rem;
   cursor: pointer;
@@ -928,22 +955,22 @@ kbd {
 }
 
 .preflight-item:hover {
-  background: rgba(30, 41, 59, 0.6);
-  border-color: rgba(99, 102, 241, 0.4);
+  background: var(--bg-surface-hover);
+  border-color: var(--border-hover);
   transform: translateX(5px);
 }
 
 .preflight-checkbox {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 .preflight-detail {
   margin-top: 0.5rem;
   margin-left: 2rem;
   font-size: 0.9rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .preflight-progress {
@@ -953,16 +980,25 @@ kbd {
 .progress-label {
   font-size: 1rem;
   font-weight: 600;
-  color: #cbd5e1;
+  color: var(--text-secondary);
+}
+
+/* ========== PANEL TITLE (reactive theme) ========== */
+.panel-title {
+  color: var(--text-primary);
+}
+
+.cta-caption {
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /* ========== CTA FINAL ========== */
 .final-cta {
   text-align: center;
   padding: 3rem 2rem;
-  background: linear-gradient(145deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.6));
+  background: var(--bg-surface);
   border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  border: 1px solid var(--border-subtle);
   max-width: 800px;
   margin: 0 auto;
 }
@@ -997,12 +1033,12 @@ kbd {
   }
 
   .robot-nervous-system {
-    height: 300px;
+    height: 260px;
   }
 
   .component-node {
-    width: 50px;
-    height: 50px;
+    width: 54px;
+    height: 54px;
   }
 
   .central-brain {
@@ -1017,5 +1053,28 @@ kbd {
   .timeline-header h3 {
     font-size: 1.1rem;
   }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: 2rem; }
+  .hero-epic  { padding: 3rem 1rem; }
+  .section-group { margin-bottom: 2.5rem; }
+
+  .robot-nervous-system {
+    height: 220px;
+  }
+
+  .component-node {
+    width: 44px;
+    height: 44px;
+  }
+
+  .central-brain {
+    width: 64px;
+    height: 64px;
+  }
+
+  .preflight-card { padding: 1.25rem; }
+  .final-cta      { padding: 2rem 1rem; }
 }
 </style>

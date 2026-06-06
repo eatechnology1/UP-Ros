@@ -11,7 +11,7 @@
           round
           icon="menu"
           aria-label="Menu"
-          class="text-white"
+          class="header-icon-btn"
           @click="toggleLeftDrawer"
         />
 
@@ -20,8 +20,23 @@
           <router-link to="/" class="header-title"> UP-Ros Academy </router-link>
         </div>
 
-        <!-- DERECHA (ESPACIADOR) -->
-        <div class="toolbar-spacer"></div>
+        <!-- DERECHA — Botón de tema -->
+        <div class="toolbar-right">
+          <q-btn
+            flat
+            dense
+            round
+            :icon="currentTheme === 'dark' ? 'light_mode' : 'dark_mode'"
+            :aria-label="currentTheme === 'dark' ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
+            class="theme-toggle-btn"
+            :class="{ 'theme-toggling': isToggling }"
+            @click="handleToggle"
+          >
+            <q-tooltip anchor="bottom right" self="top right" :delay="300">
+              {{ currentTheme === 'dark' ? 'Tema claro' : 'Tema oscuro' }}
+            </q-tooltip>
+          </q-btn>
+        </div>
       </q-toolbar>
 
       <!-- NIVEL 2: MIGAS DE PAN (BREADCRUMBS) -->
@@ -30,9 +45,9 @@
         v-if="route.path !== '/' && route.path !== '/home'"
         class="breadcrumb-bar q-px-md q-pb-sm"
       >
-        <q-breadcrumbs active-color="secondary" class="text-grey-5 text-caption">
+        <q-breadcrumbs active-color="secondary" class="text-caption breadcrumb-text">
           <template v-slot:separator>
-            <q-icon size="1.2em" name="chevron_right" color="grey-6" />
+            <q-icon size="1.2em" name="chevron_right" class="breadcrumb-separator" />
           </template>
 
           <!-- Home siempre fijo -->
@@ -75,51 +90,56 @@
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import SideMenu from 'components/SideMenu.vue';
-import { courseStructure } from 'src/data/courseStructure'; // Importamos la estructura
+import { courseStructure } from 'src/data/courseStructure';
+import { useTheme } from 'src/composables/useTheme';
 
-const leftDrawerOpen = ref(true);
+const leftDrawerOpen = ref(false);
 const route = useRoute();
+const isToggling = ref(false);
 
+// ─── Tema ─────────────────────────────────────────
+const { currentTheme, toggleTheme } = useTheme();
+
+function handleToggle() {
+  isToggling.value = true;
+  toggleTheme();
+  setTimeout(() => {
+    isToggling.value = false;
+  }, 400);
+}
+
+// ─── Año en footer ────────────────────────────────
+const currentYear = computed(() => new Date().getFullYear());
+
+// ─── Toggle drawer ────────────────────────────────
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
-const currentYear = computed(() => new Date().getFullYear());
-
-// --- LÓGICA DE MIGAS DE PAN MEJORADA ---
+// ─── Migas de pan ────────────────────────────────
 const breadcrumbs = computed(() => {
   const pathArray = route.path.split('/').filter((p) => p);
-
-  // Array acumulador para las migas
-  const crumbs = [];
+  const crumbs: { label: string; to: string; icon?: string | undefined }[] = [];
   let currentPath = '';
 
-  // Recorremos cada segmento de la URL
   for (let i = 0; i < pathArray.length; i++) {
     const segment = pathArray[i];
     if (!segment) continue;
 
     currentPath += `/${segment}`;
 
-    // Buscamos el título bonito en courseStructure
     let label = segment.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
-    let icon = undefined;
+    let icon: string | undefined = undefined;
 
-    // Lógica de búsqueda en el árbol JSON
-    // Nivel 1: Módulos (ej: modulo-0)
     const foundModule = courseStructure.find((m) => m.path === segment);
-
     if (foundModule) {
-      label = foundModule.title; // "Módulo 0: Fundamentos"
-      // No ponemos icono en módulos intermedios para no saturar
+      label = foundModule.title;
     } else {
-      // Nivel 2: Lecciones (ej: nav-sistema)
-      // Buscamos dentro de todos los módulos a ver si algún hijo coincide
       for (const mod of courseStructure) {
         if (mod.children) {
           const foundChild = mod.children.find((c) => c.path === segment);
           if (foundChild) {
-            label = foundChild.title; // "0.1 Navegación Terminal"
+            label = foundChild.title;
             icon = 'article';
             break;
           }
@@ -127,11 +147,7 @@ const breadcrumbs = computed(() => {
       }
     }
 
-    crumbs.push({
-      label: label,
-      to: currentPath,
-      icon: icon,
-    });
+    crumbs.push({ label, to: currentPath, icon });
   }
 
   return crumbs;
@@ -143,18 +159,14 @@ const breadcrumbs = computed(() => {
    HEADER GLASS
 ========================= */
 .glass-header {
-  background: rgba(18, 28, 45, 0.75); /* Un poco más oscuro para legibilidad */
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-
+  background: var(--header-bg) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  border-bottom: 1px solid var(--border-accent) !important;
   box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.35),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
-
-  /* Transición suave de altura */
-  transition: height 0.3s ease;
+    0 4px 24px var(--shadow-sm),
+    inset 0 -1px 0 var(--border-accent) !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease !important;
 }
 
 /* =========================
@@ -162,17 +174,25 @@ const breadcrumbs = computed(() => {
 ========================= */
 .breadcrumb-bar {
   display: flex;
-  justify-content: center; /* Centrado estético */
-  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  justify-content: center;
+  border-top: 1px solid var(--border-accent);
   padding-top: 6px;
 }
 
-/* Ajuste fino de los enlaces del breadcrumb */
+.breadcrumb-text {
+  color: var(--text-muted) !important;
+}
+
+.breadcrumb-separator {
+  color: var(--text-muted) !important;
+}
+
 .q-breadcrumbs__el {
   transition: color 0.2s;
+  color: var(--text-muted) !important;
 }
 .q-breadcrumbs__el:hover {
-  color: #6ecbff !important; /* Azul cyan al pasar el mouse */
+  color: var(--text-code) !important;
 }
 
 /* =========================
@@ -180,25 +200,61 @@ const breadcrumbs = computed(() => {
 ========================= */
 .header-title {
   text-decoration: none;
-  color: #e6edf7;
+  color: var(--text-primary);
   font-weight: 600;
   letter-spacing: 0.6px;
   transition: all 0.25s ease;
 }
 
 .header-title:hover {
-  color: #6ecbff;
-  text-shadow: 0 3px 10px rgba(110, 203, 255, 0.6);
+  color: var(--text-code);
+  text-shadow: 0 3px 10px rgba(56, 189, 248, 0.4);
 }
 
 /* =========================
-   DRAWER GLASS (COHERENCIA)
+   ICONOS DEL HEADER
+========================= */
+.header-icon-btn {
+  color: var(--text-primary) !important;
+}
+
+/* =========================
+   BOTÓN TOGGLE DE TEMA
+========================= */
+.theme-toggle-btn {
+  color: var(--text-secondary) !important;
+  transition: color 0.2s ease, transform 0.3s ease !important;
+}
+
+.theme-toggle-btn:hover {
+  color: var(--text-code) !important;
+}
+
+/* Animación de rotación al hacer click */
+.theme-toggle-btn.theme-toggling .q-icon {
+  animation: spin-icon 0.4s ease-out;
+}
+
+@keyframes spin-icon {
+  0%   { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(180deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* =========================
+   DRAWER GLASS
 ========================= */
 .glass-drawer {
-  background: rgba(15, 25, 40, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--drawer-bg) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-right: 1px solid var(--border-accent) !important;
+  transition: background-color 0.3s ease !important;
+}
+
+/* En tema claro el drawer tiene una sombra sutil */
+[data-theme='light'] .glass-drawer {
+  box-shadow: 2px 0 16px var(--shadow-sm) !important;
 }
 
 /* =========================
@@ -208,36 +264,33 @@ const breadcrumbs = computed(() => {
   display: grid;
   grid-template-columns: 48px 1fr 48px;
   align-items: center;
-  min-height: 50px; /* Altura controlada */
+  min-height: 50px;
 }
 
-/* =========================
-   CENTRO REAL
-========================= */
 .toolbar-center {
   display: flex;
   justify-content: center;
 }
 
-/* =========================
-   ESPACIADOR DERECHO
-========================= */
-.toolbar-spacer {
-  width: 48px;
+.toolbar-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 /* =========================
-   FOOTER GLASS (COHERENTE)
+   FOOTER GLASS
 ========================= */
 .glass-footer {
-  background: rgba(15, 25, 40, 0.55);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--footer-bg) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  border-top: 1px solid var(--border-accent) !important;
   box-shadow:
-    0 -4px 24px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    0 -4px 24px var(--shadow-sm),
+    inset 0 1px 0 var(--border-accent) !important;
   padding: 0.75rem 0;
+  transition: background-color 0.3s ease !important;
 }
 
 .footer-content {
@@ -252,7 +305,7 @@ const breadcrumbs = computed(() => {
 .footer-text {
   margin: 0;
   font-size: 0.875rem;
-  color: #9ca3af;
+  color: var(--text-muted);
   text-align: center;
   letter-spacing: 0.3px;
   font-weight: 400;

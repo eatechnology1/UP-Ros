@@ -310,7 +310,7 @@ import CodeBlock from 'components/content/CodeBlock.vue';
   align-items: center;
   justify-content: center;
   font-size: 0.7rem;
-  color: white;
+  color: var(--text-primary);
   font-weight: bold;
   position: absolute;
 }
@@ -397,13 +397,13 @@ import CodeBlock from 'components/content/CodeBlock.vue';
 .tool-card {
   height: 100%;
   border-radius: 16px;
-  background: rgba(30, 41, 59, 0.4);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* UTILS */
 .bg-slate-900 {
-  background: #0f172a;
+  background: var(--bg-surface);
 }
 .text-xxs {
   font-size: 0.6rem;
@@ -421,7 +421,7 @@ import CodeBlock from 'components/content/CodeBlock.vue';
   z-index: 10;
 }
 .custom-card {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border-left: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
 }

@@ -109,7 +109,7 @@ function handleDismiss() {
 
 .alert-block:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 24px var(--shadow-sm);
 }
 
 .alert-icon {
@@ -118,7 +118,7 @@ function handleDismiss() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--border-accent);
   border-radius: 50%;
   padding: 8px;
 }
@@ -129,7 +129,6 @@ function handleDismiss() {
 }
 
 .alert-title {
-  color: #ffffff;
   font-size: 1.05rem;
   font-weight: 700;
   margin-bottom: 6px;
@@ -138,7 +137,7 @@ function handleDismiss() {
 }
 
 .alert-body {
-  color: #cbd5f5;
+  color: var(--text-secondary);
   line-height: 1.6;
   font-size: 0.95rem;
 }
@@ -152,64 +151,70 @@ function handleDismiss() {
 .alert-dismiss {
   opacity: 0.6;
   margin-left: 8px !important;
-  color: #cbd5f5;
+  color: var(--text-secondary);
   transition: opacity 0.2s;
 }
 
 .alert-dismiss:hover {
   opacity: 1;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--border-accent);
 }
 
 /* VARIANTES */
 
 /* INFO */
 .info {
-  background: rgba(33, 150, 243, 0.12);
+  background: rgba(33, 150, 243, 0.1);
   border-color: rgba(33, 150, 243, 0.25);
 }
 .info::before {
   background-color: #2196f3;
 }
 .info .alert-title {
-  color: #90caf9;
+  color: #1e88e5;
 }
 
 /* SUCCESS */
 .success {
-  background: rgba(76, 175, 80, 0.12);
+  background: rgba(76, 175, 80, 0.1);
   border-color: rgba(76, 175, 80, 0.25);
 }
 .success::before {
   background-color: #4caf50;
 }
 .success .alert-title {
-  color: #a5d6a7;
+  color: #2e7d32;
 }
 
 /* WARNING */
 .warning {
-  background: rgba(255, 152, 0, 0.12);
+  background: rgba(255, 152, 0, 0.1);
   border-color: rgba(255, 152, 0, 0.25);
 }
 .warning::before {
   background-color: #ff9800;
 }
 .warning .alert-title {
-  color: #ffcc80;
+  color: #e65100;
 }
 
 /* DANGER */
 .danger {
-  background: rgba(244, 67, 54, 0.12);
+  background: rgba(244, 67, 54, 0.1);
   border-color: rgba(244, 67, 54, 0.25);
 }
 .danger::before {
   background-color: #f44336;
 }
 .danger .alert-title {
-  color: #ef9a9a;
+  color: #c62828;
 }
+
+/* Overrides para tema oscuro (colores claros de alertas) */
+:global([data-theme='dark']) .info .alert-title    { color: #90caf9; }
+:global([data-theme='dark']) .success .alert-title { color: #a5d6a7; }
+:global([data-theme='dark']) .warning .alert-title { color: #ffcc80; }
+:global([data-theme='dark']) .danger .alert-title  { color: #ef9a9a; }
 
 /* RESPONSIVE */
 @media (max-width: 600px) {

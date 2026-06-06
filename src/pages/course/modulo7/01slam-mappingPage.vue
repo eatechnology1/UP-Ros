@@ -1696,7 +1696,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .hero-section {
   background:
     radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15), transparent 50%),
-    linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-solid) 100%);
   border-radius: 24px;
   padding: 4rem 3rem;
   border: 1px solid rgba(148, 163, 184, 0.1);
@@ -1719,7 +1719,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
   align-items: center;
   gap: 0.5rem;
   background: rgba(59, 130, 246, 0.15);
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   padding: 0.5rem 1rem;
   border-radius: 99px;
   font-size: 0.85rem;
@@ -1745,7 +1745,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 
 .hero-subtitle {
   font-size: 1.2rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 2.5rem;
   line-height: 1.7;
   max-width: 600px;
@@ -1764,7 +1764,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .stat-val {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 0.25rem;
 }
 
@@ -1887,7 +1887,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 }
 
 .foundation-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   overflow: hidden;
@@ -1923,15 +1923,15 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .eq-title {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 1rem;
 }
 
 .eq-formula {
   font-size: 1.3rem;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 12px;
   margin-bottom: 1rem;
   text-align: center;
@@ -1941,7 +1941,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 
 .eq-desc {
   font-size: 1rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.8;
 }
 
@@ -1952,11 +1952,11 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 
 .eq-desc li {
   margin-bottom: 0.75rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .eq-desc strong {
-  color: #e2e8f0;
+  color: var(--text-secondary);
 }
 
 /* ========================================================================================
@@ -2004,14 +2004,14 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .code-section h4 {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   margin-bottom: 1.5rem;
   padding-bottom: 0.75rem;
   border-bottom: 2px solid rgba(59, 130, 246, 0.3);
 }
 
 .code-block-container {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  background: var(--bg-surface);
   border-radius: 16px;
   overflow: hidden;
   margin-bottom: 2rem;
@@ -2031,7 +2031,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .code-header span {
   font-size: 1rem;
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--text-secondary);
 }
 
 .code-block-container pre {
@@ -2045,7 +2045,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
   font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
   font-size: 0.9rem;
   line-height: 1.6;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 /* ========================================================================================
@@ -2059,7 +2059,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 }
 
 .sensor-card {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  background: var(--bg-surface);
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(148, 163, 184, 0.15);
@@ -2083,7 +2083,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .sensor-header h3 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   margin: 1rem 0 0.5rem;
 }
 
@@ -2094,7 +2094,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
@@ -2106,11 +2106,11 @@ import AlertBlock from 'components/content/AlertBlock.vue';
   padding: 0.75rem 0;
   border-bottom: 1px solid rgba(148, 163, 184, 0.05);
   font-size: 0.95rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 .sensor-spec strong {
-  color: #e2e8f0;
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
@@ -2123,7 +2123,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .sensor-cons strong {
   display: block;
   margin-bottom: 0.5rem;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   font-size: 1rem;
 }
 
@@ -2138,7 +2138,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .sensor-cons li {
   padding: 0.4rem 0;
   font-size: 0.9rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .sensor-examples {
@@ -2146,11 +2146,11 @@ import AlertBlock from 'components/content/AlertBlock.vue';
   padding-top: 1rem;
   border-top: 1px solid rgba(148, 163, 184, 0.1);
   font-size: 0.9rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .sensor-examples strong {
-  color: #e2e8f0;
+  color: var(--text-secondary);
 }
 
 /* Sensor-specific colors */
@@ -2181,7 +2181,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 }
 
 .resource-card {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  background: var(--bg-surface);
   border-radius: 16px;
   padding: 2rem;
   border: 1px solid rgba(148, 163, 184, 0.15);
@@ -2198,7 +2198,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .resource-card h4 {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   margin: 1rem 0 1.5rem;
 }
 
@@ -2211,7 +2211,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .resource-card li {
   padding: 0.5rem 0;
   font-size: 0.95rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   border-bottom: 1px solid rgba(148, 163, 184, 0.05);
 }
 
@@ -2220,7 +2220,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 }
 
 .resource-card a {
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -2242,9 +2242,9 @@ import AlertBlock from 'components/content/AlertBlock.vue';
    ======================================================================================== */
 .formula {
   font-size: 1.2rem;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 8px;
   margin: 0.5rem 0;
   text-align: center;

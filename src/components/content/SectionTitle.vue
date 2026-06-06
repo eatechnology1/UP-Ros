@@ -13,12 +13,12 @@
   /* Tipografía */
   font-size: 1.75rem;
   font-weight: 700;
-  color: #f1f5f9; /* Slate-100 */
+  color: var(--text-primary);
   line-height: 1.2;
   letter-spacing: -0.02em;
 
   /* Línea base sutil */
-  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+  border-bottom: 1px solid var(--border-medium);
   position: relative;
 }
 

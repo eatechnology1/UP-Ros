@@ -220,7 +220,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
   border-left: 4px solid #22c55e;
 }
 .concept-card p {
-  color: #e2e8f0;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   margin: 0.5rem 0;
 }

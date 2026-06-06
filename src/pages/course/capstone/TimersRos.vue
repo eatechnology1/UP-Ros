@@ -181,7 +181,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 
 /* Visualización de Relojes */
 .timer-visual {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border-radius: 12px;
   display: flex;
   justify-content: center;
@@ -194,7 +194,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
   border: 4px solid #cbd5e1;
   border-radius: 50%;
   position: relative;
-  background: #0f172a;
+  background: var(--bg-surface);
 }
 .hand {
   width: 4px;
@@ -230,7 +230,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
   left: -20px;
   text-align: center;
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-family: 'Fira Code', monospace;
 }
 </style>

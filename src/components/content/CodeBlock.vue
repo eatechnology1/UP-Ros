@@ -109,8 +109,8 @@ onMounted(() => {
   overflow: hidden;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  background: rgba(15, 23, 42, 0.95); /* Fondo oscuro sólido para código */
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: var(--bg-surface-solid);
+  border: 1px solid var(--border-medium);
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -131,8 +131,8 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 8px 16px;
-  background: rgba(30, 41, 59, 0.5); /* Slate-800 con transparencia */
-  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  background: var(--bg-surface-hover);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .code-title-group {
@@ -142,20 +142,21 @@ onMounted(() => {
 }
 
 .code-title {
-  color: #e2e8f0;
+  color: var(--text-secondary);
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.3px;
 }
 
 .code-lang {
-  background: rgba(56, 189, 248, 0.15); /* Sky-400 */
-  color: #38bdf8;
+  background: var(--bg-code);
+  color: var(--text-code);
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
+  border: 1px solid var(--border-hover);
 }
 
 .code-actions {
@@ -186,7 +187,7 @@ pre {
 code {
   font-size: 0.9rem;
   line-height: 1.6;
-  color: #f8fafc; /* Slate-50 */
+  color: var(--text-primary); /* Slate-50 */
   white-space: pre; /* Mantiene formato exacto */
   font-family: inherit;
   display: inline-block; /* Permite scroll horizontal si es necesario */
@@ -199,16 +200,16 @@ code {
 }
 
 .code-container::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.5);
+  background: var(--bg-surface);
 }
 
 .code-container::-webkit-scrollbar-thumb {
-  background: rgba(71, 85, 105, 0.6);
+  background: var(--border-medium);
   border-radius: 4px;
 }
 
 .code-container::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.6);
+  background: var(--border-hover);
 }
 
 /* RESPONSIVE */

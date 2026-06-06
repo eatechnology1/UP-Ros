@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fullscreen bg-slate text-white text-center q-pa-md flex flex-center relative-position overflow-hidden"
+    class="fullscreen bg-slate text-center q-pa-md flex flex-center relative-position overflow-hidden"
   >
     <!-- FONDO ANIMADO (Círculos difusos) -->
     <div class="bg-shape shape-1"></div>
@@ -25,7 +25,7 @@
         Transform Error: Frame [Page] does not exist
       </div>
 
-      <p class="text-grey-4 text-subtitle1 q-mb-lg description-text">
+      <p class="text-subtitle1 q-mb-lg description-text page-description">
         Parece que el <strong>TF Tree</strong> se ha roto. No podemos encontrar la transformación
         entre <code>/world</code> y la página que buscas. <br />
         Probablemente el nodo se ha caído o el tópico no está publicado.
@@ -57,7 +57,7 @@
           <div class="dot red"></div>
           <div class="dot yellow"></div>
           <div class="dot green"></div>
-          <div class="terminal-title text-grey-6 q-ml-sm" style="font-size: 10px">
+          <div class="terminal-title q-ml-sm" style="font-size: 10px; color: var(--text-muted)">
             ros2_launch_log.txt
           </div>
         </div>
@@ -65,7 +65,7 @@
           <span class="text-red"
             >[ERROR] [171562.332]: Lookup would require extrapolation into the future.</span
           ><br />
-          <span class="text-grey-5"
+          <span style="color: var(--text-muted)"
             >[INFO] [171562.335]: Waiting for service /get_page to be available...</span
           ><br />
           <span class="text-warning"
@@ -83,7 +83,7 @@
 
 <style scoped>
 .bg-slate {
-  background-color: #0f172a; /* Slate-900 */
+  background-color: var(--bg-page);
 }
 
 /* --- ROBOT & 404 --- */
@@ -98,10 +98,10 @@
 }
 
 .robot-image {
-  width: 280px; /* Ajusta el tamaño del robot aquí */
+  width: 280px;
   height: auto;
   z-index: 2;
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
 }
 
 .floating-robot {
@@ -113,7 +113,7 @@
   bottom: 20px;
   width: 150px;
   height: 20px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 50%;
   filter: blur(10px);
   animation: shadow-scale 6s ease-in-out infinite;
@@ -124,7 +124,7 @@
   position: absolute;
   font-size: 12rem;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.03);
+  color: var(--border-subtle);
   z-index: 0;
   top: 50%;
   left: 50%;
@@ -204,6 +204,10 @@
   line-height: 1.6;
 }
 
+.page-description {
+  color: var(--text-secondary);
+}
+
 /* --- BOTONES --- */
 .tech-btn {
   background: #38bdf8;
@@ -220,39 +224,39 @@
 }
 
 .tech-btn-outline {
-  color: #94a3b8;
-  border-color: #475569;
+  color: var(--text-muted);
+  border-color: var(--border-medium);
   font-weight: 600;
   border-radius: 8px;
   padding: 10px 24px;
 }
 
 .tech-btn-outline:hover {
-  color: #f1f5f9;
-  border-color: #cbd5e1;
-  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+  background: var(--bg-surface-hover);
 }
 
 /* --- TERMINAL --- */
 .terminal-mockup {
   width: 100%;
   max-width: 650px;
-  background: #1e293b;
+  background: var(--bg-surface-solid);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 20px 50px var(--shadow-md);
   text-align: left;
   overflow: hidden;
   font-size: 0.8rem;
 }
 
 .terminal-header {
-  background: #0f172a;
+  background: var(--bg-deep);
   padding: 10px 16px;
   display: flex;
   align-items: center;
   gap: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .dot {

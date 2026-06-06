@@ -224,42 +224,223 @@ T =A [
           </div>
         </div>
 
-        <div class="dh-viz">
-          <div class="dh-diagram">
-            <!-- Simplified CSS representation of 2 links -->
-            <div class="link-segment l1" :style="{ transform: `rotate(${dh_theta}deg)` }">
-              <div class="joint-axis">z</div>
-              <div class="link-body" :style="{ width: `${dh_a * 50}px` }">a (Length)</div>
+      <!-- VISUALIZADOR DH: SVG reactivo -->
+      <div class="dh-viz">
+        <!-- DIAGRAMA SVG: Cadena cinemática 2D -->
+        <div class="dh-diagram-wrap">
+          <div class="dh-label-top">Vista XY — Cadena Cinemática</div>
+          <svg
+            class="dh-svg"
+            viewBox="0 0 380 320"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <!-- Cuadrícula de fondo -->
+            <defs>
+              <pattern id="dhGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(148,163,184,0.08)" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="380" height="320" fill="url(#dhGrid)" />
+
+            <!-- Eje de referencia (Z₀ global, vertical) -->
+            <line x1="80" y1="30" x2="80" y2="290"
+              stroke="#475569" stroke-width="1" stroke-dasharray="4,3" />
+            <text x="83" y="40" fill="#94a3b8" font-size="10" font-family="monospace">Z₀</text>
+
+            <!-- Base del robot (Joint 0) -->
+            <circle cx="80" cy="220" r="10" fill="#1e293b" stroke="#6366f1" stroke-width="2.5" />
+            <text x="60" y="240" fill="#6366f1" font-size="9" font-family="monospace">Joint 0</text>
+
+            <!-- Parámetro d: Desplazamiento en Z₀ (hacia arriba) -->
+            <line
+              x1="80"
+              :y1="220"
+              x2="80"
+              :y2="220 - dh_d * 14"
+              stroke="#3b82f6"
+              stroke-width="2.5"
+            />
+            <text
+              x="55"
+              :y="220 - dh_d * 14 / 2"
+              fill="#3b82f6"
+              font-size="9"
+              font-family="monospace"
+            >d={{ dh_d.toFixed(1) }}</text>
+
+            <!-- Joint 1 (después del offset d en Z) -->
+            <circle
+              cx="80"
+              :cy="220 - dh_d * 14"
+              r="9"
+              fill="#1e293b"
+              stroke="#c084fc"
+              stroke-width="2.5"
+            />
+            <text
+              x="90"
+              :y="222 - dh_d * 14"
+              fill="#c084fc"
+              font-size="9"
+              font-family="monospace"
+            >J1</text>
+
+            <!-- Eslabón 1 (longitud a, rotado por theta en plano XY) -->
+            <line
+              x1="80"
+              :y1="220 - dh_d * 14"
+              :x2="80 + dh_a * 28 * Math.cos((dh_theta * Math.PI) / 180)"
+              :y2="220 - dh_d * 14 - dh_a * 28 * Math.sin((dh_theta * Math.PI) / 180)"
+              stroke="#c084fc"
+              stroke-width="5"
+              stroke-linecap="round"
+            />
+
+            <!-- Etiqueta a (longitud del eslabón) -->
+            <text
+              :x="80 + dh_a * 14 * Math.cos((dh_theta * Math.PI) / 180) + 6"
+              :y="220 - dh_d * 14 - dh_a * 14 * Math.sin((dh_theta * Math.PI) / 180) - 4"
+              fill="#22c55e"
+              font-size="9"
+              font-family="monospace"
+            >a={{ dh_a.toFixed(1) }}</text>
+
+            <!-- Joint 2 (extremo del eslabón 1) -->
+            <circle
+              :cx="80 + dh_a * 28 * Math.cos((dh_theta * Math.PI) / 180)"
+              :cy="220 - dh_d * 14 - dh_a * 28 * Math.sin((dh_theta * Math.PI) / 180)"
+              r="9"
+              fill="#1e293b"
+              stroke="#f97316"
+              stroke-width="2.5"
+            />
+
+            <!-- Eje Z₁ (rotado por alpha respecto a X₁) -->
+            <line
+              :x1="80 + dh_a * 28 * Math.cos((dh_theta * Math.PI) / 180)"
+              :y1="220 - dh_d * 14 - dh_a * 28 * Math.sin((dh_theta * Math.PI) / 180)"
+              :x2="80 + dh_a * 28 * Math.cos((dh_theta * Math.PI) / 180) + 40 * Math.cos(((dh_theta + dh_alpha) * Math.PI) / 180 + Math.PI / 2)"
+              :y2="220 - dh_d * 14 - dh_a * 28 * Math.sin((dh_theta * Math.PI) / 180) - 40 * Math.sin(((dh_theta + dh_alpha) * Math.PI) / 180 + Math.PI / 2)"
+              stroke="#f97316"
+              stroke-width="1.5"
+              stroke-dasharray="4,3"
+            />
+            <text
+              :x="80 + dh_a * 28 * Math.cos((dh_theta * Math.PI) / 180) + 42 * Math.cos(((dh_theta + dh_alpha) * Math.PI) / 180 + Math.PI / 2)"
+              :y="220 - dh_d * 14 - dh_a * 28 * Math.sin((dh_theta * Math.PI) / 180) - 42 * Math.sin(((dh_theta + dh_alpha) * Math.PI) / 180 + Math.PI / 2)"
+              fill="#f97316"
+              font-size="9"
+              font-family="monospace"
+            >Z₁
+            </text>
+
+            <!-- Referencia horizontal en J1 (eje X₁ = 0°) -->
+            <line
+              x1="80"
+              :y1="220 - dh_d * 14"
+              x2="116"
+              :y2="220 - dh_d * 14"
+              stroke="#475569"
+              stroke-width="1"
+              stroke-dasharray="3,2"
+            />
+
+            <!-- Arco theta: desde referencia horizontal hasta dirección del eslabón -->
+            <path
+              v-if="dh_theta !== 0"
+              :d="`M ${80 + 26},${220 - dh_d * 14} A 26,26 0 0,${dh_theta >= 0 ? 0 : 1} ${
+                80 + 26 * Math.cos((dh_theta * Math.PI) / 180)
+              },${220 - dh_d * 14 - 26 * Math.sin((dh_theta * Math.PI) / 180)}`"
+              fill="none"
+              stroke="#c084fc"
+              stroke-width="1.8"
+              stroke-dasharray="3,2"
+              opacity="0.85"
+            />
+            <!-- Etiqueta θ centrada en el arco -->
+            <text
+              :x="80 + 40 * Math.cos((dh_theta / 2 * Math.PI) / 180) + 2"
+              :y="220 - dh_d * 14 - 40 * Math.sin((dh_theta / 2 * Math.PI) / 180) - 4"
+              fill="#c084fc"
+              font-size="9"
+              font-family="monospace"
+            >θ={{ dh_theta }}°</text>
+
+            <!-- Leyenda alpha en el joint 2 -->
+            <text
+              :x="80 + dh_a * 28 * Math.cos((dh_theta * Math.PI) / 180) + 12"
+              :y="220 - dh_d * 14 - dh_a * 28 * Math.sin((dh_theta * Math.PI) / 180) + 18"
+              fill="#f97316"
+              font-size="9"
+              font-family="monospace"
+            >α={{ dh_alpha }}°</text>
+          </svg>
+        </div>
+
+        <!-- CONTROLES DH: compactos -->
+        <div class="dh-controls">
+          <div class="ctrl-mini" style="--c:#c084fc">
+            <div class="ctrl-mini-row">
+              <span class="ctrl-sym">θ</span>
+              <span class="ctrl-mini-name">Theta — rot. Z₀</span>
+              <span class="ctrl-mini-val">{{ dh_theta }}°</span>
             </div>
-            <div
-              class="link-segment l2"
-              :style="{
-                transform: `translateX(${dh_a * 50}px) rotate(${dh_alpha}deg) translateY(${-dh_d * 20}px)`,
-              }"
-            >
-              <div class="link-body">Link 2</div>
-            </div>
+            <q-slider v-model="dh_theta" :min="-90" :max="90" color="purple" dense />
           </div>
 
-          <div class="dh-controls">
-            <div class="control-row">
-              <label><i>&theta;</i> (Theta): Rotación en Z</label>
-              <q-slider v-model="dh_theta" :min="-90" :max="90" color="purple" dense />
+          <div class="ctrl-mini" style="--c:#3b82f6">
+            <div class="ctrl-mini-row">
+              <span class="ctrl-sym">d</span>
+              <span class="ctrl-mini-name">Offset — desp. Z₀</span>
+              <span class="ctrl-mini-val">{{ dh_d.toFixed(1) }}m</span>
             </div>
-            <div class="control-row">
-              <label><i>d</i> (Offset): Desplazamiento en Z</label>
-              <q-slider v-model="dh_d" :min="0" :max="5" color="blue" dense />
+            <q-slider v-model="dh_d" :min="0" :max="5" :step="0.1" color="blue" dense />
+          </div>
+
+          <div class="ctrl-mini" style="--c:#22c55e">
+            <div class="ctrl-mini-row">
+              <span class="ctrl-sym">a</span>
+              <span class="ctrl-mini-name">Longitud eslab.</span>
+              <span class="ctrl-mini-val">{{ dh_a.toFixed(1) }}m</span>
             </div>
-            <div class="control-row">
-              <label><i>a</i> (Length): Longitud común Normal</label>
-              <q-slider v-model="dh_a" :min="1" :max="5" color="green" dense />
+            <q-slider v-model="dh_a" :min="0.5" :max="4" :step="0.1" color="green" dense />
+          </div>
+
+          <div class="ctrl-mini" style="--c:#f97316">
+            <div class="ctrl-mini-row">
+              <span class="ctrl-sym">α</span>
+              <span class="ctrl-mini-name">Alpha — twist X₁</span>
+              <span class="ctrl-mini-val">{{ dh_alpha }}°</span>
             </div>
-            <div class="control-row">
-              <label><i>&alpha;</i> (Alpha): Twist en X</label>
-              <q-slider v-model="dh_alpha" :min="-90" :max="90" color="orange" dense />
+            <q-slider v-model="dh_alpha" :min="-90" :max="90" color="orange" dense />
+          </div>
+
+          <!-- Tabla resumen compacta -->
+          <div class="dh-table">
+            <div class="dh-table-header">Tabla DH</div>
+            <div class="dh-table-row">
+              <span class="t-param" style="color:#c084fc">θ</span>
+              <span class="t-val">{{ dh_theta }}°</span>
+              <span class="t-desc">Rot. Z₀</span>
+            </div>
+            <div class="dh-table-row">
+              <span class="t-param" style="color:#3b82f6">d</span>
+              <span class="t-val">{{ dh_d.toFixed(1) }}m</span>
+              <span class="t-desc">Offset Z₀</span>
+            </div>
+            <div class="dh-table-row">
+              <span class="t-param" style="color:#22c55e">a</span>
+              <span class="t-val">{{ dh_a.toFixed(1) }}m</span>
+              <span class="t-desc">Long. X₁</span>
+            </div>
+            <div class="dh-table-row">
+              <span class="t-param" style="color:#f97316">α</span>
+              <span class="t-val">{{ dh_alpha }}°</span>
+              <span class="t-desc">Twist X₁</span>
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
 
@@ -912,7 +1093,7 @@ const dh_alpha = ref(0);
   padding: 4rem 2rem;
   background:
     radial-gradient(circle at 70% 50%, rgba(59, 130, 246, 0.15), transparent 60%),
-    linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-solid) 100%);
   border-radius: 20px;
   border: 1px solid rgba(148, 163, 184, 0.1);
   margin-bottom: 4rem;
@@ -925,7 +1106,7 @@ const dh_alpha = ref(0);
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 1.5rem;
-  color: #fff;
+  color: var(--text-primary);
   letter-spacing: -1px;
 }
 
@@ -937,7 +1118,7 @@ const dh_alpha = ref(0);
 
 .hero-subtitle {
   font-size: 1.1rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   max-width: 600px;
   line-height: 1.6;
   margin-bottom: 2rem;
@@ -970,12 +1151,12 @@ const dh_alpha = ref(0);
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border: 2px solid #60a5fa;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   font-weight: 700;
   z-index: 2;
   box-shadow: 0 0 20px rgba(96, 165, 250, 0.3);
@@ -984,7 +1165,7 @@ const dh_alpha = ref(0);
 .node-line {
   width: 4px;
   height: 60px;
-  background: #334155;
+  background: var(--bg-surface-solid);
   margin-top: -2px;
   z-index: 1;
 }
@@ -1034,7 +1215,7 @@ const dh_alpha = ref(0);
   font-size: 2.5rem;
 }
 .box-title {
-  color: #86efac;
+  color: var(--text-code);
   font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
@@ -1047,7 +1228,7 @@ const dh_alpha = ref(0);
 
 /* MATH DEEP DIVE */
 .math-deep-dive {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 1px solid #334155;
   border-radius: 16px;
   padding: 2rem;
@@ -1055,7 +1236,7 @@ const dh_alpha = ref(0);
 
 .math-header {
   font-size: 1.5rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-weight: 700;
   margin-bottom: 2rem;
   display: flex;
@@ -1076,7 +1257,7 @@ const dh_alpha = ref(0);
   color: #bae6fd;
   text-align: center;
   padding: 2rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 12px;
 }
 
@@ -1089,11 +1270,11 @@ const dh_alpha = ref(0);
   margin-bottom: 1rem;
   padding-left: 1rem;
   border-left: 3px solid #64748b;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 .matrix-explanation strong {
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 /* MATH MATRIX CSS - HTML FALLBACK */
@@ -1102,7 +1283,7 @@ const dh_alpha = ref(0);
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   padding: 2rem;
   border-radius: 12px;
 }
@@ -1112,7 +1293,7 @@ const dh_alpha = ref(0);
   font-family: 'Times New Roman', serif;
   font-size: 2rem;
   font-style: italic;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .matrix-wrapper {
@@ -1129,12 +1310,12 @@ const dh_alpha = ref(0);
 
 .m-cell {
   font-family: 'Times New Roman', serif;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 1.2rem;
 }
 
 .m-cell.diagonal {
-  color: #60a5fa; /* Highlight diagonal */
+  color: var(--text-info, #2563eb); /* Highlight diagonal */
   font-weight: 700;
 }
 
@@ -1166,7 +1347,7 @@ const dh_alpha = ref(0);
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   padding: 2rem;
   border-radius: 12px;
 }
@@ -1176,7 +1357,7 @@ const dh_alpha = ref(0);
   font-family: 'Times New Roman', serif;
   font-size: 2rem;
   font-style: italic;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .matrix-wrapper {
@@ -1193,12 +1374,12 @@ const dh_alpha = ref(0);
 
 .m-cell {
   font-family: 'Times New Roman', serif;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 1.2rem;
 }
 
 .m-cell.diagonal {
-  color: #60a5fa; /* Highlight diagonal */
+  color: var(--text-info, #2563eb); /* Highlight diagonal */
   font-weight: 700;
 }
 
@@ -1226,7 +1407,7 @@ const dh_alpha = ref(0);
 
 /* INTERACTIVE CALCULATOR */
 .interactive-tool {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 2rem;
@@ -1235,11 +1416,11 @@ const dh_alpha = ref(0);
 .tool-title {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   margin-bottom: 0.5rem;
 }
 .tool-desc {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   margin-bottom: 1.5rem;
 }
@@ -1274,16 +1455,16 @@ const dh_alpha = ref(0);
 .result-value {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--text-primary);
   font-family: monospace;
 }
 .result-unit {
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .viz-feedback {
   height: 100px;
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   border-radius: 8px;
   margin-top: 1.5rem;
   position: relative;
@@ -1313,7 +1494,7 @@ const dh_alpha = ref(0);
   position: absolute;
   top: 0;
   border-left: 1px dashed #fff;
-  color: #fff;
+  color: var(--text-primary);
   padding-left: 5px;
   font-size: 0.7rem;
 }
@@ -1367,74 +1548,150 @@ const dh_alpha = ref(0);
 
 .q-label {
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
 .q-desc {
   font-size: 0.75rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
-/* DH VIZ */
+/* DH VIZ — diagrama como protagonista */
 .dh-viz {
-  display: flex;
-  gap: 3rem;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 220px;   /* Diagrama grande | Panel compacto */
+  gap: 1.25rem;
+  align-items: start;
 }
 
-.dh-diagram {
-  width: 300px;
-  height: 300px;
-  background: #0f172a;
-  border: 1px solid #334155;
-  border-radius: 50%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.dh-diagram-wrap {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  overflow: hidden;
+  min-width: 0;                        /* Permite shrink en grid */
 }
 
-.link-segment {
-  position: absolute;
-  transform-origin: center left;
-  transition: transform 0.3s ease-out;
+.dh-label-top {
+  font-size: 0.7rem;
+  font-family: 'Fira Code', monospace;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 6px 0 4px 0;
+  border-bottom: 1px solid var(--border-accent);
+  letter-spacing: 0.05em;
 }
 
-.link-body {
-  height: 10px;
-  background: #c084fc;
-  border-radius: 5px;
+.dh-svg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-.joint-axis {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #fbbf24;
-  position: absolute;
-  left: -10px;
-  top: -5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.6rem;
-  color: black;
-  font-weight: 700;
-}
-
+/* Panel de controles — ultra compacto */
 .dh-controls {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  min-width: 250px;
+  gap: 0.5rem;
+  min-width: 0;
 }
 
-.control-row label {
+/* Cada control mini: una fila de header + slider */
+.ctrl-mini {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--c, #6366f1);
+  border-radius: 8px;
+  padding: 6px 10px 8px;
+}
+
+.ctrl-mini-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.ctrl-sym {
+  font-size: 0.95rem;
+  font-weight: 800;
+  font-style: italic;
+  color: var(--c, #6366f1);
+  min-width: 14px;
+}
+
+.ctrl-mini-name {
+  flex: 1;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ctrl-mini-val {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  color: var(--c, #6366f1);
+  font-weight: 700;
+  min-width: 32px;
+  text-align: right;
+}
+
+/* Tabla DH compacta */
+.dh-table {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 0.25rem;
+}
+
+.dh-table-header {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding: 5px 10px;
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.dh-table-row {
+  display: grid;
+  grid-template-columns: 18px 44px 1fr;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-bottom: 1px solid var(--border-accent);
+  font-size: 0.72rem;
+}
+
+.dh-table-row:last-child { border-bottom: none; }
+
+.t-param {
+  font-weight: 800;
+  font-style: italic;
   font-size: 0.85rem;
-  color: #cbd5e1;
-  margin-bottom: 0.25rem;
-  display: block;
+}
+
+.t-val {
+  font-family: 'Fira Code', monospace;
+  color: var(--text-code);
+  font-size: 0.7rem;
+}
+
+.t-desc {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+}
+
+/* RESPONSIVE: apila en mobile */
+@media (max-width: 700px) {
+  .dh-viz {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* COMPLETION MSG */
@@ -1476,7 +1733,7 @@ const dh_alpha = ref(0);
 }
 
 .anatomy-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   overflow: hidden;
@@ -1499,9 +1756,9 @@ const dh_alpha = ref(0);
 
 .card-header {
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -1511,7 +1768,7 @@ const dh_alpha = ref(0);
 .card-body {
   padding: 1.5rem;
   font-size: 0.9rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 .card-body ul {
@@ -1529,12 +1786,12 @@ const dh_alpha = ref(0);
   padding: 0.75rem;
   border-radius: 6px;
   font-size: 0.8rem;
-  color: #fca5a5;
+  color: var(--text-danger, #dc2626);
 }
 
 /* XACRO STUDIO */
 .xacro-studio {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   border-radius: 12px;
   border: 1px solid #334155;
   overflow: hidden;
@@ -1542,8 +1799,8 @@ const dh_alpha = ref(0);
 
 .studio-header {
   padding: 0.75rem 1rem;
-  background: #334155;
-  color: #fff;
+  background: var(--bg-surface-solid);
+  color: var(--text-primary);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -1559,7 +1816,7 @@ const dh_alpha = ref(0);
 }
 
 .code-pane {
-  background: #0f172a;
+  background: var(--bg-surface);
   border-radius: 8px;
   height: 350px;
   display: flex;
@@ -1568,7 +1825,7 @@ const dh_alpha = ref(0);
 
 .pane-label {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   padding: 0.5rem;
   border-bottom: 1px solid #334155;
   font-family: monospace;
@@ -1584,7 +1841,7 @@ const dh_alpha = ref(0);
 
 .arrow-pane .q-icon {
   font-size: 2rem;
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
 }
 
 .xml-tree {
@@ -1611,7 +1868,7 @@ const dh_alpha = ref(0);
 }
 
 .col-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border-radius: 8px;
   padding: 1rem;
   text-align: center;
@@ -1630,7 +1887,7 @@ const dh_alpha = ref(0);
 .col-title {
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .col-viz {
@@ -1638,7 +1895,7 @@ const dh_alpha = ref(0);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 6px;
   margin-bottom: 1rem;
 }
@@ -1656,7 +1913,7 @@ const dh_alpha = ref(0);
 
 .col-stats {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-family: monospace;
 }
 /* BLOCK C STYLES */
@@ -1667,7 +1924,7 @@ const dh_alpha = ref(0);
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   padding: 2rem;
   border-radius: 12px;
   flex-wrap: wrap;
@@ -1679,7 +1936,7 @@ const dh_alpha = ref(0);
   align-items: center;
   width: 200px;
   text-align: center;
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 1.5rem;
   border-radius: 8px;
   border: 1px solid #334155;
@@ -1697,17 +1954,17 @@ const dh_alpha = ref(0);
 
 .p-icon {
   font-size: 2.5rem;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
 .p-label {
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
 .p-desc {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 .p-arrow {
   font-size: 1.5rem;
@@ -1717,7 +1974,7 @@ const dh_alpha = ref(0);
 
 /* MESH LAB */
 .mesh-lab-container {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 1px dashed #64748b;
   border-radius: 12px;
   padding: 2rem;
@@ -1728,7 +1985,7 @@ const dh_alpha = ref(0);
   position: absolute;
   top: -15px;
   left: 20px;
-  background: #0f172a;
+  background: var(--bg-surface);
   padding: 0 10px;
   color: #c4b5fd;
   font-weight: 700;
@@ -1742,13 +1999,13 @@ const dh_alpha = ref(0);
 }
 
 .error-card {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   padding: 1rem;
   border-radius: 8px;
 }
 
 .e-header {
-  color: #fca5a5;
+  color: var(--text-danger, #dc2626);
   font-weight: 700;
   margin-bottom: 1rem;
   text-align: center;
@@ -1756,7 +2013,7 @@ const dh_alpha = ref(0);
 
 .e-viz {
   height: 100px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -1796,7 +2053,7 @@ const dh_alpha = ref(0);
   position: absolute;
   top: 10%;
   right: 10%;
-  color: white;
+  color: var(--text-primary);
   font-size: 0.7rem;
   display: flex;
   align-items: center;
@@ -1813,18 +2070,18 @@ const dh_alpha = ref(0);
 }
 .scale .small {
   font-size: 0.6rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .e-fix {
   font-size: 0.8rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.4;
 }
 
 /* TRANSMISSION ARCH */
 .transmission-architecture {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 2rem;
   border-radius: 12px;
 }
@@ -1839,7 +2096,7 @@ const dh_alpha = ref(0);
 
 .arch-block {
   width: 300px;
-  background: #334155;
+  background: var(--bg-surface-solid);
   border: 1px solid #475569;
   border-radius: 6px;
   padding: 1rem;
@@ -1874,11 +2131,11 @@ const dh_alpha = ref(0);
 
 .a-title {
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
 }
 .a-sub {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 .mini-code {
   font-size: 0.7rem;
@@ -1896,7 +2153,7 @@ const dh_alpha = ref(0);
 
 /* BLUEPRINT VIZ */
 .blueprint-container {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 2px solid #3b82f6;
   border-radius: 4px;
   padding: 1rem;
@@ -1917,7 +2174,7 @@ const dh_alpha = ref(0);
 .bp-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   letter-spacing: 2px;
 }
 
@@ -1935,7 +2192,7 @@ const dh_alpha = ref(0);
 .bp-section {
   border: 1px dashed #1e40af;
   padding: 1rem;
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
 }
 
 .robot-schematic {
@@ -1947,8 +2204,8 @@ const dh_alpha = ref(0);
 
 .r-base {
   padding: 10px 20px;
-  background: #334155;
-  color: #fff;
+  background: var(--bg-surface-solid);
+  color: var(--text-primary);
   border: 1px solid #fff;
 }
 .r-joint {
@@ -1978,13 +2235,13 @@ const dh_alpha = ref(0);
 
 .map-node {
   padding: 0.5rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   border-left: 2px solid #334155;
   margin-bottom: 0.5rem;
 }
 
 .map-node.root {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   font-weight: 700;
   border: none;
 }
@@ -2022,7 +2279,7 @@ const dh_alpha = ref(0);
 .c-title {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #fca5a5;
+  color: var(--text-danger, #dc2626);
   margin-bottom: 0.5rem;
 }
 .c-desc {
@@ -2041,7 +2298,7 @@ const dh_alpha = ref(0);
   align-items: flex-start; /* Changed from center for multi-line text */
   gap: 1rem;
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
@@ -2049,7 +2306,7 @@ const dh_alpha = ref(0);
 }
 
 .c-option:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-surface-hover);
 }
 
 .opt-radio {
@@ -2061,12 +2318,12 @@ const dh_alpha = ref(0);
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   flex-shrink: 0; /* Prevent shrinking */
 }
 
 .opt-text {
-  color: #fff;
+  color: var(--text-primary);
   flex: 1;
 }
 
@@ -2075,21 +2332,21 @@ const dh_alpha = ref(0);
   background: rgba(34, 197, 94, 0.1);
 }
 .c-option.correct .opt-radio {
-  border-color: #22c55e;
-  color: #22c55e;
+  border-color: var(--text-code);
+  color: var(--text-code);
 }
 .opt-feedback {
   width: 100%;
   margin-top: 0.5rem;
   font-size: 0.9rem;
-  color: #86efac;
+  color: var(--text-code);
   padding-left: 3.5rem;
 }
 
 /* SUMMARY SECTION */
 .summary-section {
   margin-top: 5rem;
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 3rem;
   border-radius: 20px;
   text-align: center;
@@ -2098,7 +2355,7 @@ const dh_alpha = ref(0);
 .summary-title {
   font-size: 2rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 2rem;
 }
 
@@ -2116,11 +2373,11 @@ const dh_alpha = ref(0);
   gap: 1rem;
   margin-bottom: 1rem;
   font-size: 1.1rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 .summary-list .q-icon {
-  color: #22c55e;
+  color: var(--text-code);
   font-size: 1.5rem;
 }
 
@@ -2133,14 +2390,14 @@ const dh_alpha = ref(0);
 }
 
 .next-label {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 0.5rem;
 }
 .next-title {
-  color: #fff;
+  color: var(--text-primary);
   font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -2165,7 +2422,7 @@ const dh_alpha = ref(0);
 }
 /* VIDEO TUTORIAL STYLES */
 .video-container {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 1px solid #334155;
   border-radius: 12px;
   overflow: hidden;
@@ -2193,7 +2450,7 @@ const dh_alpha = ref(0);
 
 .video-caption {
   padding: 1rem 0.5rem 0.5rem 0.5rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   display: flex;
   align-items: center;
@@ -2213,7 +2470,7 @@ const dh_alpha = ref(0);
 }
 
 .summary-item {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 8px;
   padding: 1rem;
@@ -2230,7 +2487,7 @@ const dh_alpha = ref(0);
 }
 
 .summary-item span {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 
@@ -2245,7 +2502,7 @@ const dh_alpha = ref(0);
 }
 
 .next-label {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -2253,7 +2510,7 @@ const dh_alpha = ref(0);
 }
 
 .next-title {
-  color: #fff;
+  color: var(--text-primary);
   font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 1rem;

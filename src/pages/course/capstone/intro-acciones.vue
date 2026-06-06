@@ -220,7 +220,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 
 /* Visualización .action */
 .action-card {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   border-radius: 12px;
   overflow: hidden;
   max-width: 500px;
@@ -229,7 +229,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 }
 .action-header {
   background: #4f46e5; /* Indigo */
-  color: white;
+  color: var(--text-primary);
   padding: 10px;
   text-align: center;
   font-weight: bold;
@@ -291,7 +291,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
   line-height: 1.5;
 }
 .text-blue {
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
 }
 .text-yellow {
   color: #fcd34d;
@@ -302,12 +302,12 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 
 /* Tabla Comparativa */
 .comparison-table {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border-radius: 8px;
   overflow: hidden;
 }
 .header {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-surface-hover);
   padding: 10px;
   font-weight: bold;
   text-align: center;

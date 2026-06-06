@@ -24,9 +24,9 @@ defineProps<{
 
 /* Tipografía Base */
 .text-content {
-  color: #cbd5e1; /* Slate-300: Color estándar para texto en fondo oscuro */
-  font-size: 1.05rem; /* Un poco más grande que el estándar para legibilidad */
-  line-height: 1.75; /* Espaciado generoso entre líneas */
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.75;
   letter-spacing: 0.01em;
 }
 
@@ -38,39 +38,39 @@ defineProps<{
 /* Negritas */
 .text-block :deep(strong),
 .text-block :deep(b) {
-  color: #f1f5f9; /* Slate-100 (Casi blanco) */
+  color: var(--text-primary);
   font-weight: 700;
 }
 
 /* Cursivas */
 .text-block :deep(em),
 .text-block :deep(i) {
-  color: #94a3b8; /* Slate-400 */
+  color: var(--text-muted);
   font-style: italic;
 }
 
 /* Código en línea */
 .text-block :deep(code) {
-  background: rgba(56, 189, 248, 0.15); /* Sky-400 muy suave */
-  color: #38bdf8; /* Sky-400 */
+  background: var(--bg-code);
+  color: var(--text-code);
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 0.9em;
   font-family: 'Fira Code', 'Monaco', monospace;
-  border: 1px solid rgba(56, 189, 248, 0.2);
+  border: 1px solid var(--border-hover);
 }
 
 /* Enlaces */
 .text-block :deep(a) {
-  color: #60a5fa; /* Blue-400 */
+  color: var(--text-link);
   text-decoration: none;
-  border-bottom: 1px solid rgba(96, 165, 250, 0.3);
+  border-bottom: 1px solid var(--border-hover);
   transition: all 0.2s;
 }
 
 .text-block :deep(a:hover) {
-  color: #93c5fd; /* Blue-300 */
-  border-bottom-color: #93c5fd;
+  color: var(--text-link-hover);
+  border-bottom-color: var(--text-link-hover);
 }
 
 /* Listas desordenadas simples (dentro de un párrafo) */
@@ -88,15 +88,15 @@ defineProps<{
    MODO HIGHLIGHTED (Destacado)
 ========================================= */
 .is-highlighted {
-  background: rgba(30, 41, 59, 0.4); /* Slate-800 semi-transparente */
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
   padding: 24px;
-  border-left: 4px solid #38bdf8; /* Borde izquierdo Cyan */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-left: 4px solid var(--text-code);
+  box-shadow: 0 4px 20px var(--shadow-sm);
 }
 
 .is-highlighted .text-content {
-  color: #e2e8f0; /* Texto ligeramente más brillante */
+  color: var(--text-primary);
 }
 
 /* RESPONSIVE */

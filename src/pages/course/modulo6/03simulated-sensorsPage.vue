@@ -1222,7 +1222,7 @@ const computedStd = computed(() => {
 .hero-section {
   background:
     radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15), transparent 50%),
-    linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-solid) 100%);
   border-radius: 24px;
   padding: 4rem 3rem;
   border: 1px solid rgba(148, 163, 184, 0.1);
@@ -1271,7 +1271,7 @@ const computedStd = computed(() => {
 
 .hero-subtitle {
   font-size: 1.2rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 2.5rem;
   line-height: 1.7;
   max-width: 600px;
@@ -1285,7 +1285,7 @@ const computedStd = computed(() => {
 .stat-val {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 0.25rem;
 }
 
@@ -1336,7 +1336,7 @@ const computedStd = computed(() => {
 
 /* NOISE THEORY */
 .noise-theory-container {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   padding: 2rem;
   border-radius: 16px;
   border: 1px solid rgba(148, 163, 184, 0.1);
@@ -1349,20 +1349,20 @@ const computedStd = computed(() => {
 }
 
 .theory-card {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 1px solid #334155;
   border-radius: 12px;
   overflow: hidden;
 }
 
 .card-header {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 1rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   border-bottom: 1px solid #334155;
-  color: #fff;
+  color: var(--text-primary);
   font-weight: 700;
 }
 
@@ -1373,7 +1373,7 @@ const computedStd = computed(() => {
 .math-expression {
   font-family: 'Fira Code', monospace;
   font-size: 1.2rem;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   text-align: center;
   padding: 1rem;
   background: rgba(59, 130, 246, 0.1);
@@ -1382,7 +1382,7 @@ const computedStd = computed(() => {
 }
 
 .card-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.6;
   margin-bottom: 1rem;
@@ -1390,21 +1390,21 @@ const computedStd = computed(() => {
 
 .gaussian-viz,
 .walk-viz {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 8px;
   padding: 0.5rem;
 }
 
 /* NOISE LAB */
 .tool-wrapper {
-  background: #0f172a;
+  background: var(--bg-surface);
   border-radius: 20px;
   border: 1px solid #334155;
   overflow: hidden;
 }
 
 .tool-header {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
@@ -1414,12 +1414,12 @@ const computedStd = computed(() => {
 
 .tool-header .q-icon {
   font-size: 1.5rem;
-  color: #a855f7;
+  color: var(--text-primary);
 }
 
 .tool-title {
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   letter-spacing: 0.5px;
 }
 
@@ -1431,7 +1431,7 @@ const computedStd = computed(() => {
 
 .lab-controls {
   padding: 2rem;
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border-right: 1px solid #334155;
   display: flex;
   flex-direction: column;
@@ -1446,7 +1446,7 @@ const computedStd = computed(() => {
 
 .c-label {
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
@@ -1459,7 +1459,7 @@ const computedStd = computed(() => {
 
 .lab-viz {
   padding: 2rem;
-  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  background: var(--bg-surface);
 }
 
 .noise-plot {
@@ -1469,7 +1469,7 @@ const computedStd = computed(() => {
 }
 
 .plot-title {
-  color: #fff;
+  color: var(--text-primary);
   font-weight: 700;
   margin-bottom: 1rem;
 }
@@ -1477,7 +1477,7 @@ const computedStd = computed(() => {
 .plot-canvas {
   flex: 1;
   position: relative;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -1504,7 +1504,7 @@ const computedStd = computed(() => {
   justify-content: space-around;
   margin-top: 1rem;
   font-family: monospace;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
 }
 
@@ -1516,13 +1516,13 @@ const computedStd = computed(() => {
 }
 
 .code-header {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   border-bottom: 1px solid #334155;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-family: monospace;
   font-size: 0.9rem;
 }
@@ -1535,7 +1535,7 @@ const computedStd = computed(() => {
 }
 
 .class-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border-radius: 16px;
   padding: 2rem;
   border: 2px solid;
@@ -1549,23 +1549,23 @@ const computedStd = computed(() => {
 }
 
 .class-card.proprio {
-  border-color: #a855f7;
+  border-color: var(--text-primary);
 }
 
 .class-icon {
-  color: #fff;
+  color: var(--text-primary);
   text-align: center;
 }
 
 .class-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   text-align: center;
 }
 
 .class-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   text-align: center;
   line-height: 1.6;
 }
@@ -1578,16 +1578,16 @@ const computedStd = computed(() => {
 }
 
 .example-tag {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-surface-hover);
   padding: 0.25rem 0.75rem;
   border-radius: 99px;
   font-size: 0.8rem;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .class-use {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
   text-align: center;
   padding-top: 1rem;
@@ -1596,17 +1596,17 @@ const computedStd = computed(() => {
 
 /* FREQUENCY TABLE */
 .freq-table-container {
-  background: #0f172a;
+  background: var(--bg-surface);
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid #334155;
 }
 
 .table-title {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 1rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   border-bottom: 1px solid #334155;
 }
 
@@ -1616,13 +1616,13 @@ const computedStd = computed(() => {
 }
 
 .freq-table thead {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
 }
 
 .freq-table th {
   padding: 0.75rem 1rem;
   text-align: left;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-weight: 600;
   font-size: 0.85rem;
   text-transform: uppercase;
@@ -1631,7 +1631,7 @@ const computedStd = computed(() => {
 
 .freq-table td {
   padding: 1rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   border-top: 1px solid rgba(51, 65, 85, 0.5);
 }
 
@@ -1639,32 +1639,32 @@ const computedStd = computed(() => {
   background: rgba(59, 130, 246, 0.1);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   font-family: monospace;
 }
 
 /* SYNC TIMELINE */
 .sync-timeline {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 1px solid #334155;
   border-radius: 12px;
   overflow: hidden;
 }
 
 .timeline-header {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 1rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   border-bottom: 1px solid #334155;
-  color: #fff;
+  color: var(--text-primary);
   font-weight: 700;
 }
 
 .timeline-canvas {
   padding: 2rem;
-  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  background: var(--bg-surface);
 }
 
 .timeline-track {
@@ -1673,7 +1673,7 @@ const computedStd = computed(() => {
 }
 
 .track-label {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
   margin-bottom: 0.5rem;
   font-weight: 600;
@@ -1682,7 +1682,7 @@ const computedStd = computed(() => {
 .track-pulses {
   position: relative;
   height: 30px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 4px;
 }
 
@@ -1711,7 +1711,7 @@ const computedStd = computed(() => {
   padding: 1rem;
   background: rgba(59, 130, 246, 0.1);
   border-left: 3px solid #3b82f6;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.6;
 }
@@ -1772,7 +1772,7 @@ const computedStd = computed(() => {
 
 /* LIDAR CONFIGURATOR */
 .lidar-config-tool {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 1px solid #334155;
   border-radius: 12px;
   overflow: hidden;
@@ -1786,7 +1786,7 @@ const computedStd = computed(() => {
 
 .config-controls {
   padding: 2rem;
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border-right: 1px solid #334155;
   display: flex;
   flex-direction: column;
@@ -1795,7 +1795,7 @@ const computedStd = computed(() => {
 
 .config-viz {
   padding: 2rem;
-  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  background: var(--bg-surface);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1815,13 +1815,13 @@ const computedStd = computed(() => {
   text-align: center;
   margin-top: 1rem;
   font-family: monospace;
-  color: #22c55e;
+  color: var(--text-code);
   font-size: 0.85rem;
 }
 
 /* CAMERA FRUSTUM */
 .camera-frustum-viz {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   padding: 2rem;
   border-radius: 16px;
   border: 1px solid rgba(148, 163, 184, 0.1);
@@ -1882,17 +1882,17 @@ const computedStd = computed(() => {
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 8px;
 }
 
 .param-label {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-weight: 600;
 }
 
 .param-row code {
-  color: #a855f7;
+  color: var(--text-primary);
   font-family: monospace;
   font-size: 1rem;
 }
@@ -1905,7 +1905,7 @@ const computedStd = computed(() => {
 }
 
 .imu-component {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border-radius: 12px;
   padding: 2rem;
   display: flex;
@@ -1921,40 +1921,40 @@ const computedStd = computed(() => {
 }
 
 .imu-component.gyro {
-  border-color: #a855f7;
+  border-color: var(--text-primary);
 }
 
 .imu-component.mag {
-  border-color: #22c55e;
+  border-color: var(--text-code);
 }
 
 .comp-title {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .comp-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.6;
 }
 
 .comp-noise {
   padding: 0.5rem 1rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 6px;
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .comp-noise code {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
 }
 
 /* DIFF DRIVE VIZ */
 .diff-drive-viz {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   padding: 2rem;
   border-radius: 16px;
   border: 1px solid rgba(148, 163, 184, 0.1);
@@ -1983,7 +1983,7 @@ const computedStd = computed(() => {
 .eq-title {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
 
@@ -1992,18 +1992,18 @@ const computedStd = computed(() => {
   flex-direction: column;
   gap: 0.25rem;
   padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 6px;
 }
 
 .eq-row code {
   font-family: 'Fira Code', monospace;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   font-size: 0.95rem;
 }
 
 .eq-row span {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.8rem;
 }
 
@@ -2018,7 +2018,7 @@ const computedStd = computed(() => {
 }
 
 .eq-params code {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
 }
 
 /* ANIMATIONS */
@@ -2041,14 +2041,14 @@ const computedStd = computed(() => {
 
 /* SENSOR SUITE VIZ */
 .sensor-suite-viz {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 1px solid #334155;
   border-radius: 12px;
   overflow: hidden;
 }
 
 .suite-header {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 1.5rem;
   display: flex;
   align-items: center;
@@ -2059,7 +2059,7 @@ const computedStd = computed(() => {
 .suite-title {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .suite-grid {
@@ -2067,11 +2067,11 @@ const computedStd = computed(() => {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   padding: 2rem;
-  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  background: var(--bg-surface);
 }
 
 .sensor-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border-radius: 12px;
   padding: 1.5rem;
   display: flex;
@@ -2088,11 +2088,11 @@ const computedStd = computed(() => {
 }
 
 .sensor-card.lidar-card {
-  border-color: #22c55e;
+  border-color: var(--text-code);
 }
 
 .sensor-card.camera-card {
-  border-color: #a855f7;
+  border-color: var(--text-primary);
 }
 
 .sensor-card.imu-card {
@@ -2105,17 +2105,17 @@ const computedStd = computed(() => {
 
 .sensor-name {
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 1rem;
 }
 
 .sensor-spec {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
 .sensor-freq {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   padding: 0.25rem 0.75rem;
   border-radius: 99px;
   font-family: monospace;
@@ -2127,7 +2127,7 @@ const computedStd = computed(() => {
   display: flex;
   justify-content: space-around;
   padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-top: 1px solid #334155;
 }
 
@@ -2146,14 +2146,14 @@ const computedStd = computed(() => {
 }
 
 .metric-item code {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   font-size: 1.1rem;
   font-weight: 700;
 }
 
 /* CHALLENGE CARD */
 .challenge-card {
-  background: rgba(30, 41, 59, 0.4);
+  background: var(--bg-surface-solid);
   border: 1px solid #d946ef;
   border-radius: 16px;
   padding: 2rem;
@@ -2178,7 +2178,7 @@ const computedStd = computed(() => {
 }
 
 .c-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.95rem;
 }
 
@@ -2192,7 +2192,7 @@ const computedStd = computed(() => {
   display: flex;
   gap: 1rem;
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
   border-radius: 8px;
   cursor: default;
 }
@@ -2211,29 +2211,29 @@ const computedStd = computed(() => {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   flex-shrink: 0;
 }
 
 .c-option.correct .opt-radio {
-  border-color: #22c55e;
-  color: #22c55e;
+  border-color: var(--text-code);
+  color: var(--text-code);
 }
 
 .opt-text {
-  color: #fff;
+  color: var(--text-primary);
   flex: 1;
 }
 
 .opt-feedback {
   margin-top: 0.5rem;
-  color: #86efac;
+  color: var(--text-code);
   font-size: 0.9rem;
 }
 
 /* VIDEO STYLES */
 .video-container {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 1px solid #334155;
   border-radius: 12px;
   overflow: hidden;
@@ -2260,7 +2260,7 @@ const computedStd = computed(() => {
 
 .video-caption {
   padding: 1rem 0.5rem 0.5rem 0.5rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   display: flex;
   align-items: center;
@@ -2275,7 +2275,7 @@ const computedStd = computed(() => {
 }
 
 .summary-item {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 8px;
   padding: 1rem;
@@ -2292,7 +2292,7 @@ const computedStd = computed(() => {
 }
 
 .summary-item span {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 
@@ -2307,7 +2307,7 @@ const computedStd = computed(() => {
 }
 
 .next-label {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -2315,7 +2315,7 @@ const computedStd = computed(() => {
 }
 
 .next-title {
-  color: #fff;
+  color: var(--text-primary);
   font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 1rem;

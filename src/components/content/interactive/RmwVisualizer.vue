@@ -129,7 +129,7 @@ onMounted(() => {
 
 <style scoped>
 .rmw-visualizer {
-  background: rgba(15, 23, 42, 0.9);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   overflow: hidden;
@@ -143,12 +143,12 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--bg-surface-hover);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .viz-title {
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -165,7 +165,7 @@ onMounted(() => {
 
 .layer {
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(30, 41, 59, 0.8);
+  background: var(--bg-surface-solid);
   border-radius: 6px;
   padding: 0.75rem;
   text-align: center;
@@ -175,7 +175,7 @@ onMounted(() => {
 
 .layer-label {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -268,7 +268,7 @@ onMounted(() => {
   30% {
     top: 120px;
     background: #22c55e;
-    color: white;
+    color: var(--text-primary);
     content: 'PTR';
   } /* Transforms to pointer */
   70% {
@@ -296,7 +296,7 @@ onMounted(() => {
 
 .memory-block {
   background: #22c55e;
-  color: white;
+  color: var(--text-primary);
   padding: 0.5rem 1rem;
   border-radius: 4px;
   font-family: monospace;
@@ -306,7 +306,7 @@ onMounted(() => {
 
 .pointer {
   font-size: 0.7rem;
-  color: #86efac;
+  color: var(--text-code);
   font-family: monospace;
   position: relative;
 }
@@ -322,7 +322,7 @@ onMounted(() => {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
   gap: 1rem;
 }
 

@@ -143,7 +143,7 @@ addLog('Node instantiated. State: Unconfigured');
 
 <style scoped>
 .lifecycle-dashboard {
-  background: rgba(15, 23, 42, 0.9);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   overflow: hidden;
@@ -154,7 +154,7 @@ addLog('Node instantiated. State: Unconfigured');
 
 .dash-header {
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--bg-surface-hover);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -162,7 +162,7 @@ addLog('Node instantiated. State: Unconfigured');
 }
 
 .header-title {
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -178,11 +178,11 @@ addLog('Node instantiated. State: Unconfigured');
 }
 
 .state-display.unconfigured {
-  color: #94a3b8;
+  color: var(--text-muted);
   background: rgba(148, 163, 184, 0.2);
 }
 .state-display.inactive {
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   background: rgba(96, 165, 250, 0.2);
 }
 .state-display.active {
@@ -200,7 +200,7 @@ addLog('Node instantiated. State: Unconfigured');
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
 }
 
 .state-node {
@@ -217,18 +217,18 @@ addLog('Node instantiated. State: Unconfigured');
 
 .state-node.active {
   border-color: currentColor;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-surface-hover);
   box-shadow: 0 0 15px currentColor;
   transform: scale(1.05);
 }
 
 .state-node.unconfigured.active {
-  color: #94a3b8;
-  border-color: #94a3b8;
+  color: var(--text-muted);
+  border-color: var(--text-muted);
 }
 .state-node.inactive.active {
-  color: #60a5fa;
-  border-color: #60a5fa;
+  color: var(--text-info, #2563eb);
+  border-color: var(--text-info, #2563eb);
 }
 .state-node.active-state.active {
   color: #4ade80;
@@ -244,7 +244,7 @@ addLog('Node instantiated. State: Unconfigured');
   font-weight: bold;
 }
 .transition-arrow.active {
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .controls-area {
@@ -254,7 +254,7 @@ addLog('Node instantiated. State: Unconfigured');
 
 .control-label {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 0.75rem;
   text-transform: uppercase;
 }
@@ -270,7 +270,7 @@ addLog('Node instantiated. State: Unconfigured');
 }
 
 .console-log {
-  background: #0f172a;
+  background: var(--bg-surface);
   padding: 1rem;
   font-family: 'Fira Code', monospace;
   font-size: 0.75rem;
@@ -290,7 +290,7 @@ addLog('Node instantiated. State: Unconfigured');
   color: #475569;
 }
 .log-msg {
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 .log-msg.highlight {
   color: #fde047;

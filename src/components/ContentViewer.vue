@@ -79,7 +79,7 @@ function getImageUrl(filename: string) {
 ========================================= */
 
 .markdown-body {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 1.05rem;
   line-height: 1.75;
 }
@@ -89,17 +89,17 @@ function getImageUrl(filename: string) {
 }
 
 .markdown-body :deep(h2) {
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-size: 1.5rem;
   font-weight: 700;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  border-bottom: 1px solid var(--border-subtle);
   padding-bottom: 0.5rem;
 }
 
 .markdown-body :deep(h3) {
-  color: #e2e8f0;
+  color: var(--text-secondary);
   font-size: 1.25rem;
   font-weight: 600;
   margin-top: 2rem;
@@ -117,29 +117,30 @@ function getImageUrl(filename: string) {
 }
 
 .markdown-body :deep(a) {
-  color: #38bdf8;
+  color: var(--text-link);
   text-decoration: none;
-  border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+  border-bottom: 1px solid var(--border-hover);
   transition: border-color 0.2s;
 }
 
 .markdown-body :deep(a:hover) {
-  border-bottom-color: #38bdf8;
+  color: var(--text-link-hover);
+  border-bottom-color: var(--text-link-hover);
 }
 
 .markdown-body :deep(code) {
-  background: rgba(15, 23, 42, 0.6);
-  color: #38bdf8;
+  background: var(--bg-code);
+  color: var(--text-code);
   padding: 2px 6px;
   border-radius: 4px;
   font-family: 'Fira Code', monospace;
   font-size: 0.9em;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  border: 1px solid var(--border-subtle);
 }
 
 .markdown-body :deep(pre) {
-  background: rgba(15, 23, 42, 0.95);
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 8px;
   padding: 16px;
   overflow-x: auto;
@@ -148,19 +149,19 @@ function getImageUrl(filename: string) {
 
 .markdown-body :deep(pre code) {
   background: transparent;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   padding: 0;
   border: none;
   font-size: 0.9rem;
 }
 
 .markdown-body :deep(blockquote) {
-  border-left: 4px solid #38bdf8;
-  background: rgba(56, 189, 248, 0.1);
+  border-left: 4px solid var(--border-hover);
+  background: var(--bg-code);
   margin: 1.5rem 0;
   padding: 1rem 1.5rem;
   border-radius: 0 8px 8px 0;
   font-style: italic;
-  color: #e2e8f0;
+  color: var(--text-secondary);
 }
 </style>

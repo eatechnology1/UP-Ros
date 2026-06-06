@@ -573,7 +573,7 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
   grid-template-columns: auto 1fr auto;
   gap: 3rem;
   align-items: center;
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border: 2px solid rgba(251, 191, 36, 0.3);
   border-radius: 16px;
   padding: 3rem 2rem;
@@ -594,7 +594,7 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--text-primary);
   box-shadow: 0 0 30px rgba(251, 191, 36, 0.5);
 }
 
@@ -605,7 +605,7 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
 }
 
 .node-state {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
   font-style: italic;
 }
@@ -622,7 +622,7 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
   gap: 1rem;
   align-items: center;
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 8px;
 }
 
@@ -639,7 +639,7 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
 }
 
 .channel-icon {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
 }
 
 .channel-info {
@@ -650,18 +650,18 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
 
 .channel-name {
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-size: 0.95rem;
 }
 
 .channel-desc {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
   font-family: 'Fira Code', monospace;
 }
 
 .channel-arrow {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   font-size: 1.5rem;
   font-weight: 700;
 }
@@ -690,7 +690,7 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
 }
 
 .action-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   overflow: hidden;
@@ -701,16 +701,16 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.5rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-bottom: 1px solid rgba(148, 163, 184, 0.2);
   font-weight: 700;
   font-family: 'Fira Code', monospace;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 /* STATE DIAGRAM */
 .state-diagram {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 3rem 2rem;
@@ -737,7 +737,7 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
 }
 
 .state.accepting {
-  border-color: #fbbf24;
+  border-color: var(--text-warning, #d97706);
   background: rgba(251, 191, 36, 0.1);
 }
 
@@ -753,13 +753,13 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
 
 .state-name {
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
 }
 
 .state-desc {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -810,19 +810,19 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
 }
 
 .outcome.canceled {
-  border-color: #fbbf24;
+  border-color: var(--text-warning, #d97706);
   background: rgba(251, 191, 36, 0.1);
 }
 
 .outcome-name {
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-size: 1.05rem;
   margin-bottom: 0.5rem;
 }
 
 .outcome-desc {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -850,12 +850,12 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
   justify-content: center;
   font-size: 1.5rem;
   font-weight: 700;
-  color: white;
+  color: var(--text-primary);
   flex-shrink: 0;
 }
 
 .step-content {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -864,7 +864,7 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
 .step-title {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
@@ -876,7 +876,7 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
 }
 
 .cli-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   overflow: hidden;
@@ -887,15 +887,15 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.5rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-bottom: 1px solid rgba(148, 163, 184, 0.2);
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 /* VIDEO */
 .video-container {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 1.5rem;
@@ -926,7 +926,7 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
   padding: 0.75rem;
   background: rgba(59, 130, 246, 0.1);
   border-radius: 8px;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -938,7 +938,7 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
 }
 
 .summary-item {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 8px;
   padding: 1rem;
@@ -949,12 +949,12 @@ import ActionPolicyViz from 'components/content/interactive/ActionPolicyViz.vue'
 
 .summary-item code {
   font-family: 'Fira Code', monospace;
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   font-size: 0.95rem;
 }
 
 .summary-item span {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 

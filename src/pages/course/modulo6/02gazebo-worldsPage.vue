@@ -836,7 +836,7 @@ const stabilityColor = computed(() => {
 .hero-section {
   background:
     radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.1), transparent 50%),
-    linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-solid) 100%);
   border-radius: 24px;
   padding: 4rem 3rem;
   border: 1px solid rgba(148, 163, 184, 0.1);
@@ -859,7 +859,7 @@ const stabilityColor = computed(() => {
   align-items: center;
   gap: 0.5rem;
   background: rgba(59, 130, 246, 0.15);
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   padding: 0.5rem 1rem;
   border-radius: 99px;
   font-size: 0.85rem;
@@ -884,7 +884,7 @@ const stabilityColor = computed(() => {
 
 .hero-subtitle {
   font-size: 1.2rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 2.5rem;
   line-height: 1.7;
   max-width: 600px;
@@ -898,7 +898,7 @@ const stabilityColor = computed(() => {
 .stat-val {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 0.25rem;
 }
 
@@ -958,7 +958,7 @@ const stabilityColor = computed(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   padding: 2rem;
   border-radius: 16px;
   border: 1px solid rgba(148, 163, 184, 0.1);
@@ -970,14 +970,14 @@ const stabilityColor = computed(() => {
   gap: 1.5rem;
   font-family: 'Fira Code', monospace;
   font-size: 1.5rem;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .matrix-label {
   padding: 0.5rem 1rem;
   border: 2px solid #cbd5e1;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-surface-hover);
 }
 
 .operator {
@@ -986,21 +986,21 @@ const stabilityColor = computed(() => {
 
 .equation-desc {
   margin-top: 1rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   font-style: italic;
 }
 
 /* PHYSICS LAB TOOL */
 .tool-wrapper {
-  background: #0f172a;
+  background: var(--bg-surface);
   border-radius: 20px;
   border: 1px solid #334155;
   overflow: hidden;
 }
 
 .tool-header {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
@@ -1010,12 +1010,12 @@ const stabilityColor = computed(() => {
 
 .tool-header .q-icon {
   font-size: 1.5rem;
-  color: #a855f7;
+  color: var(--text-primary);
 }
 
 .tool-title {
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   letter-spacing: 0.5px;
 }
 
@@ -1027,7 +1027,7 @@ const stabilityColor = computed(() => {
 
 .lab-controls {
   padding: 2rem;
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border-right: 1px solid #334155;
   display: flex;
   flex-direction: column;
@@ -1042,19 +1042,19 @@ const stabilityColor = computed(() => {
 
 .c-label {
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 .c-desc {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   line-height: 1.4;
 }
 
 .lab-viz {
   position: relative;
-  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  background: var(--bg-surface);
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -1088,13 +1088,13 @@ const stabilityColor = computed(() => {
 }
 
 .obj-label {
-  color: #fff;
+  color: var(--text-primary);
   font-weight: 700;
   font-size: 0.9rem;
 }
 
 .obj-mass {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   font-size: 0.75rem;
 }
 
@@ -1130,7 +1130,7 @@ const stabilityColor = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fca5a5;
+  color: var(--text-danger, #dc2626);
   font-size: 0.7rem;
   z-index: 5;
 }
@@ -1143,13 +1143,13 @@ const stabilityColor = computed(() => {
 }
 
 .code-header {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   border-bottom: 1px solid #334155;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-family: monospace;
   font-size: 0.9rem;
 }
@@ -1206,7 +1206,7 @@ const stabilityColor = computed(() => {
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   padding: 2rem;
   border-radius: 16px;
   flex-wrap: wrap;
@@ -1217,7 +1217,7 @@ const stabilityColor = computed(() => {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   padding: 1.5rem;
   border-radius: 12px;
   border: 1px solid rgba(148, 163, 184, 0.1);
@@ -1227,19 +1227,19 @@ const stabilityColor = computed(() => {
 
 .pipeline-stage:hover {
   transform: translateY(-5px);
-  background: rgba(30, 41, 59, 0.8);
+  background: var(--bg-surface-solid);
 }
 
 .stage-label {
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   margin-top: 1rem;
   font-size: 1rem;
 }
 
 .stage-desc {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-top: 0.5rem;
 }
 
@@ -1251,7 +1251,7 @@ const stabilityColor = computed(() => {
 
 /* SDF TREE VIZ */
 .sdf-tree-container {
-  background: #0f172a;
+  background: var(--bg-surface);
   padding: 2rem;
   border-radius: 16px;
   border-left: 4px solid #f59e0b;
@@ -1275,11 +1275,11 @@ const stabilityColor = computed(() => {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #334155;
+  background: var(--bg-surface-solid);
 }
 
 .tree-node.world {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -1298,16 +1298,16 @@ const stabilityColor = computed(() => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-surface-hover);
   padding: 0.5rem 1rem;
   border-radius: 6px;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   width: fit-content;
 }
 
 .child-node .q-icon {
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
 }
 
 .child-node.physics {
@@ -1325,7 +1325,7 @@ const stabilityColor = computed(() => {
 
 /* PROCEDURAL VIZ */
 .procedural-viz-container {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 1px solid #334155;
   border-radius: 12px;
   overflow: hidden;
@@ -1334,13 +1334,13 @@ const stabilityColor = computed(() => {
 }
 
 .proc-header {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 0.75rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #334155;
-  color: #fff;
+  color: var(--text-primary);
   font-weight: 700;
 }
 
@@ -1357,7 +1357,7 @@ const stabilityColor = computed(() => {
   align-items: center;
   justify-content: space-around;
   padding: 2rem;
-  background: rgba(30, 41, 59, 0.3);
+  background: var(--bg-surface-solid);
 }
 
 .proc-step {
@@ -1371,7 +1371,7 @@ const stabilityColor = computed(() => {
 .step-icon {
   width: 50px;
   height: 50px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-surface-hover);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1386,12 +1386,12 @@ const stabilityColor = computed(() => {
 
 .step-text {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   line-height: 1.2;
 }
 
 .step-text strong {
-  color: #e2e8f0;
+  color: var(--text-secondary);
   display: block;
   margin-bottom: 2px;
 }
@@ -1403,7 +1403,7 @@ const stabilityColor = computed(() => {
 
 /* MAP PREVIEW */
 .proc-map-preview {
-  background: #000;
+  background: var(--bg-surface-solid);
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -1421,8 +1421,9 @@ const stabilityColor = computed(() => {
 }
 
 .map-cell {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   border-radius: 2px;
+  border: 1px solid var(--border-medium);
 }
 
 .map-cell.occupied {
@@ -1432,7 +1433,7 @@ const stabilityColor = computed(() => {
 
 .map-label {
   font-family: monospace;
-  color: #22c55e;
+  color: var(--text-code);
   font-size: 0.75rem;
   margin-top: 0.5rem;
 }
@@ -1446,7 +1447,7 @@ const stabilityColor = computed(() => {
 }
 
 .cs-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   padding: 2rem;
   border-radius: 16px;
   display: flex;
@@ -1459,20 +1460,20 @@ const stabilityColor = computed(() => {
 .cs-stat {
   font-size: 2rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--text-primary);
   margin: 0.5rem 0;
 }
 
 .cs-label {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 /* CHALLENGE CARD */
 .challenge-card {
-  background: rgba(30, 41, 59, 0.4);
+  background: var(--bg-surface-solid);
   border: 1px solid #d946ef;
   border-radius: 16px;
   padding: 2rem;
@@ -1497,7 +1498,7 @@ const stabilityColor = computed(() => {
 }
 
 .c-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.95rem;
 }
 
@@ -1511,7 +1512,7 @@ const stabilityColor = computed(() => {
   display: flex;
   gap: 1rem;
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
   border-radius: 8px;
   cursor: default; /* Static for now */
 }
@@ -1530,29 +1531,29 @@ const stabilityColor = computed(() => {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   flex-shrink: 0;
 }
 
 .c-option.correct .opt-radio {
-  border-color: #22c55e;
-  color: #22c55e;
+  border-color: var(--text-code);
+  color: var(--text-code);
 }
 
 .opt-text {
-  color: #fff;
+  color: var(--text-primary);
   flex: 1;
 }
 
 .opt-feedback {
   margin-top: 0.5rem;
-  color: #86efac;
+  color: var(--text-code);
   font-size: 0.9rem;
 }
 
 /* VIDEO STYLES */
 .video-container {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 1px solid #334155;
   border-radius: 12px;
   overflow: hidden;
@@ -1579,7 +1580,7 @@ const stabilityColor = computed(() => {
 
 .video-caption {
   padding: 1rem 0.5rem 0.5rem 0.5rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   display: flex;
   align-items: center;
@@ -1594,7 +1595,7 @@ const stabilityColor = computed(() => {
 }
 
 .summary-item {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 8px;
   padding: 1rem;
@@ -1611,7 +1612,7 @@ const stabilityColor = computed(() => {
 }
 
 .summary-item span {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 
@@ -1626,7 +1627,7 @@ const stabilityColor = computed(() => {
 }
 
 .next-label {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -1634,7 +1635,7 @@ const stabilityColor = computed(() => {
 }
 
 .next-title {
-  color: #fff;
+  color: var(--text-primary);
   font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 1rem;

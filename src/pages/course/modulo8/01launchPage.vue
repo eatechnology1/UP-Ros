@@ -282,14 +282,14 @@ import CodeBlock from 'components/content/CodeBlock.vue';
   font-weight: 800;
   margin: 0 0 1.5rem 0;
   line-height: 1.1;
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 /* TOOL CARDS */
 .tool-card {
   height: 100%;
   border-radius: 16px;
-  background: rgba(30, 41, 59, 0.4);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 

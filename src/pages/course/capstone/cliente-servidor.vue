@@ -215,16 +215,16 @@ import SplitBlock from 'components/content/SplitBlock.vue';
   border-radius: 12px;
   padding: 1.5rem;
   height: 100%;
-  color: white;
+  color: var(--text-primary);
   display: flex;
   flex-direction: column;
 }
 .concept-card.topic {
-  background: linear-gradient(145deg, rgba(59, 130, 246, 0.2), rgba(15, 23, 42, 0.9));
+  background: var(--bg-surface);
   border: 1px solid #3b82f6;
 }
 .concept-card.service {
-  background: linear-gradient(145deg, rgba(16, 185, 129, 0.2), rgba(15, 23, 42, 0.9));
+  background: var(--bg-surface);
   border: 1px solid #10b981;
 }
 
@@ -238,12 +238,12 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 .body p {
   font-size: 0.9rem;
   margin-bottom: 8px;
-  color: #e2e8f0;
+  color: var(--text-secondary);
 }
 
 /* Animaciones */
 .arrow-anim.streaming {
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   font-weight: bold;
   font-family: monospace;
   margin-top: 15px;
@@ -281,7 +281,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 
 /* Visualización .SRV */
 .srv-visual {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   border: 1px solid #475569;
   border-radius: 8px;
   padding: 20px;
@@ -303,14 +303,14 @@ import SplitBlock from 'components/content/SplitBlock.vue';
   border: 1px dashed #34d399;
 }
 .srv-separator {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-weight: bold;
   letter-spacing: 5px;
   margin: 10px 0;
 }
 .label {
   font-size: 0.7rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 5px;
   text-transform: uppercase;
 }

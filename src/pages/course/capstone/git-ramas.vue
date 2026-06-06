@@ -186,7 +186,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 .branch-visual {
   position: relative;
   height: 120px;
-  background: rgba(15, 23, 42, 0.3);
+  background: var(--bg-surface);
   border-radius: 12px;
   padding: 20px;
   overflow: hidden;
@@ -195,7 +195,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 .line {
   position: absolute;
   height: 4px;
-  background: #475569;
+  background: var(--bg-surface-solid);
   width: 80%;
   display: flex;
   align-items: center;
@@ -245,7 +245,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
   left: -60px;
   font-family: 'Fira Code', monospace;
   font-size: 0.8rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-weight: bold;
 }
 </style>

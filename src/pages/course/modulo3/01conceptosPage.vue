@@ -720,14 +720,14 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   grid-template-columns: 1fr auto 1fr auto 1fr;
   gap: 1rem;
   align-items: start;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 2rem;
 }
 
 .zone-card {
-  background: rgba(30, 41, 59, 0.8);
+  background: var(--bg-surface-solid);
   border: 2px solid;
   border-radius: 12px;
   padding: 1.5rem;
@@ -746,11 +746,11 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .zone-card.staging {
-  border-color: #fbbf24;
+  border-color: var(--text-warning, #d97706);
 }
 
 .zone-card.repository {
-  border-color: #22c55e;
+  border-color: var(--text-code);
 }
 
 .zone-header {
@@ -758,7 +758,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .zone-title {
@@ -772,7 +772,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 .zone-desc {
   text-align: center;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   margin-bottom: 1rem;
 }
@@ -788,11 +788,11 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 6px;
   font-family: 'Fira Code', monospace;
   font-size: 0.85rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 .file-status {
@@ -801,11 +801,11 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .file-item.modified .file-status {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
 }
 
 .file-item.new .file-status {
-  color: #22c55e;
+  color: var(--text-code);
 }
 
 .commit-history {
@@ -816,7 +816,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 .commit-item {
   padding: 0.5rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 6px;
   border-left: 3px solid #22c55e;
 }
@@ -824,21 +824,21 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 .commit-hash {
   font-family: 'Fira Code', monospace;
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .commit-msg {
   font-size: 0.85rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 .zone-action {
   text-align: center;
   padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--bg-surface-hover);
   border-radius: 8px;
   font-family: 'Fira Code', monospace;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   font-weight: 700;
 }
 
@@ -853,7 +853,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 2rem;
@@ -917,12 +917,12 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .commit-time {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
 .commit-message {
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 0.75rem;
@@ -939,7 +939,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -947,7 +947,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   padding: 0.75rem;
   border-radius: 8px;
 }
@@ -961,11 +961,11 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .change-item.added {
-  color: #22c55e;
+  color: var(--text-code);
 }
 
 .change-item.modified {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
 }
 
 .change-stats {
@@ -980,7 +980,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .info-card {
-  background: rgba(30, 41, 59, 0.8);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1rem;
@@ -991,12 +991,12 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   align-items: center;
   gap: 0.75rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
 
 .info-content {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.6;
 }
@@ -1009,7 +1009,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .branch-diagram {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 2rem;
@@ -1027,7 +1027,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .branch-card {
-  background: rgba(30, 41, 59, 0.8);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1rem;
@@ -1044,11 +1044,11 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .branch-name.main {
-  color: #22c55e;
+  color: var(--text-code);
 }
 
 .branch-name.feature {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
 }
 
 .branch-name.bugfix {
@@ -1056,7 +1056,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .branch-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.6;
 }
@@ -1069,7 +1069,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .comparison-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 2px solid;
   border-radius: 16px;
   padding: 2rem;
@@ -1091,7 +1091,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .comparison-title {
@@ -1110,7 +1110,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.95rem;
 }
 
@@ -1128,7 +1128,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   grid-template-columns: 1fr auto 1fr;
   gap: 2rem;
   align-items: center;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 3rem 2rem;
@@ -1144,7 +1144,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 .sync-label {
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-size: 1.1rem;
 }
 
@@ -1186,12 +1186,12 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   justify-content: center;
   font-size: 1.5rem;
   font-weight: 700;
-  color: white;
+  color: var(--text-primary);
   flex-shrink: 0;
 }
 
 .step-content {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -1200,7 +1200,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 .step-title {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
@@ -1212,7 +1212,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .practice-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -1228,19 +1228,19 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 .practice-title {
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   text-align: center;
   font-size: 1.05rem;
 }
 
 .practice-content {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.6;
 }
 
 .practice-good {
-  color: #22c55e;
+  color: var(--text-code);
   margin-bottom: 0.5rem;
 }
 
@@ -1250,7 +1250,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 /* VIDEO */
 .video-container {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 1.5rem;
@@ -1281,7 +1281,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   padding: 0.75rem;
   background: rgba(59, 130, 246, 0.1);
   border-radius: 8px;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -1293,7 +1293,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .summary-item {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 8px;
   padding: 1rem;
@@ -1304,12 +1304,12 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 .summary-item code {
   font-family: 'Fira Code', monospace;
-  color: #22c55e;
+  color: var(--text-code);
   font-size: 1rem;
 }
 
 .summary-item span {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 

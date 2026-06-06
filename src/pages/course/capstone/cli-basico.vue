@@ -180,21 +180,21 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 }
 
 .terminal-window {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   border-radius: 8px;
   padding: 10px;
   border: 1px solid #334155;
 }
 .terminal-header {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 8px;
   border-bottom: 1px solid #334155;
   padding-bottom: 4px;
 }
 
 .cmd-card {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -202,7 +202,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 }
 .cmd-card code {
   display: block;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   padding: 4px 8px;
   border-radius: 4px;
   margin-top: 8px;

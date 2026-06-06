@@ -676,7 +676,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
 }
 
 .arch-card {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border: 2px solid;
   border-radius: 16px;
   padding: 2rem;
@@ -699,7 +699,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
   gap: 1rem;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .arch-visual {
@@ -723,9 +723,9 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
 
 .module {
   padding: 0.75rem 1.5rem;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--bg-surface-hover);
   border-radius: 6px;
-  color: #fca5a5;
+  color: var(--text-danger, #dc2626);
   font-weight: 700;
 }
 
@@ -789,10 +789,10 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 6px;
   font-size: 0.9rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 /* DDS ARCHITECTURE */
@@ -800,7 +800,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
   display: flex;
   flex-direction: column;
   gap: 0;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   overflow: hidden;
@@ -823,7 +823,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
 
 .layer-content {
   font-family: 'Fira Code', monospace;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
 }
 
@@ -846,7 +846,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 1.5rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 2rem;
@@ -862,7 +862,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
   justify-content: center;
   font-size: 1.5rem;
   font-weight: 700;
-  color: white;
+  color: var(--text-primary);
   flex-shrink: 0;
 }
 
@@ -874,13 +874,13 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
 }
 
 .phase-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   margin-bottom: 1rem;
 }
 
 /* QOS TABLE */
 .qos-table {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   overflow: hidden;
@@ -905,12 +905,12 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
 }
 
 .qos-cell {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 .qos-cell code {
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--bg-surface-hover);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   font-family: 'Fira Code', monospace;
@@ -925,7 +925,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
 }
 
 .perf-card {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border: 2px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 1.5rem;
@@ -940,7 +940,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
   align-items: center;
   gap: 0.75rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .perf-metrics {
@@ -954,12 +954,12 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 6px;
 }
 
 .metric-label {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -973,7 +973,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
 }
 
 .metric-value.medium {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
 }
 
 .metric-value.high {
@@ -981,13 +981,13 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
 }
 
 .perf-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 /* BENCHMARK TABLE */
 .benchmark-table {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   overflow: hidden;
@@ -1008,7 +1008,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
 }
 
 .benchmark-cell {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-family: 'Fira Code', monospace;
   font-size: 0.9rem;
 }
@@ -1025,7 +1025,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
   grid-template-columns: 1fr auto 1fr;
   gap: 2rem;
   align-items: center;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 2rem;
@@ -1054,10 +1054,10 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
 
 .domain-node {
   padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 6px;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   text-align: center;
   font-family: 'Fira Code', monospace;
 }
@@ -1073,7 +1073,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
 
 /* VIDEO */
 .video-container {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 1.5rem;
@@ -1104,7 +1104,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
   padding: 0.75rem;
   background: rgba(59, 130, 246, 0.1);
   border-radius: 8px;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -1116,7 +1116,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
 }
 
 .summary-item {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 8px;
   padding: 1rem;
@@ -1132,7 +1132,7 @@ import RmwVisualizer from 'components/content/interactive/RmwVisualizer.vue';
 }
 
 .summary-item span {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 

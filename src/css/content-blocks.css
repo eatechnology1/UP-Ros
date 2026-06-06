@@ -1,22 +1,10 @@
 /* ========================================
-   CONTENT BLOCKS - SISTEMA GLASS/DARK
+   CONTENT BLOCKS - SISTEMA GLASS ADAPTABLE
+   Usa variables CSS definidas en app.scss
 ======================================== */
 
-/* VARIABLES BASE */
+/* VARIABLES BASE (fallbacks internos) */
 :root {
-  /* Colores glass */
-  --glass-bg-primary: rgba(15, 23, 42, 0.85);
-  --glass-bg-secondary: rgba(20, 30, 50, 0.75);
-  --glass-border: rgba(148, 163, 184, 0.3);
-  --glass-border-hover: rgba(110, 203, 255, 0.4);
-  --glass-shadow: rgba(15, 23, 42, 0.8);
-
-  /* Textos */
-  --text-primary: #e6edf7;
-  --text-secondary: #cbd5f5;
-  --text-muted: #9ca3af;
-  --text-accent: #6ecbff;
-
   /* Blur */
   --blur-base: blur(14px);
   --blur-strong: blur(20px);
@@ -40,17 +28,17 @@
   max-width: 900px;
   margin: var(--block-spacing) auto;
 
-  /* Glass base */
-  background: var(--glass-bg-primary);
+  /* Glass base — usa variables del tema */
+  background: var(--bg-glass);
   backdrop-filter: var(--blur-base);
   -webkit-backdrop-filter: var(--blur-base);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--block-radius);
 
   /* Sombra y elevación */
   box-shadow:
-    0 16px 48px var(--glass-shadow),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    0 16px 48px var(--shadow-md),
+    inset 0 1px 0 var(--border-accent);
 
   /* Interactividad */
   transition: var(--transition-base);
@@ -69,7 +57,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.12), transparent);
+  background: linear-gradient(90deg, var(--border-medium), transparent);
 }
 
 /* HOVER COMÚN */
@@ -80,9 +68,9 @@
 .image-block-wrapper:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 24px 64px var(--glass-shadow),
-    0 0 0 1px rgba(255, 255, 255, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 24px 64px var(--shadow-md),
+    0 0 0 1px var(--border-subtle),
+    inset 0 1px 0 var(--border-accent);
 }
 
 /* ========================================
@@ -90,7 +78,7 @@
 ======================================== */
 .content-text,
 .text-content {
-  color: var(--text-primary);
+  color: var(--text-secondary);
   font-size: 1.05rem;
   line-height: 1.75;
   font-weight: 400;
@@ -99,13 +87,13 @@
 
 .content-text strong,
 .text-content strong {
-  color: #ffffff;
+  color: var(--text-strong);
   font-weight: 600;
 }
 
 .content-text em,
 .text-content em {
-  color: var(--text-secondary);
+  color: var(--text-muted);
   font-style: italic;
 }
 
@@ -126,7 +114,7 @@
   left: 0;
   width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, var(--text-accent), transparent);
+  background: linear-gradient(90deg, var(--text-code), transparent);
   border-radius: 2px;
 }
 
@@ -138,8 +126,8 @@
   max-width: 900px;
   margin: 24px auto;
   padding: 20px 24px;
-  background: var(--glass-bg-secondary);
-  border-left: 4px solid var(--glass-border-hover);
+  background: var(--bg-surface);
+  border-left: 4px solid var(--border-hover);
   border-radius: 12px;
 }
 
@@ -156,7 +144,7 @@
   content: '→';
   position: absolute;
   left: -12px;
-  color: var(--text-accent);
+  color: var(--text-code);
   font-weight: 600;
 }
 
@@ -170,9 +158,9 @@
   grid-template-columns: 1fr 1fr;
   gap: 32px;
   padding: 24px;
-  background: var(--glass-bg-primary);
+  background: var(--bg-glass);
   border-radius: var(--block-radius);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--border-subtle);
 }
 
 @media (max-width: 768px) {

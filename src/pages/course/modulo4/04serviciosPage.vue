@@ -535,7 +535,7 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
   grid-template-columns: auto 1fr auto;
   gap: 3rem;
   align-items: center;
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border: 2px solid rgba(168, 85, 247, 0.3);
   border-radius: 16px;
   padding: 3rem 2rem;
@@ -556,7 +556,7 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--text-primary);
   box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
 }
 
@@ -567,7 +567,7 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
 }
 
 .node-state {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
   font-style: italic;
 }
@@ -615,7 +615,7 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
 .packet.req {
   left: 0;
   background: #a855f7;
-  color: white;
+  color: var(--text-primary);
 }
 
 .packet.res {
@@ -676,7 +676,7 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
 }
 
 .srv-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   overflow: hidden;
@@ -687,11 +687,11 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.5rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-bottom: 1px solid rgba(148, 163, 184, 0.2);
   font-weight: 700;
   font-family: 'Fira Code', monospace;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 /* ASYNC PATTERNS */
@@ -702,7 +702,7 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
 }
 
 .pattern-card {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border: 2px solid;
   border-radius: 16px;
   padding: 1.5rem;
@@ -728,12 +728,12 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
   align-items: center;
   gap: 0.75rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-size: 1.1rem;
 }
 
 .pattern-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
@@ -742,7 +742,7 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid #ef4444;
   border-radius: 8px;
-  color: #fca5a5;
+  color: var(--text-danger, #dc2626);
   font-weight: 700;
   text-align: center;
 }
@@ -759,7 +759,7 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
 
 /* LIFECYCLE DIAGRAM */
 .lifecycle-diagram {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 3rem 2rem;
@@ -786,7 +786,7 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
 }
 
 .state.inactive {
-  border-color: #fbbf24;
+  border-color: var(--text-warning, #d97706);
   background: rgba(251, 191, 36, 0.1);
 }
 
@@ -797,13 +797,13 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
 
 .state-name {
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
 
 .state-desc {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -835,7 +835,7 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
 }
 
 .cli-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   overflow: hidden;
@@ -846,15 +846,15 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.5rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-bottom: 1px solid rgba(148, 163, 184, 0.2);
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 /* VIDEO */
 .video-container {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 1.5rem;
@@ -885,7 +885,7 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
   padding: 0.75rem;
   background: rgba(59, 130, 246, 0.1);
   border-radius: 8px;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -897,7 +897,7 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
 }
 
 .summary-item {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 8px;
   padding: 1rem;
@@ -908,12 +908,12 @@ import LifecycleDashboard from 'components/content/interactive/LifecycleDashboar
 
 .summary-item code {
   font-family: 'Fira Code', monospace;
-  color: #a855f7;
+  color: var(--text-primary);
   font-size: 0.95rem;
 }
 
 .summary-item span {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 

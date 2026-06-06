@@ -49,11 +49,11 @@ defineProps<{
   /* Aspect Ratio 16:9 Mágico: Mantiene la proporción perfecta siempre */
   aspect-ratio: 16 / 9;
 
-  background: rgba(15, 23, 42, 0.8); /* Fondo oscuro mientras carga */
+  background: var(--bg-surface);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  box-shadow: 0 20px 40px -10px var(--shadow-lg);
+  border: 1px solid var(--border-subtle);
 }
 
 iframe {
@@ -65,7 +65,7 @@ iframe {
 /* Caption (Consistente con ImageBlock) */
 .video-caption {
   margin-top: 12px;
-  color: #94a3b8; /* Slate-400 */
+  color: var(--text-muted); /* Slate-400 */
   font-size: 0.9rem;
   display: flex;
   align-items: center;

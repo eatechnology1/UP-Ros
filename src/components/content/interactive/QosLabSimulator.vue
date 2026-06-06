@@ -167,7 +167,7 @@ const lateJoinerEffect = computed(() => {
 
 <style scoped>
 .qos-simulator {
-  background: rgba(15, 23, 42, 0.9);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   overflow: hidden;
@@ -178,7 +178,7 @@ const lateJoinerEffect = computed(() => {
 
 .sim-header {
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--bg-surface-hover);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -186,7 +186,7 @@ const lateJoinerEffect = computed(() => {
 }
 
 .header-title {
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -222,7 +222,7 @@ const lateJoinerEffect = computed(() => {
 
 .node-card {
   flex: 1;
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border-radius: 8px;
   padding: 1rem;
   border: 1px solid rgba(148, 163, 184, 0.2);
@@ -234,16 +234,16 @@ const lateJoinerEffect = computed(() => {
   gap: 0.5rem;
   margin-bottom: 1rem;
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   padding-bottom: 0.5rem;
 }
 
 .publisher .node-header {
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
 }
 .subscriber .node-header {
-  color: #a855f7;
+  color: var(--text-primary);
 }
 
 .qos-controls {
@@ -255,7 +255,7 @@ const lateJoinerEffect = computed(() => {
 .control-group label {
   display: block;
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 0.25rem;
   text-transform: uppercase;
 }
@@ -282,7 +282,7 @@ const lateJoinerEffect = computed(() => {
   left: 0;
   width: 100%;
   height: 4px;
-  background: #334155;
+  background: var(--bg-surface-solid);
   transform: translateY(-50%);
   border-radius: 2px;
 }
@@ -334,13 +334,13 @@ const lateJoinerEffect = computed(() => {
 
 .broken-icon {
   z-index: 10;
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border-radius: 50%;
 }
 
 .sim-explanation {
   padding: 1rem 1.5rem;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
   min-height: 60px;
   font-size: 0.9rem;
   display: flex;

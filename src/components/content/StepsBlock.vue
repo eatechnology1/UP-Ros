@@ -69,13 +69,13 @@ defineProps<{
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 0 4px rgba(15, 23, 42, 1); /* "Borde" falso del color de fondo para separar la línea */
+  box-shadow: 0 0 0 4px var(--bg-surface-solid);
   z-index: 1; /* Para estar encima de la línea conectora */
   margin-top: 2px; /* Alineación óptica con la primera línea de texto */
 }
 
 .step-number {
-  color: white;
+  color: var(--text-primary);
   font-size: 0.85rem;
   font-weight: 700;
   line-height: 1;
@@ -83,7 +83,7 @@ defineProps<{
 
 /* CONTENIDO TEXTO */
 .step-content {
-  color: #cbd5e1; /* Slate-300 */
+  color: var(--text-secondary); /* Slate-300 */
   font-size: 1rem;
   line-height: 1.6;
   padding-top: 2px; /* Pequeño ajuste para alinear con el número */

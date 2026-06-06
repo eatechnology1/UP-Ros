@@ -340,7 +340,7 @@ onUnmounted(() => {
 .tool-card {
   height: 100%;
   border-radius: 16px;
-  background: rgba(30, 41, 59, 0.4);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -406,10 +406,10 @@ onUnmounted(() => {
 
 /* UTILS */
 .bg-slate-900 {
-  background: #0f172a;
+  background: var(--bg-surface);
 }
 .bg-slate-800 {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
 }
 .text-deep-orange-4 {
   color: #ff7043;

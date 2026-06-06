@@ -359,7 +359,7 @@ const stackDevOps = [
    BASE STYLES
    ======================================== */
 .credits-page {
-  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  background: var(--bg-surface);
   min-height: 100vh;
   padding: 2rem 1rem;
 }
@@ -374,8 +374,9 @@ const stackDevOps = [
    ======================================== */
 .hero-section {
   background:
-    radial-gradient(circle at top, rgba(139, 92, 246, 0.15), transparent 70%), rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(148, 163, 184, 0.2);
+    radial-gradient(circle at top, rgba(139, 92, 246, 0.15), transparent 70%),
+    var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 24px;
   padding: 4rem 2rem;
   text-align: center;
@@ -388,7 +389,7 @@ const stackDevOps = [
   font-weight: 900;
   margin: 0 0 2rem 0;
   line-height: 1.1;
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 .text-gradient {
@@ -401,7 +402,7 @@ const stackDevOps = [
 .hero-description {
   font-size: 1.1rem;
   line-height: 1.8;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   max-width: 900px;
   margin: 0 auto;
   text-align: justify;
@@ -413,7 +414,7 @@ const stackDevOps = [
 .section-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: var(--text-primary);
   margin-bottom: 2rem;
   display: flex;
   align-items: center;
@@ -435,9 +436,9 @@ const stackDevOps = [
 }
 
 .profile-card {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--bg-surface-solid);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(148, 163, 184, 0.15);
+  border: 1px solid var(--border-subtle);
   border-radius: 20px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
@@ -445,10 +446,8 @@ const stackDevOps = [
 
 .profile-card:hover {
   transform: translateY(-8px) rotateX(2deg);
-  border-color: rgba(56, 189, 248, 0.5);
-  box-shadow:
-    0 20px 40px rgba(56, 189, 248, 0.2),
-    0 0 0 1px rgba(56, 189, 248, 0.3);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-lg);
 }
 
 .profile-header {
@@ -483,13 +482,13 @@ const stackDevOps = [
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
-  border: 4px solid #0f172a;
+  border: 4px solid var(--bg-surface-solid);
 }
 
 .profile-name {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: var(--text-primary);
   margin: 0 0 0.5rem 0;
 }
 
@@ -509,7 +508,7 @@ const stackDevOps = [
 
 .profile-institution {
   font-size: 0.9rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .profile-body {
@@ -519,7 +518,7 @@ const stackDevOps = [
 .profile-bio {
   font-size: 0.95rem;
   line-height: 1.7;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   text-align: justify;
   margin: 0;
 }
@@ -563,7 +562,7 @@ const stackDevOps = [
 .category-title {
   font-size: 1.3rem;
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
@@ -576,8 +575,8 @@ const stackDevOps = [
 }
 
 .tech-item {
-  background: rgba(30, 41, 59, 0.5);
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  background: var(--bg-surface-solid);
+  border: 1px solid var(--border-subtle);
   border-radius: 16px;
   padding: 1.5rem 1rem;
   text-align: center;
@@ -586,20 +585,20 @@ const stackDevOps = [
 
 .tech-item:hover {
   transform: translateY(-4px) scale(1.05);
-  background: rgba(30, 41, 59, 0.7);
-  border-color: rgba(148, 163, 184, 0.3);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md);
 }
 
 .tech-name {
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-weight: 700;
   margin-top: 0.75rem;
   font-size: 1rem;
 }
 
 .tech-role {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
   margin-top: 0.25rem;
 }
@@ -647,7 +646,7 @@ const stackDevOps = [
 .ai-title {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: var(--text-primary);
   margin: 0 0 1rem 0;
 }
 
@@ -664,16 +663,16 @@ const stackDevOps = [
 .ai-description {
   font-size: 1.1rem;
   line-height: 1.8;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   text-align: center;
   margin-bottom: 2rem;
 }
 
 .ai-contributions {
-  background: rgba(15, 23, 42, 0.4);
+  background: var(--bg-surface);
   border-radius: 16px;
   padding: 1.5rem;
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  border: 1px solid var(--border-subtle);
 }
 
 .contributions-title {
@@ -691,7 +690,7 @@ const stackDevOps = [
 
 .contributions-list li {
   padding: 0.5rem 0 0.5rem 2rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   position: relative;
 }
 
@@ -712,8 +711,8 @@ const stackDevOps = [
 }
 
 .institutional-container {
-  background: linear-gradient(180deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.6));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 24px;
   padding: 3rem 2rem;
   position: relative;
@@ -738,13 +737,13 @@ const stackDevOps = [
 .university-name {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #f8fafc;
+  color: var(--text-primary);
   margin: 0 0 0.5rem 0;
 }
 
 .university-year {
   font-size: 0.9rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   letter-spacing: 0.15em;
   margin-bottom: 1.5rem;
 }
@@ -752,24 +751,24 @@ const stackDevOps = [
 .university-quote {
   font-style: italic;
   font-family: 'Times New Roman', serif;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   font-size: 1.2rem;
   line-height: 1.6;
   margin: 0;
 }
 
 .acknowledgments {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-surface-hover);
   border-radius: 16px;
   padding: 2rem;
   margin-bottom: 3rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
 }
 
 .acknowledgments-title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #38bdf8;
+  color: var(--text-link);
   margin: 0 0 1.5rem 0;
   text-align: center;
 }
@@ -777,7 +776,7 @@ const stackDevOps = [
 .acknowledgments-text {
   font-size: 1rem;
   line-height: 1.8;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   text-align: justify;
   margin-bottom: 1rem;
 }
@@ -797,7 +796,7 @@ const stackDevOps = [
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-surface-hover);
   border-radius: 20px;
   padding: 1.5rem;
   border: 1px solid transparent;
@@ -806,9 +805,9 @@ const stackDevOps = [
 
 .badge-card:hover {
   transform: translateY(-6px);
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(56, 189, 248, 0.3);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-lg);
 }
 
 .logo-box {
@@ -849,14 +848,14 @@ const stackDevOps = [
 }
 
 .badge-title {
-  color: #f8fafc;
+  color: var(--text-primary);
   font-weight: 700;
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
 }
 
 .badge-desc {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   line-height: 1.5;
 }
@@ -866,10 +865,10 @@ const stackDevOps = [
    ======================================== */
 .credits-footer {
   text-align: center;
-  color: #64748b;
+  color: var(--text-muted);
   font-size: 0.9rem;
   padding: 2rem 0;
-  border-top: 1px solid rgba(148, 163, 184, 0.1);
+  border-top: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: center;

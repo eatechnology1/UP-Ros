@@ -223,7 +223,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 
 /* Visualización Callback */
 .callback-visual {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border-radius: 12px;
   position: relative;
 }
@@ -237,19 +237,19 @@ import SplitBlock from 'components/content/SplitBlock.vue';
   animation: float 3s ease-in-out infinite;
 }
 .arrow-down {
-  color: #94a3b8;
+  color: var(--text-muted);
   margin: 10px 0;
   font-size: 0.9rem;
 }
 .function-box {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   border: 1px solid #475569;
   border-radius: 8px;
   text-align: left;
   overflow: hidden;
 }
 .func-name {
-  background: #334155;
+  background: var(--bg-surface-solid);
   color: #a5f3fc;
   padding: 5px 10px;
   font-family: 'Fira Code', monospace;
@@ -257,7 +257,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 }
 .func-body {
   padding: 10px;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-family: 'Fira Code', monospace;
   font-size: 0.8rem;
 }
@@ -275,7 +275,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 /* Demo Integración */
 .integration-demo {
   position: relative;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
   padding: 20px;
   border-radius: 12px;
 }
@@ -307,7 +307,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 
 .data-flow-arrow {
   text-align: center;
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   font-weight: bold;
   margin-top: 10px;
   font-size: 0.9rem;
@@ -316,7 +316,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 
 /* Tarjetas de Error */
 .error-card {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1rem;
@@ -333,11 +333,11 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 }
 .error-card .title {
   font-weight: bold;
-  color: #f8fafc;
+  color: var(--text-primary);
   margin-bottom: 5px;
 }
 .error-card p {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 </style>

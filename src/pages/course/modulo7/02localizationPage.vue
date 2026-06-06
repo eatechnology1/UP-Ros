@@ -2350,7 +2350,7 @@ onUnmounted(() => {
 .hero-section {
   background:
     radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15), transparent 50%),
-    linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-solid) 100%);
   border-radius: 24px;
   padding: 4rem 3rem;
   border: 1px solid rgba(148, 163, 184, 0.1);
@@ -2428,7 +2428,7 @@ onUnmounted(() => {
 .hero-subtitle {
   font-size: 1.1rem;
   line-height: 1.7;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   max-width: 600px;
   margin-bottom: 2rem;
 }
@@ -2453,7 +2453,7 @@ onUnmounted(() => {
 
 .stat-label {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -2557,7 +2557,7 @@ onUnmounted(() => {
    THEORY SECTION
    ============================================================================ */
 .theory-section {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: 16px;
   padding: 2rem;
@@ -2572,7 +2572,7 @@ onUnmounted(() => {
   gap: 1rem;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 2rem;
 }
 
@@ -2583,7 +2583,7 @@ onUnmounted(() => {
 }
 
 .equation-card {
-  background: rgba(30, 41, 59, 0.8);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -2606,11 +2606,11 @@ onUnmounted(() => {
   gap: 0.75rem;
   font-weight: 700;
   font-size: 1.1rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .eq-formula {
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--bg-surface-hover);
   padding: 1.5rem;
   border-radius: 8px;
   font-family: 'Times New Roman', serif;
@@ -2623,7 +2623,7 @@ onUnmounted(() => {
 .eq-explanation {
   font-size: 0.9rem;
   line-height: 1.7;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 .eq-params {
@@ -2647,7 +2647,7 @@ onUnmounted(() => {
 }
 
 .param-item span {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.8rem;
 }
 
@@ -2668,7 +2668,7 @@ onUnmounted(() => {
   gap: 0.75rem;
   font-size: 1.3rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 1.5rem;
 }
 
@@ -2679,7 +2679,7 @@ onUnmounted(() => {
 }
 
 .concept-card {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: 12px;
   padding: 1.5rem;
@@ -2705,19 +2705,19 @@ onUnmounted(() => {
 .concept-title {
   font-weight: 700;
   font-size: 1.1rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 0.75rem;
 }
 
 .concept-desc {
   font-size: 0.85rem;
   line-height: 1.6;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 /* Algorithm Box */
 .algorithm-box {
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--bg-surface-hover);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   overflow: hidden;
@@ -2731,7 +2731,7 @@ onUnmounted(() => {
   align-items: center;
   gap: 0.75rem;
   font-weight: 700;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
 }
 
 .algo-content {
@@ -2742,7 +2742,7 @@ onUnmounted(() => {
   font-family: 'Fira Code', monospace;
   font-size: 0.9rem;
   line-height: 1.8;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   margin: 0;
 }
 
@@ -2773,7 +2773,7 @@ onUnmounted(() => {
 }
 
 .comparison-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 2rem;
@@ -2802,7 +2802,7 @@ onUnmounted(() => {
   gap: 1rem;
   font-size: 1.3rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .card-pros,
@@ -2816,14 +2816,14 @@ onUnmounted(() => {
 .cons-title {
   font-weight: 700;
   font-size: 1rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 .card-pros ul,
 .card-cons ul {
   margin: 0;
   padding-left: 1.5rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   line-height: 1.7;
 }
@@ -2836,7 +2836,7 @@ onUnmounted(() => {
 }
 
 .category-card {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: 12px;
   padding: 1.5rem;
@@ -2877,13 +2877,13 @@ onUnmounted(() => {
 .cat-title {
   font-weight: 700;
   font-size: 1.1rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
 
 .cat-desc {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 1rem;
   line-height: 1.5;
 }
@@ -2896,7 +2896,7 @@ onUnmounted(() => {
 
 /* TF Tree Container */
 .tf-tree-container {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: 16px;
   overflow: hidden;
@@ -2914,7 +2914,7 @@ onUnmounted(() => {
   gap: 0.75rem;
   font-weight: 700;
   font-size: 1.2rem;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
 }
 
 .tree-content {
@@ -2929,7 +2929,7 @@ onUnmounted(() => {
 }
 
 .recovery-method {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: 12px;
   padding: 1.5rem;
@@ -2948,19 +2948,19 @@ onUnmounted(() => {
   gap: 0.75rem;
   font-weight: 700;
   font-size: 1.1rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
 .method-body {
   font-size: 0.9rem;
   line-height: 1.6;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 /* Tool Container */
 .tool-container {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: 16px;
   overflow: hidden;
@@ -2993,7 +2993,7 @@ onUnmounted(() => {
 }
 
 .opt-card {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-left: 4px solid #10b981;
   border-radius: 12px;
@@ -3003,7 +3003,7 @@ onUnmounted(() => {
 
 .opt-card:hover {
   transform: translateX(4px);
-  border-left-color: #22c55e;
+  border-left-color: var(--text-code);
   box-shadow: -4px 0 20px rgba(16, 185, 129, 0.2);
 }
 
@@ -3015,14 +3015,14 @@ onUnmounted(() => {
 .opt-title {
   font-weight: 700;
   font-size: 1.1rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 0.75rem;
 }
 
 .opt-desc {
   font-size: 0.9rem;
   line-height: 1.6;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 /* Summary Section */
@@ -3040,7 +3040,7 @@ onUnmounted(() => {
 }
 
 .summary-card {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: 12px;
   padding: 1.5rem;
@@ -3061,14 +3061,14 @@ onUnmounted(() => {
 .summary-title {
   font-weight: 700;
   font-size: 1.2rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
 .summary-card ul {
   margin: 0;
   padding-left: 1.5rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.8;
 }
@@ -3077,7 +3077,7 @@ onUnmounted(() => {
   color: #6ee7b7;
   font-family: 'Fira Code', monospace;
   font-size: 0.85rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
 }
@@ -3086,7 +3086,7 @@ onUnmounted(() => {
    CASE STUDY SECTION
    ============================================================================ */
 .sensor-suite-viz {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: 16px;
   padding: 2rem;
@@ -3105,7 +3105,7 @@ onUnmounted(() => {
 .suite-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .suite-grid {
@@ -3116,7 +3116,7 @@ onUnmounted(() => {
 }
 
 .sensor-card {
-  background: rgba(30, 41, 59, 0.8);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -3148,13 +3148,13 @@ onUnmounted(() => {
 .sensor-name {
   font-weight: 700;
   font-size: 1.1rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin: 1rem 0 0.5rem 0;
 }
 
 .sensor-spec {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 0.5rem;
 }
 
@@ -3178,7 +3178,7 @@ onUnmounted(() => {
 
 .metric-label {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 0.5rem;
 }
 
@@ -3219,14 +3219,14 @@ onUnmounted(() => {
 .c-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
 .c-desc {
   font-size: 1rem;
   line-height: 1.7;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 .challenge-options {
@@ -3236,7 +3236,7 @@ onUnmounted(() => {
 }
 
 .c-option {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -3248,7 +3248,7 @@ onUnmounted(() => {
 
 .c-option:hover {
   border-color: rgba(139, 92, 246, 0.4);
-  background: rgba(30, 41, 59, 0.8);
+  background: var(--bg-surface-solid);
 }
 
 .c-option.correct {
@@ -3265,23 +3265,23 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   flex-shrink: 0;
 }
 
 .c-option.correct .opt-radio {
-  border-color: #22c55e;
-  color: #22c55e;
+  border-color: var(--text-code);
+  color: var(--text-code);
 }
 
 .opt-text {
-  color: #fff;
+  color: var(--text-primary);
   flex: 1;
 }
 
 .opt-feedback {
   margin-top: 0.5rem;
-  color: #86efac;
+  color: var(--text-code);
   font-size: 0.9rem;
 }
 
@@ -3289,7 +3289,7 @@ onUnmounted(() => {
    VIDEO SECTION (FINAL POSITION)
    ============================================================================ */
 .video-container {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 1px solid #334155;
   border-radius: 12px;
   overflow: hidden;
@@ -3319,7 +3319,7 @@ onUnmounted(() => {
 
 .video-caption {
   padding: 1rem 0.5rem 0.5rem 0.5rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   display: flex;
   align-items: center;
@@ -3330,7 +3330,7 @@ onUnmounted(() => {
    SUMMARY ITEMS
    ============================================================================ */
 .summary-item {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 8px;
   padding: 1rem;
@@ -3347,7 +3347,7 @@ onUnmounted(() => {
 }
 
 .summary-item span {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 
@@ -3373,7 +3373,7 @@ onUnmounted(() => {
 }
 
 .summary-card {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: 12px;
   padding: 1.5rem;
@@ -3387,14 +3387,14 @@ onUnmounted(() => {
 .summary-title {
   font-weight: 700;
   font-size: 1.2rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
 .summary-card ul {
   margin: 0;
   padding-left: 1.5rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.8;
 }
@@ -3403,7 +3403,7 @@ onUnmounted(() => {
   color: #6ee7b7;
   font-family: 'Fira Code', monospace;
   font-size: 0.85rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
 }
@@ -3506,7 +3506,7 @@ onUnmounted(() => {
    PARAMETER TABLE STYLES
    ============================================================================ */
 .param-table-container {
-  background: #0f172a;
+  background: var(--bg-surface);
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid #334155;
@@ -3516,11 +3516,11 @@ onUnmounted(() => {
 }
 
 .table-title {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 1.5rem;
   font-weight: 700;
   font-size: 1.3rem;
-  color: #fff;
+  color: var(--text-primary);
   border-bottom: 2px solid #3b82f6;
   display: flex;
   align-items: center;
@@ -3540,7 +3540,7 @@ onUnmounted(() => {
 }
 
 .param-table thead {
-  background: rgba(30, 41, 59, 0.9);
+  background: var(--bg-surface-solid);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -3549,7 +3549,7 @@ onUnmounted(() => {
 .param-table th {
   padding: 1rem;
   text-align: left;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-weight: 600;
   font-size: 0.85rem;
   text-transform: uppercase;
@@ -3560,7 +3560,7 @@ onUnmounted(() => {
 
 .param-table td {
   padding: 1rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   border-top: 1px solid rgba(51, 65, 85, 0.5);
   font-size: 0.9rem;
   vertical-align: top;
@@ -3570,7 +3570,7 @@ onUnmounted(() => {
   background: rgba(59, 130, 246, 0.15);
   padding: 0.3rem 0.6rem;
   border-radius: 6px;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   font-family: 'Fira Code', monospace;
   font-weight: 600;
   font-size: 0.85rem;
@@ -3603,26 +3603,26 @@ onUnmounted(() => {
 }
 
 .table-footer {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--bg-surface-solid);
   border-top: 1px solid #334155;
   padding: 1.5rem;
 }
 
 .footer-note {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.7;
 }
 
 .footer-note strong {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
 }
 
 .footer-note code {
   background: rgba(59, 130, 246, 0.1);
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   font-family: 'Fira Code', monospace;
   font-size: 0.85rem;
 }
@@ -3634,7 +3634,7 @@ onUnmounted(() => {
 }
 
 .table-wrapper::-webkit-scrollbar-track {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   border-radius: 5px;
 }
 
@@ -3651,14 +3651,14 @@ onUnmounted(() => {
    TF TREE DIAGRAM STYLES
    ============================================================================ */
 .tf-tree-viz {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: 16px;
   padding: 2rem;
 }
 
 .tree-canvas {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 2rem;
@@ -3684,7 +3684,7 @@ onUnmounted(() => {
 }
 
 .tree-legend {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: 12px;
   padding: 1.5rem;
@@ -3693,7 +3693,7 @@ onUnmounted(() => {
 .legend-title {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 1rem;
   text-align: center;
 }
@@ -3709,13 +3709,13 @@ onUnmounted(() => {
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
   border-radius: 8px;
   transition: all 0.3s ease;
 }
 
 .legend-item:hover {
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--bg-surface-hover);
   transform: translateX(4px);
 }
 
@@ -3737,12 +3737,12 @@ onUnmounted(() => {
   font-family: 'Fira Code', monospace;
   font-weight: 700;
   font-size: 0.9rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .legend-desc {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   line-height: 1.4;
 }
 
@@ -3750,7 +3750,7 @@ onUnmounted(() => {
    PARTICLE FILTER SIMULATOR STYLES
    ============================================================================ */
 .tool-wrapper {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   overflow: hidden;
@@ -3767,18 +3767,18 @@ onUnmounted(() => {
 
 .tool-header .q-icon {
   font-size: 2rem;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
 }
 
 .tool-title {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .tool-subtitle {
   font-size: 0.9rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-top: 0.25rem;
 }
 
@@ -3789,7 +3789,7 @@ onUnmounted(() => {
 }
 
 .lab-controls {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--bg-surface-solid);
   border-right: 1px solid rgba(148, 163, 184, 0.1);
   padding: 2rem;
   display: flex;
@@ -3827,7 +3827,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: space-between;
   font-size: 0.85rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
@@ -3871,7 +3871,7 @@ onUnmounted(() => {
 
 .lab-viz {
   padding: 2rem;
-  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  background: var(--bg-surface);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -3883,14 +3883,14 @@ onUnmounted(() => {
   gap: 0.75rem;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   padding-bottom: 1rem;
   border-bottom: 2px solid rgba(59, 130, 246, 0.3);
 }
 
 .viz-header .q-icon {
   font-size: 1.5rem;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
 }
 
 .particle-plot {
@@ -3903,7 +3903,7 @@ onUnmounted(() => {
 .particle-canvas {
   width: 100%;
   height: auto;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--bg-surface-hover);
   border-radius: 12px;
   border: 1px solid rgba(148, 163, 184, 0.1);
 }
@@ -3927,7 +3927,7 @@ onUnmounted(() => {
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   padding: 1rem;
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--bg-surface-solid);
   border-radius: 12px;
   border: 1px solid rgba(148, 163, 184, 0.1);
 }
@@ -3941,7 +3941,7 @@ onUnmounted(() => {
 
 .stat-label {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-weight: 600;
@@ -3969,7 +3969,7 @@ onUnmounted(() => {
 
 .insight-text {
   font-size: 0.9rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 
@@ -3994,12 +3994,12 @@ onUnmounted(() => {
    PSEUDOCODE COMPONENT STYLES
    ============================================================================ */
 .pseudocode-container {
-  background: #0f172a;
+  background: var(--bg-surface);
   border-radius: 12px;
   padding: 1.5rem;
   font-family: 'Fira Code', monospace;
   font-size: 0.9rem;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   border: 1px solid rgba(148, 163, 184, 0.1);
   overflow-x: auto;
 }

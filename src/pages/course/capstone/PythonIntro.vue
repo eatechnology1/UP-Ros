@@ -227,7 +227,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 }
 
 .concept-card {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -236,7 +236,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 
 .simple-list {
   padding-left: 1.2rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.8;
 }
 .simple-list li strong {

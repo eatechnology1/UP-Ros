@@ -170,7 +170,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 }
 
 .folder-card {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -203,16 +203,16 @@ import StepsBlock from 'components/content/StepsBlock.vue';
   font-weight: bold;
   font-size: 1.2rem;
   margin-bottom: 5px;
-  color: #f8fafc;
+  color: var(--text-primary);
   font-family: 'Fira Code', monospace;
 }
 .folder-card .desc {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .tree-view {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   border-radius: 8px;
   font-family: 'Fira Code', monospace;
   color: #a5f3fc;

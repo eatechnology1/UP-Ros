@@ -124,7 +124,7 @@ onMounted(() => {
   overflow: hidden;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(148, 163, 184, 0.1);
-  background: rgba(15, 23, 42, 0.5); /* Placeholder oscuro */
+  background: var(--bg-surface); /* Placeholder oscuro */
   display: inline-block; /* Ajustarse al tamaño de la imagen */
   max-width: 100%;
 }
@@ -144,14 +144,14 @@ onMounted(() => {
 .zoom-hint {
   position: absolute;
   inset: 0;
-  background: rgba(15, 23, 42, 0.4);
+  background: var(--bg-surface);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   opacity: 0;
   transition: opacity 0.2s ease;
-  color: white;
+  color: var(--text-primary);
   font-weight: 500;
   backdrop-filter: blur(2px);
 }
@@ -168,14 +168,14 @@ onMounted(() => {
 }
 
 .caption-text {
-  color: #e2e8f0;
+  color: var(--text-secondary);
   font-size: 0.95rem;
   line-height: 1.5;
   margin-bottom: 4px;
 }
 
 .credit-text {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.75rem;
   font-style: italic;
   display: flex;
@@ -207,13 +207,13 @@ onMounted(() => {
   position: absolute;
   top: -40px;
   right: 0;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-surface-hover);
 }
 
 .zoom-caption {
   margin-top: 16px;
-  color: white;
-  background: rgba(0, 0, 0, 0.6);
+  color: var(--text-primary);
+  background: var(--bg-surface-hover);
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 0.9rem;
@@ -224,7 +224,7 @@ onMounted(() => {
   .zoom-close-btn {
     top: 10px;
     right: 10px;
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--bg-surface-hover);
     z-index: 10;
   }
 }

@@ -266,7 +266,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 
 /* TECH CARDS */
 .tech-card {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border-radius: 12px;
   padding: 20px;
   text-align: center;
@@ -311,7 +311,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 
 /* CERTIFICATE */
 .certificate-container {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  background: var(--bg-surface);
   border-radius: 24px;
   border: 2px solid rgba(251, 191, 36, 0.3);
   box-shadow: 0 0 50px rgba(251, 191, 36, 0.1);
@@ -333,7 +333,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 
 /* UTILS */
 .bg-slate-900 {
-  background: #0f172a;
+  background: var(--bg-surface);
 }
 .text-xxs {
   font-size: 0.7rem;

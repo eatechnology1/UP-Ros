@@ -35,14 +35,11 @@ export default defineConfigWithVueTs(
    */
   pluginVue.configs['flat/essential'],
 
-  {
-    files: ['**/*.ts', '**/*.vue'],
-    rules: {
-      '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
-    },
-  },
   // https://github.com/vuejs/eslint-config-typescript
-  vueTsConfigs.recommendedTypeChecked,
+  // Usamos 'recommended' (sin type-checking) ya que parserOptions.project
+  // no está configurado en ESLint para archivos .vue — el type-checking
+  // lo gestiona el pipeline de Vite / vue-tsc internamente.
+  vueTsConfigs.recommended,
 
   {
     languageOptions: {

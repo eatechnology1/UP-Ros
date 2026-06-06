@@ -236,14 +236,14 @@ import StepsBlock from 'components/content/StepsBlock.vue';
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(15, 23, 42, 0.4);
+  background: var(--bg-surface);
   padding: 20px;
   border-radius: 16px;
   overflow-x: auto;
 }
 
 .state-box {
-  background: rgba(30, 41, 59, 0.8);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: 12px;
   padding: 16px;
@@ -264,12 +264,12 @@ import StepsBlock from 'components/content/StepsBlock.vue';
   font-weight: bold;
   font-size: 1.1rem;
   margin-bottom: 8px;
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 .state-box p {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   line-height: 1.4;
   flex-grow: 1;
 }
@@ -280,7 +280,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
   font-weight: bold;
   padding: 4px 8px;
   border-radius: 4px;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
   margin-top: 8px;
 }
 
@@ -298,6 +298,6 @@ import StepsBlock from 'components/content/StepsBlock.vue';
   color: #4ade80;
 }
 .text-grey {
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 </style>

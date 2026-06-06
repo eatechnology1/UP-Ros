@@ -286,7 +286,7 @@ import CodeBlock from 'components/content/CodeBlock.vue';
 }
 .custom-card {
   border-radius: 12px;
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border-left: 4px solid;
   height: 100%;
 }
@@ -312,7 +312,7 @@ import CodeBlock from 'components/content/CodeBlock.vue';
 .pipe-connection {
   flex-grow: 1;
   height: 10px;
-  background: #334155;
+  background: var(--bg-surface-solid);
   margin: 0 10px;
   border-radius: 5px;
   position: relative;
@@ -365,11 +365,11 @@ import CodeBlock from 'components/content/CodeBlock.vue';
 
 /* UTILS */
 .bg-slate-900 {
-  background: #0f172a;
+  background: var(--bg-surface);
 }
 .bg-slate-800 {
   /* Standardized darker background */
-  background: #1e293b;
+  background: var(--bg-surface-hover);
 }
 .text-xxs {
   font-size: 0.6rem;

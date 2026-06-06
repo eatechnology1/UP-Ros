@@ -1141,7 +1141,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .hero-section {
   background:
     radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15), transparent 50%),
-    linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-solid) 100%);
   border-radius: 24px;
   padding: 4rem 3rem;
   border: 1px solid rgba(148, 163, 184, 0.1);
@@ -1164,7 +1164,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
   align-items: center;
   gap: 0.5rem;
   background: rgba(59, 130, 246, 0.15);
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   padding: 0.5rem 1rem;
   border-radius: 99px;
   font-size: 0.85rem;
@@ -1190,7 +1190,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 
 .hero-subtitle {
   font-size: 1.2rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 2.5rem;
   line-height: 1.7;
   max-width: 600px;
@@ -1204,7 +1204,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .stat-val {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 0.25rem;
 }
 
@@ -1260,7 +1260,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 }
 
 .type-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border-radius: 12px;
   padding: 2rem;
   display: flex;
@@ -1276,11 +1276,11 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 }
 
 .type-card.sensor-type {
-  border-color: #22c55e;
+  border-color: var(--text-code);
 }
 
 .type-card.world-type {
-  border-color: #a855f7;
+  border-color: var(--text-primary);
 }
 
 .type-card.visual-type {
@@ -1290,17 +1290,17 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .type-title {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .type-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   line-height: 1.6;
 }
 
 .type-use {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
   padding-top: 1rem;
   border-top: 1px solid rgba(148, 163, 184, 0.2);
@@ -1309,20 +1309,20 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 
 /* LIFECYCLE */
 .lifecycle-container {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 1px solid #334155;
   border-radius: 12px;
   overflow: hidden;
 }
 
 .lifecycle-header {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 1rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   border-bottom: 1px solid #334155;
-  color: #fff;
+  color: var(--text-primary);
   font-weight: 700;
 }
 
@@ -1335,7 +1335,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 }
 
 .lifecycle-stage {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border-radius: 12px;
   padding: 1.5rem;
   min-width: 200px;
@@ -1350,11 +1350,11 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 }
 
 .lifecycle-stage.init {
-  border-color: #22c55e;
+  border-color: var(--text-code);
 }
 
 .lifecycle-stage.update {
-  border-color: #fbbf24;
+  border-color: var(--text-warning, #d97706);
 }
 
 .lifecycle-stage.fini {
@@ -1365,23 +1365,23 @@ import AlertBlock from 'components/content/AlertBlock.vue';
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-surface-hover);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .stage-name {
   font-family: 'Fira Code', monospace;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 1.1rem;
   font-weight: 700;
 }
 
 .stage-desc {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
   line-height: 1.5;
 }
@@ -1400,13 +1400,13 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 }
 
 .code-header {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   border-bottom: 1px solid #334155;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-family: monospace;
   font-size: 0.9rem;
 }
@@ -1419,20 +1419,20 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 }
 
 .api-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid #334155;
   border-radius: 12px;
   overflow: hidden;
 }
 
 .api-header {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 1rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   border-bottom: 1px solid #334155;
-  color: #fff;
+  color: var(--text-primary);
   font-weight: 700;
 }
 
@@ -1447,13 +1447,13 @@ import AlertBlock from 'components/content/AlertBlock.vue';
   background: rgba(59, 130, 246, 0.1);
   padding: 0.5rem;
   border-radius: 6px;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   font-family: 'Fira Code', monospace;
   font-size: 0.85rem;
 }
 
 .api-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.85rem;
   margin-top: -0.5rem;
 }
@@ -1498,7 +1498,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 
 /* PID DIAGRAM */
 .pid-viz-container {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   padding: 2rem;
   border-radius: 16px;
   border: 1px solid rgba(148, 163, 184, 0.1);
@@ -1513,7 +1513,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 }
 
 .pid-block {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 2px solid #3b82f6;
   border-radius: 8px;
   padding: 1rem;
@@ -1526,13 +1526,13 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 
 .block-label {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .pid-block code {
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   font-family: 'Fira Code', monospace;
   font-size: 0.9rem;
 }
@@ -1556,7 +1556,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 }
 
 .metric-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 2px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -1570,19 +1570,19 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .metric-val {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .metric-label {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 /* CHALLENGE CARD */
 .challenge-card {
-  background: rgba(30, 41, 59, 0.4);
+  background: var(--bg-surface-solid);
   border: 1px solid #ef4444;
   border-radius: 16px;
   padding: 2rem;
@@ -1602,12 +1602,12 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 .c-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #fca5a5;
+  color: var(--text-danger, #dc2626);
   margin-bottom: 0.5rem;
 }
 
 .c-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.95rem;
 }
 
@@ -1621,7 +1621,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
   display: flex;
   gap: 1rem;
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
   border-radius: 8px;
   cursor: default;
 }
@@ -1640,29 +1640,29 @@ import AlertBlock from 'components/content/AlertBlock.vue';
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   flex-shrink: 0;
 }
 
 .c-option.correct .opt-radio {
-  border-color: #22c55e;
-  color: #22c55e;
+  border-color: var(--text-code);
+  color: var(--text-code);
 }
 
 .opt-text {
-  color: #fff;
+  color: var(--text-primary);
   flex: 1;
 }
 
 .opt-feedback {
   margin-top: 0.5rem;
-  color: #86efac;
+  color: var(--text-code);
   font-size: 0.9rem;
 }
 
 /* VIDEO STYLES */
 .video-container {
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 1px solid #334155;
   border-radius: 12px;
   overflow: hidden;
@@ -1689,7 +1689,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 
 .video-caption {
   padding: 1rem 0.5rem 0.5rem 0.5rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   display: flex;
   align-items: center;
@@ -1704,7 +1704,7 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 }
 
 .summary-item {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 8px;
   padding: 1rem;
@@ -1715,13 +1715,13 @@ import AlertBlock from 'components/content/AlertBlock.vue';
 
 .summary-item code {
   font-family: 'Fira Code', monospace;
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   font-size: 0.95rem;
   font-weight: 700;
 }
 
 .summary-item span {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 /* ========== CTA FINAL ========== */

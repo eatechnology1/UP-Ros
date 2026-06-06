@@ -12,11 +12,11 @@
           />
           <div>
             <div class="text-overline text-accent text-weight-bold">MÓDULO</div>
-            <h1 class="text-h3 text-white q-my-none text-weight-bold">{{ currentModule.title }}</h1>
+            <h1 class="text-h3 module-title q-my-none text-weight-bold">{{ currentModule.title }}</h1>
           </div>
         </div>
 
-        <p class="text-h6 text-grey-4 module-description" v-if="currentModule.tooltip">
+        <p class="text-h6 module-description" v-if="currentModule.tooltip">
           {{ currentModule.tooltip }}
         </p>
 
@@ -31,8 +31,8 @@
           <q-chip
             v-for="tag in currentModule.tags"
             :key="tag"
-            color="dark"
-            text-color="grey-4"
+            :color="isDark ? 'blue-grey-8' : 'blue-grey-2'"
+            :text-color="isDark ? 'grey-3' : 'grey-8'"
             size="sm"
           >
             #{{ tag }}
@@ -40,7 +40,7 @@
         </div>
       </div>
 
-      <q-separator color="grey-8" class="q-mb-xl" />
+      <q-separator class="q-mb-xl module-separator" />
 
       <!-- Lista de Lecciones -->
       <div class="lessons-grid">
@@ -53,8 +53,8 @@
             <div class="lesson-status-line"></div>
             <q-card-section>
               <div class="text-overline text-primary q-mb-xs">LECCIÓN {{ index + 1 }}</div>
-              <div class="text-h6 text-white q-mb-sm lesson-title">{{ lesson.title }}</div>
-              <div class="text-caption text-grey-5 lesson-desc">
+              <div class="text-h6 lesson-title q-mb-sm">{{ lesson.title }}</div>
+              <div class="text-caption lesson-desc">
                 {{ lesson.description || 'Explora este tema fundamental para dominar ROS 2.' }}
               </div>
             </q-card-section>
@@ -70,8 +70,8 @@
     <!-- State: Not Found -->
     <div v-else class="column flex-center full-height q-pa-xl text-center">
       <q-icon name="warning" size="4rem" color="warning" class="q-mb-md" />
-      <h2 class="text-h4 text-white">Módulo no encontrado</h2>
-      <p class="text-grey-4">No pudimos encontrar la información para esta ruta.</p>
+      <h2 class="text-h4 module-title">Módulo no encontrado</h2>
+      <p class="module-description">No pudimos encontrar la información para esta ruta.</p>
       <q-btn to="/home" color="primary" label="Ir al Inicio" rounded unelevated class="q-mt-lg" />
     </div>
   </q-page>
@@ -81,6 +81,10 @@
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { courseStructure } from 'src/data/courseStructure';
+import { useTheme } from 'src/composables/useTheme';
+
+const { currentTheme } = useTheme();
+const isDark = computed(() => currentTheme.value === 'dark');
 
 const route = useRoute();
 const router = useRouter();
@@ -112,7 +116,7 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 <style scoped>
 .module-landing-page {
-  background: #0f172a; /* Slate 900 base */
+  background: var(--bg-page);
   min-height: 100vh;
 }
 
@@ -133,8 +137,8 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 .lesson-card {
-  background: rgba(30, 41, 59, 0.5); /* Slate 800 transparent */
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 16px;
   height: 100%;
   display: flex;
@@ -147,9 +151,9 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 .lesson-card:hover {
   transform: translateY(-5px);
-  background: rgba(30, 41, 59, 0.8);
-  border-color: rgba(56, 189, 248, 0.5); /* Sky 400 */
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  background: var(--bg-surface-hover);
+  border-color: var(--border-hover);
+  box-shadow: 0 10px 30px -10px var(--shadow-md);
 }
 
 /* Linea decorativa */
@@ -174,5 +178,23 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
   line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  color: var(--text-muted);
+}
+
+.lesson-title {
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.module-title {
+  color: var(--text-primary);
+}
+
+.module-description {
+  color: var(--text-secondary);
+}
+
+.module-separator {
+  background: var(--border-subtle) !important;
 }
 </style>

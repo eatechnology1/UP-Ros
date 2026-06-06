@@ -218,7 +218,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 
 /* Visualización .SRV Card */
 .srv-card {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   border-left: 5px solid #a855f7; /* Purple */
   border-radius: 8px;
   overflow: hidden;
@@ -227,8 +227,8 @@ import StepsBlock from 'components/content/StepsBlock.vue';
   margin: 20px auto;
 }
 .srv-header {
-  background: #334155;
-  color: #e2e8f0;
+  background: var(--bg-surface-solid);
+  color: var(--text-secondary);
   padding: 8px 16px;
   font-weight: bold;
   font-family: 'Fira Code', monospace;
@@ -258,14 +258,14 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 
 /* File Edit Visuals */
 .file-edit {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border: 1px solid #475569;
   border-radius: 8px;
   padding: 15px;
   height: 100%;
 }
 .file-edit .filename {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   font-weight: bold;
   border-bottom: 1px solid #475569;
   margin-bottom: 10px;
@@ -273,6 +273,6 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 }
 .file-edit p {
   font-size: 0.85rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 </style>

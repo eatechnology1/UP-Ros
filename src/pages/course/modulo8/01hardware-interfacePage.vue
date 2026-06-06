@@ -226,7 +226,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   padding: 2rem;
   border-radius: 12px;
 }
@@ -247,10 +247,10 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   position: absolute;
   top: -12px;
   left: 10px;
-  background: #0f172a;
+  background: var(--bg-surface);
   padding: 0 10px;
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-weight: 700;
 }
 
@@ -266,8 +266,8 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .node-box {
-  background: #334155;
-  color: #fff;
+  background: var(--bg-surface-solid);
+  color: var(--text-primary);
   padding: 0.5rem 2rem;
   border-radius: 4px;
 }
@@ -296,7 +296,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 .controller {
   background: #ef4444;
-  color: #fff;
+  color: var(--text-primary);
   padding: 0.25rem 0.5rem;
   font-size: 0.8rem;
   border-radius: 4px;
@@ -312,13 +312,13 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 .rm-title {
   font-size: 0.75rem;
-  color: #fca5a5;
+  color: var(--text-danger, #dc2626);
   margin-bottom: 0.5rem;
 }
 
 .hardware-box {
   background: #f97316;
-  color: #fff;
+  color: var(--text-primary);
   padding: 0.5rem;
   border-radius: 4px;
   font-weight: 700;
@@ -330,7 +330,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 .topic-arrow,
 .interface-arrow {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-family: monospace;
   margin: 0.5rem 0;
   font-size: 0.8rem;
@@ -346,7 +346,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 /* CHALLENGE */
 .challenge-card {
-  background: rgba(30, 41, 59, 0.8);
+  background: var(--bg-surface-solid);
   border-radius: 16px;
   padding: 2rem;
   border-left: 5px solid #f97316;
@@ -359,7 +359,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   margin-bottom: 0.5rem;
 }
 .challenge-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   margin-bottom: 1.5rem;
 }
 
@@ -370,7 +370,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .option {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   padding: 1rem;
   border-radius: 8px;
   cursor: pointer;
@@ -385,12 +385,12 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 .opt-head {
   font-weight: 700;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   margin-bottom: 0.5rem;
 }
 .opt-body {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 /* SUMMARY & RESPONSIVE */
@@ -401,7 +401,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .summary-item {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   padding: 1rem;
   border-radius: 8px;
   display: flex;
@@ -414,7 +414,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 .summary-item span {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 @media (max-width: 1024px) {

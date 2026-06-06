@@ -172,7 +172,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 }
 
 .cmd-card {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -180,13 +180,13 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 }
 .cmd-card code {
   display: block;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   padding: 8px;
   border-radius: 4px;
   margin-top: 10px;
   font-family: 'Fira Code', monospace;
   font-size: 0.85rem;
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   word-break: break-all;
 }
 
@@ -199,7 +199,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
   gap: 10px;
 }
 .step {
-  background: #334155;
+  background: var(--bg-surface-solid);
   padding: 8px 16px;
   border-radius: 6px;
   font-weight: bold;
@@ -210,7 +210,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
   animation: pulse 2s infinite;
 }
 .arrow {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 1.2rem;
 }
 

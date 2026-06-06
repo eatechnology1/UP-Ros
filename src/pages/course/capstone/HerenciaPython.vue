@@ -169,7 +169,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 
 /* Estilos para el diagrama de árbol */
 .tree-node {
-  background: #334155;
+  background: var(--bg-surface-solid);
   padding: 8px 16px;
   border-radius: 6px;
   display: inline-block;
@@ -178,12 +178,12 @@ import SplitBlock from 'components/content/SplitBlock.vue';
   font-size: 0.9rem;
 }
 .tree-node.parent {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   border-color: #38bdf8;
   color: #38bdf8;
 }
 .tree-node.child {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   border-color: #4ade80;
   color: #4ade80;
 }

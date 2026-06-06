@@ -239,7 +239,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   padding: 2rem;
   border-radius: 12px;
 }
@@ -253,7 +253,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 .sys-header {
   text-align: center;
   font-weight: 700;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
 }
@@ -263,7 +263,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   text-align: center;
   font-size: 0.8rem;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .traditional .app {
@@ -277,7 +277,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   background: #ef4444;
 }
 .traditional .os {
-  background: #475569;
+  background: var(--bg-surface-solid);
   border-radius: 0 0 8px 8px;
   margin-top: 2px;
 }
@@ -294,13 +294,13 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   margin-bottom: 2px;
 }
 .docker .os {
-  background: #1e293b;
-  color: #cbd5e1;
+  background: var(--bg-surface-hover);
+  color: var(--text-secondary);
   border-radius: 4px;
   font-size: 0.75rem;
 }
 .docker .kernel {
-  background: #475569;
+  background: var(--bg-surface-solid);
   border-radius: 8px;
 }
 
@@ -315,7 +315,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   display: flex;
   gap: 2rem;
   margin-top: 1rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   padding: 1rem;
   border-radius: 8px;
   justify-content: center;
@@ -328,7 +328,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 .stat .label {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 .stat .val {
   font-size: 1.2rem;
@@ -339,7 +339,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   color: #ef4444;
 }
 .stat .val.good {
-  color: #22c55e;
+  color: var(--text-code);
 }
 
 /* NETWORK VIZ */
@@ -350,7 +350,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .net-mode {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -363,26 +363,26 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 .net-mode.bridge {
   border-top: 4px solid #ef4444;
-  color: #fca5a5;
+  color: var(--text-danger, #dc2626);
 }
 .net-mode.host {
   border-top: 4px solid #22c55e;
-  color: #86efac;
+  color: var(--text-code);
 }
 
 .net-title {
   font-weight: 700;
   font-size: 1.1rem;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 .net-desc {
   font-size: 0.85rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 /* K8S VIZ */
 .k8s-viz {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   padding: 2rem;
   border-radius: 12px;
   display: flex;
@@ -399,7 +399,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 .role-title {
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
 }
 .role-desc {
   font-size: 0.75rem;
@@ -419,14 +419,14 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .robot-node {
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 0.5rem 1rem;
   border-radius: 6px;
   display: flex;
   align-items: center;
   gap: 1rem;
   border: 1px solid #334155;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .status {
@@ -437,7 +437,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 .status.healthy {
   background: rgba(34, 197, 94, 0.2);
-  color: #22c55e;
+  color: var(--text-code);
 }
 .status.updating {
   background: rgba(234, 179, 8, 0.2);
@@ -450,7 +450,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 /* CHALLENGE */
 .challenge-card {
-  background: rgba(30, 41, 59, 0.8);
+  background: var(--bg-surface-solid);
   border-radius: 16px;
   padding: 2rem;
   border-left: 5px solid #2563eb;
@@ -463,7 +463,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   margin-bottom: 0.5rem;
 }
 .challenge-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   margin-bottom: 1.5rem;
 }
 
@@ -475,7 +475,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .summary-item {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   padding: 1rem;
   border-radius: 8px;
   display: flex;
@@ -483,12 +483,12 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .summary-item code {
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   font-family: monospace;
 }
 .summary-item span {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 @media (max-width: 768px) {

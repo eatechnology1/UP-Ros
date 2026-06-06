@@ -188,7 +188,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 }
 
 .pkg-card {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border-radius: 12px;
   padding: 1.2rem;
   height: 100%;
@@ -213,17 +213,17 @@ import StepsBlock from 'components/content/StepsBlock.vue';
   font-family: 'Fira Code', monospace;
   font-weight: bold;
   font-size: 1.1rem;
-  color: #f8fafc;
+  color: var(--text-primary);
   margin-bottom: 5px;
 }
 .pkg-desc {
   font-size: 0.85rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   margin-bottom: 10px;
 }
 .msg-list {
   padding-left: 1.2rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
 }
 .msg-list code {
@@ -231,7 +231,7 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 }
 
 .usage-example {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-surface-hover);
   border-radius: 8px;
   height: 100%;
 }

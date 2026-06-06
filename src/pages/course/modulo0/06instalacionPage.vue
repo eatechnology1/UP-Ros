@@ -531,7 +531,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .method-card {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 2rem;
@@ -558,28 +558,28 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 .method-name {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .method-subtitle {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-style: italic;
 }
 
 .method-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.95rem;
   line-height: 1.6;
   flex-grow: 1;
 }
 
 .method-example {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   padding: 0.75rem;
   border-radius: 8px;
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .apt-workflow {
@@ -604,13 +604,13 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   justify-content: center;
   font-size: 1.5rem;
   font-weight: 700;
-  color: white;
+  color: var(--text-primary);
   flex-shrink: 0;
 }
 
 .apt-step-content {
   flex-grow: 1;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -619,7 +619,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 .apt-step-title {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 0.75rem;
 }
 
@@ -629,11 +629,11 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   background: rgba(59, 130, 246, 0.1);
   border-radius: 6px;
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .cmd-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.25rem;
@@ -646,12 +646,12 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 .cmd-name {
   font-family: 'Fira Code', monospace;
   font-size: 1.1rem;
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   font-weight: 700;
 }
 
 .cmd-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   flex-grow: 1;
 }
@@ -686,17 +686,17 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 .comparison-card.correct .comparison-header {
   background: rgba(20, 83, 45, 0.3);
-  color: #86efac;
+  color: var(--text-code);
 }
 
 .comparison-card.wrong .comparison-header {
   background: rgba(127, 29, 29, 0.3);
-  color: #fca5a5;
+  color: var(--text-danger, #dc2626);
 }
 
 .comparison-content {
   padding: 1.5rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
 }
 
 .comparison-pros,
@@ -709,16 +709,16 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 .comparison-pros {
   background: rgba(34, 197, 94, 0.1);
-  color: #86efac;
+  color: var(--text-code);
 }
 
 .comparison-cons {
   background: rgba(239, 68, 68, 0.1);
-  color: #fca5a5;
+  color: var(--text-danger, #dc2626);
 }
 
 .rosdep-demo {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 2rem;
@@ -731,13 +731,13 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 .scenario-title {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
   margin-bottom: 0.75rem;
 }
 
 .scenario-problem {
-  color: #cbd5e1;
-  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-secondary);
+  background: var(--bg-surface-hover);
   padding: 1rem;
   border-radius: 8px;
   border-left: 3px solid #f97316;
@@ -746,7 +746,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 .solution-title {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #22c55e;
+  color: var(--text-code);
   margin-bottom: 0.75rem;
 }
 
@@ -758,7 +758,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .use-case {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   overflow: hidden;
@@ -772,7 +772,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   background: rgba(59, 130, 246, 0.1);
   border-bottom: 1px solid rgba(148, 163, 184, 0.2);
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .use-case-content {
@@ -783,13 +783,13 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.3);
   border-radius: 8px;
-  color: #fca5a5;
+  color: var(--text-danger, #dc2626);
 }
 
 .error-content {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   padding: 1.5rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 .error-content ol,
@@ -803,7 +803,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .video-container {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 1.5rem;
@@ -834,7 +834,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
   padding: 0.75rem;
   background: rgba(59, 130, 246, 0.1);
   border-radius: 8px;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -845,7 +845,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 }
 
 .summary-item {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 8px;
   padding: 1rem;
@@ -856,12 +856,12 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 
 .summary-item code {
   font-family: 'Fira Code', monospace;
-  color: #22c55e;
+  color: var(--text-code);
   font-size: 1rem;
 }
 
 .summary-item span {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 
@@ -874,7 +874,7 @@ import SectionTitle from 'components/content/SectionTitle.vue';
 .final-cta {
   text-align: center;
   padding: 3rem 2rem;
-  background: linear-gradient(145deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.6));
+  background: var(--bg-surface);
   border-radius: 24px;
   border: 1px solid rgba(148, 163, 184, 0.1);
   max-width: 800px;

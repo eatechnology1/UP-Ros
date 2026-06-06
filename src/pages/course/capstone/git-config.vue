@@ -235,17 +235,17 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 }
 
 .config-card p {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   margin: 10px 0;
 }
 
 .config-card code {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   padding: 8px;
   border-radius: 4px;
   font-family: 'Fira Code', monospace;
   font-size: 0.85rem;
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   word-break: break-all;
 }
 </style>

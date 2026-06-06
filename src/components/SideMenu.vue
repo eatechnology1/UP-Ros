@@ -5,7 +5,7 @@
       <q-input
         v-model="searchQuery"
         dense
-        standout="bg-grey-9"
+        :standout="isDark ? 'bg-grey-9' : 'bg-blue-grey-1'"
         placeholder="Buscar lecciones..."
         class="search-input"
         @update:model-value="handleSearch"
@@ -178,6 +178,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { courseStructure, type CourseNode } from 'src/data/courseStructure';
+import { useTheme } from 'src/composables/useTheme';
+
+const { currentTheme } = useTheme();
+const isDark = computed(() => currentTheme.value === 'dark');
 
 const openModule = ref('');
 const searchQuery = ref('');
@@ -298,31 +302,31 @@ function getDifficultyLabel(difficulty: string): string {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: rgba(15, 23, 42, 0.98);
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--bg-glass-drawer);
+  border-right: 1px solid var(--border-accent);
 }
 
 /* ========================================
    BUSCADOR RÁPIDO
    ======================================== */
 .search-bar {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--border-accent);
+  background: var(--bg-surface);
 }
 
 .search-input :deep(.q-field__control) {
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-surface);
   transition: all 0.3s ease;
 }
 
 .search-input :deep(.q-field__control):hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--bg-surface-hover);
 }
 
 .search-input :deep(.q-field__control):focus-within {
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3);
+  background: var(--bg-surface-hover);
+  box-shadow: 0 0 0 2px var(--border-hover);
 }
 
 .menu-scroll-area {
@@ -333,7 +337,7 @@ function getDifficultyLabel(difficulty: string): string {
    HEADERS Y DIVIDERS
    ======================================== */
 .menu-header {
-  color: #475569;
+  color: var(--text-muted);
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -342,7 +346,7 @@ function getDifficultyLabel(difficulty: string): string {
 }
 
 .menu-divider {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--border-accent);
   margin: 16px 20px;
 }
 
@@ -352,7 +356,7 @@ function getDifficultyLabel(difficulty: string): string {
 .menu-item {
   margin: 2px 12px;
   border-radius: 8px;
-  color: #94a3b8;
+  color: var(--text-muted);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   min-height: 38px;
   font-size: 0.9rem;
@@ -363,10 +367,10 @@ function getDifficultyLabel(difficulty: string): string {
 }
 
 .menu-item:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: #f1f5f9;
+  background: var(--bg-surface-hover);
+  color: var(--text-primary);
   transform: translateX(4px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px var(--shadow-sm);
 }
 
 /* ========================================
@@ -380,11 +384,11 @@ function getDifficultyLabel(difficulty: string): string {
 }
 
 .module-expansion:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-surface);
 }
 
 .module-open {
-  background: rgba(255, 255, 255, 0.04) !important;
+  background: var(--bg-surface) !important;
 }
 
 :deep(.module-header) {
@@ -394,7 +398,7 @@ function getDifficultyLabel(difficulty: string): string {
 }
 
 :deep(.module-header):hover {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-surface);
 }
 
 /* ========================================
@@ -414,7 +418,7 @@ function getDifficultyLabel(difficulty: string): string {
   letter-spacing: 0.05em;
   padding: 2px 8px;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-surface-hover);
 }
 
 .difficulty-beginner {
@@ -423,7 +427,7 @@ function getDifficultyLabel(difficulty: string): string {
 }
 
 .difficulty-intermediate {
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
   background: rgba(251, 191, 36, 0.15);
 }
 
@@ -434,7 +438,7 @@ function getDifficultyLabel(difficulty: string): string {
 
 .time-badge {
   font-size: 0.65rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   display: flex;
   align-items: center;
   gap: 4px;
@@ -444,7 +448,7 @@ function getDifficultyLabel(difficulty: string): string {
    TOOLTIPS TÉCNICOS
    ======================================== */
 .technical-tooltip {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.98));
+  background: var(--bg-surface);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(56, 189, 248, 0.3);
   border-radius: 12px;
@@ -454,7 +458,7 @@ function getDifficultyLabel(difficulty: string): string {
 }
 
 .tooltip-content {
-  color: #e2e8f0;
+  color: var(--text-secondary);
 }
 
 .tooltip-title {
@@ -468,7 +472,7 @@ function getDifficultyLabel(difficulty: string): string {
 .tooltip-description {
   font-size: 0.8rem;
   line-height: 1.5;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 .tooltip-tags {
@@ -512,7 +516,7 @@ function getDifficultyLabel(difficulty: string): string {
 }
 
 .sub-item:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--bg-surface);
   transform: translateX(2px);
 }
 
@@ -536,10 +540,10 @@ function getDifficultyLabel(difficulty: string): string {
   padding: 12px;
   text-align: center;
   font-size: 0.7rem;
-  color: #475569;
+  color: var(--text-muted);
   font-family: 'Fira Code', monospace;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid var(--border-accent);
+  background: var(--bg-surface);
 }
 
 /* ========================================

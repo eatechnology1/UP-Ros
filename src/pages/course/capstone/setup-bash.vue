@@ -210,12 +210,12 @@ import StepsBlock from 'components/content/StepsBlock.vue';
   color: #34d399;
 }
 .layer.underlay .layer-label {
-  color: #60a5fa;
+  color: var(--text-info, #2563eb);
 }
 
 .layer-desc {
   font-family: 'Fira Code', monospace;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   display: inline-block;
   padding: 4px 10px;
   border-radius: 4px;
@@ -224,18 +224,18 @@ import StepsBlock from 'components/content/StepsBlock.vue';
 }
 
 .layer-arrow {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-weight: bold;
   font-size: 0.9rem;
   letter-spacing: 2px;
 }
 
 .alias-list {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 2;
 }
 .alias-list strong {
-  color: #fbbf24; /* Amber */
+  color: var(--text-warning, #d97706); /* Amber */
   font-family: 'Fira Code', monospace;
 }
 </style>

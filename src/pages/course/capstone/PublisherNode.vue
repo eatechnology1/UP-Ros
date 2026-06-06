@@ -218,7 +218,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 
 .node-box {
   display: inline-block;
-  background: #0f172a;
+  background: var(--bg-surface);
   border: 2px solid #38bdf8;
   padding: 15px 30px;
   border-radius: 12px;
@@ -247,7 +247,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
 }
 .node-box .label {
   font-weight: bold;
-  color: white;
+  color: var(--text-primary);
   margin-top: 5px;
 }
 .node-box .role {
@@ -269,12 +269,12 @@ import SplitBlock from 'components/content/SplitBlock.vue';
   top: 50%;
   left: 10px;
   transform: translateY(-50%);
-  background: #1e293b;
+  background: var(--bg-surface-hover);
   padding: 4px 8px;
   border-radius: 4px;
   font-family: 'Fira Code', monospace;
   font-size: 0.8rem;
-  color: #fbbf24;
+  color: var(--text-warning, #d97706);
 }
 .msg-type {
   position: absolute;
@@ -282,7 +282,7 @@ import SplitBlock from 'components/content/SplitBlock.vue';
   right: 10px;
   transform: translateY(-50%);
   font-size: 0.7rem;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 .cloud {
@@ -290,11 +290,11 @@ import SplitBlock from 'components/content/SplitBlock.vue';
   border-radius: 50px;
   padding: 10px 40px;
   display: inline-block;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-surface-hover);
 }
 
 .concept-card {
-  background: rgba(30, 41, 59, 0.5);
+  background: var(--bg-surface-solid);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;

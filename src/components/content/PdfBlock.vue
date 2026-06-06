@@ -50,7 +50,7 @@ defineProps<{
   gap: 16px;
   padding: 16px;
   border-radius: 12px;
-  background: rgba(30, 41, 59, 0.4); /* Slate-800 muy transparente */
+  background: var(--bg-surface-solid); /* Slate-800 muy transparente */
   border: 1px solid rgba(148, 163, 184, 0.15); /* Borde sutil */
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -61,7 +61,7 @@ defineProps<{
 
 /* Efecto Hover: Elevar y brillar */
 .pdf-card:hover {
-  background: rgba(30, 41, 59, 0.6);
+  background: var(--bg-surface-solid);
   border-color: rgba(148, 163, 184, 0.3);
   transform: translateY(-2px);
   box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
@@ -91,7 +91,7 @@ defineProps<{
 }
 
 .pdf-title {
-  color: #f1f5f9; /* Slate-100 */
+  color: var(--text-primary); /* Slate-100 */
   font-weight: 600;
   font-size: 1rem;
   margin-bottom: 4px;
@@ -103,7 +103,7 @@ defineProps<{
   align-items: center;
   gap: 8px;
   font-size: 0.75rem;
-  color: #94a3b8; /* Slate-400 */
+  color: var(--text-muted); /* Slate-400 */
   font-weight: 500;
 }
 
@@ -122,7 +122,7 @@ defineProps<{
 .pdf-description {
   margin-top: 6px;
   font-size: 0.85rem;
-  color: #cbd5e1; /* Slate-300 */
+  color: var(--text-secondary); /* Slate-300 */
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2; /* Limitar a 2 líneas */

@@ -786,7 +786,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
 
 /* WORKSPACE VISUAL */
 .workspace-visual {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border: 2px solid rgba(0, 217, 255, 0.3);
   border-radius: 16px;
   overflow: hidden;
@@ -817,7 +817,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
   grid-template-columns: auto 1fr;
   gap: 1.5rem;
   padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   transition: all 0.3s ease;
@@ -852,12 +852,12 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
   font-size: 1.2rem;
   font-weight: 700;
   font-family: 'Fira Code', monospace;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
 
 .folder-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   margin-bottom: 1rem;
 }
 
@@ -871,9 +871,9 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 6px;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -888,7 +888,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 1.5rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 2rem;
@@ -904,7 +904,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
   justify-content: center;
   font-size: 1.5rem;
   font-weight: 700;
-  color: white;
+  color: var(--text-primary);
   flex-shrink: 0;
 }
 
@@ -916,7 +916,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
 }
 
 .stage-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   margin-bottom: 1rem;
 }
 
@@ -935,7 +935,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
 }
 
 .option-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -949,7 +949,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
   align-items: center;
   gap: 0.75rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   font-size: 1.05rem;
 }
 
@@ -961,7 +961,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
 }
 
 .package-card {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border: 2px solid;
   border-radius: 16px;
   padding: 2rem;
@@ -975,7 +975,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
 }
 
 .package-card.python {
-  border-color: #fbbf24;
+  border-color: var(--text-warning, #d97706);
 }
 
 .package-header {
@@ -984,7 +984,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
   gap: 1rem;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .package-structure {
@@ -998,9 +998,9 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg-surface-hover);
   border-radius: 6px;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-family: 'Fira Code', monospace;
 }
 
@@ -1019,7 +1019,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
 }
 
 .dep-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
@@ -1034,17 +1034,17 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
   gap: 0.75rem;
   font-weight: 700;
   font-family: 'Fira Code', monospace;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .dep-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 .dep-example {
   padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--bg-surface-hover);
   border-radius: 6px;
   font-family: 'Fira Code', monospace;
   color: #00ff88;
@@ -1056,7 +1056,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 2rem;
@@ -1085,7 +1085,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
 
 .layer-label {
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 1rem;
   font-size: 1.1rem;
 }
@@ -1098,7 +1098,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
 }
 
 .layer-desc {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
 }
 
@@ -1117,7 +1117,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
 }
 
 .opt-card {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-surface);
   border: 2px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 2rem;
@@ -1132,11 +1132,11 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
   align-items: center;
   gap: 0.75rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .opt-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.95rem;
 }
 
@@ -1152,7 +1152,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
 
 /* VIDEO */
 .video-container {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.9));
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 16px;
   padding: 1.5rem;
@@ -1183,7 +1183,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
   padding: 0.75rem;
   background: rgba(59, 130, 246, 0.1);
   border-radius: 8px;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -1195,7 +1195,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
 }
 
 .summary-item {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--bg-surface);
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 8px;
   padding: 1rem;
@@ -1211,7 +1211,7 @@ import DependencySolver from 'components/content/interactive/DependencySolver.vu
 }
 
 .summary-item span {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.85rem;
 }
 

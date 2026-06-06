@@ -34,20 +34,20 @@
       <!-- Botón ANTERIOR -->
       <q-btn v-if="prevNode" flat no-caps class="nav-btn prev" :to="getRoutePath(prevNode)">
         <div class="column items-start text-left">
-          <div class="text-caption text-grey-6">Anterior</div>
-          <div class="text-weight-bold text-white">{{ prevNode.node.title }}</div>
+          <div class="text-caption" style="color: var(--text-muted)">Anterior</div>
+          <div class="text-weight-bold" style="color: var(--text-primary)">{{ prevNode.node.title }}</div>
         </div>
-        <q-icon name="arrow_back" class="on-left q-mr-md" />
+        <q-icon name="arrow_back" class="on-left q-mr-md" style="color: var(--text-secondary)" />
       </q-btn>
       <div v-else></div>
 
       <!-- Botón SIGUIENTE -->
       <q-btn v-if="nextNode" flat no-caps class="nav-btn next" :to="getRoutePath(nextNode)">
         <div class="column items-end text-right">
-          <div class="text-caption text-grey-6">Siguiente</div>
-          <div class="text-weight-bold text-white">{{ nextNode.node.title }}</div>
+          <div class="text-caption" style="color: var(--text-muted)">Siguiente</div>
+          <div class="text-weight-bold" style="color: var(--text-primary)">{{ nextNode.node.title }}</div>
         </div>
-        <q-icon name="arrow_forward" class="on-right q-ml-md" />
+        <q-icon name="arrow_forward" class="on-right q-ml-md" style="color: var(--text-secondary)" />
       </q-btn>
     </div>
   </q-page>
@@ -116,7 +116,8 @@ const heroStyle = computed(() => {
   else if (path.includes('modulo-8')) color = '0, 150, 136'; // Teal-5
 
   return {
-    background: `radial-gradient(circle at center, rgba(${color}, 0.15), transparent 60%), rgba(15, 23, 42, 0.8)`,
+    backgroundImage: `radial-gradient(circle at center, rgba(${color}, 0.15), transparent 60%)`,
+    backgroundColor: 'var(--bg-surface-solid)'
   };
 });
 
@@ -152,7 +153,7 @@ const getRoutePath = (item: { fullPath: string } | null) => {
 
   backdrop-filter: blur(20px);
   border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  border: 1px solid var(--border-medium);
   text-align: center;
 }
 
@@ -161,7 +162,7 @@ const getRoutePath = (item: { fullPath: string } | null) => {
   font-weight: 800;
   margin: 0 0 1.5rem 0;
   line-height: 1.1;
-  color: #f8fafc;
+  color: var(--text-primary);
 }
 
 .hero-desc {
@@ -169,7 +170,7 @@ const getRoutePath = (item: { fullPath: string } | null) => {
   max-width: 800px;
   margin: 0 auto; /* Centrado del texto */
   line-height: 1.6;
-  color: #cbd5e1;
+  color: var(--text-secondary);
 }
 
 /* CONTENT CONTAINER */
@@ -193,20 +194,20 @@ const getRoutePath = (item: { fullPath: string } | null) => {
   width: 100%;
   max-width: 1100px;
   margin: 3rem auto 0 auto; /* Centrado horizontal */
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--border-subtle);
   padding-top: 2rem;
 }
 
 .nav-btn {
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-subtle);
   border-radius: 12px;
   padding: 12px 24px;
   transition: all 0.3s ease;
-  background: rgba(30, 41, 59, 0.4);
+  background: var(--bg-surface);
 
   &:hover {
-    background: rgba(56, 189, 248, 0.15);
-    border-color: rgba(56, 189, 248, 0.5);
+    background: var(--bg-surface-hover);
+    border-color: var(--border-hover);
     transform: translateY(-2px);
   }
 }
