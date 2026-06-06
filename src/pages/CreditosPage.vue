@@ -44,11 +44,12 @@
 
             <q-card-section class="profile-body">
               <p class="profile-bio">
-                Próximo a titularse como Ingeniero Mecatrónico por la Universidad de Pamplona y
-                creador de UpROS Academy. Actualmente lidera su propia empresa, EA Technology, donde
-                aplica su visión técnica y espíritu emprendedor para gestionar soluciones
-                tecnológicas. Combina su sólido aprendizaje académico con la experiencia real del
-                liderazgo empresarial.
+                Estudiante de Ingeniería Mecatrónica | Fundador y Gerente de EA Technology próximo a
+                titularse como Ingeniero Mecatrónico por la Universidad de Pamplona y creador de
+                UpROS Academy. Actualmente lidera su propia empresa, EA Technology, donde aplica su
+                visión técnica y espíritu emprendedor para gestionar soluciones tecnológicas.
+                Combina su sólido aprendizaje académico con la experiencia real del liderazgo
+                empresarial.
               </p>
             </q-card-section>
 
