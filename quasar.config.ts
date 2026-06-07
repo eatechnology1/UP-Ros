@@ -194,6 +194,7 @@ export default defineConfig((/* ctx */) => {
       builder: {
         appId: 'com.alexandercalderon.upros',
         productName: 'UP-Ros',
+        publish: null,
 
         files: ['**/*'],
 
