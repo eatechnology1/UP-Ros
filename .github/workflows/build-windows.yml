@@ -16,13 +16,18 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
           cache: 'npm'
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Cache electron-builder binaries
+        uses: actions/cache@v4
         with:
-          python-version: '3.11'
+          path: |
+            ~\AppData\Local\electron-builder\Cache
+            ~\AppData\Local\electron\Cache
+          key: electron-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            electron-cache-${{ runner.os }}-
 
       - name: Install dependencies
         run: npm ci
@@ -33,23 +38,31 @@ jobs:
         run: npx quasar build -m electron
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
+          # Deshabilita firma de código en CI (no hay certificado)
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+          WIN_CSC_LINK: ''
 
       - name: List build output
+        shell: pwsh
         run: |
-          echo "Listing dist/electron directory:"
-          dir dist\electron /s
-        shell: cmd
+          Write-Host "=== Contenido de dist/electron ==="
+          if (Test-Path "dist/electron") {
+            Get-ChildItem -Recurse "dist/electron" | Select-Object FullName, Length
+          } else {
+            Write-Error "El directorio dist/electron no existe. El build falló."
+            exit 1
+          }
 
-      - name: Upload Windows Installer
+      - name: Upload Windows Installer (.exe)
         uses: actions/upload-artifact@v4
         with:
           name: UP-Ros-Windows-Installer
           path: |
             dist/electron/Packaged/*.exe
-            dist/electron/Packaged/*.msi
+            dist/electron/Packaged/*.zip
           if-no-files-found: error
 
-      - name: Upload Full Package (Optional)
+      - name: Upload Full Package
         uses: actions/upload-artifact@v4
         with:
           name: UP-Ros-Windows-Full
