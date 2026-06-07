@@ -16,8 +16,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
+
+      - name: Show environment info
+        shell: pwsh
+        run: |
+          Write-Host "Node: $(node --version)"
+          Write-Host "npm: $(npm --version)"
+          Write-Host "OS: $env:RUNNER_OS"
 
       - name: Cache electron-builder binaries
         uses: actions/cache@v4
@@ -30,7 +37,7 @@ jobs:
             electron-cache-${{ runner.os }}-
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
 
@@ -38,7 +45,6 @@ jobs:
         run: npx quasar build -m electron
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
-          # Deshabilita firma de código en CI (no hay certificado)
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
           WIN_CSC_LINK: ''
 
@@ -49,11 +55,11 @@ jobs:
           if (Test-Path "dist/electron") {
             Get-ChildItem -Recurse "dist/electron" | Select-Object FullName, Length
           } else {
-            Write-Error "El directorio dist/electron no existe. El build falló."
+            Write-Error "El directorio dist/electron no existe."
             exit 1
           }
 
-      - name: Upload Windows Installer (.exe)
+      - name: Upload Windows Installer
         uses: actions/upload-artifact@v4
         with:
           name: UP-Ros-Windows-Installer
